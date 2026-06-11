@@ -40,3 +40,6 @@ next-env.d.ts
 # Misc
 AGENTS.md
 CLAUDE.md
+
+.vercel
+.env*

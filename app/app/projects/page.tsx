@@ -1,4 +1,5 @@
 "use client";
+import { ChallengIcon, SolutionCheckIcon } from "@/components/icons/GlassIcons";
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -101,12 +102,15 @@ export default function Projects() {
                 </div>
                 <div style={{display:"flex",flexDirection:"column",gap:16}}>
                   {[
-  {label:"The Challenge", body:PROJECTS[active].challenge, icon:"challenge"},
-  {label:"Our Solution", body:PROJECTS[active].solution, icon:"solution"},
-].map(block=>(
+                    {label:"The Challenge", body:PROJECTS[active].challenge, icon:"⚠️"},
+                    {label:"Our Solution", body:PROJECTS[active].solution, icon:"solution"},
+                  ].map(block=>(
                     <GlassCard key={block.label} style={{padding:"24px 28px"}}>
                       <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:12}}>
-                        <span style={{fontSize:18}}>{block.icon}</span>
+                        <>
+                      {block.icon==="challenge" && <ChallengIcon size="sm" animated={false}/>}
+                      {block.icon==="solution"  && <SolutionCheckIcon size="sm" animated={false}/>}
+                    </>
                         <div className="t-xs" style={{color:"var(--text-3)"}}>{block.label}</div>
                       </div>
                       <p className="t-sm" style={{color:"var(--text-2)",lineHeight:1.8}}>{block.body}</p>

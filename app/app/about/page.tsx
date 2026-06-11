@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { preset, StaggerReveal, HoverLift, DrawLine, AnimatedOrb, MagneticButton } from "@/components/Motion";
 import { motion } from "framer-motion";
 import { StrataMark } from "@/components/StrataMark";
 import {
@@ -141,7 +142,7 @@ export default function About() {
                     </div>
                   </GlassCard>
                   {/* Connector dot */}
-                  <div style={{position:"absolute",left:-5,width:10,height:10,borderRadius:"50%",background:layer.color,boxShadow:`0 0 12px ${layer.color}`,top:"50%", transform:"translateY(-50%)"}}/>
+                  <div style={{position:"absolute",left:-5,width:10,height:10,borderRadius:"50%",background:layer.color,boxShadow:`0 0 12px ${layer.color}`,marginTop:-"calc(50% + 5px)" as unknown as number}}/>
                 </motion.div>
               ))}
             </div>
