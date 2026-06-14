@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsApp } from "@/components/WhatsApp";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ScrollProgress, PageTransition } from "@/components/Motion";
 
 const geist = localFont({
   src:"../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
@@ -18,18 +19,36 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title:{default:"QMULATE — Real Estate Wealth Platform",template:"%s | QMULATE"},
   description:"QMULATE organises real estate wealth through one integrated governance platform.",
-  openGraph:{type:"website",siteName:"QMULATE",
+  keywords:["real estate","wealth management","family office","governance","Saudi Arabia"],
+  openGraph:{
     title:"QMULATE — Real Estate Wealth Platform",
-    description:"Wealth, structured to outlast its makers."},
+    description:"QMULATE organises real estate wealth through one integrated governance platform.",
+    siteName:"QMULATE",
+    locale:"en_US",
+    type:"website",
+  },
 };
 
-export default function RootLayout({children}:{children:React.ReactNode}){
-  return(
-    <html lang="en" suppressHydrationWarning className={`${geist.variable} ${geistMono.variable}`}>
-      <body suppressHydrationWarning>
-        <ThemeProvider>
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
+        <link
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className={`${geist.variable} ${geistMono.variable}`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {/* Global scroll progress bar */}
+          <ScrollProgress />
           <Navbar/>
-          {children}
+          {/* Page-level entrance transition */}
+          <PageTransition>
+            {children}
+          </PageTransition>
           <Footer/>
           <WhatsApp/>
         </ThemeProvider>
