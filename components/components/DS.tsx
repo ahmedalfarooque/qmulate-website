@@ -1,6 +1,7 @@
 "use client";
 import { CapabilityIcon } from "@/components/icons/GlassIcons";
 import { CardTilt3D, HoverLift, AnimatedNumber, SPRING, EASE, DUR } from "@/components/Motion";
+import { BRAND_BLUE } from "@/components/Strata";
 /**
  * QMULATE Design System — Shared Components
  * Full dual-theme (dark + light) support via CSS variables
@@ -64,7 +65,7 @@ export function SectionHeading({eyebrow,title,subtitle,center=false,className=""
     <div className={className} style={{textAlign:center?"center":"left",maxWidth:center?680:720}}>
       {eyebrow&&(
         <motion.div {...FI(0)} style={{marginBottom:16}}>
-          <span className="pill pill-c"><span className="dot-live"/>{eyebrow}</span>
+          <span className="pill pill-c"><span style={{display:"inline-block",width:6,height:6,borderRadius:"50%",background:BRAND_BLUE,marginRight:4}}/>{eyebrow}</span>
         </motion.div>
       )}
       <motion.h2 {...FU(0.05)} className="t-h2 gt-w" style={{marginBottom:subtitle?16:0}}>

@@ -1,14 +1,12 @@
 "use client";
 import Link from "next/link";
+import { ArchitecturalBg, StrataLines, GovernancePulse, BRAND_BLUE } from "@/components/Strata";
+import { preset, StaggerReveal, HoverLift, DrawLine, MagneticButton } from "@/components/Motion";
 import { motion } from "framer-motion";
 import { StrataMark } from "@/components/StrataMark";
 import {
-  FU, FI, FS, FL, SectionHeading, GlassCard, FeatureCard,
-  HeroGlass, Divider
+  FU, FI, FS, FL, SectionHeading, GlassCard
 } from "@/components/DS";
-import {
-  ArchitecturalBg, StrataLines, GovernancePulse, BRAND_BLUE
-} from "@/components/Strata";
 
 const PRINCIPLES = [
   { n:"01", title:"Governance over returns", desc:"We don't optimise for yield. We build the structural frameworks that protect and perpetuate capital across market cycles and family generations." },
@@ -34,9 +32,12 @@ const TEAM = [
 export default function About() {
   return (
     <main>
+      
+
       {/* ── Hero ── */}
       <section style={{minHeight:"72vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
-        <ArchitecturalBg variant="mixed"/>
+        
+        
         <div className="bg-grid" style={{opacity:.6}}/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.div {...FI()} style={{marginBottom:24}}>
@@ -53,7 +54,7 @@ export default function About() {
 
       {/* ── Mission & Vision ── */}
       <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <ArchitecturalBg variant="fins"/>
+        
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div className="grid-2" style={{gap:"clamp(24px,3vw,40px)"}}>
             {[
@@ -77,7 +78,7 @@ export default function About() {
 
       {/* ── Founding Principle ── */}
       <section style={{padding:"clamp(60px,8vw,100px) 0",position:"relative",overflow:"hidden",background:"var(--bg-alt)"}}>
-        <ArchitecturalBg variant="strata-left"/>
+        
         <div className="container" style={{position:"relative",zIndex:1,textAlign:"center"}}>
           <motion.div {...FI()}><span className="pill pill-w" style={{marginBottom:32}}>Founding Principle</span></motion.div>
           <motion.blockquote {...FU(.08)} style={{fontSize:"clamp(24px,3.5vw,52px)",fontWeight:800,color:"var(--text-1)",lineHeight:1.2,maxWidth:900,margin:"0 auto 32px",letterSpacing:"-0.035em"}}>
@@ -89,7 +90,7 @@ export default function About() {
 
       {/* ── Governance Principles ── */}
       <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <ArchitecturalBg variant="lattice"/>
+        
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"clamp(48px,6vw,96px)",alignItems:"start"}} className="grid-2">
             <div>
@@ -117,7 +118,7 @@ export default function About() {
 
       {/* ── Platform Architecture ── */}
       <section className="section" style={{background:"var(--bg-alt)",position:"relative",overflow:"hidden"}}>
-        <ArchitecturalBg variant="strata-right"/>
+        
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{textAlign:"center",marginBottom:"clamp(40px,5vw,64px)"}}>
             <SectionHeading eyebrow="Platform" title="Four layers. One unified system." center
@@ -134,47 +135,17 @@ export default function About() {
                         <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:10}}>
                           <span style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:11,color:layer.color,fontWeight:700}}>{layer.num}</span>
                           <h3 style={{fontSize:16,fontWeight:700,color:"var(--text-1)"}}>{layer.name}</h3>
-                          <div style={{width:12,height:3,borderRadius:1,background:layer.color,boxShadow:`0 0 8px ${layer.color}`,marginLeft:"auto"}}/>
+                          <div style={{width:6,height:6,borderRadius:"50%",background:layer.color,boxShadow:`0 0 10px ${layer.color}`,marginLeft:"auto"}}/>
                         </div>
                         <p className="t-sm" style={{color:"var(--text-3)",lineHeight:1.75}}>{layer.desc}</p>
                       </div>
                     </div>
                   </GlassCard>
-                  {/* Connector stratum bar */}
-                  <div style={{position:"absolute",left:-8,width:16,height:3,borderRadius:1,background:layer.color,boxShadow:`0 0 10px ${layer.color}`,top:"50%", transform:"translateY(-50%)"}}/>
+                  {/* Connector dot */}
+                  <div style={{position:"absolute",left:-5,top:"50%",transform:"translateY(-50%)",width:10,height:10,borderRadius:"50%",background:layer.color,boxShadow:`0 0 12px ${layer.color}`}}/>
                 </motion.div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Governance Standards ── */}
-      <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <ArchitecturalBg variant="pulse"/>
-        <div className="container" style={{position:"relative",zIndex:1}}>
-          <div style={{textAlign:"center",marginBottom:"clamp(40px,5vw,64px)"}}>
-            <SectionHeading eyebrow="Track Record" title="Seven years building the standard." center
-              subtitle="A governance platform built through practice — not theory."/>
-          </div>
-          <div className="grid-4">
-            {[
-              {label:"Property Stewardship",desc:"Every asset governed by policy framework",icon:"◈",color:"#00D4FF"},
-              {label:"Long-Term Preservation",desc:"Structures built for generational continuity",icon:"⬡",color:"#8A5CFF"},
-              {label:"Governed Growth",desc:"Capital deployed within structural guardrails",icon:"◉",color:"#4D8DFF"},
-              {label:"Generational Continuity",desc:"Succession frameworks active across mandates",icon:"⬟",color:"#A855F7"},
-            ].map((p,i)=>(
-              <motion.div key={p.label} {...FU(i*.09)}>
-                <GlassCard style={{padding:"clamp(24px,3vw,36px)",textAlign:"center"}}>
-                  <div style={{marginBottom:16,display:"flex",justifyContent:"center"}}>
-                    <StrataLines count={3} width={60} opacity={0.22} color={p.color}/>
-                  </div>
-                  <div style={{fontSize:22,marginBottom:10,color:p.color,filter:`drop-shadow(0 0 14px ${p.color}55)`}}>{p.icon}</div>
-                  <div style={{fontSize:14,fontWeight:700,color:"var(--text-1)",marginBottom:8}}>{p.label}</div>
-                  <div className="t-xs" style={{color:"var(--text-4)",textTransform:"none",letterSpacing:0,fontSize:12,fontFamily:"inherit"}}>{p.desc}</div>
-                </GlassCard>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
@@ -189,12 +160,12 @@ export default function About() {
             {TEAM.map((member,i)=>(
               <motion.div key={member.name} {...FU(i*.08)}>
                 <GlassCard style={{padding:"clamp(24px,3vw,36px)",textAlign:"center"}}>
-                  {/* Initials mark */}
-                  <div style={{width:72,height:72,borderRadius:14,margin:"0 auto 20px",
-                    background:"linear-gradient(135deg,rgba(0,212,255,.10),rgba(138,92,255,.10))",
-                    border:"1px solid rgba(255,255,255,.08)",display:"flex",alignItems:"center",justifyContent:"center",
-                    fontSize:22,fontWeight:700,color:"rgba(255,255,255,.35)",letterSpacing:"0.02em"}}>
-                    {member.name.split(" ").map((n: string)=>n[0]).join("")}
+                  {/* Avatar placeholder */}
+                  <div style={{width:72,height:72,borderRadius:"50%",margin:"0 auto 20px",
+                    background:"linear-gradient(135deg,rgba(0,212,255,.15),rgba(138,92,255,.15))",
+                    border:"1px solid rgba(255,255,255,.1)",display:"flex",alignItems:"center",justifyContent:"center",
+                    fontSize:26,color:"rgba(255,255,255,.4)"}}>
+                    {member.name.split(" ").map(n=>n[0]).join("")}
                   </div>
                   <div style={{fontSize:15,fontWeight:700,color:"var(--text-1)",marginBottom:4}}>{member.name}</div>
                   <div style={{fontSize:13,color:"var(--cyan)",marginBottom:8}}>{member.role}</div>
@@ -208,7 +179,7 @@ export default function About() {
 
       {/* ── CTA ── */}
       <section className="section-sm" style={{textAlign:"center",position:"relative",overflow:"hidden"}}>
-        <ArchitecturalBg variant="strata-right"/>
+        
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.h2 {...FU()} className="t-h2 gt-w" style={{marginBottom:16}}>Ready to begin a conversation?</motion.h2>
           <motion.p {...FU(.08)} className="t-lg" style={{color:"var(--text-3)",marginBottom:36}}>All introductions are private and confidential.</motion.p>

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { MagneticButton } from "@/components/Motion";
 import { StrataMark } from "./StrataMark";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { MenuIcon, CloseIcon } from "./icons/GlassIcons";
@@ -58,7 +59,7 @@ export function Navbar() {
 
           {/* ── Logo ── */}
           <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:11,flexShrink:0}}>
-            <StrataMark size={28} animate style={{color:"var(--text-1)"}}/>
+            <StrataMark size={26} animate style={{color:"rgba(255,255,255,0.85)"}}/>
             <div>
               <div style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:12,
                 letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
@@ -97,10 +98,12 @@ export function Navbar() {
               {isAr?"EN":"ع"}
             </Link>
 
-            <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary d-cta"
-              style={{padding:"8px 18px",fontSize:12,borderRadius:100}}>
-              {isAr?"تواصل":"Get in touch"}
-            </Link>
+            <MagneticButton strength={0.25}>
+              <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary d-cta"
+                style={{padding:"8px 18px",fontSize:12,borderRadius:100}}>
+                {isAr?"تواصل":"Get in touch"}
+              </Link>
+            </MagneticButton>
 
             {/* ── Mobile hamburger — glass icon ── */}
             <button onClick={()=>setOpen(o=>!o)} className="m-btn"

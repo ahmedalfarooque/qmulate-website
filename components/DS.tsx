@@ -1,11 +1,13 @@
 "use client";
 import { CapabilityIcon } from "@/components/icons/GlassIcons";
+import { CardTilt3D, HoverLift, SPRING, EASE, DUR } from "@/components/Motion";
+import { BRAND_BLUE } from "@/components/Strata";
 /**
  * QMULATE Design System — Shared Components
  * Full dual-theme (dark + light) support via CSS variables
  */
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import Link from "next/link";
 import { StrataMark } from "./StrataMark";
 
@@ -35,26 +37,6 @@ export const FL = (delay=0) => ({
   transition:{duration:.85,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
 });
 
-/* ─── Animated Counter ─── */
-export function Counter({to,prefix="",suffix="",decimals=0,duration=2.2,className=""}:{
-  to:number;prefix?:string;suffix?:string;decimals?:number;duration?:number;className?:string
-}) {
-  const [value,setValue]=useState(0);
-  const ref=useRef<HTMLSpanElement>(null);
-  const inView=useInView(ref,{once:true,margin:"-100px"});
-  useEffect(()=>{
-    if(!inView)return;
-    const steps=60*duration;const step=to/steps;let current=0;
-    const timer=setInterval(()=>{
-      current=Math.min(current+step,to);setValue(current);
-      if(current>=to)clearInterval(timer);
-    },1000/60);
-    return()=>clearInterval(timer);
-  },[inView,to,duration]);
-  const display=decimals>0?value.toFixed(decimals):Math.floor(value).toLocaleString();
-  return<span ref={ref} className={className}>{prefix}{display}{suffix}</span>;
-}
-
 /* ─── Section Heading ─── */
 export function SectionHeading({eyebrow,title,subtitle,center=false,className=""}:{
   eyebrow?:string;title:React.ReactNode;subtitle?:string;center?:boolean;className?:string
@@ -63,7 +45,7 @@ export function SectionHeading({eyebrow,title,subtitle,center=false,className=""
     <div className={className} style={{textAlign:center?"center":"left",maxWidth:center?680:720}}>
       {eyebrow&&(
         <motion.div {...FI(0)} style={{marginBottom:16}}>
-          <span className="pill pill-c"><span className="dot-live"/>{eyebrow}</span>
+          <span className="pill pill-c"><span style={{display:"inline-block",width:10,height:3,borderRadius:1,background:BRAND_BLUE,marginRight:8,verticalAlign:"middle"}}/>{eyebrow}</span>
         </motion.div>
       )}
       <motion.h2 {...FU(0.05)} className="t-h2 gt-w" style={{marginBottom:subtitle?16:0}}>
@@ -79,37 +61,20 @@ export function SectionHeading({eyebrow,title,subtitle,center=false,className=""
 }
 
 /* ─── Glass Card ─── */
-export function GlassCard({children,className="",style={},hover=true,onClick}:{
-  children:React.ReactNode;className?:string;style?:React.CSSProperties;hover?:boolean;onClick?:()=>void
+export function GlassCard({children,className="",style={},hover=true,onClick,tilt=true}:{
+  children:React.ReactNode;className?:string;style?:React.CSSProperties;
+  hover?:boolean;onClick?:()=>void;tilt?:boolean;
 }) {
-  return(
-    <motion.div
-      className={`gc noise ${className}`}
-      style={style}
-      whileHover={hover?{y:-6,scale:1.008}:undefined}
-      transition={{type:"spring",stiffness:300,damping:20}}
-      onClick={onClick}
-    >{children}</motion.div>
+  if (!hover) return <div className={`gc noise ${className}`} style={style} onClick={onClick}>{children}</div>;
+  if (tilt) return (
+    <CardTilt3D className={`gc noise ${className}`} style={style} maxTilt={5} scale={1.012}>
+      <div onClick={onClick}>{children}</div>
+    </CardTilt3D>
   );
-}
-
-/* ─── Metric Card ─── */
-export function MetricCard({value,label,sub,prefix="",suffix="",accent}:{
-  value:number;label:string;sub?:string;prefix?:string;suffix?:string;accent?:string
-}) {
-  const a=accent||"var(--cyan)";
-  return(
-    <GlassCard style={{padding:"clamp(24px,3vw,36px)",textAlign:"center"}}>
-      <div style={{
-        fontSize:"clamp(36px,4.5vw,64px)",fontWeight:900,letterSpacing:"-0.04em",
-        color:a,filter:`drop-shadow(0 0 24px ${a}55)`,
-        fontVariantNumeric:"tabular-nums",lineHeight:1,marginBottom:8,
-      }}>
-        <Counter to={value} prefix={prefix} suffix={suffix}/>
-      </div>
-      <div className="t-sm" style={{color:"var(--text-2)",fontWeight:500,marginBottom:sub?4:0}}>{label}</div>
-      {sub&&<div className="t-xs" style={{color:"var(--text-4)"}}>{sub}</div>}
-    </GlassCard>
+  return (
+    <HoverLift className={`gc noise ${className}`} style={style} lift={6}>
+      <div onClick={onClick}>{children}</div>
+    </HoverLift>
   );
 }
 
@@ -127,107 +92,6 @@ export function FeatureCard({icon,title,desc,accent,index=0}:{
         <p className="t-sm" style={{color:"var(--text-3)",lineHeight:1.72}}>{desc}</p>
       </GlassCard>
     </motion.div>
-  );
-}
-
-/* ─── Orb Background ─── */
-export function OrbBg({cyan=true,violet=true,blue=false,warm=false}:{
-  cyan?:boolean;violet?:boolean;blue?:boolean;warm?:boolean
-}) {
-  return(
-    <div className="bg-mesh" style={{position:"absolute",inset:0,zIndex:0,pointerEvents:"none"}}>
-      <div className="bg-aurora"/>
-      {cyan&&<div className="orb orb-c" style={{width:700,height:700,top:"-10%",left:"-5%",animation:"float-y 22s ease-in-out infinite"}}/>}
-      {violet&&<div className="orb orb-v" style={{width:600,height:600,bottom:"-15%",right:"-8%",animation:"float-y 28s ease-in-out 8s infinite"}}/>}
-      {blue&&<div className="orb orb-b" style={{width:500,height:500,top:"40%",left:"45%",animation:"float-y 18s ease-in-out 4s infinite"}}/>}
-      {warm&&<div className="orb orb-g" style={{width:400,height:400,top:"20%",right:"20%",animation:"float-y 24s ease-in-out 6s infinite"}}/>}
-    </div>
-  );
-}
-
-/* ─── Iridescent Blob ─── */
-export function IrisBlob({size=400,top,left,right,bottom,delay=0,morph="blob-morph",opacity=0.55}:{
-  size?:number;top?:string;left?:string;right?:string;bottom?:string;delay?:number;morph?:string;opacity?:number
-}) {
-  return(
-    <div style={{position:"absolute",width:size,height:size,borderRadius:"50%",
-      top:top||"auto",left:left||"auto",right:right||"auto",bottom:bottom||"auto",
-      pointerEvents:"none",zIndex:0}}>
-      <div className={`blob blob-iris ${morph}`} style={{
-        width:"100%",height:"100%",borderRadius:"50%",opacity,
-        filter:"blur(2px) saturate(180%)",animationDelay:`${delay}s`,
-      }}/>
-    </div>
-  );
-}
-
-/* ─── Gold Blob ─── */
-export function GoldBlobComp({size=300,top,left,right,bottom,delay=0}:{
-  size?:number;top?:string;left?:string;right?:string;bottom?:string;delay?:number
-}) {
-  return(
-    <div style={{position:"absolute",width:size,height:size,borderRadius:"50%",
-      top:top||"auto",left:left||"auto",right:right||"auto",bottom:bottom||"auto",
-      pointerEvents:"none",zIndex:0}}>
-      <div className="blob blob-gold blob-morph-b" style={{
-        width:"100%",height:"100%",borderRadius:"50%",opacity:0.5,
-        filter:"blur(60px) saturate(160%)",animationDelay:`${delay}s`,
-      }}/>
-    </div>
-  );
-}
-
-/* ─── Bubbles ─── */
-export function Bubbles() {
-  const sizes=[220,160,110,280,80,140,190];
-  const positions=[
-    {top:"8%",left:"5%"},{top:"70%",left:"2%"},{top:"18%",left:"85%"},
-    {top:"75%",left:"80%"},{top:"45%",left:"92%"},{top:"35%",left:"8%"},{top:"55%",left:"50%"},
-  ];
-  const classes=["bubble-a","bubble-b","bubble-c","bubble-d","bubble-a","bubble-b","bubble-c"];
-  return(
-    <div style={{position:"absolute",inset:0,overflow:"hidden",pointerEvents:"none",zIndex:0}}>
-      {sizes.map((s,i)=>(
-        <div key={i} className={`bubble ${classes[i]}`} style={{
-          width:s,height:s,...positions[i],opacity:.45+i*.04,
-        }}/>
-      ))}
-    </div>
-  );
-}
-
-/* ─── Ripple Sphere ─── */
-export function RippleSphere({size=160,style={}}:{size?:number;style?:React.CSSProperties}) {
-  return(
-    <div style={{position:"relative",width:size,height:size,...style}}>
-      {[1,2,3].map(i=>(
-        <div key={i} className="ripple-ring" style={{
-          width:size*(0.9+i*.5),height:size*(0.9+i*.5),
-          borderColor:`rgba(0,212,255,${.4-.12*i})`,
-          boxShadow:`0 0 ${8+i*6}px rgba(0,212,255,${.25-.07*i})`,
-        }}/>
-      ))}
-      <div className="sphere" style={{position:"absolute",inset:0,zIndex:2}}/>
-    </div>
-  );
-}
-
-/* ─── Mouse Glow ─── */
-export function MouseGlow() {
-  const [pos,setPos]=useState({x:-500,y:-500});
-  useEffect(()=>{
-    const fn=(e:MouseEvent)=>setPos({x:e.clientX,y:e.clientY});
-    window.addEventListener("mousemove",fn,{passive:true});
-    return()=>window.removeEventListener("mousemove",fn);
-  },[]);
-  return(
-    <div style={{
-      position:"fixed",top:0,left:0,pointerEvents:"none",zIndex:9990,
-      width:400,height:400,borderRadius:"50%",
-      background:"radial-gradient(circle,rgba(0,212,255,.05) 0%,transparent 70%)",
-      transform:`translate(${pos.x-200}px,${pos.y-200}px)`,
-      transition:"transform .12s ease-out",filter:"blur(20px)",
-    }}/>
   );
 }
 

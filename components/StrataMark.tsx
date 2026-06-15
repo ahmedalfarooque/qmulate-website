@@ -1,49 +1,77 @@
 "use client";
-interface Props { size?: number; animate?: boolean; className?: string; style?: React.CSSProperties; }
+/**
+ * QMULATE Brand Mark — "Accumulating Strata"
+ * From Logo Guideline: strata stack upward in sequence.
+ * Blue top stratum = newest layer, still compounding.
+ * Animation plays ONCE on entry, then rests. No loop.
+ * Easing: cubic-bezier(.2,.8,.2,1) — decelerate only.
+ */
 
-export function StrataMark({ size = 32, animate = false, className = "", style = {} }: Props) {
-  const u = size / 8;       // bar height = 1 unit
-  const gap = u * 0.55;     // gap between bars = 0.55 units (from 8-unit grid)
+import { motion, useReducedMotion } from "framer-motion";
 
-  // PDF spec: 4 strata bars
-  // Top stratum = shortest = BLUE (#5B7CFA)
-  // Bars increase in width going downward
-  // Column direction: first child = top
-  const bars = [
-    { w: "58%",  blue: true,  cls: "s1" }, // top — shortest — BLUE — animates first
-    { w: "74%",  blue: false, cls: "s2" },
-    { w: "88%",  blue: false, cls: "s3" },
-    { w: "100%", blue: false, cls: "s4" }, // bottom — widest — white
-  ];
+const EASE: [number,number,number,number] = [0.2,0.8,0.2,1];
+
+// Strata: top → bottom order (rendered bottom→top so base enters first)
+const STRATA = [
+  { id:"s1", w:"100%", fill:"rgba(255,255,255,0.16)", delay:0.00 }, // base (bottom, longest)
+  { id:"s2", w:"80%",  fill:"rgba(255,255,255,0.24)", delay:0.14 },
+  { id:"s3", w:"63%",  fill:"rgba(255,255,255,0.34)", delay:0.28 },
+  { id:"s4", w:"46%",  fill:"#5B7CFA",               delay:0.42 }, // top, blue, latest
+];
+
+interface StrataMarkProps {
+  size?: number;
+  animate?: boolean;
+  style?: React.CSSProperties;
+  className?: string;
+}
+
+export function StrataMark({ size=32, animate=true, style={}, className="" }: StrataMarkProps) {
+  const pref = useReducedMotion();
+  const u = Math.max(3, size * 0.18);     // bar height
+  const gap = Math.max(2, size * 0.095);  // gap between bars
+  const totalH = 4*u + 3*gap;
+  const totalW = size;
 
   return (
     <div
       className={className}
-      aria-label="QMULATE"
+      role="img"
+      aria-label="QMULATE mark"
       style={{
-        width: size,
-        // Total height: 4 bars + 3 gaps
-        height: u * 4 + gap * 3,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
+        width: totalW,
+        height: totalH,
+        display:"flex",
+        flexDirection:"column",
         gap,
         ...style,
       }}
     >
-      {bars.map((bar, i) => (
-        <div
-          key={i}
-          className={animate ? bar.cls : ""}
-          style={{
-            width: bar.w,
-            height: u,
-            background: bar.blue ? "#5B7CFA" : "currentColor",
-            borderRadius: 0,
-            flexShrink: 0,
-          }}
-        />
-      ))}
+      {/* Render bottom→top so base (s1) enters first in DOM */}
+      {[...STRATA].reverse().map((s) => {
+        const barW = parseFloat(s.w) / 100 * totalW;
+        if (!animate || pref) {
+          return (
+            <div key={s.id} style={{
+              width: barW, height: u, borderRadius: u * 0.12,
+              background: s.fill, flexShrink:0,
+            }}/>
+          );
+        }
+        return (
+          <motion.div
+            key={s.id}
+            style={{
+              width: barW, height: u, borderRadius: u * 0.12,
+              background: s.fill, flexShrink:0,
+              originX: 0,
+            }}
+            initial={{ scaleX:0, opacity:0, y:8 }}
+            animate={{ scaleX:1, opacity:1, y:0 }}
+            transition={{ duration:0.26, delay:s.delay, ease:EASE }}
+          />
+        );
+      })}
     </div>
   );
 }

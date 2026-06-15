@@ -1,162 +1,368 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { PortfolioIcon, GovernanceIcon, CrossBorderIcon } from "@/components/icons/GlassIcons";
-import { FU, FI, FS, SectionHeading, GlassCard, MetricCard, OrbBg, IrisBlob, GoldBlobComp, MouseGlow, Counter } from "@/components/DS";
+import { ChallengeIcon, SolutionCheckIcon } from "@/components/icons";
+import {
+  FU, FI, FS, FL,
+  SectionHeading, GlassCard,
+} from "@/components/DS";
+import {
+  ArchitecturalBg, StrataLines, GovernancePulse,
+  StrataSculpture, GlassFacade, VerticalFins,
+  StructuralLattice, BRAND_BLUE,
+} from "@/components/Strata";
 
 const PROJECTS = [
-  { id:"001", title:"Multi-Generational Succession Framework", type:"Succession Engineering", status:"Active",
-    year:"2024", duration:"18 months", accentColor:"#00D4FF",
-    brief:"A third-generation family required a complete succession framework covering SAR 1.8B in real estate assets across 4 jurisdictions. The mandate included constitutional document drafting, entity restructuring, and a 25-year succession roadmap.",
-    challenge:"The family had accumulated assets across KSA, UAE, London, and Jersey over 40 years — with no unified governance structure, contradictory ownership documentation, and no succession plan.",
-    solution:"We designed a four-layer governance architecture with a Cayman holding structure, KSA operating entities, and a UAE Advisory Council. Constitutional documents were drafted for all primary entities. A 25-year succession roadmap with clear governance checkpoints was delivered.",
-    metrics:[{v:1.8,suf:"B+",l:"Assets Restructured (SAR)"},{v:4,suf:" juris.",l:"Jurisdictions Governed"},{v:3,suf:"rd gen",l:"Succession Horizon"},{v:100,suf:"%",l:"Governance Coverage"}] },
-  { id:"002", title:"AI-Powered Portfolio Analytics Deployment", type:"Digital Transformation", status:"Active",
-    year:"2023", duration:"12 months", accentColor:"#8A5CFF",
-    brief:"A GCC family office with SAR 650M in real estate across commercial, residential, and hospitality assets required a unified analytics platform to replace 7 disconnected reporting systems.",
-    challenge:"Performance data was scattered across 7 systems, 3 custodians, and 2 accounting firms. Quarterly reporting took 6 weeks and was historically inaccurate. No real-time visibility existed.",
-    solution:"We deployed our unified intelligence platform, integrating all 7 data sources into a single reporting spine. AI anomaly detection was activated across all holdings. Reporting cycle reduced from 6 weeks to 48 hours. Principal dashboard went live in month 4.",
-    metrics:[{v:650,suf:"M+",l:"Assets Unified (SAR)"},{v:7,suf:" systems",l:"Data Sources Integrated"},{v:94,suf:"%",l:"Reporting Time Reduction"},{v:100,suf:"%",l:"Real-Time Coverage"}] },
-  { id:"003", title:"Cross-Border Governance Architecture", type:"Governance Platform", status:"Completed",
-    year:"2022", duration:"24 months", accentColor:"#4D8DFF",
-    brief:"A founding-generation Saudi principal required a cross-border governance structure to consolidate assets across KSA, UK, and Jersey — designed to be succession-ready and tax-efficient at every layer.",
-    challenge:"Assets were held directly in the principal's name across three jurisdictions with no holding structure, inadequate documentation, and significant succession risk. Total exposure exceeded SAR 2.1B.",
-    solution:"A three-tier holding structure was designed: Jersey Foundation at apex, Cayman SPV layer, and KSA/UK operating companies. All assets were transferred within 18 months. Constitutional documents, mandates, and succession protocols were fully drafted and executed.",
-    metrics:[{v:2.1,suf:"B",l:"Assets Structured (SAR)"},{v:3,suf:" layers",l:"Governance Architecture"},{v:100,suf:"%",l:"Documentation Complete"},{v:18,suf:" mo",l:"Implementation Timeline"}] },
+  {
+    id: "001",
+    title: "Multi-Generational Succession Framework",
+    type: "Succession Engineering",
+    status: "Active",
+    year: "2024",
+    duration: "18 months",
+    accentColor: "#00D4FF",
+    brief:
+      "A third-generation family required a complete succession framework covering real estate assets across multiple jurisdictions — built for permanence, not just compliance.",
+    challenge:
+      "The family had accumulated assets across KSA, UAE, London, and Jersey over four decades with no unified governance structure, creating succession ambiguity and operational fragmentation.",
+    solution:
+      "We designed a four-layer governance architecture with structured entities, constitutional family documents, and a long-term succession roadmap engineered to outlast its principals.",
+    pillars: [
+      {
+        label: "Governance Architecture",
+        desc: "Constitutional documents, entity structuring, and voting rights frameworks designed for multi-generational clarity.",
+      },
+      {
+        label: "Jurisdiction Alignment",
+        desc: "Unified governance visibility across KSA, UAE, London, and Jersey with consolidated reporting.",
+      },
+      {
+        label: "Succession Protocol",
+        desc: "Third-generation succession framework with documented transfer mechanisms and family governance councils.",
+      },
+      {
+        label: "Long-Term Stewardship",
+        desc: "Perpetual mandate design with succession-proof structures built to outlast its principals.",
+      },
+    ],
+  },
 ];
 
 export default function Projects() {
   const [active, setActive] = useState(0);
+  const project = PROJECTS[active];
 
   return (
-    <main>
-      <MouseGlow/>
+    <main className="hero-page">
 
-      {/* Hero */}
-      <section style={{minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
-        <OrbBg cyan violet blue/>
-        <IrisBlob size={480} top="-10%" right="-8%" opacity={0.25}/>
-        <div className="bg-grid" style={{opacity:.6}}/>
-        <div className="container" style={{position:"relative",zIndex:1}}>
-          <motion.div {...FI()} style={{marginBottom:24}}>
-            <span className="pill pill-c"><span className="dot-live"/>Selected Projects</span>
+      {/* ══════════════════════════════════════════════════
+          HERO
+          ══════════════════════════════════════════════════ */}
+      <section style={{
+        minHeight: "60vh", position: "relative",
+        display: "flex", alignItems: "center", overflow: "hidden",
+        background: "linear-gradient(160deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%)",
+      }}>
+        <ArchitecturalBg variant="mixed" />
+        <div className="bg-grid" style={{ opacity: 0.5 }} />
+        <div className="bg-aurora" />
+
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <motion.div {...FI(0.05)} style={{ marginBottom: 20 }}>
+            <span className="pill pill-c">
+              <span style={{ display: "inline-block", width: 10, height: 3, borderRadius: 1, background: BRAND_BLUE, marginRight: 8, verticalAlign: "middle" }} />
+              Case Studies · Institutional Mandates
+            </span>
           </motion.div>
-          <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{maxWidth:720,marginBottom:24}}>
-            Mandates that redefined what governance looks like.
+
+          <motion.h1
+            {...FU(0.1)} className="t-d gt-w"
+            style={{ marginBottom: 20, maxWidth: 860, fontSize: "clamp(44px,6vw,88px)" }}
+          >
+            Mandates that<br /><span className="gt-c">redefined governance.</span>
           </motion.h1>
-          <motion.p {...FU(.16)} className="t-xl" style={{color:"var(--text-3)",maxWidth:560,lineHeight:1.8}}>
-            Three case studies from our portfolio — anonymised, with client permission, to illustrate what institutional-grade real estate governance achieves in practice.
+
+          <motion.p
+            {...FU(0.18)} className="t-xl"
+            style={{ color: "var(--text-3)", maxWidth: 560, lineHeight: 1.75, marginBottom: 40 }}
+          >
+            Each engagement is a structured governance system — designed for permanence, not just performance.
           </motion.p>
+
+          {/* Architectural visualization in hero */}
+          <motion.div
+            {...FS(0.22)}
+            style={{
+              display: "flex", gap: 32, alignItems: "flex-end",
+              padding: "28px 32px",
+              background: "var(--g1)", border: "1px solid var(--glass-border)",
+              borderRadius: 20, backdropFilter: "blur(20px)",
+              maxWidth: 680, overflow: "hidden", position: "relative",
+            }}
+          >
+            <StrataLines count={6} width={120} opacity={0.18} color={BRAND_BLUE} />
+            <div style={{ flex: 1 }}>
+              <GovernancePulse width={320} height={48} opacity={0.22} color={BRAND_BLUE} />
+            </div>
+            <VerticalFins count={8} height={60} opacity={0.12} style={{ flexShrink: 0 }} />
+          </motion.div>
         </div>
       </section>
 
-      {/* Project navigation */}
-      <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <OrbBg cyan={false} violet/>
-        <GoldBlobComp size={350} bottom="-10%" left="-5%" delay={3}/>
-        <div className="container" style={{position:"relative",zIndex:1}}>
-          {/* Tab selector */}
-          <div style={{display:"flex",gap:8,marginBottom:48,flexWrap:"wrap"}}>
-            {PROJECTS.map((p,i)=>(
-              <motion.button key={p.id} onClick={()=>setActive(i)}
-                whileHover={{scale:1.03}} whileTap={{scale:.97}}
+      {/* ══════════════════════════════════════════════════
+          PROJECT SELECTOR + CONTENT
+          ══════════════════════════════════════════════════ */}
+      <section className="section" style={{ position: "relative", overflow: "hidden" }}>
+        <ArchitecturalBg variant="lattice" />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+
+          {/* Tab selectors */}
+          <motion.div {...FU(0)} style={{ display: "flex", gap: 12, marginBottom: 56, flexWrap: "wrap" }}>
+            {PROJECTS.map((p, i) => (
+              <motion.button
+                key={p.id}
+                onClick={() => setActive(i)}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
                 style={{
-                  padding:"10px 20px",borderRadius:100,fontSize:13,fontWeight:500,cursor:"pointer",
-                  background:active===i?p.accentColor:"rgba(255,255,255,.04)",
-                  color:active===i?"#020408":"var(--text-3)",
-                  border:`1px solid ${active===i?p.accentColor:"rgba(255,255,255,.08)"}`,transition:"all .25s",
-                }}>
-                {p.id} — {p.type}
+                  padding: "12px 28px", borderRadius: 100, fontSize: 13,
+                  fontWeight: 600, cursor: "pointer",
+                  background: active === i ? p.accentColor : "rgba(255,255,255,.04)",
+                  color: active === i ? "#020408" : "var(--text-3)",
+                  border: `1px solid ${active === i ? p.accentColor : "rgba(255,255,255,.08)"}`,
+                  transition: "all .25s",
+                }}
+              >
+                <span style={{
+                  fontFamily: "var(--font-geist-mono,'Courier New'),monospace",
+                  fontSize: 10, opacity: 0.7, marginRight: 10,
+                }}>{p.id}</span>
+                {p.type}
               </motion.button>
             ))}
-          </div>
+          </motion.div>
 
           <AnimatePresence mode="wait">
-            <motion.div key={active} initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-16}} transition={{duration:.4}}>
-              {/* KPI row */}
-              <div className="grid-4" style={{marginBottom:40}}>
-                {PROJECTS[active].metrics.map((m,i)=>(
-                  <motion.div key={m.l} {...FU(i*.07)}>
-                    <GlassCard style={{padding:"clamp(20px,2.5vw,32px)",textAlign:"center",borderTop:`2px solid ${PROJECTS[active].accentColor}44`}}>
-                      <div style={{fontSize:"clamp(28px,3.5vw,48px)",fontWeight:900,letterSpacing:"-0.04em",color:PROJECTS[active].accentColor,filter:`drop-shadow(0 0 20px ${PROJECTS[active].accentColor}66)`,fontVariantNumeric:"tabular-nums",lineHeight:1,marginBottom:8}}>
-                        <Counter to={m.v} suffix={m.suf} decimals={m.v<10?1:0}/>
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -24 }}
+              transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              {/* ── Project header ── */}
+              <div
+                style={{
+                  display: "grid", gridTemplateColumns: "1.2fr 1fr",
+                  gap: "clamp(32px,4vw,64px)", marginBottom: 40,
+                }}
+                className="grid-2"
+              >
+                <div>
+                  <div style={{ display: "flex", gap: 10, marginBottom: 24, flexWrap: "wrap" }}>
+                    <span className="pill pill-c">{project.type}</span>
+                    <span style={{
+                      padding: "4px 14px", borderRadius: 100, fontSize: 11, fontWeight: 600,
+                      background: `${project.accentColor}18`, color: project.accentColor,
+                      border: `1px solid ${project.accentColor}33`,
+                    }}>{project.status}</span>
+                    <span style={{
+                      padding: "4px 14px", borderRadius: 100, fontSize: 11,
+                      color: "var(--text-4)", background: "var(--g1)",
+                      border: "1px solid var(--glass-border)",
+                    }}>{project.year} · {project.duration}</span>
+                  </div>
+
+                  <motion.h2
+                    {...FU(0.05)} className="t-h1 gt-w"
+                    style={{ marginBottom: 24, lineHeight: 1.15 }}
+                  >
+                    {project.title}
+                  </motion.h2>
+
+                  <motion.p
+                    {...FU(0.12)} className="t-lg"
+                    style={{ color: "var(--text-3)", lineHeight: 1.8 }}
+                  >
+                    {project.brief}
+                  </motion.p>
+                </div>
+
+                {/* Visual governance panel */}
+                <motion.div {...FS(0.15)} style={{ position: "relative" }}>
+                  <GlassCard style={{
+                    padding: "clamp(28px,3vw,44px)", height: "100%",
+                    display: "flex", flexDirection: "column", justifyContent: "space-between",
+                    borderLeft: `2px solid ${project.accentColor}33`,
+                    overflow: "hidden",
+                  }}>
+                    <StrataLines count={7} width={280} opacity={0.18} color={project.accentColor} />
+                    <div style={{ marginTop: 20 }}>
+                      <GovernancePulse width={280} height={56} opacity={0.28} color={project.accentColor} />
+                    </div>
+                    <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid var(--glass-border)" }}>
+                      <div className="t-xs" style={{ color: "var(--text-4)", marginBottom: 6 }}>GOVERNANCE SYSTEM</div>
+                      <div style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 600 }}>Structural perpetuity · Multi-generational</div>
+                    </div>
+                  </GlassCard>
+                </motion.div>
+              </div>
+
+              {/* ── Challenge + Solution ── */}
+              <div
+                style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 48 }}
+                className="grid-2"
+              >
+                {[
+                  { label: "The Challenge", body: project.challenge, icon: "challenge", accent: "rgba(255,107,107,0.6)" },
+                  { label: "Our Solution", body: project.solution, icon: "solution", accent: project.accentColor },
+                ].map((block, i) => (
+                  <motion.div key={block.label} {...FU(0.08 + i * 0.08)}>
+                    <GlassCard style={{
+                      padding: "clamp(24px,3vw,40px)", height: "100%",
+                      borderLeft: `2px solid ${block.accent}55`,
+                    }}>
+                      <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 18 }}>
+                        {block.icon === "challenge" && <ChallengeIcon size="sm" />}
+                        {block.icon === "solution" && <SolutionCheckIcon size="sm" />}
+                        <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text-1)", letterSpacing: "0.04em" }}>
+                          {block.label}
+                        </div>
                       </div>
-                      <div style={{fontSize:12,color:"var(--text-3)",fontWeight:500}}>{m.l}</div>
+                      <p className="t-sm" style={{ color: "var(--text-3)", lineHeight: 1.85 }}>{block.body}</p>
                     </GlassCard>
                   </motion.div>
                 ))}
               </div>
 
-              {/* Project detail */}
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"clamp(24px,3vw,48px)",alignItems:"start"}} className="grid-2">
-                <div>
-                  <div style={{display:"flex",gap:12,marginBottom:16,flexWrap:"wrap"}}>
-                    <span className="pill pill-w">{PROJECTS[active].type}</span>
-                    <span className="pill" style={{background:`${PROJECTS[active].accentColor}14`,border:`1px solid ${PROJECTS[active].accentColor}40`,color:PROJECTS[active].accentColor}}>{PROJECTS[active].status}</span>
-                    <span className="pill pill-w">{PROJECTS[active].year}</span>
-                  </div>
-                  <h2 className="t-h3" style={{color:"var(--text-1)",marginBottom:20,lineHeight:1.25}}>{PROJECTS[active].title}</h2>
-                  <p className="t-md" style={{color:"var(--text-3)",lineHeight:1.85,marginBottom:24}}>{PROJECTS[active].brief}</p>
+              {/* ── Governance Architecture Pillars ── */}
+              <motion.div {...FU(0.18)}>
+                <div className="t-xs" style={{ color: "var(--text-4)", marginBottom: 24 }}>
+                  GOVERNANCE ARCHITECTURE
                 </div>
-                <div style={{display:"flex",flexDirection:"column",gap:16}}>
-                  {[
-  {label:"The Challenge", body:PROJECTS[active].challenge, icon:"challenge"},
-  {label:"Our Solution", body:PROJECTS[active].solution, icon:"solution"},
-].map(block=>(
-                    <GlassCard key={block.label} style={{padding:"24px 28px"}}>
-                      <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:12}}>
-                        <span style={{fontSize:18}}>{block.icon}</span>
-                        <div className="t-xs" style={{color:"var(--text-3)"}}>{block.label}</div>
-                      </div>
-                      <p className="t-sm" style={{color:"var(--text-2)",lineHeight:1.8}}>{block.body}</p>
-                    </GlassCard>
+                <div className="grid-4" style={{ gap: "clamp(12px,2vw,20px)" }}>
+                  {project.pillars.map((pillar, i) => (
+                    <motion.div key={pillar.label} {...FU(0.04 + i * 0.07)}>
+                      <GlassCard style={{ padding: "clamp(20px,2.5vw,32px)", height: "100%" }}>
+                        <div style={{ marginBottom: 14 }}>
+                          <StrataLines
+                            count={3} width={64} opacity={0.25}
+                            color={project.accentColor}
+                          />
+                        </div>
+                        <div style={{
+                          fontSize: 13, fontWeight: 700,
+                          color: "var(--text-1)", marginBottom: 10, lineHeight: 1.3,
+                        }}>
+                          {pillar.label}
+                        </div>
+                        <p className="t-xs" style={{
+                          color: "var(--text-3)", lineHeight: 1.75,
+                          textTransform: "none", letterSpacing: 0, fontSize: 12, fontFamily: "inherit",
+                        }}>
+                          {pillar.desc}
+                        </p>
+                      </GlassCard>
+                    </motion.div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
+
             </motion.div>
           </AnimatePresence>
         </div>
       </section>
 
-      {/* Aggregate metrics */}
-      <section className="section" style={{background:"var(--bg-alt)",position:"relative",overflow:"hidden"}}>
-        <IrisBlob size={500} top="-15%" right="-8%" opacity={0.12}/>
-        <div className="container" style={{position:"relative",zIndex:1}}>
-          <div style={{textAlign:"center",marginBottom:"clamp(40px,5vw,64px)"}}>
-            <SectionHeading eyebrow="Across All Mandates" title="The numbers behind the governance." center/>
-          </div>
-          <div className="grid-4">
-            {[
-              {to:4.6,pre:"SAR ",suf:"B+",l:"Total Assets Governed",accent:"#00D4FF"},
-              {to:7,suf:"+ yrs",l:"Average Mandate Duration",accent:"#8A5CFF"},
-              {to:100,suf:"%",l:"Client Retention Rate",accent:"#4D8DFF"},
-              {to:3,suf:"rd gen",l:"Maximum Succession Depth",accent:"#A855F7"},
-            ].map((m,i)=>(
-              <motion.div key={m.l} {...FU(i*.09)}>
-                <GlassCard style={{padding:"clamp(24px,3vw,36px)",textAlign:"center"}}>
-                  <div style={{fontSize:"clamp(32px,4vw,52px)",fontWeight:900,letterSpacing:"-0.04em",color:m.accent,filter:`drop-shadow(0 0 20px ${m.accent}66)`,fontVariantNumeric:"tabular-nums",lineHeight:1,marginBottom:8}}>
-                    <Counter to={m.to} prefix={m.pre||""} suffix={m.suf} decimals={m.to<10?1:0}/>
-                  </div>
-                  <div style={{fontSize:13,color:"var(--text-2)",fontWeight:500}}>{m.l}</div>
-                </GlassCard>
+      {/* ══════════════════════════════════════════════════
+          GLASS FACADE VISUAL BREAK
+          ══════════════════════════════════════════════════ */}
+      <section style={{
+        position: "relative", overflow: "hidden",
+        background: "var(--bg-alt)",
+        borderTop: "1px solid var(--glass-border)",
+        borderBottom: "1px solid var(--glass-border)",
+        padding: "clamp(48px,6vw,80px) 0",
+      }}>
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div style={{
+            display: "flex", gap: "clamp(24px,4vw,56px)",
+            alignItems: "center", justifyContent: "center", flexWrap: "wrap",
+          }}>
+            <motion.div {...FS(0)}>
+              <GlassFacade cols={9} rows={6} cellW={32} cellH={24} gap={3} opacity={0.12} accent={BRAND_BLUE} />
+            </motion.div>
+            <div style={{ maxWidth: 380 }}>
+              <motion.div {...FL(0.1)}>
+                <div className="t-xs" style={{ color: "var(--text-4)", marginBottom: 16 }}>
+                  STEWARDSHIP STANDARD
+                </div>
+                <p className="t-lg" style={{ color: "var(--text-2)", lineHeight: 1.75 }}>
+                  Every mandate is built on the same principle: governance that outlasts its principals — across assets, jurisdictions, and generations.
+                </p>
               </motion.div>
-            ))}
+            </div>
+            <motion.div {...FS(0.05)}>
+              <StructuralLattice width={200} height={160} opacity={0.08} />
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="section-sm" style={{textAlign:"center",position:"relative",overflow:"hidden"}}>
-        <IrisBlob size={400} top="-10%" left="30%" opacity={0.1}/>
-        <div className="container" style={{position:"relative",zIndex:1}}>
-          <motion.h2 {...FU()} className="t-h2 gt-w" style={{marginBottom:16}}>Ready to become a case study?</motion.h2>
-          <motion.p {...FU(.08)} className="t-lg" style={{color:"var(--text-3)",marginBottom:36}}>We'd be glad to speak with you about your mandate.</motion.p>
-          <motion.div {...FU(.14)} style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
-            <Link href="/contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>Request an introduction →</Link>
+      {/* ══════════════════════════════════════════════════
+          CTA
+          ══════════════════════════════════════════════════ */}
+      <section className="section" style={{
+        position: "relative", overflow: "hidden",
+        background: "linear-gradient(160deg,var(--bg-1),var(--bg-0))",
+      }}>
+        <ArchitecturalBg variant="mixed" />
+        <div className="bg-grid" style={{ opacity: 0.4 }} />
+        <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+          <motion.div {...FI(0)} style={{ marginBottom: 24 }}>
+            <span className="pill pill-v">
+              <span className="dot-live" style={{ background: "#8A5CFF", boxShadow: "0 0 8px #8A5CFF" }} />
+              PRIVATE FAMILY OFFICE · RIYADH
+            </span>
+          </motion.div>
+
+          {/* Strata sculpture centrepiece */}
+          <motion.div {...FS(0.06)} style={{ display: "flex", justifyContent: "center", marginBottom: 36 }}>
+            <StrataSculpture size={320} opacity={0.22} style={{ position: "relative" }} />
+          </motion.div>
+
+          <motion.h2
+            {...FU(0.1)} className="t-d gt-a"
+            style={{ marginBottom: 20, fontSize: "clamp(36px,5.5vw,72px)" }}
+          >
+            Ready to become<br />a case study?
+          </motion.h2>
+          <motion.p
+            {...FU(0.16)} className="t-xl"
+            style={{ color: "var(--text-3)", maxWidth: 500, margin: "0 auto 44px", lineHeight: 1.75 }}
+          >
+            If your wealth requires governance — not just management — we would be glad to speak with you in confidence.
+          </motion.p>
+          <motion.div
+            {...FU(0.22)}
+            style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}
+          >
+            <Link href="/contact" className="btn btn-primary glow-border" style={{ fontSize: 16, padding: "16px 40px" }}>
+              Request an introduction →
+            </Link>
+            <Link href="/services" className="btn btn-ghost" style={{ fontSize: 16, padding: "16px 36px" }}>
+              Explore our services
+            </Link>
           </motion.div>
         </div>
       </section>
+
+      <style>{`
+        @media(max-width:900px){.grid-2{grid-template-columns:1fr!important}}
+        @media(max-width:640px){.grid-4{grid-template-columns:1fr 1fr!important}}
+        @media(max-width:480px){.grid-4{grid-template-columns:1fr!important}}
+      `}</style>
     </main>
   );
 }

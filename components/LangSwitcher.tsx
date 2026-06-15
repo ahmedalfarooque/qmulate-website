@@ -25,9 +25,9 @@ export function LangSwitcher() {
       }}
     >
       {isAr ? (
-        <><span>EN</span><span style={{ color: "var(--accent)" }}>🌐</span></>
+        <><span>EN</span><span style={{ color: "var(--accent)" }}></span></>
       ) : (
-        <><span style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}>ع</span><span style={{ color: "var(--accent)" }}>🌐</span></>
+        <><span style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}>ع</span><span style={{ color: "var(--accent)" }}></span></>
       )}
     </Link>
   );

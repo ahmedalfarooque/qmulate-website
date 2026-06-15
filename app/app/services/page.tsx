@@ -1,13 +1,14 @@
 "use client";
 import Link from "next/link";
+import { ArchitecturalBg, StrataLines, GovernancePulse, BRAND_BLUE } from "@/components/Strata";
+import { preset, StaggerReveal, HoverLift, DrawLine, MagneticButton } from "@/components/Motion";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ServiceIcon, ProcessIcon } from "@/components/icons/GlassIcons";
-import { FU, FI, FS, SectionHeading, GlassCard, FeatureCard } from "@/components/DS";
-import { ArchitecturalBg, BRAND_BLUE } from "@/components/Strata";
+import { FU, FI, FS, SectionHeading, GlassCard,  FeatureCard } from "@/components/DS";
 
 const SERVICES = [
-  { id:"stewardship", icon:"◈", label:"Property Stewardship", color:"var(--cyan)",
+  { id:"stewardship", icon:"s", label:"Property Stewardship", color:"var(--cyan)",
     headline:"Professional oversight that preserves and compounds value.",
     body:"We manage your real estate portfolio as a unified, governed system — not a collection of fragmented assets. From daily operations to strategic positioning, every decision is made within a documented governance framework that ensures consistency, accountability, and long-term value preservation.",
     deliverables:[
@@ -20,7 +21,7 @@ const SERVICES = [
       "Vendor governance and oversight",
       "Capital maintenance planning",
     ] },
-  { id:"growth", icon:"⬡", label:"Governed Growth", color:"#8A5CFF",
+  { id:"growth", icon:"g", label:"Governed Growth", color:"#8A5CFF",
     headline:"Capital deployment within structural guardrails.",
     body:"Growth without governance is speculation. We design investment mandates, acquisition criteria, and capital deployment frameworks that enable ambitious expansion while maintaining structural integrity. Every investment decision is documented, rationale-driven, and made within pre-approved parameters.",
     deliverables:[
@@ -33,7 +34,7 @@ const SERVICES = [
       "Board and governance committee design",
       "Annual mandate review process",
     ] },
-  { id:"advisory", icon:"◉", label:"Property Advisory", color:"#4D8DFF",
+  { id:"advisory", icon:"a", label:"Property Advisory", color:"#4D8DFF",
     headline:"Market intelligence converted into decisive action.",
     body:"Our advisory practice converts raw market data into structured investment decisions. We cover deal origination, independent valuation, due diligence management, and transaction governance — always operating within the family's documented mandate framework.",
     deliverables:[
@@ -46,7 +47,7 @@ const SERVICES = [
       "Exit strategy analysis",
       "Portfolio rebalancing recommendations",
     ] },
-  { id:"reporting", icon:"⬟", label:"Wealth Reporting", color:"#A855F7",
+  { id:"reporting", icon:"r", label:"Wealth Reporting", color:"#A855F7",
     headline:"Complete visibility across every holding, every quarter.",
     body:"Principals deserve a clear, accurate picture of their wealth. We produce consolidated reporting that covers performance, attribution, risk exposure, and governance compliance — structured for principals, trustees, advisors, and regulatory requirements.",
     deliverables:[
@@ -59,7 +60,7 @@ const SERVICES = [
       "Benchmark performance comparison",
       "Annual wealth governance report",
     ] },
-  { id:"risk", icon:"🛡️", label:"Risk Management", color:"#FF6EC7",
+  { id:"risk", icon:"risk", label:"Risk Management", color:"#FF6EC7",
     headline:"Systematic protection against structural and market risk.",
     body:"Risk in real estate wealth is multidimensional — concentration risk, liquidity risk, succession risk, and market risk all compound in complex ways. We design systematic frameworks that identify, measure, and mitigate risk before it becomes an event.",
     deliverables:[
@@ -72,7 +73,7 @@ const SERVICES = [
       "Scenario planning and modelling",
       "Risk governance committee facilitation",
     ] },
-  { id:"digital", icon:"⚡", label:"Digital Transformation", color:"#FFB56B",
+  { id:"digital", icon:"dig", label:"Digital Transformation", color:"#FFB56B",
     headline:"Technology that makes governance effortless.",
     body:"We deploy the intelligence infrastructure to make governance automatic, not manual. From real-time analytics to AI-powered risk detection, our technology layer converts data from all sources into actionable, governed insights — available anywhere, any time.",
     deliverables:[
@@ -92,9 +93,12 @@ export default function Services() {
 
   return (
     <main>
+      
+
       {/* Hero */}
       <section style={{minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
-        <ArchitecturalBg variant="mixed"/>
+        
+        
         <div className="bg-grid" style={{opacity:.6}}/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.div {...FI()} style={{marginBottom:24}}>
@@ -111,7 +115,8 @@ export default function Services() {
 
       {/* Service tabs */}
       <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <ArchitecturalBg variant="lattice"/>
+        
+        
         <div className="container" style={{position:"relative",zIndex:1}}>
           {/* Tab nav */}
           <div style={{display:"flex",gap:8,marginBottom:48,flexWrap:"wrap"}}>
@@ -123,8 +128,7 @@ export default function Services() {
                   background:active===i?s.color:"rgba(255,255,255,.04)",
                   color:active===i?"#020408":"var(--text-3)",
                   border:`1px solid ${active===i?s.color:"rgba(255,255,255,.08)"}`,
-                  transition:"all .25s",display:"flex",alignItems:"center",gap:6,
-                }}>
+                  transition:"all .25s",display:"flex",alignItems:"center",gap:6}}>
                 <ServiceIcon id={s.id} size="xs"/><span style={{marginLeft:4}}>{s.label}</span>
               </motion.button>
             ))}
@@ -146,7 +150,7 @@ export default function Services() {
                     {SERVICES[active].deliverables.map((item,i)=>(
                       <motion.div key={item} initial={{opacity:0,x:16}} animate={{opacity:1,x:0}} transition={{delay:i*.04}}>
                         <div style={{display:"flex",gap:12,alignItems:"center",padding:"10px 0",borderBottom:"1px solid var(--glass-border)"}}>
-                          <div style={{width:10,height:3,borderRadius:1,background:SERVICES[active].color,flexShrink:0,boxShadow:`0 0 6px ${SERVICES[active].color}`}}/>
+                          <div style={{width:6,height:6,borderRadius:"50%",background:SERVICES[active].color,flexShrink:0,boxShadow:`0 0 6px ${SERVICES[active].color}`}}/>
                           <span style={{fontSize:13,color:"var(--text-2)"}}>{item}</span>
                         </div>
                       </motion.div>
@@ -161,7 +165,7 @@ export default function Services() {
 
       {/* How we work */}
       <section className="section" style={{background:"var(--bg-alt)",position:"relative",overflow:"hidden"}}>
-        <ArchitecturalBg variant="fins"/>
+        
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{textAlign:"center",marginBottom:"clamp(40px,5vw,64px)"}}>
             <SectionHeading eyebrow="Our Process" title="How we onboard every mandate." center
@@ -169,10 +173,10 @@ export default function Services() {
           </div>
           <div className="grid-4">
             {[
-              {n:"01",icon:"🔍",title:"Discovery",desc:"We conduct a comprehensive diagnostic of existing structures, assets, governance gaps, and family mandate.",accent:"#00D4FF"},
-              {n:"02",icon:"🏗️",title:"Architecture",desc:"We design the complete governance architecture — entity structures, mandate documents, and reporting frameworks.",accent:"#8A5CFF"},
-              {n:"03",icon:"⚡",title:"Implementation",desc:"We deploy the governance infrastructure — systems, processes, and documentation — within a defined timeline.",accent:"#4D8DFF"},
-              {n:"04",icon:"♾️",title:"Governance",desc:"We operate the mandate on an ongoing basis — reporting, advisory, and continuous governance improvement.",accent:"#A855F7"},
+              {n:"01",icon:0,title:"Discovery",desc:"We conduct a comprehensive diagnostic of existing structures, assets, governance gaps, and family mandate.",accent:"#00D4FF"},
+              {n:"02",icon:1,title:"Architecture",desc:"We design the complete governance architecture — entity structures, mandate documents, and reporting frameworks.",accent:"#8A5CFF"},
+              {n:"03",icon:2,title:"Implementation",desc:"We deploy the governance infrastructure — systems, processes, and documentation — within a defined timeline.",accent:"#4D8DFF"},
+              {n:"04",icon:3,title:"Governance",desc:"We operate the mandate on an ongoing basis — reporting, advisory, and continuous governance improvement.",accent:"#A855F7"},
             ].map((step,i)=>(
               <motion.div key={step.n} {...FU(i*.1)}>
                 <GlassCard style={{padding:"clamp(24px,3vw,36px)",textAlign:"center",height:"100%"}}>
@@ -189,7 +193,7 @@ export default function Services() {
 
       {/* CTA */}
       <section className="section-sm" style={{textAlign:"center",position:"relative",overflow:"hidden"}}>
-        <ArchitecturalBg variant="strata-right"/>
+        
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.h2 {...FU()} className="t-h2 gt-w" style={{marginBottom:16}}>Ready to discuss your mandate?</motion.h2>
           <motion.p {...FU(.08)} className="t-lg" style={{color:"var(--text-3)",marginBottom:36}}>All conversations are private and confidential.</motion.p>

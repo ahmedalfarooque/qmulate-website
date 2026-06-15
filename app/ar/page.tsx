@@ -1,13 +1,15 @@
 "use client";
-import { ServiceIcon, ProcessIcon } from "@/components/icons/GlassIcons";
+import { ServiceIcon } from "@/components/icons/GlassIcons";
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { StrataMark } from "@/components/StrataMark";
 import {
-  FU, FI, FS, Counter, SectionHeading, GlassCard, MetricCard, FeatureCard,
-  OrbBg, IrisBlob, GoldBlobComp, Bubbles, RippleSphere, MouseGlow, HeroGlass, FloatingBadge
+  FU, FI, FS, SectionHeading, GlassCard, HeroGlass
 } from "@/components/DS";
+import {
+  ArchitecturalBg, StrataLines, GovernancePulse, StrataSculpture, BRAND_BLUE
+} from "@/components/Strata";
 
 const SERVICES_AR = [
   { id:"stewardship", icon:"◈", label:"إدارة العقارات", color:"var(--cyan)", headline:"إشراف احترافي يحافظ على القيمة ويضاعفها.", body:"نُدير محفظتك العقارية كمنظومة موحّدة ومحكومة — وليس مجرد مجموعة أصول متفرقة. كل قرار يُتَّخذ ضمن إطار حوكمة موثَّق يضمن الاتساق والمساءلة والقيمة طويلة الأمد.", items:["إطار حوكمة موحَّد","تقارير ربعية للأداء والحوكمة","تجميع مراكز متعددة الحراس","توجيه القياسي ونسب الأداء","متابعة الامتثال التنظيمي","تقارير التموضع الاستراتيجي"] },
@@ -21,20 +23,17 @@ export default function ArHome() {
 
   return (
     <main className="hero-page ar">
-      <MouseGlow/>
 
       {/* ── HERO ── */}
       <section style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",position:"relative",overflow:"hidden",background:"var(--bg-0)",padding:"clamp(90px,12vw,120px) clamp(20px,4vw,48px) 40px"}}>
-        <OrbBg cyan violet blue warm/>
+        <ArchitecturalBg variant="mixed"/>
         <div className="bg-grid" style={{opacity:.7}}/>
-        <IrisBlob size={560} top="-15%" left="-8%" delay={0} opacity={0.45}/>
-        <GoldBlobComp size={380} bottom="-5%" right="-6%" delay={3}/>
-        <Bubbles/>
+        <div className="bg-aurora" style={{opacity:.4}}/>
 
         <div style={{position:"relative",zIndex:10,width:"100%",maxWidth:1240}}>
           <HeroGlass style={{borderRadius:36,padding:"clamp(44px,6vw,80px)"}}>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1.1fr",gap:"clamp(40px,5vw,80px)",alignItems:"center",direction:"rtl"}} className="hero-grid">
-              {/* Right (RTL = appears right) */}
+              {/* Right text column (RTL = appears right) */}
               <div>
                 <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.6,duration:.7}} style={{marginBottom:28}}>
                   <span className="pill pill-c"><span className="dot-live"/>منصة الثروة العقارية · الرياض</span>
@@ -63,35 +62,51 @@ export default function ArHome() {
                   <Link href="/ar/contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 34px"}}>اطلب مقدمة ←</Link>
                   <Link href="/ar/about" className="btn btn-ghost" style={{fontSize:15,padding:"14px 30px"}}>نهجنا</Link>
                 </motion.div>
+                {/* Qualitative trust bar — no numerical values */}
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.3,duration:.8}}
-                  style={{display:"flex",gap:32,paddingTop:28,borderTop:"1px solid var(--glass-border)",justifyContent:"flex-end"}} className="hero-trust">
-                  {[{v:"SAR 2.4B+",l:"تحت الحوكمة"},{v:"الجيل الثالث",l:"عمق التوريث"},{v:"100%",l:"تغطية الحوكمة"}].map(item=>(
+                  style={{display:"flex",gap:28,paddingTop:28,borderTop:"1px solid var(--glass-border)",justifyContent:"flex-end",flexWrap:"wrap"}} className="hero-trust">
+                  {[
+                    {icon:"◈",v:"رعاية العقار",l:"حوكمة الأصول"},
+                    {icon:"⬡",v:"النمو المحكوم",l:"نشر رأس المال"},
+                    {icon:"◉",v:"الاستمرارية الجيلية",l:"إطار التوريث"},
+                  ].map(item=>(
                     <div key={item.l} style={{textAlign:"right"}}>
-                      <div style={{fontSize:"clamp(16px,2vw,22px)",fontWeight:800,color:"var(--cyan)",letterSpacing:"-0.03em",filter:"drop-shadow(0 0 16px rgba(0,212,255,.5))"}}>{item.v}</div>
-                      <div className="t-xs" style={{color:"var(--text-4)",marginTop:3}}>{item.l}</div>
+                      <div style={{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end",marginBottom:4}}>
+                        <div style={{fontSize:16,color:"var(--cyan)",filter:"drop-shadow(0 0 10px rgba(0,212,255,.5))"}}>{item.icon}</div>
+                        <div style={{fontSize:"clamp(13px,1.5vw,15px)",fontWeight:700,color:"var(--text-1)"}}>{item.v}</div>
+                      </div>
+                      <div style={{display:"flex",justifyContent:"flex-end"}}>
+                        <StrataLines count={2} width={52} opacity={0.3} color="var(--cyan)"/>
+                      </div>
+                      <div className="t-xs" style={{color:"var(--text-4)",marginTop:4}}>{item.l}</div>
                     </div>
                   ))}
                 </motion.div>
               </div>
-              {/* Left (RTL = appears left) */}
-              <div style={{position:"relative",display:"flex",flexDirection:"column",gap:16}}>
+
+              {/* Left visual column (RTL = appears left) */}
+              <div style={{position:"relative",display:"flex",flexDirection:"column",gap:16,alignItems:"center"}}>
                 <motion.div initial={{opacity:0,scale:.5}} animate={{opacity:1,scale:1}} transition={{delay:1.0,duration:1.2,ease:[.34,1.56,.64,1]}}
                   style={{display:"flex",justifyContent:"center",marginBottom:8}}>
-                  <RippleSphere size={120}/>
+                  <StrataSculpture size={280} opacity={0.28}/>
                 </motion.div>
+                {/* Qualitative governance status cards */}
                 {[
-                  {val:"SAR 48.2m",label:"إجمالي الثروة (ر1)",sub:"▲ 2.4% ربعية",accent:"#00D4FF",delay:1.2},
-                  {val:"94.7%",label:"درجة الحوكمة",sub:"الأفضل في فئته",accent:"#8A5CFF",delay:1.35},
-                  {val:"3 أجيال",label:"أُفق التوريث",sub:"أُطر نشطة",accent:"#4D8DFF",delay:1.5},
+                  {icon:"◈",label:"رعاية العقار",sub:"إطار الحوكمة نشط",accent:"#00D4FF",delay:1.2},
+                  {icon:"⬡",label:"درجة الحوكمة",sub:"ممتاز — مُدقَّق",accent:"#8A5CFF",delay:1.35},
+                  {icon:"◉",label:"أُفق التوريث",sub:"متعدد الأجيال",accent:"#4D8DFF",delay:1.5},
                 ].map((m,i)=>(
-                  <motion.div key={i} initial={{opacity:0,x:-30}} animate={{opacity:1,x:0}} transition={{delay:m.delay,duration:.8}}>
-                    <GlassCard style={{padding:"18px 22px"}}>
-                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexDirection:"row-reverse"}}>
-                        <div style={{textAlign:"right"}}>
-                          <div style={{fontSize:"clamp(18px,2vw,26px)",fontWeight:800,color:m.accent,letterSpacing:"-0.03em",lineHeight:1,filter:`drop-shadow(0 0 12px ${m.accent}66)`}}>{m.val}</div>
-                          <div style={{fontSize:12,color:"var(--text-3)",marginTop:4}}>{m.label}</div>
+                  <motion.div key={i} initial={{opacity:0,x:-30}} animate={{opacity:1,x:0}} transition={{delay:m.delay,duration:.8}} style={{width:"100%"}}>
+                    <GlassCard style={{padding:"16px 20px"}}>
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row-reverse"}}>
+                        <div style={{display:"flex",alignItems:"center",gap:8,flexDirection:"row-reverse"}}>
+                          <div style={{fontSize:18,color:m.accent,filter:`drop-shadow(0 0 10px ${m.accent}88)`}}>{m.icon}</div>
+                          <div style={{textAlign:"right"}}>
+                            <div style={{fontSize:13,fontWeight:700,color:"var(--text-1)",lineHeight:1.2}}>{m.label}</div>
+                            <div style={{fontSize:11,color:"var(--text-3)",marginTop:3}}>{m.sub}</div>
+                          </div>
                         </div>
-                        <span style={{fontSize:10,color:m.accent,background:`${m.accent}14`,border:`1px solid ${m.accent}30`,borderRadius:100,padding:"3px 10px",whiteSpace:"nowrap"}}>{m.sub}</span>
+                        <StrataLines count={3} width={40} opacity={0.28} color={m.accent}/>
                       </div>
                     </GlassCard>
                   </motion.div>
@@ -102,21 +117,24 @@ export default function ArHome() {
         </div>
       </section>
 
-      {/* ── METRICS ── */}
-      <section style={{background:"var(--bg-alt)",backdropFilter:"blur(40px)",borderTop:"1px solid var(--glass-border)",borderBottom:"1px solid var(--glass-border)"}}>
-        <div className="container">
+      {/* ── GOVERNANCE PILLARS (replaces numerical METRICS) ── */}
+      <section style={{background:"var(--bg-alt)",backdropFilter:"blur(40px)",borderTop:"1px solid var(--glass-border)",borderBottom:"1px solid var(--glass-border)",position:"relative",overflow:"hidden"}}>
+        <ArchitecturalBg variant="strata-left"/>
+        <div className="container" style={{position:"relative",zIndex:1}}>
           <div className="grid-4" style={{padding:"clamp(40px,5vw,64px) 0"}}>
             {[
-              {to:2.4,pre:"SAR ",suf:"B+",l:"الأصول تحت الحوكمة",c:"#00D4FF"},
-              {to:14,suf:" عاماً",l:"سجل الحوكمة",c:"#8A5CFF"},
-              {to:97,suf:"%",l:"معدل استبقاء العملاء",c:"#4D8DFF"},
-              {to:100,suf:"%",l:"تغطية الحوكمة",c:"#A855F7"},
-            ].map((m,i)=>(
-              <motion.div key={m.l} {...FU(i*.1)} style={{textAlign:"center",padding:"clamp(24px,3vw,40px) 16px"}}>
-                <div style={{fontSize:"clamp(36px,4.5vw,60px)",fontWeight:900,letterSpacing:"-0.05em",color:m.c,filter:`drop-shadow(0 0 24px ${m.c}66)`,fontVariantNumeric:"tabular-nums",lineHeight:1,marginBottom:8,direction:"ltr"}}>
-                  <Counter to={m.to} prefix={m.pre||""} suffix={m.suf} decimals={m.to<10?1:0}/>
+              {icon:"◈",label:"رعاية العقار",desc:"كل أصل محكوم بإطار سياسات",color:"#00D4FF"},
+              {icon:"⬡",label:"النمو المحكوم",desc:"رأس مال ينشر ضمن حواجز هيكلية",color:"#8A5CFF"},
+              {icon:"◉",label:"الحفاظ طويل الأمد",desc:"هياكل مبنية للاستمرارية الجيلية",color:"#4D8DFF"},
+              {icon:"⬟",label:"الاستمرارية الجيلية",desc:"أُطر التوريث نشطة عبر التفويضات",color:"#A855F7"},
+            ].map((p,i)=>(
+              <motion.div key={p.label} {...FU(i*.1)} style={{textAlign:"center",padding:"clamp(24px,3vw,40px) 16px"}}>
+                <div style={{marginBottom:14,display:"flex",justifyContent:"center"}}>
+                  <StrataLines count={3} width={60} opacity={0.22} color={p.color}/>
                 </div>
-                <div style={{fontSize:14,color:"var(--text-2)",fontWeight:600,marginBottom:4}}>{m.l}</div>
+                <div style={{fontSize:26,marginBottom:10,color:p.color,filter:`drop-shadow(0 0 18px ${p.color}55)`}}>{p.icon}</div>
+                <div style={{fontSize:14,color:"var(--text-1)",fontWeight:700,marginBottom:6}}>{p.label}</div>
+                <div style={{fontSize:12,color:"var(--text-4)",lineHeight:1.6}}>{p.desc}</div>
               </motion.div>
             ))}
           </div>
@@ -125,7 +143,7 @@ export default function ArHome() {
 
       {/* ── SERVICES ── */}
       <section className="section" style={{background:"var(--bg-alt)",position:"relative",overflow:"hidden"}}>
-        <IrisBlob size={500} top="-10%" left="-5%" opacity={0.12}/>
+        <ArchitecturalBg variant="lattice"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{textAlign:"center",marginBottom:"clamp(40px,5vw,64px)"}}>
             <motion.div {...FI()} style={{marginBottom:16}}><span className="pill pill-c"><span className="dot-live"/>خدماتنا</span></motion.div>
@@ -156,7 +174,7 @@ export default function ArHome() {
                   {SERVICES_AR[activeService].items.map((item,i)=>(
                     <motion.div key={item} initial={{opacity:0,x:-20}} animate={{opacity:1,x:0}} transition={{delay:i*.06}}>
                       <div style={{display:"flex",gap:12,padding:"14px 18px",background:"var(--g1)",border:"1px solid var(--glass-border)",borderRadius:12,alignItems:"center",flexDirection:"row-reverse"}}>
-                        <div style={{width:6,height:6,borderRadius:"50%",background:SERVICES_AR[activeService].color,flexShrink:0,boxShadow:`0 0 8px ${SERVICES_AR[activeService].color}`}}/>
+                        <div style={{width:10,height:3,borderRadius:1,background:SERVICES_AR[activeService].color,flexShrink:0,boxShadow:`0 0 8px ${SERVICES_AR[activeService].color}`}}/>
                         <span style={{fontSize:13,color:"var(--text-2)"}}>{item}</span>
                       </div>
                     </motion.div>
@@ -170,9 +188,7 @@ export default function ArHome() {
 
       {/* ── CTA ── */}
       <section className="section" style={{position:"relative",overflow:"hidden",background:"linear-gradient(160deg,var(--bg-1),var(--bg-0))"}}>
-        <IrisBlob size={700} top="-30%" right="-15%" opacity={0.18}/>
-        <GoldBlobComp size={400} bottom="-20%" left="-10%" delay={5}/>
-        <Bubbles/>
+        <ArchitecturalBg variant="mixed"/>
         <div className="container" style={{position:"relative",zIndex:1,textAlign:"center"}}>
           <motion.div {...FI()}><span className="pill pill-v" style={{marginBottom:28}}>مكتب العائلة الخاص · الرياض</span></motion.div>
           <motion.h2 {...FU(.08)} className="t-d gt-a" style={{marginBottom:20,fontSize:"clamp(44px,7vw,96px)"}}>

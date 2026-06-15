@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { GovernanceIcon, PortfolioIcon, AIIcon, CrossBorderIcon, RiskIcon, DigitalIcon, DocumentIcon, WealthIcon } from "@/components/icons/GlassIcons";
-import { FU, FI, FS, SectionHeading, GlassCard, MetricCard, OrbBg, IrisBlob, GoldBlobComp, MouseGlow, Counter } from "@/components/DS";
+import { FU, FI, FS, SectionHeading, GlassCard } from "@/components/DS";
+import { ArchitecturalBg } from "@/components/Strata";
 
 const SOLUTIONS = [
   {icon:"🏛️",title:"Governance Platform",color:"var(--cyan)",desc:"End-to-end governance infrastructure — constitutional documents, mandate frameworks, entity structures, and succession protocols — deployed as a unified, auditable system.",features:["Constitutional document library","Board governance tools","Succession protocol engine","Mandate tracking dashboard","Audit trail and documentation","Regulatory compliance monitoring"]},
@@ -16,12 +17,9 @@ const SOLUTIONS = [
 export default function Solutions() {
   return (
     <main>
-      <MouseGlow/>
-
       {/* Hero */}
       <section style={{minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
-        <OrbBg cyan violet blue/>
-        <IrisBlob size={500} top="-15%" right="-8%" opacity={0.3}/>
+        <ArchitecturalBg variant="mixed"/>
         <div className="bg-grid" style={{opacity:.6}}/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.div {...FI()} style={{marginBottom:24}}>
@@ -38,8 +36,7 @@ export default function Solutions() {
 
       {/* Solutions grid */}
       <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <OrbBg cyan={false} violet blue/>
-        <GoldBlobComp size={400} top="-8%" right="-8%" delay={2}/>
+        <ArchitecturalBg variant="lattice"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div className="grid-3">
             {SOLUTIONS.map((s,i)=>(
@@ -58,7 +55,7 @@ export default function Solutions() {
                   <div style={{display:"flex",flexDirection:"column",gap:8}}>
                     {s.features.map(f=>(
                       <div key={f} style={{display:"flex",gap:10,alignItems:"center"}}>
-                        <div style={{width:5,height:5,borderRadius:"50%",background:s.color,flexShrink:0,boxShadow:`0 0 6px ${s.color}`}}/>
+                        <div style={{width:8,height:2,borderRadius:1,background:s.color,flexShrink:0,boxShadow:`0 0 5px ${s.color}`}}/>
                         <span style={{fontSize:12,color:"var(--text-3)"}}>{f}</span>
                       </div>
                     ))}
@@ -72,7 +69,7 @@ export default function Solutions() {
 
       {/* Architecture diagram */}
       <section className="section" style={{background:"var(--bg-alt)",position:"relative",overflow:"hidden"}}>
-        <IrisBlob size={600} top="-20%" left="-15%" opacity={0.1}/>
+        <ArchitecturalBg variant="fins"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{textAlign:"center",marginBottom:"clamp(40px,5vw,64px)"}}>
             <SectionHeading eyebrow="Architecture" title="How the platform is built." center
@@ -99,7 +96,7 @@ export default function Solutions() {
                 }}>
                   <div style={{fontWeight:700,color:"var(--text-1)",fontSize:"clamp(13px,1.5vw,16px)"}}>{layer.label}</div>
                   <div style={{fontSize:12,color:"var(--text-3)",textAlign:"right",maxWidth:360}}>{layer.sub}</div>
-                  <div style={{width:8,height:8,borderRadius:"50%",background:layer.color,boxShadow:`0 0 12px ${layer.color}`,flexShrink:0}}/>
+                  <div style={{width:14,height:3,borderRadius:1,background:layer.color,boxShadow:`0 0 10px ${layer.color}`,flexShrink:0}}/>
                 </div>
                 {i<4&&<div style={{width:1,height:16,background:layer.color,margin:"0 auto",opacity:.4}}/>}
               </motion.div>
@@ -110,7 +107,7 @@ export default function Solutions() {
 
       {/* CTA */}
       <section className="section-sm" style={{textAlign:"center",position:"relative",overflow:"hidden"}}>
-        <IrisBlob size={500} top="-15%" left="30%" opacity={0.1}/>
+        <ArchitecturalBg variant="strata-right"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.h2 {...FU()} className="t-h2 gt-w" style={{marginBottom:16}}>See the platform in action.</motion.h2>
           <motion.p {...FU(.08)} className="t-lg" style={{color:"var(--text-3)",marginBottom:36}}>We offer a private demonstration for qualified principals.</motion.p>

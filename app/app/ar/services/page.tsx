@@ -1,8 +1,9 @@
 "use client";
+import { ArchitecturalBg, BRAND_BLUE } from "@/components/Strata";
 import Link from "next/link";
+import { preset, StaggerReveal, HoverLift, MagneticButton } from "@/components/Motion";
 import { motion } from "framer-motion";
 import { FU, FI, SectionHeading, GlassCard } from "@/components/DS";
-import { ArchitecturalBg } from "@/components/Strata";
 
 const titles: Record<string,{h1:string,sub:string,badge:string}> = {
   about:   {badge:"من نحن",h1:"مكتب عائلة مُهندَس للديمومة.",sub:"تأسَّست كيوميليت لحل مشكلة محددة: معظم الثروات العقارية تُدار بصورة تفاعلية لا استباقية. نحن هنا لتغيير ذلك."},
@@ -11,14 +12,14 @@ const titles: Record<string,{h1:string,sub:string,badge:string}> = {
   projects:{badge:"مشاريع مختارة",h1:"تفويضات أعادت تعريف معنى الحوكمة.",sub:"ثلاث دراسات حالة من محفظتنا — مُخفاة الهوية بإذن العملاء."},
   contact: {badge:"خاص وسري",h1:"ابدأ محادثة.",sub:"كل مقدمة تُعامَل بسرية تامة. عادةً ما نرد خلال يوم عمل واحد."},
 };
-const t = titles["solutions"];
+const t = titles["services"];
 
 export default function ArPage() {
   return (
     <main className="ar">
       
       <section style={{minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
-        <ArchitecturalBg variant="mixed"/>
+        
         
         <div className="bg-grid" style={{opacity:.6}}/>
         <div className="container" style={{position:"relative",zIndex:1}}>

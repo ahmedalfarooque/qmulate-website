@@ -1,13 +1,18 @@
 "use client";
-import { ServiceIcon, ProcessIcon, CapabilityIcon } from "@/components/icons/GlassIcons";
+import { ServiceIcon, CapabilityIcon } from "@/components/icons/GlassIcons";
 import Link from "next/link";
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { StrataMark } from "@/components/StrataMark";
 import {
-  FU, FI, FS, FL, Counter, SectionHeading, GlassCard, MetricCard, FeatureCard,
-  OrbBg, IrisBlob, GoldBlobComp, Bubbles, RippleSphere, MouseGlow, HeroGlass, Divider
+  FU, FI, FS, FL, SectionHeading, GlassCard, FeatureCard,
+  HeroGlass, Divider
 } from "@/components/DS";
+import {
+  ArchitecturalBg, ArchitecturalBgLight, StrataStack, StrataLines,
+  GovernancePulse, GlassFacade, VerticalFins, StructuralLattice,
+  StrataSculpture, BRAND_BLUE
+} from "@/components/Strata";
 
 /* ── Service tabs ── */
 const SERVICES = [
@@ -42,19 +47,27 @@ const CAPABILITIES = [
 /* ── Timeline ── */
 const TIMELINE = [
   { year:"2019", title:"Foundation", desc:"QMULATE established to govern — not merely manage — real estate wealth across generations." },
-  { year:"2020", title:"First Mandate", desc:"SAR 240M inaugural engagement. Multi-custodian consolidation completed within 90 days." },
+  { year:"2020", title:"First Mandate", desc:"Inaugural family office engagement. Multi-custodian consolidation completed within 90 days." },
   { year:"2021", title:"Platform Build", desc:"Proprietary governance platform deployed. Real-time reporting across all asset classes launched." },
-  { year:"2023", title:"GCC Expansion", desc:"Expanded advisory practice to UAE and KSA. Assets under governance exceed SAR 1B." },
+  { year:"2023", title:"GCC Expansion", desc:"Expanded advisory practice to UAE and KSA. Regional governance mandates established." },
   { year:"2024", title:"AI Integration", desc:"Machine learning risk engine integrated. Predictive analytics active across portfolio." },
-  { year:"2026", title:"Today", desc:"SAR 2.4B+ under governance. Three generational mandates active. Platform v7 live.", current:true },
+  { year:"2026", title:"Today", desc:"Multiple generational mandates active. Stewardship structures spanning jurisdictions. Platform v7 live.", current:true },
 ];
 
 /* ── FAQ ── */
 const FAQ = [
   { q:"How is QMULATE different from a traditional wealth manager?", a:"We are a governance-first family office, not a product-selling wealth manager. Our mandate is to organise, protect, and transfer wealth — not to generate fee income from product recommendations. We operate fee-only, with no conflicts of interest." },
-  { q:"What is the minimum mandate size?", a:"We typically engage with principals managing real estate portfolios of SAR 100M and above. Below this threshold, our governance infrastructure may be disproportionate to the mandate size." },
+  { q:"What types of principals do you work with?", a:"We engage with families and principals for whom governance infrastructure is proportionate to their mandate — typically multi-generational real estate wealth requiring structured oversight. Reach out in confidence to discuss whether we are the right fit." },
   { q:"How do you handle multi-jurisdictional structures?", a:"We maintain governance frameworks across KSA, UAE, UK, and key offshore jurisdictions. Each structure is designed for succession clarity, tax efficiency, and operational simplicity — with consolidated reporting in a single view." },
   { q:"What does 'governed growth' mean in practice?", a:"It means every capital deployment decision is made within a pre-approved investment mandate — with documented rationale, risk parameters, and approval governance. Growth happens, but never at the expense of structural integrity." },
+];
+
+/* ── Governance Pillars (replaces numerical metrics) ── */
+const PILLARS = [
+  { label:"Property Stewardship", icon:"◈", color:"#00D4FF", desc:"Every asset governed by a documented policy framework, not individual discretion." },
+  { label:"Governed Growth", icon:"⬡", color:"#8A5CFF", desc:"Structures built to outlast principals — transferring wealth and intent across generations." },
+  { label:"Long-Term Preservation", icon:"◉", color:"#4D8DFF", desc:"Real-time analytics across all holdings. No surprises. Full transparency." },
+  { label:"Generational Continuity", icon:"⬟", color:"#A855F7", desc:"Succession structures built from day one, not as an afterthought." },
 ];
 
 export default function Home() {
@@ -67,21 +80,16 @@ export default function Home() {
 
   return (
     <main className="hero-page">
-      <MouseGlow/>
 
       {/* ══════════════════════════════════════════════════
           HERO — Full-viewport glass experience
           ══════════════════════════════════════════════════ */}
       <section ref={heroRef} style={{minHeight:"100vh",position:"relative",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"linear-gradient(160deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%)"}}>
-        {/* Background layers */}
+        {/* Architectural background layers */}
         <motion.div style={{position:"absolute",inset:0,y:heroY}} className="will-change-transform">
-          <OrbBg cyan violet blue warm/>
-          <div className="bg-grid" style={{opacity:.7}}/>
+          <ArchitecturalBg variant="mixed"/>
+          <div className="bg-grid" style={{opacity:.5}}/>
           <div className="bg-aurora"/>
-          <IrisBlob size={560} top="-15%" right="-8%" delay={0} opacity={0.45}/>
-          <GoldBlobComp size={380} bottom="-5%" left="-6%" delay={3}/>
-          <IrisBlob size={300} top="55%" left="-4%" delay={6} morph="blob-morph-b" opacity={0.35}/>
-          <Bubbles/>
         </motion.div>
 
         {/* Hero glass panel */}
@@ -124,45 +132,48 @@ export default function Home() {
                   <Link href="/about" className="btn btn-ghost" style={{fontSize:15,padding:"14px 30px"}}>Our approach</Link>
                 </motion.div>
 
+                {/* Governance indicators — qualitative, no numbers */}
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.3,duration:.8}}
                   style={{display:"flex",gap:32,paddingTop:28,borderTop:"1px solid var(--glass-border)"}} className="hero-trust">
-                  {[{v:"SAR 2.4B+",l:"Under Governance"},{v:"3rd Gen",l:"Succession Depth"},{v:"100%",l:"Governance Coverage"}].map(item=>(
-                    <div key={item.l}>
-                      <div style={{fontSize:"clamp(16px,2vw,22px)",fontWeight:800,color:"var(--cyan)",letterSpacing:"-0.03em",filter:"drop-shadow(0 0 16px rgba(0,212,255,.5))"}}>{item.v}</div>
-                      <div className="t-xs" style={{color:"var(--text-4)",marginTop:3}}>{item.l}</div>
+                  {[
+                    {label:"Property Stewardship",icon:"◈",color:"#00D4FF"},
+                    {label:"Governed Growth",icon:"⬡",color:"#8A5CFF"},
+                    {label:"Generational Continuity",icon:"◉",color:"#4D8DFF"},
+                  ].map(item=>(
+                    <div key={item.label}>
+                      <div style={{fontSize:"clamp(16px,1.5vw,20px)",fontWeight:800,color:item.color,letterSpacing:"-0.02em",filter:`drop-shadow(0 0 12px ${item.color}66)`,marginBottom:3}}>{item.icon}</div>
+                      <div className="t-xs" style={{color:"var(--text-4)"}}>{item.label}</div>
                     </div>
                   ))}
                 </motion.div>
               </div>
 
-              {/* Right — floating dashboard */}
+              {/* Right — architectural governance visualization */}
               <div style={{position:"relative",display:"flex",flexDirection:"column",gap:16}}>
-                {/* Ripple sphere */}
-                <motion.div initial={{opacity:0,scale:.5}} animate={{opacity:1,scale:1}} transition={{delay:1.0,duration:1.2,ease:[.34,1.56,.64,1]}}
-                  style={{display:"flex",justifyContent:"center",marginBottom:8}}>
-                  <RippleSphere size={120}/>
+                {/* Strata sculpture — replaces RippleSphere */}
+                <motion.div initial={{opacity:0,scale:.5,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{delay:1.0,duration:1.2,ease:[.34,1.56,.64,1]}}
+                  style={{display:"flex",justifyContent:"center",marginBottom:8,position:"relative",minHeight:120}}>
+                  <StrataSculpture size={300} opacity={0.32} style={{position:"relative",margin:"0 auto"}}/>
                 </motion.div>
 
-                {/* Floating metric cards */}
+                {/* Qualitative governance status cards */}
                 {[
-                  {val:"SAR 48.2m",label:"Total Wealth (Q1)",sub:"▲ 2.4% quarter",accent:"#00D4FF",delay:1.2},
-                  {val:"94.7%",label:"Governance Score",sub:"Best in class",accent:"#8A5CFF",delay:1.35},
-                  {val:"3 gen",label:"Succession Horizon",sub:"Frameworks active",accent:"#4D8DFF",delay:1.5},
+                  {label:"Governance Active",sub:"All mandates governed",accent:"#00D4FF",delay:1.2},
+                  {label:"Structure Intact",sub:"Long-term preservation",accent:"#8A5CFF",delay:1.35},
+                  {label:"Succession Aligned",sub:"Generational frameworks",accent:"#4D8DFF",delay:1.5},
                 ].map((m,i)=>(
                   <motion.div key={i} initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} transition={{delay:m.delay,duration:.8}}>
                     <GlassCard style={{padding:"18px 22px"}}>
-                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                         <div>
-                          <div style={{fontSize:"clamp(18px,2vw,26px)",fontWeight:800,color:m.accent,letterSpacing:"-0.03em",lineHeight:1,filter:`drop-shadow(0 0 12px ${m.accent}66)`}}>{m.val}</div>
-                          <div style={{fontSize:12,color:"var(--text-3)",marginTop:4}}>{m.label}</div>
+                          <div style={{fontSize:"clamp(13px,1.4vw,16px)",fontWeight:700,color:m.accent,letterSpacing:"-0.01em",lineHeight:1,filter:`drop-shadow(0 0 10px ${m.accent}55)`}}>{m.label}</div>
+                          <div style={{fontSize:12,color:"var(--text-3)",marginTop:4}}>{m.sub}</div>
                         </div>
-                        <span style={{fontSize:10,color:m.accent,background:`${m.accent}14`,border:`1px solid ${m.accent}30`,borderRadius:100,padding:"3px 10px"}}>{m.sub}</span>
+                        <StrataLines count={3} width={48} opacity={0.3} color={m.accent} style={{flexShrink:0}}/>
                       </div>
                     </GlassCard>
                   </motion.div>
                 ))}
-
-
               </div>
             </div>
           </HeroGlass>
@@ -173,31 +184,28 @@ export default function Home() {
           style={{position:"absolute",bottom:36,left:"50%",transform:"translateX(-50%)",display:"flex",flexDirection:"column",alignItems:"center",gap:8,zIndex:10}}>
           <div className="t-xs" style={{color:"rgba(255,255,255,.2)"}}>SCROLL TO EXPLORE</div>
           <motion.div animate={{y:[0,8,0]}} transition={{repeat:Infinity,duration:2}}
-            style={{width:1,height:48,background:"linear-gradient(#00D4FF,transparent)"}}/>
+            style={{width:1,height:48,background:`linear-gradient(${BRAND_BLUE},transparent)`}}/>
         </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════════════
-          METRICS SECTION
+          GOVERNANCE PILLARS — replaces numerical metrics
           ══════════════════════════════════════════════════ */}
-      <section style={{background:"var(--bg-alt)",backdropFilter:"blur(40px)",borderTop:"1px solid var(--glass-border)",borderBottom:"1px solid var(--glass-border)"}}>
-        <div className="container">
+      <section style={{background:"var(--bg-alt)",backdropFilter:"blur(40px)",borderTop:"1px solid var(--glass-border)",borderBottom:"1px solid var(--glass-border)",position:"relative",overflow:"hidden"}}>
+        <ArchitecturalBg variant="fins" style={{opacity:0.6}}/>
+        <div className="container" style={{position:"relative",zIndex:1}}>
           <div className="grid-4" style={{padding:"clamp(40px,5vw,64px) 0"}}>
-            {[
-              {to:2.4,pre:"SAR ",suf:"B+",label:"Assets Under Governance",sub:"Total portfolio value"},
-              {to:14,suf:" years",label:"Governance Track Record",sub:"Uninterrupted mandates"},
-              {to:97,suf:"%",label:"Client Retention Rate",sub:"Multi-generation relationships"},
-              {to:100,suf:"%",label:"Governance Coverage",sub:"Every asset, every quarter"},
-            ].map((m,i)=>(
-              <motion.div key={m.label} {...FU(i*0.1)} style={{textAlign:"center",padding:"clamp(24px,3vw,40px) 16px"}}>
-                <div style={{fontSize:"clamp(36px,4.5vw,60px)",fontWeight:900,letterSpacing:"-0.05em",
-                  color:["#00D4FF","#8A5CFF","#4D8DFF","#A855F7"][i],
-                  filter:`drop-shadow(0 0 24px ${["rgba(0,212,255,.55)","rgba(138,92,255,.5)","rgba(77,141,255,.5)","rgba(168,85,247,.5)"][i]})`,
-                  fontVariantNumeric:"tabular-nums",lineHeight:1,marginBottom:8}}>
-                  <Counter to={m.to} prefix={m.pre||""} suffix={m.suf} decimals={m.to<10?1:0}/>
+            {PILLARS.map((p,i)=>(
+              <motion.div key={p.label} {...FU(i*0.1)} style={{textAlign:"center",padding:"clamp(24px,3vw,40px) 16px"}}>
+                <div style={{marginBottom:16,display:"flex",justifyContent:"center"}}>
+                  <StrataLines count={4} width={72} opacity={0.25} color={p.color}/>
                 </div>
-                <div style={{fontSize:14,color:"var(--text-2)",fontWeight:600,marginBottom:4}}>{m.label}</div>
-                <div className="t-xs" style={{color:"var(--text-4)"}}>{m.sub}</div>
+                <div style={{fontSize:"clamp(20px,2.2vw,28px)",fontWeight:800,letterSpacing:"-0.03em",
+                  color:p.color,filter:`drop-shadow(0 0 18px ${p.color}55)`,lineHeight:1,marginBottom:10}}>
+                  {p.icon}
+                </div>
+                <div style={{fontSize:14,color:"var(--text-2)",fontWeight:600,marginBottom:6}}>{p.label}</div>
+                <div className="t-xs" style={{color:"var(--text-4)",textTransform:"none",letterSpacing:0,fontSize:12,fontFamily:"inherit"}}>{p.desc}</div>
               </motion.div>
             ))}
           </div>
@@ -208,7 +216,7 @@ export default function Home() {
           WHAT WE DO — platform overview
           ══════════════════════════════════════════════════ */}
       <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <OrbBg cyan violet/>
+        <ArchitecturalBg variant="strata-left"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"clamp(48px,6vw,96px)",alignItems:"center"}} className="grid-2">
             <div>
@@ -253,7 +261,7 @@ export default function Home() {
                           <div style={{fontSize:14,fontWeight:700,color:"var(--text-1)",marginBottom:4}}>{layer.label}</div>
                           <div className="t-xs" style={{color:"var(--text-3)",textTransform:"none",letterSpacing:0,fontSize:12}}>{layer.sub}</div>
                         </div>
-                        <div style={{width:8,height:8,borderRadius:"50%",background:layer.color,boxShadow:`0 0 12px ${layer.color}`,flexShrink:0}}/>
+                        <div style={{width:12,height:3,borderRadius:1,background:layer.color,boxShadow:`0 0 8px ${layer.color}`,flexShrink:0}}/>
                       </div>
                     </GlassCard>
                   </motion.div>
@@ -269,8 +277,7 @@ export default function Home() {
           SERVICES — interactive tabs
           ══════════════════════════════════════════════════ */}
       <section className="section" style={{background:"var(--bg-alt)",position:"relative",overflow:"hidden"}}>
-        <IrisBlob size={500} top="-10%" right="-5%" opacity={0.12}/>
-        <GoldBlobComp size={350} bottom="-10%" left="-5%" delay={4}/>
+        <ArchitecturalBg variant="lattice"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{textAlign:"center",marginBottom:"clamp(40px,5vw,64px)"}}>
             <SectionHeading eyebrow="Services" title="Everything your wealth requires." center
@@ -309,7 +316,7 @@ export default function Home() {
                   {SERVICES[activeService].items.map((item,i)=>(
                     <motion.div key={item} initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:i*.06}}>
                       <div style={{display:"flex",gap:12,padding:"14px 18px",background:"var(--g1)",border:"1px solid var(--glass-border)",borderRadius:12,alignItems:"center"}}>
-                        <div style={{width:6,height:6,borderRadius:"50%",background:SERVICES[activeService].color,flexShrink:0,boxShadow:`0 0 8px ${SERVICES[activeService].color}`}}/>
+                        <div style={{width:10,height:3,borderRadius:1,background:SERVICES[activeService].color,flexShrink:0,boxShadow:`0 0 8px ${SERVICES[activeService].color}`}}/>
                         <span style={{fontSize:13,color:"var(--text-2)"}}>{item}</span>
                       </div>
                     </motion.div>
@@ -325,7 +332,7 @@ export default function Home() {
           CAPABILITIES — feature grid
           ══════════════════════════════════════════════════ */}
       <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <OrbBg violet blue/>
+        <ArchitecturalBg variant="strata-right"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{textAlign:"center",marginBottom:"clamp(40px,5vw,64px)"}}>
             <SectionHeading eyebrow="Capabilities" title="What we can do for you." center
@@ -343,7 +350,7 @@ export default function Home() {
           PHILOSOPHY SECTION
           ══════════════════════════════════════════════════ */}
       <section className="section" style={{background:"var(--bg-alt)",position:"relative",overflow:"hidden"}}>
-        <IrisBlob size={600} top="-20%" left="-10%" opacity={0.1}/>
+        <ArchitecturalBg variant="lattice"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"clamp(48px,6vw,96px)",alignItems:"center"}} className="grid-2">
             <motion.div {...FL()}>
@@ -369,18 +376,20 @@ export default function Home() {
 
             <motion.div {...FS(.15)} style={{position:"relative"}}>
               <GlassCard style={{padding:"clamp(32px,4vw,52px)",textAlign:"center"}}>
-                <div style={{fontSize:56,marginBottom:16,filter:"drop-shadow(0 0 32px rgba(0,212,255,.5))"}}>
-                  <RippleSphere size={120} style={{margin:"0 auto"}}/>
+                {/* Strata sculpture — replaces RippleSphere */}
+                <div style={{marginBottom:28,display:"flex",justifyContent:"center"}}>
+                  <StrataSculpture size={280} opacity={0.28} style={{position:"relative"}}/>
                 </div>
                 <blockquote style={{fontSize:"clamp(18px,2.2vw,26px)",fontWeight:700,color:"var(--text-1)",lineHeight:1.45,marginBottom:16,fontStyle:"italic"}}>
                   "Wealth, structured to outlast its makers."
                 </blockquote>
                 <div className="t-xs" style={{color:"var(--text-4)",marginBottom:32}}>QMULATE FOUNDING PRINCIPLE · 2019</div>
                 <div style={{display:"flex",justifyContent:"center",gap:24,paddingTop:24,borderTop:"1px solid var(--glass-border)"}}>
-                  {[{v:"6",l:"Core Governance Layers"},{v:"∞",l:"Succession Horizon"}].map(item=>(
-                    <div key={item.l} style={{textAlign:"center"}}>
-                      <div style={{fontSize:28,fontWeight:900,color:"var(--cyan)",filter:"drop-shadow(0 0 16px rgba(0,212,255,.5))"}}>{item.v}</div>
-                      <div className="t-xs" style={{color:"var(--text-4)",marginTop:4}}>{item.l}</div>
+                  {[{label:"Structural Perpetuity",sub:"Built to outlast"},{label:"Governed Stewardship",sub:"Every mandate"}].map(item=>(
+                    <div key={item.label} style={{textAlign:"center"}}>
+                      <GovernancePulse width={100} height={24} opacity={0.25} color={BRAND_BLUE} style={{margin:"0 auto 8px"}}/>
+                      <div style={{fontSize:12,fontWeight:700,color:"var(--text-2)",marginBottom:2}}>{item.label}</div>
+                      <div className="t-xs" style={{color:"var(--text-4)",marginTop:2}}>{item.sub}</div>
                     </div>
                   ))}
                 </div>
@@ -394,14 +403,14 @@ export default function Home() {
           TIMELINE
           ══════════════════════════════════════════════════ */}
       <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <OrbBg cyan={false} violet blue/>
+        <ArchitecturalBg variant="pulse"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{textAlign:"center",marginBottom:"clamp(40px,5vw,64px)"}}>
             <SectionHeading eyebrow="Our Journey" title="Seven years building the standard." center/>
           </div>
           <div style={{position:"relative"}}>
             {/* Timeline line */}
-            <div style={{position:"absolute",left:"50%",top:0,bottom:0,width:1,background:"linear-gradient(to bottom,transparent,rgba(0,212,255,.4),rgba(138,92,255,.3),transparent)",transform:"translateX(-50%)"}} className="timeline-line"/>
+            <div style={{position:"absolute",left:"50%",top:0,bottom:0,width:1,background:`linear-gradient(to bottom,transparent,${BRAND_BLUE}44,rgba(138,92,255,.3),transparent)`,transform:"translateX(-50%)"}} className="timeline-line"/>
             <div style={{display:"flex",flexDirection:"column",gap:32}}>
               {TIMELINE.map((item,i)=>(
                 <motion.div key={item.year} {...FU(i*.08)} style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:48,position:"relative"}} className="timeline-row">
@@ -409,7 +418,7 @@ export default function Home() {
                   {i%2===0 ? (
                     <>
                       <div style={{textAlign:"right",paddingRight:40,paddingTop:8}}>
-                        <div style={{fontSize:"clamp(28px,3.5vw,44px)",fontWeight:900,color:item.current?"#00D4FF":"var(--text-5)",letterSpacing:"-0.04em",fontVariantNumeric:"tabular-nums",marginBottom:8,filter:item.current?"drop-shadow(0 0 20px rgba(0,212,255,.5))":undefined}}>{item.year}</div>
+                        <div style={{fontSize:"clamp(28px,3.5vw,44px)",fontWeight:900,color:item.current?BRAND_BLUE:"var(--text-5)",letterSpacing:"-0.04em",fontVariantNumeric:"tabular-nums",marginBottom:8,filter:item.current?`drop-shadow(0 0 20px ${BRAND_BLUE}77)`:undefined}}>{item.year}</div>
                         <GlassCard style={{padding:"20px 24px",display:"inline-block",textAlign:"left"}}>
                           <div style={{fontSize:15,fontWeight:700,color:"var(--text-1)",marginBottom:6}}>{item.title}</div>
                           <p className="t-sm" style={{color:"var(--text-3)"}}>{item.desc}</p>
@@ -421,7 +430,7 @@ export default function Home() {
                     <>
                       <div/>
                       <div style={{paddingLeft:40,paddingTop:8}}>
-                        <div style={{fontSize:"clamp(28px,3.5vw,44px)",fontWeight:900,color:item.current?"#00D4FF":"var(--text-5)",letterSpacing:"-0.04em",fontVariantNumeric:"tabular-nums",marginBottom:8,filter:item.current?"drop-shadow(0 0 20px rgba(0,212,255,.5))":undefined}}>{item.year}</div>
+                        <div style={{fontSize:"clamp(28px,3.5vw,44px)",fontWeight:900,color:item.current?BRAND_BLUE:"var(--text-5)",letterSpacing:"-0.04em",fontVariantNumeric:"tabular-nums",marginBottom:8,filter:item.current?`drop-shadow(0 0 20px ${BRAND_BLUE}77)`:undefined}}>{item.year}</div>
                         <GlassCard style={{padding:"20px 24px"}}>
                           <div style={{fontSize:15,fontWeight:700,color:"var(--text-1)",marginBottom:6}}>{item.title}</div>
                           <p className="t-sm" style={{color:"var(--text-3)"}}>{item.desc}</p>
@@ -429,12 +438,11 @@ export default function Home() {
                       </div>
                     </>
                   )}
-                  {/* Center dot */}
-                  <div style={{position:"absolute",left:"50%",top:8,transform:"translateX(-50%)",
-                    width:item.current?16:10,height:item.current?16:10,borderRadius:"50%",
-                    background:item.current?"#00D4FF":"rgba(255,255,255,.15)",
-                    boxShadow:item.current?"0 0 24px rgba(0,212,255,.8)":undefined,
-                    border:item.current?"3px solid rgba(0,212,255,.5)":undefined,
+                  {/* Center stratum marker — replaces circular dot */}
+                  <div style={{position:"absolute",left:"50%",top:12,transform:"translateX(-50%)",
+                    width:item.current?28:18,height:item.current?4:3,borderRadius:2,
+                    background:item.current?BRAND_BLUE:"rgba(255,255,255,.15)",
+                    boxShadow:item.current?`0 0 16px ${BRAND_BLUE}88`:undefined,
                     zIndex:2,
                   }}/>
                 </motion.div>
@@ -468,7 +476,7 @@ export default function Home() {
                     }}>
                       <div style={{fontSize:14,fontWeight:600,color:"var(--text-1)",lineHeight:1.5}}>{item.q}</div>
                       <motion.div animate={{rotate:activeFaq===i?45:0}} transition={{duration:.25}}
-                        style={{flexShrink:0,width:22,height:22,borderRadius:"50%",background:"var(--g2)",
+                        style={{flexShrink:0,width:22,height:22,borderRadius:4,background:"var(--g2)",
                           display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,color:"var(--text-3)"}}>+</motion.div>
                     </button>
                     <AnimatePresence>
@@ -493,9 +501,7 @@ export default function Home() {
           CTA SECTION
           ══════════════════════════════════════════════════ */}
       <section className="section" style={{position:"relative",overflow:"hidden",background:"linear-gradient(160deg,var(--bg-1),var(--bg-0))"}}>
-        <IrisBlob size={700} top="-30%" left="-15%" opacity={0.18}/>
-        <GoldBlobComp size={400} bottom="-20%" right="-10%" delay={5}/>
-        <Bubbles/>
+        <ArchitecturalBg variant="mixed"/>
         <div className="bg-grid" style={{opacity:.5}}/>
         <div className="container" style={{position:"relative",zIndex:1,textAlign:"center"}}>
           <motion.div {...FI()}>

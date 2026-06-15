@@ -3,7 +3,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LocationIcon, EmailIcon, LockIcon, ClockIcon, CheckIcon, SuccessStateIcon } from "@/components/icons/GlassIcons";
 import { FU, FI, FS, SectionHeading, GlassCard } from "@/components/DS";
-import { ArchitecturalBg } from "@/components/Strata";
 
 const REASONS = ["Governance Architecture","Portfolio Intelligence","Succession Planning","Wealth Reporting","Risk Management","General Enquiry"];
 
@@ -19,8 +18,7 @@ export default function Contact() {
     borderRadius:12,padding:"13px 16px",fontSize:14,color:"var(--text-1)",
     outline:"none",fontFamily:"'Inter',sans-serif",
     transition:"border-color .2s, box-shadow .2s",
-    boxShadow:focus===field?"0 0 0 3px rgba(0,212,255,.12)":"none",
-  });
+    boxShadow:focus===field?"0 0 0 3px rgba(0,212,255,.12)":"none"});
 
   const handleSubmit = async(e:React.FormEvent)=>{
     e.preventDefault();
@@ -32,9 +30,12 @@ export default function Contact() {
 
   return (
     <main>
+      
+
       {/* Hero */}
       <section style={{minHeight:"50vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
-        <ArchitecturalBg variant="mixed"/>
+        
+        
         <div className="bg-grid" style={{opacity:.6}}/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.div {...FI()} style={{marginBottom:24}}>
@@ -51,7 +52,8 @@ export default function Contact() {
 
       {/* Form section */}
       <section className="section-sm" style={{position:"relative",overflow:"hidden"}}>
-        <ArchitecturalBg variant="lattice"/>
+        
+        
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1.6fr",gap:"clamp(40px,5vw,96px)",alignItems:"start"}} className="grid-2">
             {/* Left — info */}
@@ -85,7 +87,7 @@ export default function Contact() {
                 <GlassCard style={{padding:"24px 28px"}}>
                   <div style={{fontSize:13,color:"var(--text-3)",lineHeight:1.8}}>
                     <strong style={{color:"var(--text-1)",display:"block",marginBottom:8}}>Minimum Mandate</strong>
-                    We typically engage with principals managing real estate portfolios of SAR 100M and above. If you are below this threshold and believe our services are still relevant, we are happy to discuss your situation.
+                    We engage with principals managing significant real estate portfolios who are seeking institutional-grade governance. If you are uncertain whether our services are appropriate, we are happy to speak in confidence.
                   </div>
                 </GlassCard>
               </motion.div>

@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FU, FI, SectionHeading, GlassCard, OrbBg, IrisBlob, MouseGlow } from "@/components/DS";
+import { FU, FI, SectionHeading, GlassCard } from "@/components/DS";
+import { ArchitecturalBg } from "@/components/Strata";
 
 const titles: Record<string,{h1:string,sub:string,badge:string}> = {
   about:   {badge:"من نحن",h1:"مكتب عائلة مُهندَس للديمومة.",sub:"تأسَّست كيوميليت لحل مشكلة محددة: معظم الثروات العقارية تُدار بصورة تفاعلية لا استباقية. نحن هنا لتغيير ذلك."},
@@ -15,10 +16,10 @@ const t = titles["projects"];
 export default function ArPage() {
   return (
     <main className="ar">
-      <MouseGlow/>
+      
       <section style={{minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
-        <OrbBg cyan violet/>
-        <IrisBlob size={480} top="-15%" right="-8%" opacity={0.28}/>
+        <ArchitecturalBg variant="mixed"/>
+        
         <div className="bg-grid" style={{opacity:.6}}/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-end"}}><span className="pill pill-c"><span className="dot-live"/>{t.badge}</span></motion.div>
