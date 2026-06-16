@@ -1173,6 +1173,85 @@ input:focus, select:focus, textarea:focus {
 :is([data-theme="light"],.light) textarea::placeholder { color: #9CA3AF }
 :is([data-theme="light"],.light) option { background: #F8F7F4 }
 
+/* ═══════════════════════════════════════════
+   QMULATE — Hero 3D Glass Logo Animations
+═══════════════════════════════════════════ */
+
+@keyframes aura-pulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50%       { opacity: 1.0; transform: translate(-50%, -50%) scale(1.10); }
+}
+
+@keyframes line-move-r {
+  0%   { transform: translateX(-120%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes line-move-l {
+  0%   { transform: translateX(120%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(-120%); opacity: 0; }
+}
+
+@keyframes line-move-d {
+  0%   { transform: translateY(-120%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(120%); opacity: 0; }
+}
+
+@keyframes scan-down {
+  0%   { top: -4px; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: calc(100% + 4px); opacity: 0; }
+}
+
+@keyframes logo-float-3d {
+  0%   { transform: translateY(0px)   rotateX(0deg)  rotateY(0deg); }
+  25%  { transform: translateY(-14px) rotateX(6deg)  rotateY(8deg); }
+  50%  { transform: translateY(-8px)  rotateX(-4deg) rotateY(14deg); }
+  75%  { transform: translateY(-16px) rotateX(8deg)  rotateY(-6deg); }
+  100% { transform: translateY(0px)   rotateX(0deg)  rotateY(0deg); }
+}
+
+@keyframes shadow-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) scaleX(0.8); }
+  50%       { opacity: 1.0; transform: translateX(-50%) scaleX(1.2); }
+}
+
+@keyframes cube-float-1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-12px) rotate(8deg); }
+  66%       { transform: translateY(-6px) rotate(-5deg); }
+}
+
+@keyframes cube-float-2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50%       { transform: translateY(-18px) rotate(12deg) scale(1.08); }
+}
+
+@keyframes cube-float-3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  40%       { transform: translateY(-10px) rotate(-8deg); }
+  80%       { transform: translateY(-5px) rotate(6deg); }
+}
+
+@keyframes corner-blink {
+  0%, 100% { opacity: 0.4; box-shadow: 0 0 4px rgba(91,124,250,0.4); }
+  50%       { opacity: 1.0; box-shadow: 0 0 12px rgba(91,124,250,1.0); }
+}
+
+@keyframes logo-sweep {
+  0%   { left: -100%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: 200%; opacity: 0; }
+}
+
 /* ══════════════════════════════
    MISC INTERACTIVE
    ══════════════════════════════ */

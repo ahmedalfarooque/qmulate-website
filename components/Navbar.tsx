@@ -61,10 +61,14 @@ export function Navbar() {
           <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:11,flexShrink:0}}>
             <img
               src="/Logo.png"
-              alt="QMULATE"
-              width={32}
-              height={40}
-              style={{ objectFit: 'contain', display: 'block' }}
+              alt="QMULATE logo"
+              width={28}
+              height={36}
+              style={{
+                objectFit: 'contain',
+                display: 'block',
+                filter: 'drop-shadow(0 0 6px rgba(91,124,250,0.5))',
+              }}
             />
             <div>
               <div style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:12,

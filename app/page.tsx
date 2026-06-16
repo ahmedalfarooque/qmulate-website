@@ -105,7 +105,74 @@ export default function Home() {
                 </motion.div>
 
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7,duration:.6}} style={{marginBottom:24}}>
-                  <Logo3D size={336} />
+                  {/* Glass-framed Logo.png — hero left column */}
+                  <div style={{
+                    position: 'relative',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '32px 40px',
+                    borderRadius: '20px',
+                    background: 'linear-gradient(135deg, rgba(91,124,250,0.08) 0%, rgba(0,196,204,0.04) 100%)',
+                    border: '1px solid rgba(91,124,250,0.20)',
+                    backdropFilter: 'blur(16px)',
+                    WebkitBackdropFilter: 'blur(16px)',
+                    boxShadow: `
+                      0 0 60px rgba(91,124,250,0.15),
+                      0 0 120px rgba(91,124,250,0.06),
+                      inset 0 1px 0 rgba(255,255,255,0.10),
+                      inset 0 -1px 0 rgba(0,0,0,0.20)
+                    `,
+                  }}>
+                    {/* Aura glow behind logo */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      borderRadius: '20px',
+                      background: 'radial-gradient(ellipse at 40% 40%, rgba(91,124,250,0.18) 0%, transparent 70%)',
+                      pointerEvents: 'none',
+                    }}/>
+                    {/* Top-left glass shine */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0, left: 0,
+                      width: '55%', height: '45%',
+                      borderRadius: '20px 20px 0 0',
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 100%)',
+                      pointerEvents: 'none',
+                    }}/>
+                    {/* Moving lightning sweep */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      borderRadius: '20px',
+                      overflow: 'hidden',
+                      pointerEvents: 'none',
+                    }}>
+                      <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: '-100%',
+                        width: '60%',
+                        height: '100%',
+                        background: 'linear-gradient(90deg, transparent 0%, rgba(91,124,250,0.15) 40%, rgba(0,196,204,0.20) 50%, rgba(91,124,250,0.15) 60%, transparent 100%)',
+                        animation: 'logo-sweep 4s ease-in-out infinite',
+                      }}/>
+                    </div>
+                    {/* The actual logo image */}
+                    <img
+                      src="/Logo.png"
+                      alt="QMULATE"
+                      style={{
+                        width: '120px',
+                        height: 'auto',
+                        objectFit: 'contain',
+                        position: 'relative',
+                        zIndex: 1,
+                        filter: 'drop-shadow(0 0 20px rgba(91,124,250,0.6)) drop-shadow(0 0 40px rgba(91,124,250,0.25))',
+                      }}
+                    />
+                  </div>
                 </motion.div>
 
                 <motion.h1
@@ -150,32 +217,249 @@ export default function Home() {
                 </motion.div>
               </div>
 
-              {/* Right — architectural governance visualization */}
+              {/* Right — 3D Glass Hero Visual */}
               <div style={{position:"relative",display:"flex",flexDirection:"column",gap:16}}>
-                {/* Strata sculpture — replaces RippleSphere */}
-                <motion.div initial={{opacity:0,scale:.5,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{delay:1.0,duration:1.2,ease:[.34,1.56,.64,1]}}
-                  style={{display:"flex",justifyContent:"center",marginBottom:8,position:"relative",minHeight:120}}>
-                  <StrataSculpture size={300} opacity={0.32} style={{position:"relative",margin:"0 auto"}}/>
-                </motion.div>
+                <motion.div initial={{opacity:0,scale:.9,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{delay:1.0,duration:1.0,ease:[.34,1.56,.64,1]}}>
+                  {/* 3D Glass Hero Visual */}
+                  <div style={{
+                    position: 'relative',
+                    width: '100%',
+                    maxWidth: '480px',
+                    height: '460px',
+                    marginLeft: 'auto',
+                  }}>
 
-                {/* Qualitative governance status cards */}
-                {[
-                  {label:"Governance Active",sub:"All mandates governed",accent:"#00D4FF",delay:1.2},
-                  {label:"Structure Intact",sub:"Long-term preservation",accent:"#8A5CFF",delay:1.35},
-                  {label:"Succession Aligned",sub:"Generational frameworks",accent:"#4D8DFF",delay:1.5},
-                ].map((m,i)=>(
-                  <motion.div key={i} initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} transition={{delay:m.delay,duration:.8}}>
-                    <GlassCard style={{padding:"18px 22px"}}>
-                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                        <div>
-                          <div style={{fontSize:"clamp(13px,1.4vw,16px)",fontWeight:700,color:m.accent,letterSpacing:"-0.01em",lineHeight:1,filter:`drop-shadow(0 0 10px ${m.accent}55)`}}>{m.label}</div>
-                          <div style={{fontSize:12,color:"var(--text-3)",marginTop:4}}>{m.sub}</div>
-                        </div>
-                        <StrataLines count={3} width={48} opacity={0.3} color={m.accent} style={{flexShrink:0}}/>
+                    {/* === BACKGROUND AURA GLOW === */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%', left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '600px', height: '500px',
+                      borderRadius: '50%',
+                      background: 'radial-gradient(ellipse, rgba(91,124,250,0.20) 0%, rgba(0,196,204,0.08) 40%, transparent 70%)',
+                      filter: 'blur(40px)',
+                      animation: 'aura-pulse 5s ease-in-out infinite',
+                      pointerEvents: 'none',
+                    }}/>
+
+                    {/* === MOVING LIGHTNING LINES === */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '28%', left: 0, right: 0,
+                      height: '1px',
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(91,124,250,0.6) 30%, rgba(0,196,204,0.9) 50%, rgba(91,124,250,0.6) 70%, transparent 100%)',
+                      animation: 'line-move-r 3.5s ease-in-out infinite',
+                      boxShadow: '0 0 8px rgba(0,196,204,0.8), 0 0 20px rgba(91,124,250,0.4)',
+                      borderRadius: '1px',
+                    }}/>
+                    <div style={{
+                      position: 'absolute',
+                      top: '62%', left: 0, right: 0,
+                      height: '1px',
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(0,196,204,0.5) 40%, rgba(91,124,250,0.8) 50%, rgba(0,196,204,0.5) 60%, transparent 100%)',
+                      animation: 'line-move-l 4.2s ease-in-out infinite',
+                      animationDelay: '1.5s',
+                      boxShadow: '0 0 8px rgba(91,124,250,0.8)',
+                    }}/>
+                    <div style={{
+                      position: 'absolute',
+                      top: 0, left: '40%',
+                      width: '1px', height: '100%',
+                      background: 'linear-gradient(180deg, transparent 0%, rgba(91,124,250,0.4) 30%, rgba(0,196,204,0.6) 50%, rgba(91,124,250,0.4) 70%, transparent 100%)',
+                      animation: 'line-move-d 5s ease-in-out infinite',
+                      animationDelay: '0.8s',
+                      boxShadow: '0 0 6px rgba(0,196,204,0.5)',
+                    }}/>
+
+                    {/* === MAIN GLASS PANEL === */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: '20px',
+                      borderRadius: '24px',
+                      background: 'linear-gradient(135deg, rgba(91,124,250,0.07) 0%, rgba(13,17,23,0.85) 50%, rgba(0,196,204,0.04) 100%)',
+                      border: '1px solid rgba(91,124,250,0.22)',
+                      backdropFilter: 'blur(20px)',
+                      WebkitBackdropFilter: 'blur(20px)',
+                      boxShadow: `
+                        0 0 0 1px rgba(255,255,255,0.04),
+                        0 8px 80px rgba(91,124,250,0.15),
+                        0 2px 8px rgba(0,0,0,0.4),
+                        inset 0 1px 0 rgba(255,255,255,0.10),
+                        inset 0 -1px 0 rgba(0,0,0,0.25)
+                      `,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      overflow: 'hidden',
+                    }}>
+                      {/* Glass panel top-left shine */}
+                      <div style={{
+                        position: 'absolute',
+                        top: 0, left: 0,
+                        width: '50%', height: '40%',
+                        borderRadius: '24px 0 0 0',
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.09) 0%, transparent 100%)',
+                        pointerEvents: 'none',
+                      }}/>
+
+                      {/* Inner scan line */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '-4px', left: 0, right: 0,
+                        height: '4px',
+                        background: 'linear-gradient(90deg, transparent, rgba(0,196,204,0.8), transparent)',
+                        animation: 'scan-down 4s linear infinite',
+                        boxShadow: '0 0 12px rgba(0,196,204,0.8)',
+                      }}/>
+
+                      {/* === LOGO.PNG — 3D FLOATING === */}
+                      <div style={{
+                        position: 'relative',
+                        animation: 'logo-float-3d 6s ease-in-out infinite',
+                        transformStyle: 'preserve-3d',
+                        perspective: '800px',
+                      }}>
+                        {/* Glow orb under logo */}
+                        <div style={{
+                          position: 'absolute',
+                          bottom: '-30px',
+                          left: '50%',
+                          transform: 'translateX(-50%)',
+                          width: '180px',
+                          height: '40px',
+                          borderRadius: '50%',
+                          background: 'radial-gradient(ellipse, rgba(91,124,250,0.5) 0%, transparent 70%)',
+                          filter: 'blur(12px)',
+                          animation: 'shadow-pulse 6s ease-in-out infinite',
+                        }}/>
+                        <img
+                          src="/Logo.png"
+                          alt="QMULATE"
+                          style={{
+                            width: '180px',
+                            height: 'auto',
+                            objectFit: 'contain',
+                            position: 'relative',
+                            zIndex: 1,
+                            filter: `
+                              drop-shadow(0 0 24px rgba(91,124,250,0.70))
+                              drop-shadow(0 0 60px rgba(91,124,250,0.30))
+                              drop-shadow(0 0 4px rgba(0,196,204,0.50))
+                            `,
+                          }}
+                        />
                       </div>
-                    </GlassCard>
-                  </motion.div>
-                ))}
+
+                      {/* Corner accent dots */}
+                      {[
+                        { top: '12px', left: '12px' },
+                        { top: '12px', right: '12px' },
+                        { bottom: '12px', left: '12px' },
+                        { bottom: '12px', right: '12px' },
+                      ].map((pos, i) => (
+                        <div key={i} style={{
+                          position: 'absolute',
+                          ...pos,
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          background: 'rgba(91,124,250,0.6)',
+                          boxShadow: '0 0 8px rgba(91,124,250,0.8)',
+                          animation: `corner-blink 2s ease-in-out infinite`,
+                          animationDelay: `${i * 0.5}s`,
+                        }}/>
+                      ))}
+
+                      {/* Top badge */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '16px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        padding: '4px 14px',
+                        borderRadius: '20px',
+                        background: 'rgba(91,124,250,0.12)',
+                        border: '1px solid rgba(91,124,250,0.30)',
+                        backdropFilter: 'blur(8px)',
+                        fontSize: '10px',
+                        letterSpacing: '0.12em',
+                        color: 'rgba(91,124,250,0.9)',
+                        whiteSpace: 'nowrap',
+                        fontFamily: 'monospace',
+                      }}>
+                        QMULATE · v7.0
+                      </div>
+
+                      {/* Bottom badge */}
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '16px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        padding: '4px 14px',
+                        borderRadius: '20px',
+                        background: 'rgba(0,196,204,0.10)',
+                        border: '1px solid rgba(0,196,204,0.25)',
+                        backdropFilter: 'blur(8px)',
+                        fontSize: '10px',
+                        letterSpacing: '0.12em',
+                        color: 'rgba(0,196,204,0.85)',
+                        whiteSpace: 'nowrap',
+                        fontFamily: 'monospace',
+                      }}>
+                        RIYADH · 2026
+                      </div>
+                    </div>
+
+                    {/* === FLOATING GLASS CUBES === */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '-10px', left: '-10px',
+                      width: '48px', height: '48px',
+                      borderRadius: '10px',
+                      background: 'linear-gradient(135deg, rgba(91,124,250,0.18) 0%, rgba(91,124,250,0.06) 100%)',
+                      border: '1px solid rgba(91,124,250,0.30)',
+                      backdropFilter: 'blur(8px)',
+                      boxShadow: '0 0 20px rgba(91,124,250,0.20), inset 0 1px 0 rgba(255,255,255,0.12)',
+                      animation: 'cube-float-1 7s ease-in-out infinite',
+                    }}/>
+                    <div style={{
+                      position: 'absolute',
+                      top: '30px', right: '-14px',
+                      width: '36px', height: '36px',
+                      borderRadius: '8px',
+                      background: 'linear-gradient(135deg, rgba(0,196,204,0.16) 0%, rgba(0,196,204,0.05) 100%)',
+                      border: '1px solid rgba(0,196,204,0.28)',
+                      backdropFilter: 'blur(6px)',
+                      boxShadow: '0 0 16px rgba(0,196,204,0.18), inset 0 1px 0 rgba(255,255,255,0.10)',
+                      animation: 'cube-float-2 5.5s ease-in-out infinite',
+                      animationDelay: '1s',
+                    }}/>
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '20px', left: '-8px',
+                      width: '28px', height: '28px',
+                      borderRadius: '6px',
+                      background: 'linear-gradient(135deg, rgba(91,124,250,0.14) 0%, transparent 100%)',
+                      border: '1px solid rgba(91,124,250,0.24)',
+                      backdropFilter: 'blur(6px)',
+                      animation: 'cube-float-3 8s ease-in-out infinite',
+                      animationDelay: '2s',
+                    }}/>
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '-8px', right: '20px',
+                      width: '40px', height: '40px',
+                      borderRadius: '9px',
+                      background: 'linear-gradient(135deg, rgba(0,196,204,0.12) 0%, transparent 100%)',
+                      border: '1px solid rgba(0,196,204,0.22)',
+                      backdropFilter: 'blur(7px)',
+                      boxShadow: '0 0 14px rgba(0,196,204,0.15)',
+                      animation: 'cube-float-1 6s ease-in-out infinite',
+                      animationDelay: '0.5s',
+                    }}/>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </HeroGlass>
