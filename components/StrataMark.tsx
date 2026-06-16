@@ -1,22 +1,14 @@
 "use client";
-/**
- * QMULATE Brand Mark — "Accumulating Strata"
- * From Logo Guideline: strata stack upward in sequence.
- * Blue top stratum = newest layer, still compounding.
- * Animation plays ONCE on entry, then rests. No loop.
- * Easing: cubic-bezier(.2,.8,.2,1) — decelerate only.
- */
-
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 const EASE: [number,number,number,number] = [0.2,0.8,0.2,1];
 
-// Strata: top → bottom order (rendered bottom→top so base enters first)
 const STRATA = [
-  { id:"s1", w:"100%", fill:"rgba(255,255,255,0.16)", delay:0.00 }, // base (bottom, longest)
+  { id:"s1", w:"100%", fill:"rgba(255,255,255,0.16)", delay:0.00 },
   { id:"s2", w:"80%",  fill:"rgba(255,255,255,0.24)", delay:0.14 },
   { id:"s3", w:"63%",  fill:"rgba(255,255,255,0.34)", delay:0.28 },
-  { id:"s4", w:"46%",  fill:"#5B7CFA",               delay:0.42 }, // top, blue, latest
+  { id:"s4", w:"46%",  fill:"#5B7CFA",               delay:0.42 },
 ];
 
 interface StrataMarkProps {
@@ -27,9 +19,12 @@ interface StrataMarkProps {
 }
 
 export function StrataMark({ size=32, animate=true, style={}, className="" }: StrataMarkProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   const pref = useReducedMotion();
-  const u = Math.max(3, size * 0.18);     // bar height
-  const gap = Math.max(2, size * 0.095);  // gap between bars
+  const u = Math.max(3, size * 0.18);
+  const gap = Math.max(2, size * 0.095);
   const totalH = 4*u + 3*gap;
   const totalW = size;
 
@@ -38,19 +33,12 @@ export function StrataMark({ size=32, animate=true, style={}, className="" }: St
       className={className}
       role="img"
       aria-label="QMULATE mark"
-      style={{
-        width: totalW,
-        height: totalH,
-        display:"flex",
-        flexDirection:"column",
-        gap,
-        ...style,
-      }}
+      style={{ width: totalW, height: totalH, display:"flex", flexDirection:"column", gap, ...style }}
     >
-      {/* Render bottom→top so base (s1) enters first in DOM */}
       {[...STRATA].reverse().map((s) => {
         const barW = parseFloat(s.w) / 100 * totalW;
-        if (!animate || pref) {
+        const shouldAnimate = animate && mounted && !pref;
+        if (!shouldAnimate) {
           return (
             <div key={s.id} style={{
               width: barW, height: u, borderRadius: u * 0.12,

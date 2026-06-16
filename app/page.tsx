@@ -3,7 +3,6 @@ import { ServiceIcon, CapabilityIcon } from "@/components/icons/GlassIcons";
 import Link from "next/link";
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { StrataMark } from "@/components/StrataMark";
 import {
   FU, FI, FS, FL, SectionHeading, GlassCard, FeatureCard,
   HeroGlass, Divider
@@ -13,6 +12,8 @@ import {
   GovernancePulse, GlassFacade, VerticalFins, StructuralLattice,
   StrataSculpture, BRAND_BLUE
 } from "@/components/Strata";
+import { PageBackground } from "@/components/PageBackground";
+import { Logo3D } from "@/components/Logo3D";
 
 /* ── Service tabs ── */
 const SERVICES = [
@@ -79,7 +80,8 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress,[0,1],["0%","20%"]);
 
   return (
-    <main className="hero-page">
+    <main className="hero-page" style={{ position: 'relative' }}>
+      <PageBackground variant="home" />
 
       {/* ══════════════════════════════════════════════════
           HERO — Full-viewport glass experience
@@ -103,7 +105,7 @@ export default function Home() {
                 </motion.div>
 
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7,duration:.6}} style={{marginBottom:24}}>
-                  <StrataMark size={48} animate style={{color:"var(--text-1)"}}/>
+                  <Logo3D size={336} />
                 </motion.div>
 
                 <motion.h1

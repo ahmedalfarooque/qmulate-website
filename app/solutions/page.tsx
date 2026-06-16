@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { GovernanceIcon, PortfolioIcon, AIIcon, CrossBorderIcon, RiskIcon, DigitalIcon, DocumentIcon, WealthIcon } from "@/components/icons/GlassIcons";
 import { FU, FI, FS, SectionHeading, GlassCard } from "@/components/DS";
 import { ArchitecturalBg } from "@/components/Strata";
+import { PageBackground } from "@/components/PageBackground";
 
 const SOLUTIONS = [
   {icon:"🏛️",title:"Governance Platform",color:"var(--cyan)",desc:"End-to-end governance infrastructure — constitutional documents, mandate frameworks, entity structures, and succession protocols — deployed as a unified, auditable system.",features:["Constitutional document library","Board governance tools","Succession protocol engine","Mandate tracking dashboard","Audit trail and documentation","Regulatory compliance monitoring"]},
@@ -16,7 +17,8 @@ const SOLUTIONS = [
 
 export default function Solutions() {
   return (
-    <main>
+    <main style={{ position: 'relative' }}>
+      <PageBackground variant="solutions" />
       {/* Hero */}
       <section style={{minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
         <ArchitecturalBg variant="mixed"/>

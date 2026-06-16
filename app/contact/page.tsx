@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LocationIcon, EmailIcon, LockIcon, ClockIcon, CheckIcon, SuccessStateIcon } from "@/components/icons/GlassIcons";
 import { FU, FI, FS, SectionHeading, GlassCard } from "@/components/DS";
 import { ArchitecturalBg } from "@/components/Strata";
+import { PageBackground } from "@/components/PageBackground";
 
 const REASONS = ["Governance Architecture","Portfolio Intelligence","Succession Planning","Wealth Reporting","Risk Management","General Enquiry"];
 
@@ -31,7 +32,8 @@ export default function Contact() {
   };
 
   return (
-    <main>
+    <main style={{ position: 'relative' }}>
+      <PageBackground variant="contact" />
       {/* Hero */}
       <section style={{minHeight:"50vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
         <ArchitecturalBg variant="mixed"/>

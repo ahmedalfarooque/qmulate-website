@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ServiceIcon, ProcessIcon } from "@/components/icons/GlassIcons";
 import { FU, FI, FS, SectionHeading, GlassCard, FeatureCard } from "@/components/DS";
 import { ArchitecturalBg, BRAND_BLUE } from "@/components/Strata";
+import { PageBackground } from "@/components/PageBackground";
 
 const SERVICES = [
   { id:"stewardship", icon:"◈", label:"Property Stewardship", color:"var(--cyan)",
@@ -91,7 +92,8 @@ export default function Services() {
   const [active, setActive] = useState(0);
 
   return (
-    <main>
+    <main style={{ position: 'relative' }}>
+      <PageBackground variant="services" />
       {/* Hero */}
       <section style={{minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
         <ArchitecturalBg variant="mixed"/>

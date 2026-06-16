@@ -9,6 +9,7 @@ import {
 import {
   ArchitecturalBg, StrataLines, GovernancePulse, BRAND_BLUE
 } from "@/components/Strata";
+import { PageBackground } from "@/components/PageBackground";
 
 const PRINCIPLES = [
   { n:"01", title:"Governance over returns", desc:"We don't optimise for yield. We build the structural frameworks that protect and perpetuate capital across market cycles and family generations." },
@@ -33,7 +34,8 @@ const TEAM = [
 
 export default function About() {
   return (
-    <main>
+    <main style={{ position: 'relative' }}>
+      <PageBackground variant="about" />
       {/* ── Hero ── */}
       <section style={{minHeight:"72vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
         <ArchitecturalBg variant="mixed"/>

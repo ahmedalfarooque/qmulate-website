@@ -13,6 +13,7 @@ import {
   StrataSculpture, GlassFacade, VerticalFins,
   StructuralLattice, BRAND_BLUE,
 } from "@/components/Strata";
+import { PageBackground } from "@/components/PageBackground";
 
 const PROJECTS = [
   {
@@ -55,7 +56,8 @@ export default function Projects() {
   const project = PROJECTS[active];
 
   return (
-    <main className="hero-page">
+    <main className="hero-page" style={{ position: 'relative' }}>
+      <PageBackground variant="projects" />
 
       {/* ══════════════════════════════════════════════════
           HERO

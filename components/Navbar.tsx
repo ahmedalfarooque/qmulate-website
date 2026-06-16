@@ -59,7 +59,13 @@ export function Navbar() {
 
           {/* ── Logo ── */}
           <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:11,flexShrink:0}}>
-            <StrataMark size={26} animate style={{color:"rgba(255,255,255,0.85)"}}/>
+            <img
+              src="/Logo.png"
+              alt="QMULATE"
+              width={32}
+              height={40}
+              style={{ objectFit: 'contain', display: 'block' }}
+            />
             <div>
               <div style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:12,
                 letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>

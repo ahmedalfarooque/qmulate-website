@@ -10,6 +10,7 @@ import {
 import {
   ArchitecturalBg, StrataLines, GovernancePulse, StrataSculpture, BRAND_BLUE
 } from "@/components/Strata";
+import { PageBackground } from "@/components/PageBackground";
 
 const SERVICES_AR = [
   { id:"stewardship", icon:"◈", label:"إدارة العقارات", color:"var(--cyan)", headline:"إشراف احترافي يحافظ على القيمة ويضاعفها.", body:"نُدير محفظتك العقارية كمنظومة موحّدة ومحكومة — وليس مجرد مجموعة أصول متفرقة. كل قرار يُتَّخذ ضمن إطار حوكمة موثَّق يضمن الاتساق والمساءلة والقيمة طويلة الأمد.", items:["إطار حوكمة موحَّد","تقارير ربعية للأداء والحوكمة","تجميع مراكز متعددة الحراس","توجيه القياسي ونسب الأداء","متابعة الامتثال التنظيمي","تقارير التموضع الاستراتيجي"] },
@@ -22,7 +23,8 @@ export default function ArHome() {
   const [activeService, setActiveService] = useState(0);
 
   return (
-    <main className="hero-page ar">
+    <main className="hero-page ar" style={{ position: 'relative' }}>
+      <PageBackground variant="home" />
 
       {/* ── HERO ── */}
       <section style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",position:"relative",overflow:"hidden",background:"var(--bg-0)",padding:"clamp(90px,12vw,120px) clamp(20px,4vw,48px) 40px"}}>
