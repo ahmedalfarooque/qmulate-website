@@ -88,16 +88,23 @@ export const preset = {
 
 export function PageTransition({ children }: { children: ReactNode }) {
   const should = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  // SSR and initial client render agree: opacity 0 (no mismatch).
+  // After mount, CSS transition fades in — no framer-motion initial state on the server.
   if (should) return <>{children}</>;
   return (
-    <motion.div
-      initial={{ opacity:0, y:16, filter:"blur(4px)" }}
-      animate={{ opacity:1, y:0, filter:"blur(0px)" }}
-      transition={{ duration:DUR.slow, ease:EASE.luxury }}
-      style={{ minHeight:"100%" }}
+    <div
+      style={{
+        opacity: mounted ? 1 : 0,
+        transform: mounted ? 'none' : 'translateY(12px)',
+        transition: mounted ? `opacity ${DUR.slow}s cubic-bezier(${EASE.luxury.join(',')}), transform ${DUR.slow}s cubic-bezier(${EASE.luxury.join(',')})` : 'none',
+        minHeight: '100%',
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
