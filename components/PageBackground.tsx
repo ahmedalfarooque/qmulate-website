@@ -8,7 +8,7 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
   useEffect(() => setMounted(true), [])
   if (!mounted) return null
 
-  const isBlue = variant === 'home' || variant === 'about' || variant === 'solutions' || variant === 'contact'
+  const isBlue = ['home', 'about', 'solutions', 'contact'].includes(variant)
   const accentA = isBlue ? '91,124,250' : '0,196,204'
   const accentB = isBlue ? '0,196,204' : '91,124,250'
 
@@ -35,29 +35,24 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
           100%{transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg)}
         }
         @keyframes qbg-glow {
-          0%,100%{opacity:0.08}
-          50%{opacity:0.20}
+          0%,100%{opacity:0.08} 50%{opacity:0.22}
         }
         @keyframes qbg-shimmer {
-          0%,100%{opacity:0.04}
-          50%{opacity:0.18}
+          0%,100%{opacity:0.04} 50%{opacity:0.18}
         }
         @keyframes qbg-line-r {
-          0%{transform:translateX(-110%) scaleX(0.4);opacity:0}
-          8%{opacity:1;transform:translateX(-60%) scaleX(1)}
-          92%{opacity:1;transform:translateX(60%) scaleX(1)}
-          100%{transform:translateX(110%) scaleX(0.4);opacity:0}
+          0%{transform:translateX(-110%);opacity:0}
+          8%{opacity:1}92%{opacity:1}
+          100%{transform:translateX(110%);opacity:0}
         }
         @keyframes qbg-line-l {
           0%{transform:translateX(110%);opacity:0}
-          8%{opacity:1}
-          92%{opacity:1}
+          8%{opacity:1}92%{opacity:1}
           100%{transform:translateX(-110%);opacity:0}
         }
         @keyframes qbg-line-d {
           0%{transform:translateY(-110%);opacity:0}
-          8%{opacity:1}
-          92%{opacity:1}
+          8%{opacity:1}92%{opacity:1}
           100%{transform:translateY(110%);opacity:0}
         }
         @keyframes qbg-cube-bob {
@@ -74,6 +69,14 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
           25%{transform:translate(10px,-14px) rotateZ(8deg)}
           75%{transform:translate(-8px,-10px) rotateZ(-6deg)}
         }
+        @keyframes qbg-diamond-spin {
+          0%,100%{transform:rotate(45deg) translateY(0px) scale(1)}
+          50%{transform:rotate(225deg) translateY(-12px) scale(1.08)}
+        }
+        @keyframes qbg-diamond-pulse {
+          0%,100%{transform:rotate(45deg) scale(1);opacity:0.5}
+          50%{transform:rotate(45deg) scale(1.15);opacity:0.9}
+        }
         .qbg-root {
           position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;perspective:1400px;
         }
@@ -81,7 +84,7 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
           position:absolute;transform-style:preserve-3d;will-change:transform,opacity;
         }
         @media(prefers-reduced-motion:reduce){.qbg-root *{animation:none!important}}
-        @media(max-width:768px){.qbg-root{opacity:0.6}}
+        @media(max-width:768px){.qbg-root{opacity:0.55}}
       `}</style>
 
       <div className="qbg-root" aria-hidden="true">
@@ -131,7 +134,7 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
           animationDelay:'3s',
         }}/>
 
-        {/* ── 3D GLASS CUBES ── */}
+        {/* ── FLOATING 3D GLASS CUBES ── */}
         <div className="qbg-shape" style={{
           top:'8%', left:'4%', width:72, height:72, borderRadius:16,
           background:`linear-gradient(135deg, rgba(${accentA},0.16) 0%, rgba(${accentA},0.05) 100%)`,
@@ -163,94 +166,120 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
           border:`1px solid rgba(${accentB},0.20)`,
           backdropFilter:'blur(6px)',
           animation:'qbg-cube-bob 6s ease-in-out infinite',
-          animationDelay:'3.5s',
-        }}/>
-        <div className="qbg-shape" style={{
-          bottom:'8%', right:'5%', width:64, height:64, borderRadius:14,
-          background:`linear-gradient(135deg, rgba(${accentA},0.14) 0%, rgba(${accentB},0.06) 100%)`,
-          border:`1px solid rgba(${accentA},0.22)`,
-          backdropFilter:'blur(8px)', WebkitBackdropFilter:'blur(8px)',
-          boxShadow:`0 0 20px rgba(${accentA},0.15), inset 0 1px 0 rgba(255,255,255,0.10)`,
-          animation:'qbg-cube-drift 8s ease-in-out infinite',
-          animationDelay:'1.5s',
-        }}/>
-        <div className="qbg-shape" style={{
-          bottom:'15%', left:'5%', width:44, height:44, borderRadius:10,
-          background:`linear-gradient(135deg, rgba(${accentB},0.13) 0%, transparent 100%)`,
-          border:`1px solid rgba(${accentB},0.22)`,
-          backdropFilter:'blur(7px)',
-          animation:'qbg-cube-spin 12s ease-in-out infinite',
           animationDelay:'0.5s',
         }}/>
         <div className="qbg-shape" style={{
-          top:'5%', left:'48%', width:20, height:20, borderRadius:4,
-          background:`rgba(${accentA},0.18)`,
-          border:`1px solid rgba(${accentA},0.35)`,
-          boxShadow:`0 0 12px rgba(${accentA},0.4)`,
-          animation:'qbg-cube-bob 5s ease-in-out infinite',
+          bottom:'15%', left:'8%', width:22, height:22, borderRadius:5,
+          background:`linear-gradient(135deg, rgba(${accentA},0.10) 0%, transparent 100%)`,
+          border:`1px solid rgba(${accentA},0.18)`,
+          backdropFilter:'blur(4px)',
+          animation:'qbg-cube-drift 13s ease-in-out infinite',
           animationDelay:'4s',
         }}/>
+        <div className="qbg-shape" style={{
+          bottom:'8%', right:'7%', width:44, height:44, borderRadius:10,
+          background:`linear-gradient(135deg, rgba(${accentB},0.13) 0%, rgba(${accentA},0.04) 100%)`,
+          border:`1px solid rgba(${accentB},0.22)`,
+          backdropFilter:'blur(8px)',
+          boxShadow:`0 0 16px rgba(${accentB},0.14)`,
+          animation:'qbg-cube-spin 10s ease-in-out infinite',
+          animationDelay:'3s',
+        }}/>
 
-        {/* ── PAGE-SPECIFIC SHAPES ── */}
+        {/* ── FLOATING 3D DIAMOND SHAPES ── */}
+        <div className="qbg-shape" style={{
+          top:'35%', left:'10%', width:40, height:40,
+          background:`linear-gradient(135deg, rgba(${accentA},0.18) 0%, rgba(${accentB},0.08) 100%)`,
+          border:`1px solid rgba(${accentA},0.32)`,
+          backdropFilter:'blur(8px)',
+          boxShadow:`0 0 20px rgba(${accentA},0.20), inset 0 1px 0 rgba(255,255,255,0.14)`,
+          animation:'qbg-diamond-spin 8s ease-in-out infinite',
+          transform:'rotate(45deg)',
+        }}/>
+        <div className="qbg-shape" style={{
+          top:'18%', left:'50%', width:28, height:28,
+          background:`linear-gradient(135deg, rgba(${accentB},0.16) 0%, rgba(${accentA},0.06) 100%)`,
+          border:`1px solid rgba(${accentB},0.28)`,
+          backdropFilter:'blur(6px)',
+          boxShadow:`0 0 14px rgba(${accentB},0.18)`,
+          animation:'qbg-diamond-pulse 6s ease-in-out infinite',
+          transform:'rotate(45deg)',
+          animationDelay:'1.5s',
+        }}/>
+        <div className="qbg-shape" style={{
+          top:'60%', right:'12%', width:22, height:22,
+          background:`linear-gradient(135deg, rgba(${accentA},0.14) 0%, transparent 100%)`,
+          border:`1px solid rgba(${accentA},0.24)`,
+          backdropFilter:'blur(4px)',
+          animation:'qbg-diamond-spin 10s ease-in-out infinite',
+          transform:'rotate(45deg)',
+          animationDelay:'3s',
+        }}/>
+        <div className="qbg-shape" style={{
+          bottom:'20%', left:'55%', width:32, height:32,
+          background:`linear-gradient(135deg, rgba(${accentB},0.12) 0%, transparent 100%)`,
+          border:`1px solid rgba(${accentB},0.22)`,
+          backdropFilter:'blur(6px)',
+          animation:'qbg-diamond-pulse 9s ease-in-out infinite',
+          transform:'rotate(45deg)',
+          animationDelay:'2s',
+        }}/>
+
+        {/* ── PAGE-SPECIFIC SVG SHAPES ── */}
 
         {variant === 'home' && <>
           <div className="qbg-shape" style={{
-            top:-40, left:-60, width:560, height:340,
-            animation:'qbg-floatY 14s ease-in-out infinite',
+            top:-60, left:-80, width:580, height:380,
+            animation:'qbg-floatY 14s ease-in-out infinite', opacity:0.22,
           }}>
-            <svg width="560" height="340" viewBox="0 0 560 340" fill="none">
+            <svg width="580" height="380" viewBox="0 0 580 380" fill="none">
               <defs>
-                <linearGradient id="h-g1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#5B7CFA" stopOpacity="0.22"/>
-                  <stop offset="100%" stopColor="#5B7CFA" stopOpacity="0.03"/>
+                <linearGradient id="hg1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#5B7CFA" stopOpacity="0.35"/>
+                  <stop offset="100%" stopColor="#5B7CFA" stopOpacity="0.04"/>
                 </linearGradient>
               </defs>
-              {Array.from({length:7}).map((_,row)=>Array.from({length:11}).map((_,col)=>{
-                const glow=(row+col)%3===0?0.20:(row+col)%2===0?0.09:0.03
-                return <rect key={`${row}-${col}`} x={col*50+3} y={row*46+3} width={42} height={38} rx={8}
-                  fill={`rgba(91,124,250,${glow})`} stroke="rgba(91,124,250,0.12)" strokeWidth="0.5"
-                  style={{animation:`qbg-shimmer ${10+(row+col)*0.4}s ease-in-out infinite`,animationDelay:`${(row+col)*0.15}s`}}/>
-              }))}
-              <rect x="0" y="0" width="560" height="340" rx="18"
-                fill="url(#h-g1)" stroke="rgba(255,255,255,0.06)" strokeWidth="1"/>
+              {Array.from({length:7}).map((_,row)=>Array.from({length:11}).map((_,col)=>(
+                <rect key={`${row}-${col}`}
+                  x={col*52+4} y={row*50+4} width={42} height={40} rx={8}
+                  fill={`rgba(91,124,250,${0.04+(row+col)%4*0.025})`}
+                  stroke="rgba(91,124,250,0.12)" strokeWidth="0.6"
+                  style={{animation:`qbg-shimmer ${9+(row+col)*0.4}s ease-in-out infinite`,animationDelay:`${(row+col)*0.14}s`}}
+                />
+              )))}
+              <rect x="0" y="0" width="580" height="380" rx="20"
+                stroke="rgba(255,255,255,0.06)" strokeWidth="1" fill="none"/>
             </svg>
           </div>
-
           <div className="qbg-shape" style={{
-            top:'10%', right:-30, width:300, height:400,
+            top:'15%', right:-40, width:320, height:420,
             animation:'qbg-floatX 10s ease-in-out infinite',
-            animationDelay:'2s',
+            animationDelay:'2s', opacity:0.18,
           }}>
-            <svg width="300" height="400" viewBox="0 0 300 400" fill="none">
-              <defs>
-                <linearGradient id="h-g2" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#5B7CFA" stopOpacity="0"/>
-                  <stop offset="40%" stopColor="#5B7CFA" stopOpacity="0.22"/>
-                  <stop offset="70%" stopColor="#00C4CC" stopOpacity="0.18"/>
-                  <stop offset="100%" stopColor="transparent"/>
-                </linearGradient>
-              </defs>
-              {Array.from({length:12}).map((_,i)=>(
-                <rect key={i} x={i*24+3} y={20} width={16} height={360} rx={8}
-                  fill={`rgba(91,124,250,${0.05+(i%3)*0.05})`}
-                  stroke="rgba(91,124,250,0.14)" strokeWidth="0.5"
-                  style={{animation:`qbg-shimmer ${8+i*0.3}s ease-in-out infinite`,animationDelay:`${i*0.2}s`}}/>
+            <svg width="320" height="420" viewBox="0 0 320 420" fill="none">
+              {Array.from({length:13}).map((_,i)=>(
+                <rect key={i}
+                  x={i*24+4} y={20} width={15} height={380} rx={7}
+                  fill={`rgba(91,124,250,${0.06+(i%3)*0.05})`}
+                  stroke="rgba(91,124,250,0.15)" strokeWidth="0.5"
+                  style={{animation:`qbg-shimmer ${7+i*0.3}s ease-in-out infinite`,animationDelay:`${i*0.2}s`}}
+                />
               ))}
-              <rect x="0" y="0" width="300" height="400" fill="url(#h-g2)"/>
             </svg>
           </div>
-
           <div className="qbg-shape" style={{
-            bottom:-30, left:'18%', width:480, height:280,
+            bottom:-40, left:'20%', width:500, height:300,
             animation:'qbg-breathe 16s ease-in-out infinite',
-            animationDelay:'4s',
+            animationDelay:'4s', opacity:0.15,
           }}>
-            <svg width="480" height="280" viewBox="0 0 480 280" fill="none">
-              {Array.from({length:9}).map((_,row)=>Array.from({length:15}).map((_,col)=>{
-                const cx=col*32+(row%2)*16, cy=row*28
-                return <polygon key={`${row}-${col}`}
-                  points={`${cx},${cy-13} ${cx+15},${cy} ${cx},${cy+13} ${cx-15},${cy}`}
-                  fill="rgba(91,124,250,0.04)" stroke="rgba(91,124,250,0.14)" strokeWidth="0.5"/>
+            <svg width="500" height="300" viewBox="0 0 500 300" fill="none">
+              {Array.from({length:9}).map((_,row)=>Array.from({length:13}).map((_,col)=>{
+                const cx=col*38+(row%2)*19, cy=row*30
+                return(
+                  <polygon key={`${row}-${col}`}
+                    points={`${cx},${cy-13} ${cx+15},${cy} ${cx},${cy+13} ${cx-15},${cy}`}
+                    fill="rgba(91,124,250,0.05)" stroke="rgba(91,124,250,0.16)" strokeWidth="0.6"/>
+                )
               }))}
             </svg>
           </div>
@@ -258,27 +287,31 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
 
         {variant === 'about' && <>
           <div className="qbg-shape" style={{
-            top:-60, left:'8%', width:580, height:340,
-            animation:'qbg-spin 22s ease-in-out infinite', opacity:0.65,
+            top:-40, left:-60, width:600, height:400,
+            animation:'qbg-breathe 16s ease-in-out infinite', opacity:0.18,
           }}>
-            <svg width="580" height="340" viewBox="0 0 580 340" fill="none">
-              {Array.from({length:11}).map((_,row)=>Array.from({length:18}).map((_,col)=>{
-                const cx=col*32+(row%2)*16, cy=row*28
-                return <polygon key={`${row}-${col}`}
-                  points={`${cx},${cy-12} ${cx+14},${cy} ${cx},${cy+12} ${cx-14},${cy}`}
-                  fill="rgba(91,124,250,0.04)" stroke="rgba(91,124,250,0.14)" strokeWidth="0.5"/>
+            <svg width="600" height="400" viewBox="0 0 600 400" fill="none">
+              {Array.from({length:11}).map((_,row)=>Array.from({length:14}).map((_,col)=>{
+                const cx=col*42+(row%2)*21, cy=row*35
+                return(
+                  <polygon key={`${row}-${col}`}
+                    points={`${cx},${cy-14} ${cx+16},${cy} ${cx},${cy+14} ${cx-16},${cy}`}
+                    fill="rgba(91,124,250,0.04)" stroke="rgba(91,124,250,0.15)" strokeWidth="0.5"/>
+                )
               }))}
             </svg>
           </div>
           <div className="qbg-shape" style={{
-            top:'20%', right:-50, width:260, height:360,
-            animation:'qbg-floatY 12s ease-in-out infinite', animationDelay:'3s',
+            top:'20%', right:-100, width:380, height:420,
+            animation:'qbg-floatY 12s ease-in-out infinite',
+            animationDelay:'3s', opacity:0.16,
           }}>
-            <svg width="260" height="360" viewBox="0 0 260 360" fill="none">
-              {Array.from({length:10}).map((_,i)=>(
-                <rect key={i} x={i*25+3} y={30} width={17} height={300} rx={8}
-                  fill={`rgba(91,124,250,${0.05+(i%4)*0.04})`}
-                  stroke="rgba(91,124,250,0.12)" strokeWidth="0.5"/>
+            <svg width="380" height="420" viewBox="0 0 380 420" fill="none">
+              {Array.from({length:14}).map((_,i)=>(
+                <rect key={i}
+                  x={i*26+4} y={20} width={17} height={380} rx={8}
+                  fill={`rgba(91,124,250,${0.05+(i%3)*0.04})`}
+                  stroke="rgba(91,124,250,0.13)" strokeWidth="0.5"/>
               ))}
             </svg>
           </div>
@@ -286,37 +319,33 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
 
         {variant === 'services' && <>
           <div className="qbg-shape" style={{
-            top:-40, right:'3%', width:460, height:340,
-            animation:'qbg-floatX 11s ease-in-out infinite',
+            top:-60, right:'5%', width:550, height:400,
+            animation:'qbg-floatX 11s ease-in-out infinite', opacity:0.18,
           }}>
-            <svg width="460" height="340" viewBox="0 0 460 340" fill="none">
-              <defs>
-                <linearGradient id="sv-g1" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#00C4CC" stopOpacity="0"/>
-                  <stop offset="40%" stopColor="#00C4CC" stopOpacity="0.20"/>
-                  <stop offset="60%" stopColor="#5B7CFA" stopOpacity="0.18"/>
-                  <stop offset="100%" stopColor="transparent"/>
-                </linearGradient>
-              </defs>
-              {Array.from({length:17}).map((_,i)=>(
-                <rect key={i} x={i*26+3} y={20} width={18} height={300} rx={9}
-                  fill={`rgba(0,196,204,${0.04+(i%4)*0.05})`}
+            <svg width="550" height="400" viewBox="0 0 550 400" fill="none">
+              {Array.from({length:16}).map((_,i)=>(
+                <rect key={i}
+                  x={i*33+4} y={20} width={22} height={360} rx={10}
+                  fill={`rgba(0,196,204,${0.05+(i%4)*0.03})`}
                   stroke="rgba(0,196,204,0.14)" strokeWidth="0.5"
-                  style={{animation:`qbg-shimmer ${9+i*0.25}s ease-in-out infinite`,animationDelay:`${i*0.18}s`}}/>
+                  style={{animation:`qbg-shimmer ${8+i*0.25}s ease-in-out infinite`,animationDelay:`${i*0.18}s`}}
+                />
               ))}
-              <rect x="0" y="0" width="460" height="340" fill="url(#sv-g1)"/>
             </svg>
           </div>
           <div className="qbg-shape" style={{
-            top:'28%', left:-50, width:400, height:260,
-            animation:'qbg-floatY 15s ease-in-out infinite', animationDelay:'3s',
+            top:'30%', left:-80, width:420, height:320,
+            animation:'qbg-breathe 15s ease-in-out infinite',
+            animationDelay:'3s', opacity:0.14,
           }}>
-            <svg width="400" height="260" viewBox="0 0 400 260" fill="none">
-              {Array.from({length:9}).map((_,row)=>Array.from({length:12}).map((_,col)=>{
-                const cx=col*33+(row%2)*16, cy=row*26
-                return <polygon key={`${row}-${col}`}
-                  points={`${cx},${cy-12} ${cx+14},${cy} ${cx},${cy+12} ${cx-14},${cy}`}
-                  fill="rgba(0,196,204,0.04)" stroke="rgba(0,196,204,0.15)" strokeWidth="0.5"/>
+            <svg width="420" height="320" viewBox="0 0 420 320" fill="none">
+              {Array.from({length:9}).map((_,row)=>Array.from({length:11}).map((_,col)=>{
+                const cx=col*38+(row%2)*19, cy=row*32
+                return(
+                  <polygon key={`${row}-${col}`}
+                    points={`${cx},${cy-14} ${cx+16},${cy} ${cx},${cy+14} ${cx-16},${cy}`}
+                    fill="rgba(0,196,204,0.04)" stroke="rgba(0,196,204,0.15)" strokeWidth="0.5"/>
+                )
               }))}
             </svg>
           </div>
@@ -324,69 +353,50 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
 
         {variant === 'solutions' && <>
           <div className="qbg-shape" style={{
-            top:-80, left:'12%', width:600, height:360,
-            animation:'qbg-floatY 13s ease-in-out infinite',
+            top:-100, left:'15%', width:620, height:380,
+            animation:'qbg-floatY 13s ease-in-out infinite', opacity:0.20,
           }}>
-            <svg width="600" height="360" viewBox="0 0 600 360" fill="none">
-              <defs>
-                <radialGradient id="sol-g1" cx="50%" cy="40%" r="60%">
-                  <stop offset="0%" stopColor="#5B7CFA" stopOpacity="0.20"/>
-                  <stop offset="100%" stopColor="transparent"/>
-                </radialGradient>
-              </defs>
-              {Array.from({length:8}).map((_,row)=>Array.from({length:12}).map((_,col)=>{
-                const dist=Math.sqrt(Math.pow(col-6,2)+Math.pow(row-4,2))
-                const alpha=Math.max(0,0.22-dist*0.025)
-                return <rect key={`${row}-${col}`} x={col*49+3} y={row*43+3} width={41} height={35} rx={7}
-                  fill={`rgba(91,124,250,${alpha})`} stroke="rgba(91,124,250,0.10)" strokeWidth="0.5"/>
-              }))}
-              <rect x="0" y="0" width="600" height="360" fill="url(#sol-g1)" rx="18"/>
+            <svg width="620" height="380" viewBox="0 0 620 380" fill="none">
+              {Array.from({length:7}).map((_,row)=>Array.from({length:12}).map((_,col)=>(
+                <rect key={`${row}-${col}`}
+                  x={col*52+4} y={row*52+4} width={43} height={43} rx={9}
+                  fill={`rgba(91,124,250,${0.05+(row+col)%3*0.03})`}
+                  stroke="rgba(91,124,250,0.14)" strokeWidth="0.6"/>
+              )))}
             </svg>
           </div>
         </>}
 
         {variant === 'projects' && <>
           <div className="qbg-shape" style={{
-            top:-60, right:'8%', width:540, height:340,
-            animation:'qbg-spin 24s ease-in-out infinite', opacity:0.60,
+            top:-80, right:'10%', width:560, height:380,
+            animation:'qbg-breathe 15s ease-in-out infinite', opacity:0.17,
           }}>
-            <svg width="540" height="340" viewBox="0 0 540 340" fill="none">
-              <defs>
-                <linearGradient id="pr-g1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#00C4CC" stopOpacity="0.16"/>
-                  <stop offset="100%" stopColor="transparent"/>
-                </linearGradient>
-              </defs>
-              {Array.from({length:12}).map((_,row)=>Array.from({length:17}).map((_,col)=>{
-                const cx=col*32+(row%2)*16, cy=row*26
-                return <polygon key={`${row}-${col}`}
-                  points={`${cx},${cy-12} ${cx+14},${cy} ${cx},${cy+12} ${cx-14},${cy}`}
-                  fill="rgba(0,196,204,0.04)" stroke="rgba(0,196,204,0.14)" strokeWidth="0.5"/>
+            <svg width="560" height="380" viewBox="0 0 560 380" fill="none">
+              {Array.from({length:10}).map((_,row)=>Array.from({length:13}).map((_,col)=>{
+                const cx=col*42+(row%2)*21, cy=row*36
+                return(
+                  <polygon key={`${row}-${col}`}
+                    points={`${cx},${cy-15} ${cx+17},${cy} ${cx},${cy+15} ${cx-17},${cy}`}
+                    fill="rgba(0,196,204,0.04)" stroke="rgba(0,196,204,0.16)" strokeWidth="0.5"/>
+                )
               }))}
-              <rect x="0" y="0" width="540" height="340" fill="url(#pr-g1)" rx="18"/>
             </svg>
           </div>
         </>}
 
         {variant === 'contact' && <>
           <div className="qbg-shape" style={{
-            top:-20, left:-50, width:380, height:460,
-            animation:'qbg-floatX 16s ease-in-out infinite',
+            top:-30, left:-80, width:500, height:360,
+            animation:'qbg-floatX 16s ease-in-out infinite', opacity:0.16,
           }}>
-            <svg width="380" height="460" viewBox="0 0 380 460" fill="none">
-              <defs>
-                <linearGradient id="ct-g1" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#5B7CFA" stopOpacity="0"/>
-                  <stop offset="40%" stopColor="#5B7CFA" stopOpacity="0.18"/>
-                  <stop offset="100%" stopColor="transparent"/>
-                </linearGradient>
-              </defs>
+            <svg width="500" height="360" viewBox="0 0 500 360" fill="none">
               {Array.from({length:14}).map((_,i)=>(
-                <rect key={i} x={i*26+3} y={30} width={18} height={400} rx={9}
-                  fill={`rgba(91,124,250,${0.04+(i%5)*0.03})`}
-                  stroke="rgba(91,124,250,0.12)" strokeWidth="0.5"/>
+                <rect key={i}
+                  x={i*34+4} y={20} width={22} height={320} rx={10}
+                  fill={`rgba(91,124,250,${0.05+(i%3)*0.04})`}
+                  stroke="rgba(91,124,250,0.13)" strokeWidth="0.5"/>
               ))}
-              <rect x="0" y="0" width="380" height="460" fill="url(#ct-g1)"/>
             </svg>
           </div>
         </>}

@@ -7,9 +7,10 @@ interface GlassIconProps {
   color?: 'blue' | 'cyan' | 'white'
   glow?: boolean
   style?: CSSProperties
+  className?: string
 }
 
-export function GlassIcon({ children, size = 48, color = 'blue', glow = true, style }: GlassIconProps) {
+export function GlassIcon({ children, size = 48, color = 'blue', glow = true, style, className }: GlassIconProps) {
   const colorMap = {
     blue:  { rgb: '91,124,250',  border: 'rgba(91,124,250,0.30)' },
     cyan:  { rgb: '0,196,204',   border: 'rgba(0,196,204,0.28)'  },
@@ -19,7 +20,7 @@ export function GlassIcon({ children, size = 48, color = 'blue', glow = true, st
   const r = size * 0.28
 
   return (
-    <div style={{
+    <div className={className} style={{
       position: 'relative',
       width: size,
       height: size,
