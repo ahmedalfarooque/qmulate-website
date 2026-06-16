@@ -1648,3 +1648,47 @@ main {
   -webkit-backdrop-filter: blur(8px);
   border-radius: 12px;
 }
+
+/* ══════════════════════════════
+   LOGO — transparent bg, blend mode
+   ══════════════════════════════ */
+
+/* Dark mode: screen blend removes black pixels, keeps blue/white bars visible */
+.logo-img,
+img[alt="QMULATE"],
+img[alt="QMULATE logo"] {
+  mix-blend-mode: screen;
+}
+
+/* Light mode: revert blend mode, use shadow for definition instead */
+[data-theme="light"] .logo-img,
+[data-theme="light"] img[alt="QMULATE"],
+[data-theme="light"] img[alt="QMULATE logo"] {
+  mix-blend-mode: normal;
+  filter:
+    drop-shadow(0 4px 20px rgba(0,0,0,0.28))
+    drop-shadow(0 0 24px rgba(91,124,250,0.45)) !important;
+}
+
+/* ══════════════════════════════
+   AURA + 3D LOGO KEYFRAMES
+   ══════════════════════════════ */
+
+@keyframes aura-zoom-fade {
+  0%   { transform: translate(-50%,-50%) scale(0.85); opacity: 0;   }
+  15%  { opacity: 1; }
+  60%  { transform: translate(-50%,-50%) scale(1.12); opacity: 0.9; }
+  100% { transform: translate(-50%,-50%) scale(1.35); opacity: 0;   }
+}
+
+@keyframes logo-3d-rotate {
+  0%   { transform: translateY(0px)   rotateX(0deg)   rotateY(0deg)   rotateZ(0deg);  }
+  12%  { transform: translateY(-10px) rotateX(8deg)   rotateY(14deg)  rotateZ(2deg);  }
+  25%  { transform: translateY(-16px) rotateX(-5deg)  rotateY(22deg)  rotateZ(-3deg); }
+  38%  { transform: translateY(-8px)  rotateX(12deg)  rotateY(-8deg)  rotateZ(4deg);  }
+  50%  { transform: translateY(-18px) rotateX(-8deg)  rotateY(-18deg) rotateZ(-2deg); }
+  63%  { transform: translateY(-6px)  rotateX(6deg)   rotateY(10deg)  rotateZ(3deg);  }
+  75%  { transform: translateY(-14px) rotateX(-10deg) rotateY(20deg)  rotateZ(-4deg); }
+  88%  { transform: translateY(-4px)  rotateX(4deg)   rotateY(-12deg) rotateZ(1deg);  }
+  100% { transform: translateY(0px)   rotateX(0deg)   rotateY(0deg)   rotateZ(0deg);  }
+}

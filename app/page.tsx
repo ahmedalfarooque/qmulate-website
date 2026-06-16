@@ -230,235 +230,147 @@ export default function Home() {
                     marginLeft: 'auto',
                   }}>
 
-                    {/* === BACKGROUND AURA GLOW === */}
+                    {/* ── AURA — zoom-fade-out pulse ── */}
                     <div style={{
-                      position: 'absolute',
-                      top: '50%', left: '50%',
+                      position: 'absolute', top: '50%', left: '50%',
                       transform: 'translate(-50%, -50%)',
-                      width: '600px', height: '500px',
-                      borderRadius: '50%',
-                      background: 'radial-gradient(ellipse, rgba(91,124,250,0.20) 0%, rgba(0,196,204,0.08) 40%, transparent 70%)',
-                      filter: 'blur(40px)',
-                      animation: 'aura-pulse 5s ease-in-out infinite',
-                      pointerEvents: 'none',
+                      width: '520px', height: '420px', borderRadius: '50%',
+                      background: 'radial-gradient(ellipse, rgba(91,124,250,0.28) 0%, rgba(0,196,204,0.10) 40%, transparent 70%)',
+                      filter: 'blur(36px)',
+                      animation: 'aura-zoom-fade 4s ease-out infinite',
+                      pointerEvents: 'none', zIndex: 0,
+                    }}/>
+                    <div style={{
+                      position: 'absolute', top: '50%', left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '380px', height: '320px', borderRadius: '50%',
+                      background: 'radial-gradient(ellipse, rgba(0,196,204,0.18) 0%, rgba(91,124,250,0.06) 50%, transparent 75%)',
+                      filter: 'blur(28px)',
+                      animation: 'aura-zoom-fade 4s ease-out infinite',
+                      animationDelay: '2s',
+                      pointerEvents: 'none', zIndex: 0,
                     }}/>
 
-                    {/* === MOVING LIGHTNING LINES === */}
+                    {/* ── LIGHTNING LINES ── */}
                     <div style={{
-                      position: 'absolute',
-                      top: '28%', left: 0, right: 0,
-                      height: '1px',
-                      background: 'linear-gradient(90deg, transparent 0%, rgba(91,124,250,0.6) 30%, rgba(0,196,204,0.9) 50%, rgba(91,124,250,0.6) 70%, transparent 100%)',
-                      animation: 'line-move-r 3.5s ease-in-out infinite',
-                      boxShadow: '0 0 8px rgba(0,196,204,0.8), 0 0 20px rgba(91,124,250,0.4)',
-                      borderRadius: '1px',
+                      position: 'absolute', top: '22%', left: 0, right: 0, height: '1px',
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(91,124,250,0.6) 30%, rgba(0,196,204,1) 50%, rgba(91,124,250,0.6) 70%, transparent 100%)',
+                      boxShadow: '0 0 10px rgba(0,196,204,0.9), 0 0 24px rgba(91,124,250,0.4)',
+                      animation: 'line-move-r 3.5s ease-in-out infinite', zIndex: 1,
                     }}/>
                     <div style={{
-                      position: 'absolute',
-                      top: '62%', left: 0, right: 0,
-                      height: '1px',
-                      background: 'linear-gradient(90deg, transparent 0%, rgba(0,196,204,0.5) 40%, rgba(91,124,250,0.8) 50%, rgba(0,196,204,0.5) 60%, transparent 100%)',
-                      animation: 'line-move-l 4.2s ease-in-out infinite',
-                      animationDelay: '1.5s',
+                      position: 'absolute', top: '72%', left: 0, right: 0, height: '1px',
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(0,196,204,0.6) 40%, rgba(91,124,250,0.9) 50%, rgba(0,196,204,0.6) 60%, transparent 100%)',
                       boxShadow: '0 0 8px rgba(91,124,250,0.8)',
+                      animation: 'line-move-l 4.2s ease-in-out infinite',
+                      animationDelay: '1.5s', zIndex: 1,
                     }}/>
                     <div style={{
-                      position: 'absolute',
-                      top: 0, left: '40%',
-                      width: '1px', height: '100%',
-                      background: 'linear-gradient(180deg, transparent 0%, rgba(91,124,250,0.4) 30%, rgba(0,196,204,0.6) 50%, rgba(91,124,250,0.4) 70%, transparent 100%)',
+                      position: 'absolute', top: 0, left: '42%', width: '1px', height: '100%',
+                      background: 'linear-gradient(180deg, transparent 0%, rgba(91,124,250,0.4) 30%, rgba(0,196,204,0.7) 50%, rgba(91,124,250,0.4) 70%, transparent 100%)',
+                      boxShadow: '0 0 8px rgba(0,196,204,0.5)',
                       animation: 'line-move-d 5s ease-in-out infinite',
-                      animationDelay: '0.8s',
-                      boxShadow: '0 0 6px rgba(0,196,204,0.5)',
+                      animationDelay: '0.8s', zIndex: 1,
                     }}/>
 
-                    {/* === MAIN GLASS PANEL === */}
+                    {/* ── OUTER GLASS FRAME — transparent, no solid background ── */}
                     <div style={{
-                      position: 'absolute',
-                      inset: '20px',
-                      borderRadius: '24px',
-                      background: 'linear-gradient(135deg, rgba(91,124,250,0.07) 0%, rgba(13,17,23,0.85) 50%, rgba(0,196,204,0.04) 100%)',
-                      border: '1px solid rgba(91,124,250,0.22)',
-                      backdropFilter: 'blur(20px)',
-                      WebkitBackdropFilter: 'blur(20px)',
-                      boxShadow: `
-                        0 0 0 1px rgba(255,255,255,0.04),
-                        0 8px 80px rgba(91,124,250,0.15),
-                        0 2px 8px rgba(0,0,0,0.4),
-                        inset 0 1px 0 rgba(255,255,255,0.10),
-                        inset 0 -1px 0 rgba(0,0,0,0.25)
-                      `,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      overflow: 'hidden',
+                      position: 'absolute', inset: '16px', borderRadius: '28px',
+                      background: 'linear-gradient(135deg, rgba(91,124,250,0.04) 0%, rgba(0,196,204,0.02) 100%)',
+                      border: '1px solid rgba(91,124,250,0.18)',
+                      backdropFilter: 'blur(2px)', WebkitBackdropFilter: 'blur(2px)',
+                      boxShadow: '0 0 0 1px rgba(255,255,255,0.03), 0 0 80px rgba(91,124,250,0.12), inset 0 1px 0 rgba(255,255,255,0.06)',
+                      zIndex: 2, overflow: 'hidden', pointerEvents: 'none',
                     }}>
-                      {/* Glass panel top-left shine */}
                       <div style={{
-                        position: 'absolute',
-                        top: 0, left: 0,
-                        width: '50%', height: '40%',
-                        borderRadius: '24px 0 0 0',
-                        background: 'linear-gradient(135deg, rgba(255,255,255,0.09) 0%, transparent 100%)',
-                        pointerEvents: 'none',
+                        position: 'absolute', top: 0, left: 0,
+                        width: '45%', height: '38%', borderRadius: '28px 0 0 0',
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 100%)',
                       }}/>
-
-                      {/* Inner scan line */}
                       <div style={{
-                        position: 'absolute',
-                        top: '-4px', left: 0, right: 0,
-                        height: '4px',
-                        background: 'linear-gradient(90deg, transparent, rgba(0,196,204,0.8), transparent)',
-                        animation: 'scan-down 4s linear infinite',
-                        boxShadow: '0 0 12px rgba(0,196,204,0.8)',
+                        position: 'absolute', top: '-4px', left: 0, right: 0, height: '3px',
+                        background: 'linear-gradient(90deg, transparent, rgba(0,196,204,0.7), transparent)',
+                        animation: 'scan-down 5s linear infinite',
+                        boxShadow: '0 0 10px rgba(0,196,204,0.7)',
                       }}/>
+                    </div>
 
-                      {/* === LOGO.PNG — 3D FLOATING === */}
+                    {/* ── 3D FLOATING LOGO — transparent background ── */}
+                    <div style={{
+                      position: 'absolute', inset: 0,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      zIndex: 3,
+                    }}>
                       <div style={{
+                        animation: 'logo-3d-rotate 8s ease-in-out infinite',
+                        transformStyle: 'preserve-3d', perspective: '900px',
                         position: 'relative',
-                        animation: 'logo-float-3d 6s ease-in-out infinite',
-                        transformStyle: 'preserve-3d',
-                        perspective: '800px',
                       }}>
-                        {/* Glow orb under logo */}
                         <div style={{
-                          position: 'absolute',
-                          bottom: '-30px',
-                          left: '50%',
+                          position: 'absolute', bottom: '-24px', left: '50%',
                           transform: 'translateX(-50%)',
-                          width: '180px',
-                          height: '40px',
-                          borderRadius: '50%',
-                          background: 'radial-gradient(ellipse, rgba(91,124,250,0.5) 0%, transparent 70%)',
-                          filter: 'blur(12px)',
-                          animation: 'shadow-pulse 6s ease-in-out infinite',
+                          width: '160px', height: '28px', borderRadius: '50%',
+                          background: 'radial-gradient(ellipse, rgba(91,124,250,0.55) 0%, transparent 70%)',
+                          filter: 'blur(10px)',
+                          animation: 'shadow-pulse 8s ease-in-out infinite',
                         }}/>
                         <img
                           src="/Logo.png"
                           alt="QMULATE"
+                          className="logo-img"
                           style={{
-                            width: '180px',
-                            height: 'auto',
-                            objectFit: 'contain',
-                            position: 'relative',
-                            zIndex: 1,
+                            width: '160px', height: 'auto',
+                            objectFit: 'contain', display: 'block',
+                            position: 'relative', zIndex: 1,
+                            background: 'transparent',
+                            mixBlendMode: 'screen',
                             filter: `
-                              drop-shadow(0 0 24px rgba(91,124,250,0.70))
-                              drop-shadow(0 0 60px rgba(91,124,250,0.30))
-                              drop-shadow(0 0 4px rgba(0,196,204,0.50))
+                              drop-shadow(0 0 28px rgba(91,124,250,0.80))
+                              drop-shadow(0 0 60px rgba(91,124,250,0.35))
+                              drop-shadow(0 0 6px rgba(0,196,204,0.55))
                             `,
                           }}
                         />
                       </div>
-
-                      {/* Corner accent dots */}
-                      {[
-                        { top: '12px', left: '12px' },
-                        { top: '12px', right: '12px' },
-                        { bottom: '12px', left: '12px' },
-                        { bottom: '12px', right: '12px' },
-                      ].map((pos, i) => (
-                        <div key={i} style={{
-                          position: 'absolute',
-                          ...pos,
-                          width: '6px',
-                          height: '6px',
-                          borderRadius: '50%',
-                          background: 'rgba(91,124,250,0.6)',
-                          boxShadow: '0 0 8px rgba(91,124,250,0.8)',
-                          animation: `corner-blink 2s ease-in-out infinite`,
-                          animationDelay: `${i * 0.5}s`,
-                        }}/>
-                      ))}
-
-                      {/* Top badge */}
-                      <div style={{
-                        position: 'absolute',
-                        top: '16px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        padding: '4px 14px',
-                        borderRadius: '20px',
-                        background: 'rgba(91,124,250,0.12)',
-                        border: '1px solid rgba(91,124,250,0.30)',
-                        backdropFilter: 'blur(8px)',
-                        fontSize: '10px',
-                        letterSpacing: '0.12em',
-                        color: 'rgba(91,124,250,0.9)',
-                        whiteSpace: 'nowrap',
-                        fontFamily: 'monospace',
-                      }}>
-                        QMULATE · v7.0
-                      </div>
-
-                      {/* Bottom badge */}
-                      <div style={{
-                        position: 'absolute',
-                        bottom: '16px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        padding: '4px 14px',
-                        borderRadius: '20px',
-                        background: 'rgba(0,196,204,0.10)',
-                        border: '1px solid rgba(0,196,204,0.25)',
-                        backdropFilter: 'blur(8px)',
-                        fontSize: '10px',
-                        letterSpacing: '0.12em',
-                        color: 'rgba(0,196,204,0.85)',
-                        whiteSpace: 'nowrap',
-                        fontFamily: 'monospace',
-                      }}>
-                        RIYADH · 2026
-                      </div>
                     </div>
 
-                    {/* === FLOATING GLASS CUBES === */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '-10px', left: '-10px',
-                      width: '48px', height: '48px',
-                      borderRadius: '10px',
-                      background: 'linear-gradient(135deg, rgba(91,124,250,0.18) 0%, rgba(91,124,250,0.06) 100%)',
-                      border: '1px solid rgba(91,124,250,0.30)',
-                      backdropFilter: 'blur(8px)',
-                      boxShadow: '0 0 20px rgba(91,124,250,0.20), inset 0 1px 0 rgba(255,255,255,0.12)',
-                      animation: 'cube-float-1 7s ease-in-out infinite',
-                    }}/>
-                    <div style={{
-                      position: 'absolute',
-                      top: '30px', right: '-14px',
-                      width: '36px', height: '36px',
-                      borderRadius: '8px',
-                      background: 'linear-gradient(135deg, rgba(0,196,204,0.16) 0%, rgba(0,196,204,0.05) 100%)',
-                      border: '1px solid rgba(0,196,204,0.28)',
-                      backdropFilter: 'blur(6px)',
-                      boxShadow: '0 0 16px rgba(0,196,204,0.18), inset 0 1px 0 rgba(255,255,255,0.10)',
-                      animation: 'cube-float-2 5.5s ease-in-out infinite',
-                      animationDelay: '1s',
-                    }}/>
-                    <div style={{
-                      position: 'absolute',
-                      bottom: '20px', left: '-8px',
-                      width: '28px', height: '28px',
-                      borderRadius: '6px',
-                      background: 'linear-gradient(135deg, rgba(91,124,250,0.14) 0%, transparent 100%)',
-                      border: '1px solid rgba(91,124,250,0.24)',
-                      backdropFilter: 'blur(6px)',
-                      animation: 'cube-float-3 8s ease-in-out infinite',
-                      animationDelay: '2s',
-                    }}/>
-                    <div style={{
-                      position: 'absolute',
-                      bottom: '-8px', right: '20px',
-                      width: '40px', height: '40px',
-                      borderRadius: '9px',
-                      background: 'linear-gradient(135deg, rgba(0,196,204,0.12) 0%, transparent 100%)',
-                      border: '1px solid rgba(0,196,204,0.22)',
-                      backdropFilter: 'blur(7px)',
-                      boxShadow: '0 0 14px rgba(0,196,204,0.15)',
-                      animation: 'cube-float-1 6s ease-in-out infinite',
-                      animationDelay: '0.5s',
-                    }}/>
+                    {/* ── CORNER ACCENT DOTS ── */}
+                    {([
+                      { top: '20px',   left: '20px'  },
+                      { top: '20px',   right: '20px' },
+                      { bottom: '20px',left: '20px'  },
+                      { bottom: '20px',right: '20px' },
+                    ] as React.CSSProperties[]).map((pos, i) => (
+                      <div key={i} style={{
+                        position: 'absolute', ...pos,
+                        width: '8px', height: '8px', borderRadius: '50%',
+                        background: i % 2 === 0 ? 'rgba(91,124,250,0.7)' : 'rgba(0,196,204,0.7)',
+                        boxShadow: i % 2 === 0 ? '0 0 10px rgba(91,124,250,0.9)' : '0 0 10px rgba(0,196,204,0.9)',
+                        animation: 'corner-blink 2s ease-in-out infinite',
+                        animationDelay: `${i * 0.5}s`, zIndex: 4,
+                      }}/>
+                    ))}
+
+                    {/* ── FLOATING GLASS CUBES ── */}
+                    {([
+                      { top:'-10px',   left:'-10px',  size:44, c:'91,124,250', d:'0s',   a:'cube-float-1' },
+                      { top:'28px',    right:'-14px', size:32, c:'0,196,204',  d:'1s',   a:'cube-float-2' },
+                      { bottom:'22px', left:'-10px',  size:26, c:'91,124,250', d:'2s',   a:'cube-float-3' },
+                      { bottom:'-8px', right:'18px',  size:38, c:'0,196,204',  d:'0.5s', a:'cube-float-1' },
+                    ] as any[]).map((cube, i) => (
+                      <div key={i} style={{
+                        position: 'absolute',
+                        top: cube.top, left: cube.left, right: cube.right, bottom: cube.bottom,
+                        width: cube.size, height: cube.size,
+                        borderRadius: Math.round(cube.size * 0.22),
+                        background: `linear-gradient(135deg, rgba(${cube.c},0.16) 0%, rgba(${cube.c},0.04) 100%)`,
+                        border: `1px solid rgba(${cube.c},0.30)`,
+                        backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+                        boxShadow: `0 0 18px rgba(${cube.c},0.18), inset 0 1px 0 rgba(255,255,255,0.12)`,
+                        animation: `${cube.a} 7s ease-in-out infinite`,
+                        animationDelay: cube.d, zIndex: 4,
+                      }}/>
+                    ))}
                   </div>
                 </motion.div>
               </div>

@@ -64,10 +64,13 @@ export function Navbar() {
               alt="QMULATE logo"
               width={28}
               height={36}
+              className="logo-img"
               style={{
                 objectFit: 'contain',
                 display: 'block',
-                filter: 'drop-shadow(0 0 6px rgba(91,124,250,0.5))',
+                background: 'transparent',
+                mixBlendMode: 'screen',
+                filter: 'drop-shadow(0 0 6px rgba(91,124,250,0.55))',
               }}
             />
             <div>
