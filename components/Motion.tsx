@@ -87,19 +87,20 @@ export const preset = {
 // ══════════════════════════════════════════════════════════════
 
 export function PageTransition({ children }: { children: ReactNode }) {
-  const should = useReducedMotion();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  // SSR and initial client render agree: opacity 0 (no mismatch).
-  // After mount, CSS transition fades in — no framer-motion initial state on the server.
-  if (should) return <>{children}</>;
+  // Always render the same <div> on server and client — never branch on useReducedMotion
+  // (framer-motion returns true on the server for that hook, causing a tree-structure mismatch).
+  // CSS transition only kicks in after mount, so SSR and initial client render agree exactly.
   return (
     <div
       style={{
         opacity: mounted ? 1 : 0,
         transform: mounted ? 'none' : 'translateY(12px)',
-        transition: mounted ? `opacity ${DUR.slow}s cubic-bezier(${EASE.luxury.join(',')}), transform ${DUR.slow}s cubic-bezier(${EASE.luxury.join(',')})` : 'none',
+        transition: mounted
+          ? `opacity ${DUR.slow}s cubic-bezier(${EASE.luxury.join(',')}), transform ${DUR.slow}s cubic-bezier(${EASE.luxury.join(',')})`
+          : 'none',
         minHeight: '100%',
       }}
     >
