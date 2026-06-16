@@ -274,30 +274,51 @@ export function StrataLines({
   color="rgba(255,255,255,1)",
   style={},
 }:{count?:number;width?:number;opacity?:number;color?:string;style?:React.CSSProperties}) {
-  const pref = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const H = count * 20;
   const widths = [100,82,68,56,45,36,28,20].map(p=>`${p}%`);
 
   return (
     <svg width={width} height={H} viewBox={`0 0 ${width} ${H}`}
       style={{opacity, pointerEvents:"none", ...style}}>
-      {Array.from({length:count},(_,i)=>(
-        <motion.line
-          key={i}
-          x1={0} y1={i*20+2}
-          x2={(parseFloat(widths[i]||"100")/100)*width} y2={i*20+2}
-          stroke={i===0?BRAND_BLUE:color}
-          strokeWidth={i===0?1.5:1}
-          opacity={i===0?0.8:0.4}
-          initial={pref?{}: { scaleX:0, opacity:0 }}
-          animate={pref?{}: { scaleX:1, opacity:i===0?0.8:0.4 }}
-          style={{ transformOrigin:"left" }}
-          transition={{
-            duration:0.9, delay:i*0.08,
-            ease:[0.2,0.8,0.2,1],
-          }}
-        />
-      ))}
+      {Array.from({length:count},(_,i)=>{
+        const lineWidth = (parseFloat(widths[i]||"100")/100)*width;
+        const isFirst = i === 0;
+        const lineOpacity = isFirst ? 0.8 : 0.4;
+
+        // Before mount: plain <line> at final opacity — matches SSR exactly, no mismatch.
+        // After mount: <motion.line> animates in from scaleX:0.
+        if (!mounted) {
+          return (
+            <line
+              key={i}
+              x1={0} y1={i*20+2}
+              x2={lineWidth} y2={i*20+2}
+              stroke={isFirst ? BRAND_BLUE : color}
+              strokeWidth={isFirst ? 1.5 : 1}
+              opacity={lineOpacity}
+              style={{ transformOrigin:"left" }}
+            />
+          );
+        }
+
+        return (
+          <motion.line
+            key={i}
+            x1={0} y1={i*20+2}
+            x2={lineWidth} y2={i*20+2}
+            stroke={isFirst ? BRAND_BLUE : color}
+            strokeWidth={isFirst ? 1.5 : 1}
+            opacity={lineOpacity}
+            initial={{ scaleX:0, opacity:0 }}
+            animate={{ scaleX:1, opacity:lineOpacity }}
+            style={{ transformOrigin:"left" }}
+            transition={{ duration:0.9, delay:i*0.08, ease:[0.2,0.8,0.2,1] }}
+          />
+        );
+      })}
     </svg>
   );
 }
