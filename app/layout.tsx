@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { WhatsApp } from "@/components/WhatsApp";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ScrollProgress, PageTransition } from "@/components/Motion";
+import { EnergyBeam } from "@/components/EnergyBeam";
 
 const geist = localFont({
   src:"../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {/* Global scroll progress bar */}
           <ScrollProgress />
+          <EnergyBeam />
           <Navbar/>
           {/* Page-level entrance transition */}
           <PageTransition>

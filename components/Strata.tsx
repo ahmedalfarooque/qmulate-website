@@ -330,46 +330,7 @@ type BgVariant = "strata-left"|"strata-right"|"lattice"|"fins"|"facade"|"pulse"|
 export function ArchitecturalBg({
   variant="mixed", className="", style={},
 }:{variant?:BgVariant; className?:string; style?:React.CSSProperties}) {
-  return (
-    <div
-      className={className}
-      style={{
-        position:"absolute",inset:0,overflow:"hidden",
-        pointerEvents:"none",zIndex:0,
-        ...style,
-      }}
-    >
-      {(variant==="strata-left"||variant==="mixed") && (
-        <StrataStack opacity={0.07} side="left"
-          size={320}
-          style={{top:"50%",transform:"translateY(-50%)"}}/>
-      )}
-      {(variant==="strata-right"||variant==="mixed") && (
-        <StrataStack opacity={0.06} side="right"
-          size={280}
-          style={{bottom:"20%"}}/>
-      )}
-      {(variant==="lattice"||variant==="mixed") && (
-        <StructuralLattice
-          width={360} height={300} opacity={0.045}
-          style={{position:"absolute",right:-60,top:"10%"}}/>
-      )}
-      {(variant==="fins"||variant==="mixed") && (
-        <VerticalFins
-          count={14} height={200} opacity={0.055}
-          style={{position:"absolute",left:"5%",bottom:"8%"}}/>
-      )}
-      {variant==="facade" && (
-        <GlassFacade opacity={0.08}
-          style={{position:"absolute",right:"5%",top:"10%"}}/>
-      )}
-      {(variant==="pulse"||variant==="mixed") && (
-        <GovernancePulse
-          opacity={0.14}
-          style={{position:"absolute",bottom:"12%",left:0,right:0,width:"80%",margin:"0 auto"}}/>
-      )}
-    </div>
-  );
+  return null;
 }
 
 // ─── 8. STRATA HERO SCULPTURE — 3D-esque layered mark ─────────────
@@ -436,30 +397,5 @@ export function StrataSculpture({
 export function ArchitecturalBgLight({
   variant="mixed", className="", style={},
 }:{variant?:BgVariant; className?:string; style?:React.CSSProperties}) {
-  return (
-    <div className={className}
-      style={{position:"absolute",inset:0,overflow:"hidden",pointerEvents:"none",zIndex:0,...style}}>
-      {(variant==="strata-left"||variant==="mixed") && (
-        <StrataStack opacity={0.05} side="left" size={300}
-          style={{top:"50%",transform:"translateY(-50%)"}}/>
-      )}
-      {(variant==="lattice"||variant==="mixed") && (
-        <StructuralLattice
-          width={320} height={260} opacity={0.04}
-          color="rgba(0,0,0,1)"
-          style={{position:"absolute",right:-40,top:"15%"}}/>
-      )}
-      {(variant==="fins"||variant==="mixed") && (
-        <VerticalFins
-          count={12} height={180} opacity={0.04}
-          color="rgba(0,0,0,1)"
-          style={{position:"absolute",left:"5%",bottom:"10%"}}/>
-      )}
-      {(variant==="pulse"||variant==="mixed") && (
-        <GovernancePulse
-          opacity={0.10} color={BRAND_BLUE}
-          style={{position:"absolute",bottom:"12%",left:0,right:0,width:"80%",margin:"0 auto"}}/>
-      )}
-    </div>
-  );
+  return null;
 }

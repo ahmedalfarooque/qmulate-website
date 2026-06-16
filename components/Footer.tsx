@@ -9,10 +9,10 @@ export function Footer() {
 
   const en = {
     links:[
-      {h:"About",items:[{l:"Our Story",h:"/about"},{l:"Mission & Vision",h:"/about"},{l:"Governance Philosophy",h:"/about"},{l:"Leadership",h:"/about"}]},
-      {h:"Services",items:[{l:"Property Stewardship",h:"/services"},{l:"Governed Growth",h:"/services"},{l:"Property Advisory",h:"/services"},{l:"Wealth Reporting",h:"/services"},{l:"Risk Management",h:"/services"}]},
-      {h:"Platform",items:[{l:"Solutions",h:"/solutions"},{l:"Projects",h:"/projects"},{l:"Intelligence",h:"/solutions"},{l:"Technology",h:"/solutions"}]},
-      {h:"Company",items:[{l:"Contact Us",h:"/contact"},{l:"Privacy Policy",h:"/contact"},{l:"Terms of Service",h:"/contact"},{l:"Confidentiality",h:"/contact"}]},
+      {h:"About",items:[{l:"Our Story",h:"/#about"},{l:"Mission & Vision",h:"/#about"},{l:"Governance Philosophy",h:"/#about"},{l:"Leadership",h:"/#about"}]},
+      {h:"Services",items:[{l:"Property Stewardship",h:"/#services"},{l:"Governed Growth",h:"/#services"},{l:"Property Advisory",h:"/#services"},{l:"Wealth Reporting",h:"/#services"},{l:"Risk Management",h:"/#services"}]},
+      {h:"Platform",items:[{l:"Solutions",h:"/#solutions"},{l:"Projects",h:"/#projects"},{l:"Intelligence",h:"/#solutions"},{l:"Technology",h:"/#solutions"}]},
+      {h:"Company",items:[{l:"Contact Us",h:"/#contact"},{l:"Privacy Policy",h:"/#contact"},{l:"Terms of Service",h:"/#contact"},{l:"Confidentiality",h:"/#contact"}]},
     ],
     tagline:"Wealth, structured to outlast its makers.",
     sub:"QMULATE is a specialist real estate family office. All communications are private and confidential.",
@@ -20,10 +20,10 @@ export function Footer() {
   };
   const ar = {
     links:[
-      {h:"الشركة",items:[{l:"قصتنا",h:"/ar/about"},{l:"الرؤية والرسالة",h:"/ar/about"},{l:"فلسفة الحوكمة",h:"/ar/about"},{l:"القيادة",h:"/ar/about"}]},
-      {h:"الخدمات",items:[{l:"إدارة العقارات",h:"/ar/services"},{l:"النمو المحكوم",h:"/ar/services"},{l:"الاستشارات",h:"/ar/services"},{l:"تقارير الثروة",h:"/ar/services"},{l:"إدارة المخاطر",h:"/ar/services"}]},
-      {h:"المنصة",items:[{l:"الحلول",h:"/ar/solutions"},{l:"المشاريع",h:"/ar/projects"},{l:"الذكاء الاستثماري",h:"/ar/solutions"},{l:"التكنولوجيا",h:"/ar/solutions"}]},
-      {h:"التواصل",items:[{l:"اتصل بنا",h:"/ar/contact"},{l:"سياسة الخصوصية",h:"/ar/contact"},{l:"شروط الخدمة",h:"/ar/contact"},{l:"السرية",h:"/ar/contact"}]},
+      {h:"الشركة",items:[{l:"قصتنا",h:"/ar#about"},{l:"الرؤية والرسالة",h:"/ar#about"},{l:"فلسفة الحوكمة",h:"/ar#about"},{l:"القيادة",h:"/ar#about"}]},
+      {h:"الخدمات",items:[{l:"إدارة العقارات",h:"/ar#services"},{l:"النمو المحكوم",h:"/ar#services"},{l:"الاستشارات",h:"/ar#services"},{l:"تقارير الثروة",h:"/ar#services"},{l:"إدارة المخاطر",h:"/ar#services"}]},
+      {h:"المنصة",items:[{l:"الحلول",h:"/ar#solutions"},{l:"المشاريع",h:"/ar#projects"},{l:"الذكاء الاستثماري",h:"/ar#solutions"},{l:"التكنولوجيا",h:"/ar#solutions"}]},
+      {h:"التواصل",items:[{l:"اتصل بنا",h:"/ar#contact"},{l:"سياسة الخصوصية",h:"/ar#contact"},{l:"شروط الخدمة",h:"/ar#contact"},{l:"السرية",h:"/ar#contact"}]},
     ],
     tagline:"ثروة مبنية لتدوم بعد صانعيها.",
     sub:"كيوميليت مكتب عائلي متخصص في العقارات. جميع المراسلات سرية وخاصة.",

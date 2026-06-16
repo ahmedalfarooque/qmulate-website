@@ -26,7 +26,6 @@ export function Scene({ children }: { children?: React.ReactNode }) {
   return (
     <div style={{ position:"absolute", inset:0, overflow:"hidden", zIndex:0, pointerEvents:"none" }}>
       <div className="bg-orbs" />
-      <div className="bg-grid" />
       <div className="orb c" style={{ width:600, height:600, top:"15%", right:"-8%"  }} />
       <div className="orb p" style={{ width:500, height:500, bottom:"5%",left:"3%" }} />
       {children}
@@ -64,7 +63,7 @@ export function PageHero({
       paddingBottom:"clamp(80px,12vh,140px)",
     }}>
       <div style={{ position:"absolute", inset:0, overflow:"hidden", zIndex:0, pointerEvents:"none" }}>
-        <div className="bg-orbs" /><div className="bg-grid" />
+        <div className="bg-orbs" />
         <div className="scan" />
         <div className="orb c" style={{ width:700,height:700,top:"-15%",right:"-5%" }} />
         <div className="orb p" style={{ width:400,height:400,bottom:0,left:"5%" }} />

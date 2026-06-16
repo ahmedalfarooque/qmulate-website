@@ -2,154 +2,218 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
-export function Logo3D({ size = 336 }: { size?: number }) {
+export function Logo3D({ size = 200 }: { size?: number }) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
   if (!mounted) return null
 
   const s = size
-  const barH = s * 0.13
-  const gap = s * 0.07
-  const r = s * 0.04
-
-  const strata = [
-    { w: s * 0.46, color: '#5B7CFA', glowColor: 'rgba(91,124,250,0.9)', delay: 0 },
-    { w: s * 0.63, color: 'rgba(255,255,255,0.50)', glowColor: 'rgba(255,255,255,0.45)', delay: 0.1 },
-    { w: s * 0.80, color: 'rgba(255,255,255,0.32)', glowColor: 'rgba(255,255,255,0.28)', delay: 0.2 },
-    { w: s * 1.00, color: 'rgba(255,255,255,0.18)', glowColor: 'rgba(255,255,255,0.16)', delay: 0.3 },
-  ]
+  const fr = Math.round(s * 0.12)
 
   return (
-    <div style={{ position: 'relative', width: s + 120, perspective: 900 }}>
+    <div style={{ position: 'relative', width: s, height: s, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-      {/* ── AURA HALO GLOW ── */}
+      {/* AURA LAYER 1 — zoom fade out */}
       <div style={{
-        position: 'absolute',
-        top: '50%', left: '50%',
+        position: 'absolute', top: '50%', left: '50%',
+        width: s * 1.9, height: s * 1.6, borderRadius: '50%',
         transform: 'translate(-50%, -50%)',
-        width: s * 1.8, height: s * 1.4,
-        borderRadius: '50%',
-        background: 'radial-gradient(ellipse, rgba(91,124,250,0.22) 0%, rgba(0,196,204,0.08) 45%, transparent 75%)',
-        filter: 'blur(28px)',
-        animation: 'qlogo-halo 5s ease-in-out infinite',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }}/>
-      {/* Secondary aura layer */}
-      <div style={{
-        position: 'absolute',
-        top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: s * 2.2, height: s * 1.7,
-        borderRadius: '50%',
-        background: 'radial-gradient(ellipse, rgba(91,124,250,0.08) 0%, rgba(0,196,204,0.03) 50%, transparent 75%)',
-        filter: 'blur(50px)',
-        animation: 'qlogo-halo 7s ease-in-out infinite',
-        animationDelay: '1s',
-        pointerEvents: 'none',
-        zIndex: 0,
+        background: 'radial-gradient(ellipse, rgba(91,124,250,0.30) 0%, rgba(0,196,204,0.10) 40%, transparent 70%)',
+        filter: 'blur(32px)',
+        animation: 'qlogo-aura-zoom 4s ease-out infinite',
+        pointerEvents: 'none', zIndex: 0,
       }}/>
 
-      {/* ── LIGHTNING LINES AROUND LOGO ── */}
+      {/* AURA LAYER 2 — offset 2s */}
       <div style={{
-        position: 'absolute',
-        top: '15%', left: 0, right: 0, height: '1px',
+        position: 'absolute', top: '50%', left: '50%',
+        width: s * 1.4, height: s * 1.2, borderRadius: '50%',
+        transform: 'translate(-50%, -50%)',
+        background: 'radial-gradient(ellipse, rgba(0,196,204,0.22) 0%, rgba(91,124,250,0.08) 50%, transparent 75%)',
+        filter: 'blur(22px)',
+        animation: 'qlogo-aura-zoom 4s ease-out infinite',
+        animationDelay: '2s',
+        pointerEvents: 'none', zIndex: 0,
+      }}/>
+
+      {/* LIGHTNING LINE R */}
+      <div style={{
+        position: 'absolute', top: '22%', left: -fr, right: -fr, height: '1px',
         background: 'linear-gradient(90deg, transparent 0%, rgba(91,124,250,0.7) 30%, rgba(0,196,204,1) 50%, rgba(91,124,250,0.7) 70%, transparent 100%)',
         boxShadow: '0 0 10px rgba(0,196,204,0.9), 0 0 24px rgba(91,124,250,0.4)',
-        animation: 'qbg-line-r 3s ease-in-out infinite',
-        zIndex: 0,
+        animation: 'qlogo-line-r 3.5s ease-in-out infinite',
+        zIndex: 1,
       }}/>
+
+      {/* LIGHTNING LINE L */}
       <div style={{
-        position: 'absolute',
-        top: '82%', left: 0, right: 0, height: '1px',
+        position: 'absolute', top: '72%', left: -fr, right: -fr, height: '1px',
         background: 'linear-gradient(90deg, transparent 0%, rgba(0,196,204,0.6) 40%, rgba(91,124,250,0.9) 50%, rgba(0,196,204,0.6) 60%, transparent 100%)',
         boxShadow: '0 0 8px rgba(91,124,250,0.8)',
-        animation: 'qbg-line-l 4s ease-in-out infinite',
-        animationDelay: '1.2s',
-        zIndex: 0,
+        animation: 'qlogo-line-l 4.2s ease-in-out infinite',
+        animationDelay: '1.5s',
+        zIndex: 1,
       }}/>
 
-      {/* ── GLASS PANEL BEHIND BARS ── */}
+      {/* LIGHTNING LINE D */}
+      <div style={{
+        position: 'absolute', top: -fr, bottom: -fr, left: '42%', width: '1px',
+        background: 'linear-gradient(180deg, transparent 0%, rgba(91,124,250,0.4) 30%, rgba(0,196,204,0.7) 50%, rgba(91,124,250,0.4) 70%, transparent 100%)',
+        boxShadow: '0 0 8px rgba(0,196,204,0.5)',
+        animation: 'qlogo-line-d 5s ease-in-out infinite',
+        animationDelay: '0.8s',
+        zIndex: 1,
+      }}/>
+
+      {/* OUTER CRYSTAL GLASS FRAME */}
       <div style={{
         position: 'absolute',
-        inset: `-${s * 0.12}px`,
-        borderRadius: s * 0.08,
+        inset: `-${fr}px`,
+        borderRadius: Math.round(s * 0.14),
         background: 'linear-gradient(135deg, rgba(91,124,250,0.06) 0%, rgba(0,196,204,0.03) 100%)',
-        border: '1px solid rgba(91,124,250,0.14)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        boxShadow: '0 8px 64px rgba(91,124,250,0.10), inset 0 1px 0 rgba(255,255,255,0.07)',
-        zIndex: 0,
-      }}/>
-      {/* Glass edge shimmer */}
-      <div style={{
-        position: 'absolute',
-        top: `-${s * 0.12}px`, left: `-${s * 0.12}px`,
-        width: '55%', height: '35%',
-        borderRadius: `${s * 0.08}px ${s * 0.08}px 0 0`,
-        background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 100%)',
-        zIndex: 0, pointerEvents: 'none',
-      }}/>
+        border: '1px solid rgba(91,124,250,0.22)',
+        backdropFilter: 'blur(2px)',
+        WebkitBackdropFilter: 'blur(2px)',
+        boxShadow: '0 0 0 1px rgba(255,255,255,0.04), 0 0 80px rgba(91,124,250,0.15), inset 0 1px 0 rgba(255,255,255,0.08)',
+        zIndex: 2, pointerEvents: 'none', overflow: 'hidden',
+      }}>
+        <div style={{
+          position: 'absolute', top: 0, left: 0,
+          width: '45%', height: '38%',
+          background: 'linear-gradient(135deg, rgba(255,255,255,0.09) 0%, transparent 100%)',
+          borderRadius: `${Math.round(s * 0.14)}px ${Math.round(s * 0.14)}px 0 0`,
+        }}/>
+        <div style={{
+          position: 'absolute', top: '-4px', left: 0, right: 0, height: '3px',
+          background: 'linear-gradient(90deg, transparent, rgba(0,196,204,0.7), transparent)',
+          animation: 'qlogo-scan 5s linear infinite',
+          boxShadow: '0 0 10px rgba(0,196,204,0.7)',
+        }}/>
+      </div>
 
-      {/* ── 3D ROTATING STRATA BARS ── */}
+      {/* 3D FLOATING LOGO */}
       <motion.div
         animate={{
-          rotateX: [0, 8, -5, 3, 0],
-          rotateY: [0, 15, -10, 20, 5, 0],
-          rotateZ: [0, 2, -3, 1, 0],
+          translateY: [0, -14, -8, -18, -6, -16, -4, -12, 0],
+          rotateX: [0, 8, -5, 12, -8, 6, -10, 4, 0],
+          rotateY: [0, 14, 22, -8, -18, 10, 20, -12, 0],
+          rotateZ: [0, 2, -3, 4, -2, 3, -4, 1, 0],
         }}
         transition={{
-          duration: 18, repeat: Infinity, ease: 'easeInOut',
-          times: [0, 0.25, 0.5, 0.75, 1],
+          duration: 12, repeat: Infinity, ease: 'easeInOut',
+          times: [0, 0.12, 0.25, 0.38, 0.50, 0.63, 0.75, 0.88, 1],
         }}
         style={{
-          position: 'relative', zIndex: 1,
-          width: s,
-          display: 'flex', flexDirection: 'column', gap,
-          transformStyle: 'preserve-3d',
-          filter: 'drop-shadow(0 0 48px rgba(91,124,250,0.40)) drop-shadow(0 0 18px rgba(0,196,204,0.20))',
-          marginLeft: 60,
+          position: 'relative', zIndex: 3,
+          transformStyle: 'preserve-3d', perspective: '900px',
+          filter: 'drop-shadow(0 0 32px rgba(91,124,250,0.85)) drop-shadow(0 0 64px rgba(91,124,250,0.35)) drop-shadow(0 0 8px rgba(0,196,204,0.60))',
         }}
       >
-        {strata.map((stratum, i) => (
-          <motion.div key={i}
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ delay: stratum.delay, duration: 0.65, ease: [0.2, 0.8, 0.2, 1] }}
-            style={{
-              width: stratum.w, height: barH, borderRadius: r,
-              background: i === 0
-                ? 'linear-gradient(135deg, #8EAAFF 0%, #5B7CFA 40%, #4A6CE8 80%, #3A5CD8 100%)'
-                : `linear-gradient(135deg, rgba(255,255,255,${0.10+(3-i)*0.07}) 0%, ${stratum.color} 45%, rgba(255,255,255,0.03) 100%)`,
-              boxShadow: i === 0
-                ? '0 0 36px rgba(91,124,250,0.65), 0 0 72px rgba(91,124,250,0.25), 0 0 4px rgba(0,196,204,0.40), inset 0 1.5px 0 rgba(255,255,255,0.40), inset 0 -1.5px 0 rgba(0,0,60,0.35)'
-                : `0 0 14px ${stratum.glowColor}44, 0 2px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.20), inset 0 -1px 0 rgba(0,0,0,0.22)`,
-              border: i === 0 ? '1px solid rgba(142,170,255,0.70)' : '1px solid rgba(255,255,255,0.14)',
-              backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
-              flexShrink: 0, transformOrigin: '0% 50%',
-              position: 'relative', overflow: 'hidden',
-            }}
-          >
-            <div style={{position:'absolute',top:0,left:0,width:'65%',height:'48%',background:'linear-gradient(135deg,rgba(255,255,255,0.30)0%,transparent 100%)',borderRadius:`${r}px ${r}px 0 0`,pointerEvents:'none'}}/>
-            <div style={{position:'absolute',bottom:0,left:0,right:0,height:'30%',background:'linear-gradient(to top,rgba(255,255,255,0.04)0%,transparent 100%)',pointerEvents:'none'}}/>
-          </motion.div>
-        ))}
+        <img src="/Logo.png" alt="QMULATE" width={s} height={s}
+          style={{ objectFit: 'contain', display: 'block', background: 'transparent', mixBlendMode: 'screen' }}
+        />
       </motion.div>
 
+      {/* GROUND SHADOW GLOW */}
+      <div style={{
+        position: 'absolute', bottom: `${-(fr + 8)}px`, left: '50%',
+        transform: 'translateX(-50%)',
+        width: Math.round(s * 0.7), height: Math.round(s * 0.10), borderRadius: '50%',
+        background: 'radial-gradient(ellipse, rgba(91,124,250,0.55) 0%, transparent 70%)',
+        filter: 'blur(10px)',
+        animation: 'qlogo-shadow-pulse 12s ease-in-out infinite',
+        zIndex: 2, pointerEvents: 'none',
+      }}/>
+
+      {/* CORNER DOTS */}
+      {([
+        { top: `${-(fr + 4)}px`,    left: `${-(fr + 4)}px`  },
+        { top: `${-(fr + 4)}px`,    right: `${-(fr + 4)}px` },
+        { bottom: `${-(fr + 4)}px`, left: `${-(fr + 4)}px`  },
+        { bottom: `${-(fr + 4)}px`, right: `${-(fr + 4)}px` },
+      ] as React.CSSProperties[]).map((pos, i) => (
+        <div key={i} style={{
+          position: 'absolute', ...pos,
+          width: 7, height: 7, borderRadius: '50%',
+          background: i % 2 === 0 ? 'rgba(91,124,250,0.8)' : 'rgba(0,196,204,0.8)',
+          boxShadow: i % 2 === 0 ? '0 0 10px rgba(91,124,250,0.9)' : '0 0 10px rgba(0,196,204,0.9)',
+          animation: 'qlogo-dot-blink 2s ease-in-out infinite',
+          animationDelay: `${i * 0.5}s`,
+          zIndex: 5,
+        }}/>
+      ))}
+
+      {/* FLOATING GLASS CUBES */}
+      {([
+        { top: `${-fr}px`,           left: `${-(fr + 10)}px`,  size: Math.round(s * 0.18), c: '91,124,250', d: '0s',   a: 'qlogo-cube1' },
+        { top: `${Math.round(s * 0.1)}px`,  right: `${-(fr + 14)}px`, size: Math.round(s * 0.13), c: '0,196,204',  d: '1s',   a: 'qlogo-cube2' },
+        { bottom: `${Math.round(s * 0.08)}px`, left: `${-(fr + 10)}px`, size: Math.round(s * 0.11), c: '91,124,250', d: '2s',   a: 'qlogo-cube3' },
+        { bottom: `${-fr}px`,        right: `${Math.round(s * 0.06)}px`, size: Math.round(s * 0.15), c: '0,196,204',  d: '0.5s', a: 'qlogo-cube1' },
+      ] as any[]).map((cube, i) => (
+        <div key={i} style={{
+          position: 'absolute',
+          top: cube.top, left: cube.left, right: cube.right, bottom: cube.bottom,
+          width: cube.size, height: cube.size,
+          borderRadius: Math.round(cube.size * 0.22),
+          background: `linear-gradient(135deg, rgba(${cube.c},0.18) 0%, rgba(${cube.c},0.05) 100%)`,
+          border: `1px solid rgba(${cube.c},0.32)`,
+          backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+          boxShadow: `0 0 18px rgba(${cube.c},0.20), inset 0 1px 0 rgba(255,255,255,0.12)`,
+          animation: `${cube.a} 7s ease-in-out infinite`,
+          animationDelay: cube.d,
+          zIndex: 4,
+        }}/>
+      ))}
+
       <style>{`
-        @keyframes qlogo-halo {
-          0%,100%{opacity:0.7;transform:translate(-50%,-50%) scale(1)}
-          50%{opacity:1.0;transform:translate(-50%,-50%) scale(1.10)}
+        @keyframes qlogo-aura-zoom {
+          0%   { opacity: 0.5; transform: translate(-50%,-50%) scale(0.85); }
+          40%  { opacity: 1.0; transform: translate(-50%,-50%) scale(1.0); }
+          100% { opacity: 0;   transform: translate(-50%,-50%) scale(1.35); }
         }
-        @keyframes qbg-line-r {
-          0%{transform:translateX(-110%);opacity:0}
-          8%{opacity:1}92%{opacity:1}
-          100%{transform:translateX(110%);opacity:0}
+        @keyframes qlogo-line-r {
+          0%   { transform: translateX(-110%); opacity: 0; }
+          8%   { opacity: 1; }
+          92%  { opacity: 1; }
+          100% { transform: translateX(110%);  opacity: 0; }
         }
-        @keyframes qbg-line-l {
-          0%{transform:translateX(110%);opacity:0}
-          8%{opacity:1}92%{opacity:1}
-          100%{transform:translateX(-110%);opacity:0}
+        @keyframes qlogo-line-l {
+          0%   { transform: translateX(110%);  opacity: 0; }
+          8%   { opacity: 1; }
+          92%  { opacity: 1; }
+          100% { transform: translateX(-110%); opacity: 0; }
+        }
+        @keyframes qlogo-line-d {
+          0%   { transform: translateY(-110%); opacity: 0; }
+          8%   { opacity: 1; }
+          92%  { opacity: 1; }
+          100% { transform: translateY(110%);  opacity: 0; }
+        }
+        @keyframes qlogo-scan {
+          0%   { top: -4px; opacity: 1; }
+          100% { top: 100%; opacity: 0.2; }
+        }
+        @keyframes qlogo-shadow-pulse {
+          0%,100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+          50%     { opacity: 0.9; transform: translateX(-50%) scale(0.85); }
+        }
+        @keyframes qlogo-dot-blink {
+          0%,100% { opacity: 0.5; transform: scale(1); }
+          50%     { opacity: 1.0; transform: scale(1.4); }
+        }
+        @keyframes qlogo-cube1 {
+          0%,100% { transform: translateY(0px) rotate(0deg); }
+          33%     { transform: translateY(-8px) rotate(6deg); }
+          66%     { transform: translateY(4px) rotate(-4deg); }
+        }
+        @keyframes qlogo-cube2 {
+          0%,100% { transform: translateY(0px) rotate(0deg); }
+          33%     { transform: translateY(6px) rotate(-5deg); }
+          66%     { transform: translateY(-10px) rotate(8deg); }
+        }
+        @keyframes qlogo-cube3 {
+          0%,100% { transform: translateY(0px) rotate(0deg); }
+          50%     { transform: translateY(-12px) rotate(10deg); }
         }
       `}</style>
     </div>

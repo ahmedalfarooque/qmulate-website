@@ -10,9 +10,7 @@ export function SceneBg({ cyan=false }:{cyan?:boolean}){
   return(
     <div style={{position:"absolute",inset:0,overflow:"hidden",zIndex:0,pointerEvents:"none"}}>
       <div className="bg-mesh" style={{position:"absolute",inset:0}}/>
-      <div className="bg-aurora"/>
       <div className="bg-orbs"/>
-      <div className="bg-grid"/>
       <div className="orb-c" style={{width:600,height:600,top:"20%",left:"55%",
         background:`radial-gradient(circle,${cyan?"rgba(0,212,255,0.10)":"rgba(91,124,250,0.09)"} 0%,transparent 65%)`}}/>
     </div>
@@ -27,10 +25,8 @@ export function HeroBg({ scrollProgress }:{scrollProgress:any}){
   return(
     <motion.div style={{position:"absolute",inset:0,y,zIndex:0,pointerEvents:"none"}}>
       <div className="bg-mesh" style={{position:"absolute",inset:0}}/>
-      <div className="bg-aurora"/>
       <div className="bg-particles"/>
       <div className="bg-orbs"/>
-      <div className="bg-grid"/>
       <div className="orb-c" style={{width:700,height:700,top:"15%",left:"52%",
         background:"radial-gradient(circle,rgba(0,212,255,0.12) 0%,transparent 65%)"}}/>
       <div className="orb-c" style={{width:500,height:500,top:"55%",left:"5%",
@@ -71,10 +67,8 @@ export function PageHero({children,minH="64vh",particles=true}:{children:React.R
     <section style={{position:"relative",overflow:"hidden",minHeight:minH,display:"flex",alignItems:"flex-end"}}>
       <div style={{position:"absolute",inset:0,overflow:"hidden",zIndex:0,pointerEvents:"none"}}>
         <div className="bg-mesh" style={{position:"absolute",inset:0}}/>
-        <div className="bg-aurora"/>
         {particles&&<div className="bg-particles"/>}
         <div className="bg-orbs"/>
-        <div className="bg-grid"/>
         <div className="orb-c" style={{width:600,height:600,top:"10%",left:"55%",
           background:"radial-gradient(circle,rgba(0,212,255,0.10) 0%,transparent 65%)"}}/>
         <div className="orb-c" style={{width:400,height:400,top:"60%",left:"5%",

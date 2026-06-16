@@ -6,6 +6,10 @@
    Dark: "Midnight Deep"   ·   Light: "Pearl Ink"
    ═══════════════════════════════════════════════════════════════════════ */
 
+/* ── SINGLE-PAGE SCROLL ──────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+[id] { scroll-margin-top: 64px; }
+
 /* ── DARK THEME (default) ─────────────────────────────────────────────── */
 :root {
   --nav-h: 64px;
@@ -199,7 +203,7 @@ body{
 
 /* Smooth theme transition */
 body,
-.gc,.gp,.gf,.btn,.btn-primary,.btn-ghost,.pill,.bg-mesh,.bg-aurora,
+.gc,.gp,.gf,.btn,.btn-primary,.btn-ghost,.pill,.bg-mesh,
 nav header footer section{
   transition:background .35s ease,border-color .3s ease,color .3s ease,box-shadow .35s ease;
 }
@@ -349,24 +353,9 @@ main.hero-page{padding-top:0}
     radial-gradient(ellipse 70% 80% at 90% 80%,var(--orb-v) 0%,transparent 55%),
     radial-gradient(ellipse 60% 50% at 50% -10%,var(--orb-b) 0%,transparent 55%);
 }
-.bg-aurora{
-  position:absolute;inset:0;pointer-events:none;overflow:hidden;
-  background:
-    repeating-linear-gradient(-35deg,transparent 0,transparent 80px,rgba(0,212,255,.015) 80px,rgba(0,212,255,.015) 82px,transparent 82px,transparent 160px),
-    repeating-linear-gradient(-35deg,transparent 0,transparent 75px,rgba(138,92,255,.012) 75px,rgba(138,92,255,.012) 76px,transparent 76px,transparent 150px);
-}
-:is([data-theme="light"],.light) .bg-aurora{
-  background:
-    repeating-linear-gradient(-35deg,transparent 0,transparent 80px,rgba(2,132,199,.020) 80px,rgba(2,132,199,.020) 82px,transparent 82px,transparent 160px),
-    repeating-linear-gradient(-35deg,transparent 0,transparent 75px,rgba(109,40,217,.016) 75px,rgba(109,40,217,.016) 76px,transparent 76px,transparent 150px);
-}
-.bg-grid{
-  position:absolute;inset:0;pointer-events:none;
-  background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);
-  background-size:52px 52px;
-  mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,black 20%,transparent 100%);
-  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,black 20%,transparent 100%);
-}
+/* bg-aurora and bg-grid removed — replaced by EnergyBeam */
+.bg-aurora{ display:none }
+.bg-grid{ display:none }
 
 /* Architectural strata drift — used by StrataStack */
 @keyframes strata-drift{0%,100%{opacity:1;transform:translateY(0)}50%{opacity:.8;transform:translateY(-8px)}}
@@ -859,22 +848,7 @@ input:focus, select:focus, textarea:focus {
     radial-gradient(ellipse 55% 45% at 50% -5%, rgba(29,78,216,0.035) 0%,transparent 55%);
 }
 
-:is([data-theme="light"],.light) .bg-grid {
-  background-image:
-    linear-gradient(rgba(0,0,0,0.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,0,0,0.025) 1px,transparent 1px);
-  background-size: 52px 52px;
-}
-
-:is([data-theme="light"],.light) .bg-aurora {
-  background:
-    repeating-linear-gradient(-35deg,transparent 0,transparent 80px,
-      rgba(2,132,199,0.016) 80px,rgba(2,132,199,0.016) 82px,
-      transparent 82px,transparent 160px),
-    repeating-linear-gradient(-35deg,transparent 0,transparent 75px,
-      rgba(109,40,217,0.012) 75px,rgba(109,40,217,0.012) 76px,
-      transparent 76px,transparent 150px);
-}
+/* bg-grid and bg-aurora light overrides removed */
 
 /* Orbs — muted tints for light mode */
 :is([data-theme="light"],.light) .orb-c { background: radial-gradient(circle,rgba(2,132,199,0.08),transparent 70%) }
@@ -1691,4 +1665,18 @@ img[alt="QMULATE logo"] {
   75%  { transform: translateY(-14px) rotateX(-10deg) rotateY(20deg)  rotateZ(-4deg); }
   88%  { transform: translateY(-4px)  rotateX(4deg)   rotateY(-12deg) rotateZ(1deg);  }
   100% { transform: translateY(0px)   rotateX(0deg)   rotateY(0deg)   rotateZ(0deg);  }
+}
+
+/* ══════════════════════════════
+   QLOGO-IMG — navbar logo blend
+   ══════════════════════════════ */
+
+.qlogo-img {
+  mix-blend-mode: screen;
+  background: transparent !important;
+}
+
+[data-theme="light"] .qlogo-img {
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 0 6px rgba(91,124,250,0.55)) !important;
 }

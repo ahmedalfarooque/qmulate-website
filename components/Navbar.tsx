@@ -9,18 +9,21 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import { MenuIcon, CloseIcon } from "./icons/GlassIcons";
 
 const EN_LINKS = [
-  {h:"/",l:"Home"},{h:"/about",l:"About"},{h:"/services",l:"Services"},
-  {h:"/solutions",l:"Solutions"},{h:"/projects",l:"Projects"},{h:"/contact",l:"Contact"},
+  {h:"/",l:"Home"},{h:"/#about",l:"About"},{h:"/#services",l:"Services"},
+  {h:"/#solutions",l:"Solutions"},{h:"/#projects",l:"Projects"},{h:"/#contact",l:"Contact"},
 ];
 const AR_LINKS = [
-  {h:"/ar",l:"الرئيسية"},{h:"/ar/about",l:"من نحن"},{h:"/ar/services",l:"خدماتنا"},
-  {h:"/ar/solutions",l:"الحلول"},{h:"/ar/projects",l:"المشاريع"},{h:"/ar/contact",l:"تواصل"},
+  {h:"/ar",l:"الرئيسية"},{h:"/ar#about",l:"من نحن"},{h:"/ar#services",l:"خدماتنا"},
+  {h:"/ar#solutions",l:"الحلول"},{h:"/ar#projects",l:"المشاريع"},{h:"/ar#contact",l:"تواصل"},
 ];
+
+const SECTION_IDS = ["home","about","services","solutions","projects","contact"];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [compact, setCompact] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const path = usePathname();
   const isAr = path.startsWith("/ar");
   const links = isAr ? AR_LINKS : EN_LINKS;
@@ -32,7 +35,29 @@ export function Navbar() {
   });
   useEffect(()=>setOpen(false),[path]);
 
-  const isActive = (h:string) => h==="/"||h==="/ar" ? path===h : path.startsWith(h);
+  useEffect(()=>{
+    const onScroll = () => {
+      const sy = window.scrollY + 80;
+      let current = "home";
+      for (const id of SECTION_IDS) {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY;
+          if (sy >= top) current = id;
+        }
+      }
+      setActiveSection(current);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  },[path]);
+
+  const isActive = (h:string) => {
+    if (h==="/"||h==="/ar") return (activeSection==="home") && path===h;
+    const hash = h.split("#")[1];
+    return hash ? activeSection===hash : false;
+  };
 
   return (
     <>
@@ -64,7 +89,7 @@ export function Navbar() {
               alt="QMULATE logo"
               width={28}
               height={36}
-              className="logo-img"
+              className="qlogo-img"
               style={{
                 objectFit: 'contain',
                 display: 'block',
@@ -112,7 +137,7 @@ export function Navbar() {
             </Link>
 
             <MagneticButton strength={0.25}>
-              <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary d-cta"
+              <Link href={isAr?"/ar#contact":"/#contact"} className="btn btn-primary d-cta"
                 style={{padding:"8px 18px",fontSize:12,borderRadius:100}}>
                 {isAr?"تواصل":"Get in touch"}
               </Link>
@@ -156,7 +181,7 @@ export function Navbar() {
                   {l.l}
                 </Link>
               ))}
-              <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary"
+              <Link href={isAr?"/ar#contact":"/#contact"} className="btn btn-primary"
                 style={{marginTop:28,justifyContent:"center",fontSize:15,padding:16}}>
                 {isAr?"طلب تواصل →":"Request an introduction →"}
               </Link>
