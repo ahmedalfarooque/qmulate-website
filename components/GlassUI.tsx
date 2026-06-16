@@ -1,5 +1,5 @@
 "use client";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { StrataMark } from "./StrataMark";
 
@@ -20,7 +20,7 @@ export function SceneBg({ cyan=false }:{cyan?:boolean}){
 /* ─────────────────────────────────────────────────────────
    HeroBg — parallax hero background with particles
    ───────────────────────────────────────────────────────── */
-export function HeroBg({ scrollProgress }:{scrollProgress:any}){
+export function HeroBg({ scrollProgress }:{scrollProgress:MotionValue<number>}){
   const y = useTransform(scrollProgress,[0,1],["0%","24%"]);
   return(
     <motion.div style={{position:"absolute",inset:0,y,zIndex:0,pointerEvents:"none"}}>
@@ -97,14 +97,17 @@ export function SectionHead({badge,h2,sub,left=false,cyan=false}:{
   const FI={initial:{opacity:0},whileInView:{opacity:1},viewport:{once:true},transition:{duration:.7}};
   return(
     <div style={{textAlign:left?"left":"center",marginBottom:72}}>
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <motion.div {...FI as any} style={{marginBottom:22,justifyContent:left?"flex-start":"center",display:"flex"}}>
         <span className="badge">{badge}</span>
       </motion.div>
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <motion.h2 {...FU as any} className="t-h2" style={{
         maxWidth:640,margin:left?"0 0 16px":"0 auto 16px",
         background:"linear-gradient(160deg,#fff 25%,#94A3B8 100%)",
         WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"
       }}>{h2}</motion.h2>
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       {sub&&<motion.p {...FU as any} className="t-lg" style={{
         color:"#64748B",maxWidth:500,margin:left?"0":"0 auto"
       }}>{sub}</motion.p>}

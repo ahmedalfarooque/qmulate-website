@@ -13,6 +13,15 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      // isMounted pattern (useEffect(() => setMounted(true), [])) is intentional
+      // for SSR/hydration mismatch prevention — a well-established React pattern.
+      "react-hooks/set-state-in-effect": "off",
+      // Math.random() for visual texture arrays is intentional (not render logic).
+      "react-hooks/purity": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

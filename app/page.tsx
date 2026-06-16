@@ -414,7 +414,7 @@ export default function Home() {
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"clamp(48px,6vw,96px)",alignItems:"center"}} className="grid-2">
             <motion.div {...FL()}>
-              <SectionHeading eyebrow="Philosophy" title={<>We govern. <span className="gt-c">We don't speculate.</span></>} subtitle="Most wealth managers are product sellers. We are governance engineers. We build structures, not portfolios. We protect mandates, not just returns."/>
+              <SectionHeading eyebrow="Philosophy" title={<>We govern. <span className="gt-c">We don&apos;t speculate.</span></>} subtitle="Most wealth managers are product sellers. We are governance engineers. We build structures, not portfolios. We protect mandates, not just returns."/>
               <motion.div {...FU(.2)} style={{display:"flex",flexDirection:"column",gap:20,marginTop:36}}>
                 {[{n:"01",title:"Governance over returns",desc:"We don't chase yield. We build the structures that protect and perpetuate capital — so returns are a consequence of discipline, not luck."},{n:"02",title:"Perpetuity over performance",desc:"Every mandate is designed to outlast its principals. Succession structures, constitutional documents, and governance protocols are built in from day one."},{n:"03",title:"Transparency over opacity",desc:"Principals deserve complete visibility. We deliver quarterly governance packs, real-time performance data, and unconditional access to every decision rationale."}].map((p,i)=>(
                   <motion.div key={p.n} {...FU(.08+i*.1)} style={{display:"flex",gap:20,alignItems:"flex-start"}}>
@@ -433,7 +433,7 @@ export default function Home() {
                   <StrataSculpture size={280} opacity={0.28} style={{position:"relative"}}/>
                 </div>
                 <blockquote style={{fontSize:"clamp(18px,2.2vw,26px)",fontWeight:700,color:"var(--text-1)",lineHeight:1.45,marginBottom:16,fontStyle:"italic"}}>
-                  "Wealth, structured to outlast its makers."
+                  &ldquo;Wealth, structured to outlast its makers.&rdquo;
                 </blockquote>
                 <div className="t-xs" style={{color:"var(--text-4)",marginBottom:32}}>QMULATE FOUNDING PRINCIPLE · 2019</div>
                 <div style={{display:"flex",justifyContent:"center",gap:24,paddingTop:24,borderTop:"1px solid var(--glass-border)"}}>
@@ -582,7 +582,7 @@ export default function Home() {
         <div className="container" style={{position:"relative",zIndex:1,textAlign:"center"}}>
           <motion.div {...FI()}><span className="pill pill-w" style={{marginBottom:32}}>Founding Principle</span></motion.div>
           <motion.blockquote {...FU(.08)} style={{fontSize:"clamp(24px,3.5vw,52px)",fontWeight:800,color:"var(--text-1)",lineHeight:1.2,maxWidth:900,margin:"0 auto 32px",letterSpacing:"-0.035em"}}>
-            "Wealth, structured to <span className="gt-c">outlast its makers.</span>"
+            &ldquo;Wealth, structured to <span className="gt-c">outlast its makers.</span>&rdquo;
           </motion.blockquote>
           <motion.p {...FU(.16)} className="t-xs" style={{color:"var(--text-4)"}}>QMULATE · FOUNDED 2019 · RIYADH, SAUDI ARABIA</motion.p>
         </div>

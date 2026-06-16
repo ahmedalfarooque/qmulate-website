@@ -6,71 +6,77 @@
  * Replaces: Bubbles, OrbBg, IrisBlob, GoldBlobComp, RippleSphere
  *
  * All elements are:
- * - SVG-based for precision
- * - Very low opacity (institutional restraint)
- * - GPU-accelerated (transform, opacity only)
- * - Reduced-motion aware
- * - Themed for dark and light mode
+ *   - SVG-based for precision
+ *   - Very low opacity (institutional restraint)
+ *   - GPU-accelerated (transform, opacity only)
+ *   - Reduced-motion aware
+ *   - Themed for dark and light mode
  */
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
+
+// Deterministic pseudo-random — same seed always returns the same value on server AND client.
+// Avoids hydration mismatches caused by Math.random() diverging between SSR and client runs.
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453123;
+  return x - Math.floor(x);
+}
 
 // ─── Brand Accent ───────────────────────────────────────────────
 export const BRAND_BLUE = "#5B7CFA";
 
 // ─── 1. STRATA STACK — The QMULATE mark expanded to full section ─
 export function StrataStack({
-  opacity=0.08, side="left", size=480, style={},
-}:{opacity?:number; side?:"left"|"right"|"center"; size?:number; style?:React.CSSProperties}) {
+  opacity = 0.08, side = "left", size = 480, style = {},
+}: { opacity?: number; side?: "left" | "right" | "center"; size?: number; style?: React.CSSProperties }) {
   const pref = useReducedMotion();
   const bars = [
-    {w:"100%",c:"rgba(255,255,255,0.55)",h:12},
-    {w:"80%", c:"rgba(255,255,255,0.42)",h:12},
-    {w:"63%", c:"rgba(255,255,255,0.32)",h:12},
-    {w:"46%", c:BRAND_BLUE,             h:12},
+    { w: "100%", c: "rgba(255,255,255,0.55)", h: 12 },
+    { w: "80%",  c: "rgba(255,255,255,0.42)", h: 12 },
+    { w: "63%",  c: "rgba(255,255,255,0.32)", h: 12 },
+    { w: "46%",  c: BRAND_BLUE,               h: 12 },
   ];
   const gap = 8;
-  const totalH = bars.length*12 + (bars.length-1)*gap;
+  const totalH = bars.length * 12 + (bars.length - 1) * gap;
 
   return (
     <motion.div
       style={{
-        position:"absolute",
-        width:size,
-        height:totalH,
+        position: "absolute",
+        width: size,
+        height: totalH,
         opacity,
-        pointerEvents:"none",
-        left: side==="left" ? "clamp(-80px,-4%,0)" : side==="center" ? "50%" : "auto",
-        right: side==="right" ? "clamp(-80px,-4%,0)" : "auto",
-        transform: side==="center" ? "translateX(-50%)" : undefined,
+        pointerEvents: "none",
+        left: side === "left" ? "clamp(-80px,-4%,0)" : side === "center" ? "50%" : "auto",
+        right: side === "right" ? "clamp(-80px,-4%,0)" : "auto",
+        transform: side === "center" ? "translateX(-50%)" : undefined,
         ...style,
       }}
       animate={pref ? {} : {
-        y:[0,-10,5,0],
-        opacity:[opacity, opacity*1.18, opacity*0.88, opacity],
+        y: [0, -10, 5, 0],
+        opacity: [opacity, opacity * 1.18, opacity * 0.88, opacity],
       }}
-      transition={{duration:22, repeat:Infinity, ease:"easeInOut"}}
+      transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
     >
-      <div style={{display:"flex",flexDirection:"column",gap}}>
-        {bars.map((b,i)=>(
+      <div style={{ display: "flex", flexDirection: "column", gap }}>
+        {bars.map((b, i) => (
           <motion.div
             key={i}
             style={{
-              width:b.w, height:b.h,
-              background:b.c,
-              borderRadius:2,
-              backdropFilter:b.c===BRAND_BLUE ? undefined : "blur(1px)",
+              width: b.w, height: b.h,
+              background: b.c,
+              borderRadius: 2,
+              backdropFilter: b.c === BRAND_BLUE ? undefined : "blur(1px)",
             }}
             animate={pref ? {} : {
-              opacity:[1,.7,1],
-              scaleX:[1,.96,1],
+              opacity: [1, .7, 1],
+              scaleX: [1, .96, 1],
             }}
             transition={{
-              duration:14+i*2, repeat:Infinity, ease:"easeInOut",
-              delay:i*1.5,
+              duration: 14 + i * 2, repeat: Infinity, ease: "easeInOut",
+              delay: i * 1.5,
             }}
-
           />
         ))}
       </div>
@@ -80,25 +86,25 @@ export function StrataStack({
 
 // ─── 2. STRUCTURAL LATTICE — Diagonal cross-hatch (from design guide) ─
 export function StructuralLattice({
-  width=400, height=300, opacity=0.045,
-  color="rgba(255,255,255,1)",
-  style={},
-}:{width?:number;height?:number;opacity?:number;color?:string;style?:React.CSSProperties}) {
+  width = 400, height = 300, opacity = 0.045,
+  color = "rgba(255,255,255,1)",
+  style = {},
+}: { width?: number; height?: number; opacity?: number; color?: string; style?: React.CSSProperties }) {
   const pref = useReducedMotion();
   const cellSize = 28;
   const lines: React.ReactNode[] = [];
   // Diagonal lines going ↗
   for (let x = -height; x < width + height; x += cellSize) {
     lines.push(
-      <line key={`d1-${x}`} x1={x} y1={height} x2={x+height} y2={0}
-        stroke={color} strokeWidth={0.6} opacity={0.6}/>
+      <line key={`d1-${x}`} x1={x} y1={height} x2={x + height} y2={0}
+        stroke={color} strokeWidth={0.6} opacity={0.6} />
     );
   }
   // Diagonal lines going ↘
   for (let x = -height; x < width + height; x += cellSize) {
     lines.push(
-      <line key={`d2-${x}`} x1={x} y1={0} x2={x+height} y2={height}
-        stroke={color} strokeWidth={0.6} opacity={0.6}/>
+      <line key={`d2-${x}`} x1={x} y1={0} x2={x + height} y2={height}
+        stroke={color} strokeWidth={0.6} opacity={0.6} />
     );
   }
 
@@ -106,9 +112,9 @@ export function StructuralLattice({
     <motion.svg
       width={width} height={height}
       viewBox={`0 0 ${width} ${height}`}
-      style={{ opacity, pointerEvents:"none", ...style }}
-      animate={pref ? {} : { opacity:[opacity, opacity*1.3, opacity] }}
-      transition={{duration:16, repeat:Infinity, ease:"easeInOut"}}
+      style={{ opacity, pointerEvents: "none", ...style }}
+      animate={pref ? {} : { opacity: [opacity, opacity * 1.3, opacity] }}
+      transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
     >
       {lines}
     </motion.svg>
@@ -117,10 +123,10 @@ export function StructuralLattice({
 
 // ─── 3. VERTICAL FINS — Architectural vertical lines ─
 export function VerticalFins({
-  count=16, height=200, opacity=0.06,
-  color="rgba(255,255,255,1)",
-  style={},
-}:{count?:number;height?:number;opacity?:number;color?:string;style?:React.CSSProperties}) {
+  count = 16, height = 200, opacity = 0.06,
+  color = "rgba(255,255,255,1)",
+  style = {},
+}: { count?: number; height?: number; opacity?: number; color?: string; style?: React.CSSProperties }) {
   const pref = useReducedMotion();
   const w = count * 14;
 
@@ -128,23 +134,23 @@ export function VerticalFins({
     <motion.svg
       width={w} height={height}
       viewBox={`0 0 ${w} ${height}`}
-      style={{ opacity, pointerEvents:"none", ...style }}
-      animate={pref ? {} : { opacity:[opacity,opacity*1.4,opacity] }}
-      transition={{duration:20, repeat:Infinity, ease:"easeInOut"}}
+      style={{ opacity, pointerEvents: "none", ...style }}
+      animate={pref ? {} : { opacity: [opacity, opacity * 1.4, opacity] }}
+      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
     >
-      {Array.from({length:count},(_,i)=>(
+      {Array.from({ length: count }, (_, i) => (
         <motion.line
           key={i}
-          x1={i*14+7} y1={0}
-          x2={i*14+7} y2={height}
+          x1={i * 14 + 7} y1={0}
+          x2={i * 14 + 7} y2={height}
           stroke={color}
           strokeWidth={0.75}
-          initial={{ pathLength:0, opacity:0 }}
-          animate={{ pathLength:1, opacity:[0,.7,1,1,.8] }}
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: [0, .7, 1, 1, .8] }}
           transition={{
-            duration:1.8, delay:i*0.04,
-            ease:[0.2,0.8,0.2,1],
-            opacity:{duration:2.2, delay:i*0.04},
+            duration: 1.8, delay: i * 0.04,
+            ease: [0.2, 0.8, 0.2, 1],
+            opacity: { duration: 2.2, delay: i * 0.04 },
           }}
         />
       ))}
@@ -154,33 +160,54 @@ export function VerticalFins({
 
 // ─── 4. GLASS FAÇADE — Grid of glass panels (from design guide) ─
 export function GlassFacade({
-  cols=10, rows=7,
-  cellW=36, cellH=28,
-  gap=3,
-  opacity=0.07,
-  accent=BRAND_BLUE,
-  style={},
-}:{cols?:number;rows?:number;cellW?:number;cellH?:number;gap?:number;opacity?:number;accent?:string;style?:React.CSSProperties}) {
+  cols = 10, rows = 7,
+  cellW = 36, cellH = 28,
+  gap = 3,
+  opacity = 0.07,
+  accent = BRAND_BLUE,
+  style = {},
+}: { cols?: number; rows?: number; cellW?: number; cellH?: number; gap?: number; opacity?: number; accent?: string; style?: React.CSSProperties }) {
   const pref = useReducedMotion();
-  const W = cols*(cellW+gap)-gap;
-  const H = rows*(cellH+gap)-gap;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-  // Random opacity map for visual texture
-  const opacities = Array.from({length:cols*rows},()=>
-    0.2 + Math.random() * 0.6
+  const W = cols * (cellW + gap) - gap;
+  const H = rows * (cellH + gap) - gap;
+
+  // Deterministic opacity per cell — seededRandom(idx) returns the same value on
+  // server and client so SSR HTML and hydration output are identical.
+  const opacities = useMemo(
+    () => Array.from({ length: cols * rows }, (_, i) => 0.2 + seededRandom(i) * 0.6),
+    [cols, rows]
   );
-  // A few "lit" cells (blue accent)
-  const litCells = new Set([2,5,11,22,37,44]);
+  const litCells = new Set([2, 5, 11, 22, 37, 44]);
 
   return (
     <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}
-      style={{opacity, pointerEvents:"none", ...style}}>
-      {Array.from({length:rows},(_,r)=>
-        Array.from({length:cols},(_,c)=>{
-          const idx = r*cols+c;
+      style={{ opacity, pointerEvents: "none", ...style }}>
+      {Array.from({ length: rows }, (_, r) =>
+        Array.from({ length: cols }, (_, c) => {
+          const idx = r * cols + c;
           const isLit = litCells.has(idx);
-          const xp = c*(cellW+gap);
-          const yp = r*(cellH+gap);
+          const xp = c * (cellW + gap);
+          const yp = r * (cellH + gap);
+          const cellOpacity = opacities[idx] * (isLit ? 0.8 : 0.28);
+
+          // SSR / pre-mount: plain <rect> — output is identical to server HTML, no mismatch.
+          if (!mounted) {
+            return (
+              <rect
+                key={idx}
+                x={xp} y={yp}
+                width={cellW} height={cellH}
+                rx={1}
+                fill={isLit ? accent : "rgba(255,255,255,1)"}
+                opacity={cellOpacity}
+              />
+            );
+          }
+
+          // Post-mount (client only): motion.rect adds pulse animation safely.
           return (
             <motion.rect
               key={idx}
@@ -188,15 +215,15 @@ export function GlassFacade({
               width={cellW} height={cellH}
               rx={1}
               fill={isLit ? accent : "rgba(255,255,255,1)"}
-              opacity={opacities[idx] * (isLit ? 0.8 : 0.28)}
+              opacity={cellOpacity}
               animate={pref ? {} : isLit ? {
-                opacity:[opacities[idx]*0.5,opacities[idx]*0.9,opacities[idx]*0.5],
+                opacity: [opacities[idx] * 0.5, opacities[idx] * 0.9, opacities[idx] * 0.5],
               } : {
-                opacity:[opacities[idx]*0.28, opacities[idx]*0.18, opacities[idx]*0.28],
+                opacity: [opacities[idx] * 0.28, opacities[idx] * 0.18, opacities[idx] * 0.28],
               }}
               transition={{
-                duration:8+idx*0.07, repeat:Infinity,
-                ease:"easeInOut", delay:idx*0.02,
+                duration: 8 + idx * 0.07, repeat: Infinity,
+                ease: "easeInOut", delay: idx * 0.02,
               }}
             />
           );
@@ -208,30 +235,30 @@ export function GlassFacade({
 
 // ─── 5. GOVERNANCE PULSE — ECG-inspired structural line ─
 export function GovernancePulse({
-  width=600, height=80, opacity=0.18,
-  color=BRAND_BLUE,
-  style={},
-}:{width?:number;height?:number;opacity?:number;color?:string;style?:React.CSSProperties}) {
+  width = 600, height = 80, opacity = 0.18,
+  color = BRAND_BLUE,
+  style = {},
+}: { width?: number; height?: number; opacity?: number; color?: string; style?: React.CSSProperties }) {
   const pref = useReducedMotion();
-  const mid = height/2;
+  const mid = height / 2;
 
   // Governance/ECG path — architectural, measured
   const path = `
     M 0 ${mid}
-    L ${width*0.08} ${mid}
-    L ${width*0.12} ${mid-height*0.3}
-    L ${width*0.16} ${mid+height*0.3}
-    L ${width*0.20} ${mid-height*0.15}
-    L ${width*0.24} ${mid}
-    L ${width*0.38} ${mid}
-    L ${width*0.42} ${mid-height*0.22}
-    L ${width*0.46} ${mid+height*0.22}
-    L ${width*0.50} ${mid-height*0.10}
-    L ${width*0.53} ${mid}
-    L ${width*0.70} ${mid}
-    L ${width*0.73} ${mid-height*0.18}
-    L ${width*0.76} ${mid+height*0.18}
-    L ${width*0.79} ${mid}
+    L ${width * 0.08} ${mid}
+    L ${width * 0.12} ${mid - height * 0.3}
+    L ${width * 0.16} ${mid + height * 0.3}
+    L ${width * 0.20} ${mid - height * 0.15}
+    L ${width * 0.24} ${mid}
+    L ${width * 0.38} ${mid}
+    L ${width * 0.42} ${mid - height * 0.22}
+    L ${width * 0.46} ${mid + height * 0.22}
+    L ${width * 0.50} ${mid - height * 0.10}
+    L ${width * 0.53} ${mid}
+    L ${width * 0.70} ${mid}
+    L ${width * 0.73} ${mid - height * 0.18}
+    L ${width * 0.76} ${mid + height * 0.18}
+    L ${width * 0.79} ${mid}
     L ${width} ${mid}
   `;
 
@@ -239,11 +266,9 @@ export function GovernancePulse({
     <motion.svg
       width={width} height={height}
       viewBox={`0 0 ${width} ${height}`}
-      style={{ opacity, pointerEvents:"none", ...style }}
+      style={{ opacity, pointerEvents: "none", ...style }}
     >
       {/* Background trace */}
-      <path d={path} fill="none" stroke="rgba(255,255,255,0.08)"
-        strokeWidth={1} strokeLinecap="round" strokeLinejoin="round"/>
       {/* Animated trace */}
       <motion.path
         d={path}
@@ -252,16 +277,16 @@ export function GovernancePulse({
         strokeWidth={1.2}
         strokeLinecap="round"
         strokeLinejoin="round"
-        initial={{ pathLength:0, opacity:0 }}
+        initial={{ pathLength: 0, opacity: 0 }}
         animate={pref ? {} : {
-          pathLength:[0,1,1,0],
-          opacity:[0,1,0.6,0],
+          pathLength: [0, 1, 1, 0],
+          opacity: [0, 1, 0.6, 0],
         }}
         transition={{
-          duration:7, repeat:Infinity,
-          ease:[0.2,0.8,0.2,1],
-          delay:0,
-          times:[0,0.5,0.9,1],
+          duration: 7, repeat: Infinity,
+          ease: [0.2, 0.8, 0.2, 1],
+          delay: 0,
+          times: [0, 0.5, 0.9, 1],
         }}
       />
     </motion.svg>
@@ -270,21 +295,21 @@ export function GovernancePulse({
 
 // ─── 6. HORIZONTAL STRATA LINES — Fine architectural rhythm ─
 export function StrataLines({
-  count=8, width=600, opacity=0.06,
-  color="rgba(255,255,255,1)",
-  style={},
-}:{count?:number;width?:number;opacity?:number;color?:string;style?:React.CSSProperties}) {
+  count = 8, width = 600, opacity = 0.06,
+  color = "rgba(255,255,255,1)",
+  style = {},
+}: { count?: number; width?: number; opacity?: number; color?: string; style?: React.CSSProperties }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   const H = count * 20;
-  const widths = [100,82,68,56,45,36,28,20].map(p=>`${p}%`);
+  const widths = [100, 82, 68, 56, 45, 36, 28, 20].map(p => `${p}%`);
 
   return (
     <svg width={width} height={H} viewBox={`0 0 ${width} ${H}`}
-      style={{opacity, pointerEvents:"none", ...style}}>
-      {Array.from({length:count},(_,i)=>{
-        const lineWidth = (parseFloat(widths[i]||"100")/100)*width;
+      style={{ opacity, pointerEvents: "none", ...style }}>
+      {Array.from({ length: count }, (_, i) => {
+        const lineWidth = (parseFloat(widths[i] || "100") / 100) * width;
         const isFirst = i === 0;
         const lineOpacity = isFirst ? 0.8 : 0.4;
 
@@ -294,12 +319,12 @@ export function StrataLines({
           return (
             <line
               key={i}
-              x1={0} y1={i*20+2}
-              x2={lineWidth} y2={i*20+2}
+              x1={0} y1={i * 20 + 2}
+              x2={lineWidth} y2={i * 20 + 2}
               stroke={isFirst ? BRAND_BLUE : color}
               strokeWidth={isFirst ? 1.5 : 1}
               opacity={lineOpacity}
-              style={{ transformOrigin:"left" }}
+              style={{ transformOrigin: "left" }}
             />
           );
         }
@@ -307,15 +332,15 @@ export function StrataLines({
         return (
           <motion.line
             key={i}
-            x1={0} y1={i*20+2}
-            x2={lineWidth} y2={i*20+2}
+            x1={0} y1={i * 20 + 2}
+            x2={lineWidth} y2={i * 20 + 2}
             stroke={isFirst ? BRAND_BLUE : color}
             strokeWidth={isFirst ? 1.5 : 1}
             opacity={lineOpacity}
-            initial={{ scaleX:0, opacity:0 }}
-            animate={{ scaleX:1, opacity:lineOpacity }}
-            style={{ transformOrigin:"left" }}
-            transition={{ duration:0.9, delay:i*0.08, ease:[0.2,0.8,0.2,1] }}
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: lineOpacity }}
+            style={{ transformOrigin: "left" }}
+            transition={{ duration: 0.9, delay: i * 0.08, ease: [0.2, 0.8, 0.2, 1] }}
           />
         );
       })}
@@ -325,67 +350,67 @@ export function StrataLines({
 
 // ─── 7. ARCHITECTURAL BACKGROUND — Combines elements ─────────────
 
-type BgVariant = "strata-left"|"strata-right"|"lattice"|"fins"|"facade"|"pulse"|"mixed";
+type BgVariant = "strata-left" | "strata-right" | "lattice" | "fins" | "facade" | "pulse" | "mixed";
 
 export function ArchitecturalBg({
-  variant="mixed", className="", style={},
-}:{variant?:BgVariant; className?:string; style?:React.CSSProperties}) {
+  variant = "mixed", className = "", style = {},
+}: { variant?: BgVariant; className?: string; style?: React.CSSProperties }) {
   return null;
 }
 
 // ─── 8. STRATA HERO SCULPTURE — 3D-esque layered mark ─────────────
 export function StrataSculpture({
-  size=380, opacity=0.12, style={},
-}:{size?:number;opacity?:number;style?:React.CSSProperties}) {
+  size = 380, opacity = 0.12, style = {},
+}: { size?: number; opacity?: number; style?: React.CSSProperties }) {
   const pref = useReducedMotion();
 
   const layers = [
-    {w:"100%",h:14,y:0,  blur:0,  fill:"rgba(255,255,255,0.09)"},
-    {w:"88%", h:12,y:22, blur:0,  fill:"rgba(255,255,255,0.13)"},
-    {w:"76%", h:12,y:42, blur:0,  fill:"rgba(255,255,255,0.16)"},
-    {w:"64%", h:12,y:62, blur:0,  fill:"rgba(255,255,255,0.20)"},
-    {w:"52%", h:12,y:82, blur:0,  fill:"rgba(255,255,255,0.26)"},
-    {w:"40%", h:12,y:102,blur:0,  fill:"rgba(255,255,255,0.32)"},
-    {w:"28%", h:12,y:122,blur:0,  fill:BRAND_BLUE},
+    { w: "100%", h: 14, y: 0,   blur: 0, fill: "rgba(255,255,255,0.09)" },
+    { w: "88%",  h: 12, y: 22,  blur: 0, fill: "rgba(255,255,255,0.13)" },
+    { w: "76%",  h: 12, y: 42,  blur: 0, fill: "rgba(255,255,255,0.16)" },
+    { w: "64%",  h: 12, y: 62,  blur: 0, fill: "rgba(255,255,255,0.20)" },
+    { w: "52%",  h: 12, y: 82,  blur: 0, fill: "rgba(255,255,255,0.26)" },
+    { w: "40%",  h: 12, y: 102, blur: 0, fill: "rgba(255,255,255,0.32)" },
+    { w: "28%",  h: 12, y: 122, blur: 0, fill: BRAND_BLUE },
   ];
 
   return (
     <motion.div
       style={{
-        position:"absolute",
-        width:size,
-        height:148,
+        position: "absolute",
+        width: size,
+        height: 148,
         opacity,
-        pointerEvents:"none",
+        pointerEvents: "none",
         ...style,
       }}
       animate={pref ? {} : {
-        y:[0,-12,6,0],
-        rotateX:[-2,2,-2],
-        perspective:800,
+        y: [0, -12, 6, 0],
+        rotateX: [-2, 2, -2],
+        perspective: 800,
       }}
-      transition={{duration:28, repeat:Infinity, ease:"easeInOut"}}
+      transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
     >
-      {layers.map((l,i)=>(
+      {layers.map((l, i) => (
         <motion.div
           key={i}
           style={{
-            position:"absolute",
-            top:l.y,
-            left:0,
-            width:l.w,
-            height:l.h,
-            background:l.fill,
-            borderRadius:2,
-            backdropFilter:"blur(4px)",
+            position: "absolute",
+            top: l.y,
+            left: 0,
+            width: l.w,
+            height: l.h,
+            background: l.fill,
+            borderRadius: 2,
+            backdropFilter: "blur(4px)",
           }}
           animate={pref ? {} : {
-            opacity:[1,.75,1],
-            translateX:[0, i*1.5, 0],
+            opacity: [1, .75, 1],
+            translateX: [0, i * 1.5, 0],
           }}
           transition={{
-            duration:18+i*2, repeat:Infinity, ease:"easeInOut",
-            delay:i*0.8,
+            duration: 18 + i * 2, repeat: Infinity, ease: "easeInOut",
+            delay: i * 0.8,
           }}
         />
       ))}
@@ -395,7 +420,7 @@ export function StrataSculpture({
 
 // ─── 9. Light mode variants ───────────────────────────────────────
 export function ArchitecturalBgLight({
-  variant="mixed", className="", style={},
-}:{variant?:BgVariant; className?:string; style?:React.CSSProperties}) {
+  variant = "mixed", className = "", style = {},
+}: { variant?: BgVariant; className?: string; style?: React.CSSProperties }) {
   return null;
 }

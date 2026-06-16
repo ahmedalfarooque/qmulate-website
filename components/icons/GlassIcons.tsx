@@ -570,7 +570,7 @@ export function ProcessIcon({ step, size="md" as GlassSize }: { step:number; siz
   const Icon = Icons[Math.min(step, Icons.length-1)];
   return <Icon size={size}/>;
 }
-export const ChallengeIcon = ({ size = "sm" }: any) => (
+export const ChallengeIcon = ({ size = "sm" }: { size?: string }) => (
   <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
     <path
       d="M12 2L2 22h20L12 2z"
@@ -582,7 +582,7 @@ export const ChallengeIcon = ({ size = "sm" }: any) => (
   </svg>
 );
 
-export const SolutionCheckIcon = ({ size = "sm" }: any) => (
+export const SolutionCheckIcon = ({ size = "sm" }: { size?: string }) => (
   <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8" />
     <path

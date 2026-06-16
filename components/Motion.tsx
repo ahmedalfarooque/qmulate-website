@@ -13,7 +13,7 @@
 import {
   motion, useScroll, useTransform, useSpring,
   useInView, useMotionValue, AnimatePresence,
-  useReducedMotion, animate, stagger,
+  useReducedMotion, animate, stagger, type Variants,
 } from "framer-motion";
 import { useRef, useState, useEffect, useCallback, ReactNode } from "react";
 
@@ -294,11 +294,11 @@ export function StaggerReveal({
   const ref = useRef(null);
   const inView = useInView(ref, { once:true, margin:"-80px" });
 
-  const variants: Record<string, any> = {
+  const variants: Variants = {
     hidden: {},
     show: { transition: { staggerChildren: staggerDelay, delayChildren: delay } },
   };
-  const childVariants: Record<string, any> = {
+  const childVariants: Record<string, Variants> = {
     up:     { hidden:{ opacity:0, y:28 }, show:{ opacity:1, y:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
     left:   { hidden:{ opacity:0, x:-28}, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
     right:  { hidden:{ opacity:0, x:28 }, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },

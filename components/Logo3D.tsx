@@ -149,6 +149,7 @@ export function Logo3D({ size = 200 }: { size?: number }) {
         { top: `${Math.round(s * 0.1)}px`,  right: `${-(fr + 14)}px`, size: Math.round(s * 0.13), c: '0,196,204',  d: '1s',   a: 'qlogo-cube2' },
         { bottom: `${Math.round(s * 0.08)}px`, left: `${-(fr + 10)}px`, size: Math.round(s * 0.11), c: '91,124,250', d: '2s',   a: 'qlogo-cube3' },
         { bottom: `${-fr}px`,        right: `${Math.round(s * 0.06)}px`, size: Math.round(s * 0.15), c: '0,196,204',  d: '0.5s', a: 'qlogo-cube1' },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any[]).map((cube, i) => (
         <div key={i} style={{
           position: 'absolute',
