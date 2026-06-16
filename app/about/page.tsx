@@ -10,6 +10,7 @@ import {
   ArchitecturalBg, StrataLines, GovernancePulse, BRAND_BLUE
 } from "@/components/Strata";
 import { PageBackground } from "@/components/PageBackground";
+import { GlassIcon } from "@/components/GlassIcon";
 
 const PRINCIPLES = [
   { n:"01", title:"Governance over returns", desc:"We don't optimise for yield. We build the structural frameworks that protect and perpetuate capital across market cycles and family generations." },
@@ -171,7 +172,11 @@ export default function About() {
                   <div style={{marginBottom:16,display:"flex",justifyContent:"center"}}>
                     <StrataLines count={3} width={60} opacity={0.22} color={p.color}/>
                   </div>
-                  <div style={{fontSize:22,marginBottom:10,color:p.color,filter:`drop-shadow(0 0 14px ${p.color}55)`}}>{p.icon}</div>
+                  <div style={{marginBottom:10,display:"flex",justifyContent:"center"}}>
+                    <GlassIcon size={48} color={p.color==="#00D4FF"?"cyan":"blue"}>
+                      <span style={{color:p.color,filter:`drop-shadow(0 0 10px ${p.color}88)`}}>{p.icon}</span>
+                    </GlassIcon>
+                  </div>
                   <div style={{fontSize:14,fontWeight:700,color:"var(--text-1)",marginBottom:8}}>{p.label}</div>
                   <div className="t-xs" style={{color:"var(--text-4)",textTransform:"none",letterSpacing:0,fontSize:12,fontFamily:"inherit"}}>{p.desc}</div>
                 </GlassCard>

@@ -14,6 +14,7 @@ import {
 } from "@/components/Strata";
 import { PageBackground } from "@/components/PageBackground";
 import { Logo3D } from "@/components/Logo3D";
+import { GlassIcon } from "@/components/GlassIcon";
 
 /* ── Service tabs ── */
 const SERVICES = [
@@ -486,9 +487,10 @@ export default function Home() {
                 <div style={{marginBottom:16,display:"flex",justifyContent:"center"}}>
                   <StrataLines count={4} width={72} opacity={0.25} color={p.color}/>
                 </div>
-                <div style={{fontSize:"clamp(20px,2.2vw,28px)",fontWeight:800,letterSpacing:"-0.03em",
-                  color:p.color,filter:`drop-shadow(0 0 18px ${p.color}55)`,lineHeight:1,marginBottom:10}}>
-                  {p.icon}
+                <div style={{marginBottom:10,display:"flex",justifyContent:"center"}}>
+                  <GlassIcon size={52} color={p.color==="#00D4FF"||p.color==="var(--cyan)"?"cyan":"blue"}>
+                    <span style={{color:p.color,filter:`drop-shadow(0 0 10px ${p.color}88)`}}>{p.icon}</span>
+                  </GlassIcon>
                 </div>
                 <div style={{fontSize:14,color:"var(--text-2)",fontWeight:600,marginBottom:6}}>{p.label}</div>
                 <div className="t-xs" style={{color:"var(--text-4)",textTransform:"none",letterSpacing:0,fontSize:12,fontFamily:"inherit"}}>{p.desc}</div>
@@ -518,7 +520,7 @@ export default function Home() {
                   ["◉","Intelligence Layer","Real-time analytics across all holdings. No surprises. Full transparency."],
                 ].map(([icon,title,desc])=>(
                   <div key={String(title)} style={{display:"flex",gap:16,padding:"18px 20px",background:"var(--g1)",border:"1px solid var(--glass-border)",borderRadius:16}}>
-                    <div style={{fontSize:20,width:40,flexShrink:0}}>{icon}</div>
+                    <GlassIcon size={40} color="blue">{icon}</GlassIcon>
                     <div>
                       <div style={{fontSize:14,fontWeight:700,color:"var(--text-1)",marginBottom:4}}>{title}</div>
                       <div className="t-sm" style={{color:"var(--text-3)"}}>{desc}</div>
