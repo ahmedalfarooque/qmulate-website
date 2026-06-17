@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { StrataMark } from "./StrataMark";
 
 export function Footer() {
   const path = usePathname();
@@ -49,7 +48,7 @@ export function Footer() {
           {/* Brand column */}
           <div>
             <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,textDecoration:"none"}}>
-              <StrataMark size={30} style={{color:"var(--text-1)"}}/>
+              <img src="/Logo.png" alt="QMULATE" style={{height:'36px',width:'auto',display:'block',objectFit:'contain',mixBlendMode:'screen',filter:'drop-shadow(0 0 4px rgba(91,124,250,0.45))'}} />
               <div>
                 <div style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:13,letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
                 <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,color:"rgba(148,163,184,.45)",letterSpacing:"0.10em",marginTop:2}}>FAMILY OFFICE</div>

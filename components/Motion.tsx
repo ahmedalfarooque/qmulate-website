@@ -29,7 +29,7 @@ export const EASE = {
   precise: [0.40, 0.00, 0.20, 1.00] as [number,number,number,number],
 };
 
-export const DUR = { fast:.22, normal:.55, slow:.85, luxury:1.10, epic:1.6 };
+export const DUR = { fast:.22, normal:.28, slow:.32, luxury:.35, epic:1.6 };
 
 // Spring configs
 export const SPRING = {
@@ -44,34 +44,34 @@ export const SPRING = {
 // ══════════════════════════════════════════════════════════════
 
 export const preset = {
-  fadeUp: (delay=0, distance=32) => ({
-    initial:{ opacity:0, y:distance },
+  fadeUp: (delay=0, distance=20) => ({
+    initial:{ opacity:0, y:distance, willChange:"opacity, transform" },
     whileInView:{ opacity:1, y:0 },
-    viewport:{ once:true, margin:"-80px" },
+    viewport:{ once:true, margin:"-30px" },
     transition:{ duration:DUR.slow, delay, ease:EASE.luxury },
   }),
   fadeIn: (delay=0) => ({
-    initial:{ opacity:0 },
+    initial:{ opacity:0, willChange:"opacity" },
     whileInView:{ opacity:1 },
-    viewport:{ once:true, margin:"-60px" },
+    viewport:{ once:true, margin:"-30px" },
     transition:{ duration:DUR.normal, delay, ease:EASE.smooth },
   }),
   scaleIn: (delay=0) => ({
-    initial:{ opacity:0, scale:.94 },
+    initial:{ opacity:0, scale:.94, willChange:"opacity, transform" },
     whileInView:{ opacity:1, scale:1 },
-    viewport:{ once:true, margin:"-60px" },
+    viewport:{ once:true, margin:"-30px" },
     transition:{ duration:DUR.luxury, delay, ease:EASE.luxury },
   }),
   slideLeft: (delay=0) => ({
-    initial:{ opacity:0, x:-40 },
+    initial:{ opacity:0, x:-20, willChange:"opacity, transform" },
     whileInView:{ opacity:1, x:0 },
-    viewport:{ once:true, margin:"-60px" },
+    viewport:{ once:true, margin:"-30px" },
     transition:{ duration:DUR.slow, delay, ease:EASE.luxury },
   }),
   slideRight: (delay=0) => ({
-    initial:{ opacity:0, x:40 },
+    initial:{ opacity:0, x:20, willChange:"opacity, transform" },
     whileInView:{ opacity:1, x:0 },
-    viewport:{ once:true, margin:"-60px" },
+    viewport:{ once:true, margin:"-30px" },
     transition:{ duration:DUR.slow, delay, ease:EASE.luxury },
   }),
   // Hero entrance — starts from larger offset, blur
@@ -248,7 +248,7 @@ export function TextReveal({
 }) {
   const should = useReducedMotion();
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-80px" });
+  const inView = useInView(ref, { once:true, margin:"-30px" });
   const words = text.split(" ");
 
   if (should) {
@@ -261,12 +261,12 @@ export function TextReveal({
       {words.map((word, i) => (
         <span key={i} style={{ display:"inline-block", overflow:"hidden", verticalAlign:"top" }}>
           <motion.span
-            style={{ display:"inline-block" }}
+            style={{ display:"inline-block", willChange:"opacity, transform" }}
             initial={{ y:"110%", opacity:0 }}
             animate={inView ? { y:"0%", opacity:1 } : {}}
             transition={{
               duration: DUR.slow,
-              delay: delay + i * 0.045,
+              delay: delay + i * 0.025,
               ease: EASE.luxury,
             }}
           >
@@ -284,7 +284,7 @@ export function TextReveal({
 // ══════════════════════════════════════════════════════════════
 
 export function StaggerReveal({
-  children, delay=0, staggerDelay=0.08, direction="up", className="", style={},
+  children, delay=0, staggerDelay=0.06, direction="up", className="", style={},
 }: {
   children: ReactNode; delay?:number; staggerDelay?:number;
   direction?: "up"|"left"|"right"|"scale";
@@ -292,17 +292,17 @@ export function StaggerReveal({
 }) {
   const should = useReducedMotion();
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-80px" });
+  const inView = useInView(ref, { once:true, margin:"-30px" });
 
   const variants: Variants = {
     hidden: {},
     show: { transition: { staggerChildren: staggerDelay, delayChildren: delay } },
   };
   const childVariants: Record<string, Variants> = {
-    up:     { hidden:{ opacity:0, y:28 }, show:{ opacity:1, y:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
-    left:   { hidden:{ opacity:0, x:-28}, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
-    right:  { hidden:{ opacity:0, x:28 }, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
-    scale:  { hidden:{ opacity:0, scale:.92 }, show:{ opacity:1, scale:1, transition:{ duration:DUR.luxury, ease:EASE.luxury }} },
+    up:     { hidden:{ opacity:0, y:20, willChange:"opacity, transform" as string }, show:{ opacity:1, y:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
+    left:   { hidden:{ opacity:0, x:-20, willChange:"opacity, transform" as string}, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
+    right:  { hidden:{ opacity:0, x:20,  willChange:"opacity, transform" as string}, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
+    scale:  { hidden:{ opacity:0, scale:.92, willChange:"opacity, transform" as string }, show:{ opacity:1, scale:1, transition:{ duration:DUR.luxury, ease:EASE.luxury }} },
   };
   const cv = childVariants[direction];
 
@@ -367,7 +367,7 @@ export function AnimatedNumber({
   const should = useReducedMotion();
   const [display, setDisplay] = useState(0);
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-100px" });
+  const inView = useInView(ref, { once:true, margin:"-30px" });
 
   useEffect(() => {
     if (!inView || should) { setDisplay(value); return; }
@@ -410,7 +410,7 @@ export function DrawLine({
 }) {
   const should = useReducedMotion();
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-60px" });
+  const inView = useInView(ref, { once:true, margin:"-30px" });
 
   return (
     <div ref={ref} className={className} style={{ overflow:"hidden", ...style }}>
@@ -438,14 +438,14 @@ export function RevealSection({
 }) {
   const should = useReducedMotion();
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-120px" });
+  const inView = useInView(ref, { once:true, margin:"-30px" });
 
   return (
     <motion.section
       ref={ref}
       className={className}
       style={style}
-      initial={should ? {} : { opacity:0, y:32 }}
+      initial={should ? {} : { opacity:0, y:20, willChange:"opacity, transform" }}
       animate={inView ? { opacity:1, y:0 } : {}}
       transition={{ duration:DUR.luxury, ease:EASE.luxury }}
     >

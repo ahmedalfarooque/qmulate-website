@@ -17,12 +17,12 @@ export function TextReveal({
   style?: CSSProperties
 }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const inView = useInView(ref, { once: true, margin: '-30px' })
 
   const variants = {
-    up:   { hidden: { opacity: 0, y: 32 },  visible: { opacity: 1, y: 0 } },
-    left: { hidden: { opacity: 0, x: -28 }, visible: { opacity: 1, x: 0 } },
-    fade: { hidden: { opacity: 0 },          visible: { opacity: 1 } },
+    up:   { hidden: { opacity: 0, y: 20, willChange: "opacity, transform" },  visible: { opacity: 1, y: 0 } },
+    left: { hidden: { opacity: 0, x: -20, willChange: "opacity, transform" }, visible: { opacity: 1, x: 0 } },
+    fade: { hidden: { opacity: 0, willChange: "opacity" },                     visible: { opacity: 1 } },
   }
 
   return (
@@ -31,7 +31,7 @@ export function TextReveal({
       initial="hidden"
       animate={inView ? 'visible' : 'hidden'}
       variants={variants[direction]}
-      transition={{ duration: 0.70, delay, ease: [0.2, 0.8, 0.2, 1] }}
+      transition={{ duration: 0.32, delay, ease: [0.2, 0.8, 0.2, 1] }}
       className={className}
       style={style}
     >
@@ -42,7 +42,7 @@ export function TextReveal({
 
 export function StaggerHeadline({ text, className }: { text: string; className?: string }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const inView = useInView(ref, { once: true, margin: '-30px' })
   const words = text.split(' ')
 
   return (
@@ -50,9 +50,9 @@ export function StaggerHeadline({ text, className }: { text: string; className?:
       {words.map((word, i) => (
         <motion.span
           key={i}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 20, willChange: "opacity, transform" }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: i * 0.08, duration: 0.55, ease: [0.2, 0.8, 0.2, 1] }}
+          transition={{ delay: i * 0.05, duration: 0.30, ease: [0.2, 0.8, 0.2, 1] }}
           style={{ display: 'inline-block', marginRight: '0.25em' }}
         >
           {word}

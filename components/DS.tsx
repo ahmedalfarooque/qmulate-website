@@ -9,32 +9,31 @@ import { BRAND_BLUE } from "@/components/Strata";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { StrataMark } from "./StrataMark";
 
 /* ─── Animation Presets ─── */
-export const FU = (delay=0,distance=28) => ({
-  initial:{opacity:0,y:distance},
+export const FU = (delay=0,distance=20) => ({
+  initial:{opacity:0,y:distance,willChange:"opacity, transform"},
   whileInView:{opacity:1,y:0},
-  viewport:{once:true,margin:"-80px"},
-  transition:{duration:.85,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
+  viewport:{once:true,margin:"-30px"},
+  transition:{duration:.32,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
 });
 export const FI = (delay=0) => ({
-  initial:{opacity:0},
+  initial:{opacity:0,willChange:"opacity"},
   whileInView:{opacity:1},
-  viewport:{once:true,margin:"-60px"},
-  transition:{duration:.7,delay},
+  viewport:{once:true,margin:"-30px"},
+  transition:{duration:.28,delay},
 });
 export const FS = (delay=0) => ({
-  initial:{opacity:0,scale:.92} as {opacity:number,scale:number},
+  initial:{opacity:0,scale:.92,willChange:"opacity, transform"} as {opacity:number,scale:number,willChange:string},
   whileInView:{opacity:1,scale:1},
-  viewport:{once:true,margin:"-60px"},
-  transition:{duration:.9,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
+  viewport:{once:true,margin:"-30px"},
+  transition:{duration:.35,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
 });
 export const FL = (delay=0) => ({
-  initial:{opacity:0,x:-32},
+  initial:{opacity:0,x:-20,willChange:"opacity, transform"},
   whileInView:{opacity:1,x:0},
-  viewport:{once:true,margin:"-60px"},
-  transition:{duration:.85,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
+  viewport:{once:true,margin:"-30px"},
+  transition:{duration:.32,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
 });
 
 /* ─── Section Heading ─── */
@@ -52,7 +51,7 @@ export function SectionHeading({eyebrow,title,subtitle,center=false,className=""
         {title}
       </motion.h2>
       {subtitle&&(
-        <motion.p {...FU(0.12)} className="t-lg" style={{color:"var(--text-3)",marginTop:16,lineHeight:1.75}}>
+        <motion.p {...FU(0.08)} className="t-lg" style={{color:"var(--text-3)",marginTop:16,lineHeight:1.75}}>
           {subtitle}
         </motion.p>
       )}

@@ -281,7 +281,7 @@ export default function Home() {
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div className="grid-4" style={{padding:"clamp(40px,5vw,64px) 0"}}>
             {PILLARS.map((p,i)=>(
-              <motion.div key={p.label} {...FU(i*0.1)} style={{textAlign:"center",padding:"clamp(24px,3vw,40px) 16px"}}>
+              <motion.div key={p.label} {...FU(Math.min(i*0.04, 0.1))} style={{textAlign:"center",padding:"clamp(24px,3vw,40px) 16px"}}>
                 <div style={{marginBottom:16,display:"flex",justifyContent:"center"}}><StrataLines count={4} width={72} opacity={0.25} color={p.color}/></div>
                 <div style={{marginBottom:10,display:"flex",justifyContent:"center"}}>
                   <GlassIcon size={52} color={p.color==="#00D4FF"||p.color==="var(--cyan)"?"cyan":"blue"}>
@@ -448,7 +448,7 @@ export default function Home() {
             <div style={{position:"absolute",left:"50%",top:0,bottom:0,width:1,background:`linear-gradient(to bottom,transparent,${BRAND_BLUE}44,rgba(138,92,255,.3),transparent)`,transform:"translateX(-50%)"}} className="timeline-line"/>
             <div style={{display:"flex",flexDirection:"column",gap:32}}>
               {TIMELINE.map((item,i)=>(
-                <motion.div key={item.year} {...FU(i*.08)} style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:48,position:"relative"}} className="timeline-row">
+                <motion.div key={item.year} {...FU(Math.min(i*0.04, 0.1))} style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:48,position:"relative"}} className="timeline-row">
                   {i%2===0 ? (
                     <>
                       <div style={{textAlign:"right",paddingRight:40,paddingTop:8}}>
@@ -492,7 +492,7 @@ export default function Home() {
             </div>
             <div style={{display:"flex",flexDirection:"column",gap:12}}>
               {FAQ.map((item,i)=>(
-                <motion.div key={i} {...FU(i*.07)}>
+                <motion.div key={i} {...FU(Math.min(i*0.04, 0.1))}>
                   <GlassCard hover={false} style={{overflow:"hidden"}}>
                     <button onClick={()=>setActiveFaq(activeFaq===i?null:i)} style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center",gap:16,padding:"20px 24px",textAlign:"left",cursor:"pointer"}}>
                       <div style={{fontSize:14,fontWeight:600,color:"var(--text-1)",lineHeight:1.5}}>{item.q}</div>
@@ -547,7 +547,7 @@ export default function Home() {
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div className="grid-2" style={{gap:"clamp(24px,3vw,40px)"}}>
             {[{label:"MISSION",color:"var(--cyan)",title:"We govern wealth. We don't manage products.",body:"QMULATE organises real estate wealth — property management, brokerage, advisory, and facilities — into one governed system. Every mandate is structured to preserve, grow, and transfer wealth across generations without loss of intent."},{label:"VISION",color:"#8A5CFF",title:"A world where wealth outlasts its makers.",body:"We believe every family that builds significant real estate wealth deserves a governance framework worthy of that achievement. Our vision is to become the standard of institutional-grade real estate wealth governance in the GCC and beyond."}].map((item,i)=>(
-              <motion.div key={item.label} {...FU(i*.1)}>
+              <motion.div key={item.label} {...FU(i*0.05)}>
                 <GlassCard style={{padding:"clamp(32px,4vw,52px)",height:"100%"}}>
                   <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:24}}>
                     <span className="t-xs" style={{color:item.color}}>{item.label}</span>
@@ -642,7 +642,7 @@ export default function Home() {
           </div>
           <div className="grid-4">
             {[{label:"Property Stewardship",desc:"Every asset governed by policy framework",icon:"◈",color:"#00D4FF"},{label:"Long-Term Preservation",desc:"Structures built for generational continuity",icon:"⬡",color:"#8A5CFF"},{label:"Governed Growth",desc:"Capital deployed within structural guardrails",icon:"◉",color:"#4D8DFF"},{label:"Generational Continuity",desc:"Succession frameworks active across mandates",icon:"⬟",color:"#A855F7"}].map((p,i)=>(
-              <motion.div key={p.label} {...FU(i*.09)}>
+              <motion.div key={p.label} {...FU(Math.min(i*0.04, 0.1))}>
                 <GlassCard style={{padding:"clamp(24px,3vw,36px)",textAlign:"center"}}>
                   <div style={{marginBottom:16,display:"flex",justifyContent:"center"}}><StrataLines count={3} width={60} opacity={0.22} color={p.color}/></div>
                   <div style={{marginBottom:10,display:"flex",justifyContent:"center"}}>
@@ -667,7 +667,7 @@ export default function Home() {
           </div>
           <div className="grid-4">
             {TEAM.map((member,i)=>(
-              <motion.div key={member.name} {...FU(i*.08)}>
+              <motion.div key={member.name} {...FU(Math.min(i*0.04, 0.1))}>
                 <GlassCard style={{padding:"clamp(24px,3vw,36px)",textAlign:"center"}}>
                   <div style={{width:72,height:72,borderRadius:14,margin:"0 auto 20px",background:"linear-gradient(135deg,rgba(0,212,255,.10),rgba(138,92,255,.10))",border:"1px solid rgba(255,255,255,.08)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,fontWeight:700,color:"rgba(255,255,255,.35)",letterSpacing:"0.02em"}}>
                     {member.name.split(" ").map((n: string)=>n[0]).join("")}
@@ -755,7 +755,7 @@ export default function Home() {
           </div>
           <div className="grid-4">
             {[{n:"01",icon:"🔍",title:"Discovery",desc:"We conduct a comprehensive diagnostic of existing structures, assets, governance gaps, and family mandate.",accent:"#00D4FF"},{n:"02",icon:"🏗️",title:"Architecture",desc:"We design the complete governance architecture — entity structures, mandate documents, and reporting frameworks.",accent:"#8A5CFF"},{n:"03",icon:"⚡",title:"Implementation",desc:"We deploy the governance infrastructure — systems, processes, and documentation — within a defined timeline.",accent:"#4D8DFF"},{n:"04",icon:"♾️",title:"Governance",desc:"We operate the mandate on an ongoing basis — reporting, advisory, and continuous governance improvement.",accent:"#A855F7"}].map((step,i)=>(
-              <motion.div key={step.n} {...FU(i*.1)}>
+              <motion.div key={step.n} {...FU(Math.min(i*0.04, 0.1))}>
                 <GlassCard style={{padding:"clamp(24px,3vw,36px)",textAlign:"center",height:"100%"}}>
                   <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:11,color:step.accent,marginBottom:16}}>{step.n}</div>
                   <div style={{marginBottom:16}}><ProcessIcon step={i} size="lg"/></div>
@@ -798,7 +798,7 @@ export default function Home() {
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div className="grid-3">
             {SOLUTIONS.map((s,i)=>(
-              <motion.div key={s.title} {...FU(i*.07)}>
+              <motion.div key={s.title} {...FU(Math.min(i*0.04, 0.1))}>
                 <GlassCard style={{padding:"clamp(24px,3vw,40px)",height:"100%"}}>
                   <div style={{marginBottom:20}}>
                     {i===0&&<GovernanceIcon size="lg" animated={false}/>}
@@ -874,10 +874,10 @@ export default function Home() {
           <motion.h1 {...FU(0.1)} className="t-d gt-w" style={{marginBottom:20,maxWidth:860,fontSize:"clamp(44px,6vw,88px)"}}>
             Mandates that<br/><span className="gt-c">redefined governance.</span>
           </motion.h1>
-          <motion.p {...FU(0.18)} className="t-xl" style={{color:"var(--text-3)",maxWidth:560,lineHeight:1.75,marginBottom:40}}>
+          <motion.p {...FU(0.1)} className="t-xl" style={{color:"var(--text-3)",maxWidth:560,lineHeight:1.75,marginBottom:40}}>
             Each engagement is a structured governance system — designed for permanence, not just performance.
           </motion.p>
-          <motion.div {...FS(0.22)} style={{display:"flex",gap:32,alignItems:"flex-end",padding:"28px 32px",background:"var(--g1)",border:"1px solid var(--glass-border)",borderRadius:20,backdropFilter:"blur(20px)",maxWidth:680,overflow:"hidden",position:"relative"}}>
+          <motion.div {...FS(0.1)} style={{display:"flex",gap:32,alignItems:"flex-end",padding:"28px 32px",background:"var(--g1)",border:"1px solid var(--glass-border)",borderRadius:20,backdropFilter:"blur(20px)",maxWidth:680,overflow:"hidden",position:"relative"}}>
             <StrataLines count={6} width={120} opacity={0.18} color={BRAND_BLUE}/>
             <div style={{flex:1}}><GovernancePulse width={320} height={48} opacity={0.22} color={BRAND_BLUE}/></div>
             <VerticalFins count={8} height={60} opacity={0.12} style={{flexShrink:0}}/>
@@ -908,9 +908,9 @@ export default function Home() {
                     <span style={{padding:"4px 14px",borderRadius:100,fontSize:11,color:"var(--text-4)",background:"var(--g1)",border:"1px solid var(--glass-border)"}}>{project.year} · {project.duration}</span>
                   </div>
                   <motion.h2 {...FU(0.05)} className="t-h1 gt-w" style={{marginBottom:24,lineHeight:1.15}}>{project.title}</motion.h2>
-                  <motion.p {...FU(0.12)} className="t-lg" style={{color:"var(--text-3)",lineHeight:1.8}}>{project.brief}</motion.p>
+                  <motion.p {...FU(0.08)} className="t-lg" style={{color:"var(--text-3)",lineHeight:1.8}}>{project.brief}</motion.p>
                 </div>
-                <motion.div {...FS(0.15)} style={{position:"relative"}}>
+                <motion.div {...FS(0.08)} style={{position:"relative"}}>
                   <GlassCard style={{padding:"clamp(28px,3vw,44px)",height:"100%",display:"flex",flexDirection:"column",justifyContent:"space-between",borderLeft:`2px solid ${project.accentColor}33`,overflow:"hidden"}}>
                     <StrataLines count={7} width={280} opacity={0.18} color={project.accentColor}/>
                     <div style={{marginTop:20}}><GovernancePulse width={280} height={56} opacity={0.28} color={project.accentColor}/></div>
@@ -937,11 +937,11 @@ export default function Home() {
                 ))}
               </div>
 
-              <motion.div {...FU(0.18)}>
+              <motion.div {...FU(0.1)}>
                 <div className="t-xs" style={{color:"var(--text-4)",marginBottom:24}}>GOVERNANCE ARCHITECTURE</div>
                 <div className="grid-4" style={{gap:"clamp(12px,2vw,20px)"}}>
                   {project.pillars.map((pillar,i)=>(
-                    <motion.div key={pillar.label} {...FU(0.04+i*0.07)}>
+                    <motion.div key={pillar.label} {...FU(Math.min(0.04+i*0.05,0.1))}>
                       <GlassCard style={{padding:"clamp(20px,2.5vw,32px)",height:"100%"}}>
                         <div style={{marginBottom:14}}><StrataLines count={3} width={64} opacity={0.25} color={project.accentColor}/></div>
                         <div style={{fontSize:13,fontWeight:700,color:"var(--text-1)",marginBottom:10,lineHeight:1.3}}>{pillar.label}</div>
@@ -983,8 +983,8 @@ export default function Home() {
             <StrataSculpture size={320} opacity={0.22} style={{position:"relative"}}/>
           </motion.div>
           <motion.h2 {...FU(0.1)} className="t-d gt-a" style={{marginBottom:20,fontSize:"clamp(36px,5.5vw,72px)"}}>Ready to become<br/>a case study?</motion.h2>
-          <motion.p {...FU(0.16)} className="t-xl" style={{color:"var(--text-3)",maxWidth:500,margin:"0 auto 44px",lineHeight:1.75}}>If your wealth requires governance — not just management — we would be glad to speak with you in confidence.</motion.p>
-          <motion.div {...FU(0.22)} style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
+          <motion.p {...FU(0.08)} className="t-xl" style={{color:"var(--text-3)",maxWidth:500,margin:"0 auto 44px",lineHeight:1.75}}>If your wealth requires governance — not just management — we would be glad to speak with you in confidence.</motion.p>
+          <motion.div {...FU(0.1)} style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
             <Link href="#contact" className="btn btn-primary glow-border" style={{fontSize:16,padding:"16px 40px"}}>Request an introduction →</Link>
             <Link href="#services" className="btn btn-ghost" style={{fontSize:16,padding:"16px 36px"}}>Explore our services</Link>
           </motion.div>

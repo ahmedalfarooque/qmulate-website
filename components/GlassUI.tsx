@@ -1,7 +1,6 @@
 "use client";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import { StrataMark } from "./StrataMark";
 
 /* ────────────────────────────────────────────────
    SceneBg — section background (3 layers + aurora)
