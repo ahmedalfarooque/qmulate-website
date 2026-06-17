@@ -1680,3 +1680,232 @@ img[alt="QMULATE logo"] {
   mix-blend-mode: normal;
   filter: drop-shadow(0 0 6px rgba(91,124,250,0.55)) !important;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   RTL ANIMATION OVERRIDES
+   ══════════════════════════════════════════════════════════════ */
+
+[dir="rtl"] .reveal-left  { --reveal-x: 28px;  }
+[dir="rtl"] .reveal-right { --reveal-x: -28px; }
+[dir="rtl"] [class*="slide-left"]  { animation-direction: reverse; }
+[dir="rtl"] [class*="marquee"]     { animation-direction: reverse; }
+[dir="rtl"] [class*="carousel"]    { direction: rtl; }
+
+/* ── RTL LAYOUT RESETS ── */
+[dir="rtl"] .text-left  { text-align: right; }
+[dir="rtl"] .text-right { text-align: left; }
+[dir="rtl"] .pl-4  { padding-left: 0; padding-right: 1rem; }
+[dir="rtl"] .pr-4  { padding-right: 0; padding-left: 1rem; }
+[dir="rtl"] .ml-auto { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .mr-auto { margin-right: 0; margin-left: auto; }
+[dir="rtl"] .border-l { border-left: none; border-right: inherit; }
+[dir="rtl"] .border-r { border-right: none; border-left: inherit; }
+[dir="rtl"] .rounded-l { border-radius: 0 var(--r-md) var(--r-md) 0; }
+[dir="rtl"] .rounded-r { border-radius: var(--r-md) 0 0 var(--r-md); }
+[dir="rtl"] .space-x-4 > * + * { margin-left: 0; margin-right: 1rem; }
+
+/* ── RTL FORMS ── */
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  text-align: right;
+  direction: rtl;
+}
+[dir="rtl"] label {
+  text-align: right;
+  display: block;
+}
+[dir="rtl"] form {
+  direction: rtl;
+}
+
+/* ── RTL CARDS AND GRIDS ── */
+[dir="rtl"] .grid   { direction: rtl; }
+[dir="rtl"] [class*="card"]    { text-align: right; }
+[dir="rtl"] [class*="feature"] { text-align: right; }
+
+/* ── RTL BUTTONS ── */
+[dir="rtl"] button,
+[dir="rtl"] a[class*="btn"] {
+  direction: rtl;
+}
+
+/* ── RTL ICON PLACEMENT ── */
+[dir="rtl"] [class*="icon-left"] {
+  order: 1;
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+/* ── RTL STAT / METRIC CARDS ── */
+[dir="rtl"] [class*="stat"] { text-align: right; }
+
+/* ── RTL nav underline — animates right-to-left ── */
+[dir="rtl"] .nav-link-hover::after {
+  left: auto;
+  right: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   COMPREHENSIVE RTL OVERRIDES — ARABIC WEBSITE EXPERIENCE
+   ══════════════════════════════════════════════════════════════ */
+
+/* Navigation — right-side layout */
+[dir="rtl"] header .cw          { direction: rtl; }
+[dir="rtl"] header nav          { direction: rtl; }
+[dir="rtl"] nav a               { direction: rtl; text-align: right; }
+
+/* All sections inherit RTL */
+[dir="rtl"] section             { direction: rtl; }
+[dir="rtl"] .container          { direction: rtl; }
+[dir="rtl"] .cw                 { direction: rtl; }
+
+/* Typography — right-aligned in RTL */
+[dir="rtl"] h1, [dir="rtl"] h2,
+[dir="rtl"] h3, [dir="rtl"] h4 { text-align: right; }
+[dir="rtl"] p                   { text-align: right; }
+[dir="rtl"] label               { text-align: right; display: block; }
+[dir="rtl"] .t-d, [dir="rtl"] .t-h1, [dir="rtl"] .t-h2,
+[dir="rtl"] .t-h3, [dir="rtl"] .t-lg, [dir="rtl"] .t-xl { text-align: right; }
+
+/* Arabic font application */
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3,
+[dir="rtl"] p, [dir="rtl"] span,
+[dir="rtl"] a, [dir="rtl"] button,
+[dir="rtl"] label, [dir="rtl"] input,
+[dir="rtl"] textarea, [dir="rtl"] select {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  line-height: 1.85;
+}
+
+/* Cards — right-aligned content */
+[dir="rtl"] .gc,
+[dir="rtl"] .gp,
+[dir="rtl"] .gf                { text-align: right; direction: rtl; }
+[dir="rtl"] [class*="card"]    { text-align: right; direction: rtl; }
+[dir="rtl"] [class*="feature"] { text-align: right; direction: rtl; }
+[dir="rtl"] .stat-card         { text-align: right; }
+
+/* Flex containers — reverse for RTL */
+[dir="rtl"] .hero-grid          { direction: rtl; }
+
+/* Grid system */
+[dir="rtl"] .grid-2,
+[dir="rtl"] .grid-3,
+[dir="rtl"] .grid-4             { direction: rtl; }
+
+/* Forms */
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select              { text-align: right; direction: rtl; }
+[dir="rtl"] form                { direction: rtl; }
+[dir="rtl"] .input-field        { direction: rtl; text-align: right; }
+
+/* Buttons — RTL text flow */
+[dir="rtl"] .btn,
+[dir="rtl"] button,
+[dir="rtl"] a[class*="btn"]    { direction: rtl; }
+
+/* Dropdowns */
+[dir="rtl"] select              { padding-right: 16px; padding-left: 40px; background-position: left 12px center; }
+
+/* Pill / badge */
+[dir="rtl"] .pill,
+[dir="rtl"] [class*="pill"]    { direction: rtl; }
+
+/* Metrics / stats */
+[dir="rtl"] [class*="stat"]    { text-align: right; }
+
+/* Icons — flip order in RTL */
+[dir="rtl"] [class*="icon-left"] { order: 1; margin-left: 0.5rem; margin-right: 0; }
+
+/* Spacings flip */
+[dir="rtl"] .pl-4  { padding-left: 0; padding-right: 1rem; }
+[dir="rtl"] .pr-4  { padding-right: 0; padding-left: 1rem; }
+[dir="rtl"] .ml-4  { margin-left: 0; margin-right: 1rem; }
+[dir="rtl"] .mr-4  { margin-right: 0; margin-left: 1rem; }
+[dir="rtl"] .ml-auto { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .mr-auto { margin-right: 0; margin-left: auto; }
+
+/* Borders */
+[dir="rtl"] .border-l { border-left: none; border-right: inherit; }
+[dir="rtl"] .border-r { border-right: none; border-left: inherit; }
+
+/* RTL scroll progress bar — starts from right */
+[dir="rtl"] .scroll-progress { right: 0; left: auto; transform-origin: right; }
+
+/* Footer RTL */
+[dir="rtl"] footer              { direction: rtl; }
+[dir="rtl"] footer p,
+[dir="rtl"] footer a,
+[dir="rtl"] footer div          { text-align: right; }
+
+/* RTL ANIMATION — Reveal from right instead of left */
+[dir="rtl"] .reveal-left  { --reveal-x: 28px; }
+[dir="rtl"] .reveal-right { --reveal-x: -28px; }
+
+/* RTL slide animations — reverse direction */
+@keyframes slide-r-rtl { from { opacity:0; transform:translateX(-30px) } to { opacity:1; transform:translateX(0) } }
+@keyframes slide-l-rtl { from { opacity:0; transform:translateX(30px)  } to { opacity:1; transform:translateX(0) } }
+[dir="rtl"] [class*="slide-left"]  { animation-name: slide-l-rtl; }
+[dir="rtl"] [class*="slide-right"] { animation-name: slide-r-rtl; }
+[dir="rtl"] [class*="marquee"]     { animation-direction: reverse; }
+[dir="rtl"] [class*="carousel"]    { direction: rtl; }
+
+/* ── Mobile menu RTL ── */
+[dir="rtl"] .mob-nav-link { text-align: right; }
+
+/* ── Stagger items — correct reading order ── */
+[dir="rtl"] .stagger-children > * { text-align: right; }
+
+/* ── Hero section RTL ── */
+[dir="rtl"] .hero-trust        { justify-content: flex-start; }
+[dir="rtl"] .hero-cta-row      { justify-content: flex-start; }
+
+/* ══════════════════════════════════════════════════════════════
+   BEAM CYCLE — CSS card illumination (5.5s matches EnergyBeam)
+   ══════════════════════════════════════════════════════════════ */
+
+@keyframes beam-card-pulse {
+  0%, 100% { box-shadow: var(--sh-card); }
+  50%       { box-shadow: var(--sh-card), 0 0 28px rgba(0,212,255,0.08); }
+}
+.gc:not(:hover) {
+  animation: beam-card-pulse 5.5s ease-in-out infinite;
+}
+.gc:not(:hover):nth-child(2)  { animation-delay: 0.92s; }
+.gc:not(:hover):nth-child(3)  { animation-delay: 1.83s; }
+.gc:not(:hover):nth-child(4)  { animation-delay: 2.75s; }
+.gc:not(:hover):nth-child(5)  { animation-delay: 3.67s; }
+.gc:not(:hover):nth-child(6)  { animation-delay: 4.58s; }
+
+/* ══════════════════════════════════════════════════════════════
+   GPU ACCELERATION — 3D SCENE
+   ══════════════════════════════════════════════════════════════ */
+
+.crystal-scene,
+[class*="glass"],
+[class*="cube"],
+[class*="diamond"] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Reduced motion — disable canvas */
+@media (prefers-reduced-motion: reduce) {
+  canvas { display: none !important; }
+  [class*="float"],
+  [class*="pulse"],
+  [class*="rotate"] {
+    animation: none !important;
+  }
+}
+
+/* Mobile performance */
+@media (max-width: 768px) {
+  [class*="particle"],
+  [class*="streak"] {
+    display: none;
+  }
+}

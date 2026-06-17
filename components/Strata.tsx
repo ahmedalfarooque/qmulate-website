@@ -14,14 +14,7 @@
  */
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useState, useMemo } from "react";
-
-// Deterministic pseudo-random — same seed always returns the same value on server AND client.
-// Avoids hydration mismatches caused by Math.random() diverging between SSR and client runs.
-function seededRandom(seed: number): number {
-  const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453123;
-  return x - Math.floor(x);
-}
+import { useRef, useEffect, useState } from "react";
 
 // ─── Brand Accent ───────────────────────────────────────────────
 export const BRAND_BLUE = "#5B7CFA";
@@ -168,18 +161,15 @@ export function GlassFacade({
   style = {},
 }: { cols?: number; rows?: number; cellW?: number; cellH?: number; gap?: number; opacity?: number; accent?: string; style?: React.CSSProperties }) {
   const pref = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const [cellData, setCellData] = useState<Array<{ opacity: number }> | null>(null);
+  useEffect(() => {
+    setCellData(
+      Array.from({ length: cols * rows }, () => ({ opacity: 0.2 + Math.random() * 0.6 }))
+    );
+  }, [cols, rows]);
 
   const W = cols * (cellW + gap) - gap;
   const H = rows * (cellH + gap) - gap;
-
-  // Deterministic opacity per cell — seededRandom(idx) returns the same value on
-  // server and client so SSR HTML and hydration output are identical.
-  const opacities = useMemo(
-    () => Array.from({ length: cols * rows }, (_, i) => 0.2 + seededRandom(i) * 0.6),
-    [cols, rows]
-  );
   const litCells = new Set([2, 5, 11, 22, 37, 44]);
 
   return (
@@ -191,10 +181,9 @@ export function GlassFacade({
           const isLit = litCells.has(idx);
           const xp = c * (cellW + gap);
           const yp = r * (cellH + gap);
-          const cellOpacity = opacities[idx] * (isLit ? 0.8 : 0.28);
 
-          // SSR / pre-mount: plain <rect> — output is identical to server HTML, no mismatch.
-          if (!mounted) {
+          // SSR / pre-mount: static rects at a fixed opacity — server and client HTML match exactly.
+          if (!cellData) {
             return (
               <rect
                 key={idx}
@@ -202,12 +191,13 @@ export function GlassFacade({
                 width={cellW} height={cellH}
                 rx={1}
                 fill={isLit ? accent : "rgba(255,255,255,1)"}
-                opacity={cellOpacity}
+                opacity={0.15}
               />
             );
           }
 
-          // Post-mount (client only): motion.rect adds pulse animation safely.
+          // Post-mount (client only): use stable random values generated in useEffect.
+          const cellOpacity = cellData[idx].opacity * (isLit ? 0.8 : 0.28);
           return (
             <motion.rect
               key={idx}
@@ -217,9 +207,9 @@ export function GlassFacade({
               fill={isLit ? accent : "rgba(255,255,255,1)"}
               opacity={cellOpacity}
               animate={pref ? {} : isLit ? {
-                opacity: [opacities[idx] * 0.5, opacities[idx] * 0.9, opacities[idx] * 0.5],
+                opacity: [cellData[idx].opacity * 0.5, cellData[idx].opacity * 0.9, cellData[idx].opacity * 0.5],
               } : {
-                opacity: [opacities[idx] * 0.28, opacities[idx] * 0.18, opacities[idx] * 0.28],
+                opacity: [cellData[idx].opacity * 0.28, cellData[idx].opacity * 0.18, cellData[idx].opacity * 0.28],
               }}
               transition={{
                 duration: 8 + idx * 0.07, repeat: Infinity,
@@ -382,12 +372,12 @@ export function StrataSculpture({
         height: 148,
         opacity,
         pointerEvents: "none",
+        perspective: 800,
         ...style,
       }}
       animate={pref ? {} : {
         y: [0, -12, 6, 0],
         rotateX: [-2, 2, -2],
-        perspective: 800,
       }}
       transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
     >

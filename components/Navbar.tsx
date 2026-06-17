@@ -80,7 +80,7 @@ export function Navbar() {
           style={{position:"absolute",top:0,left:0,right:0,height:1,
             background:"linear-gradient(90deg,transparent 5%,rgba(0,212,255,.5) 40%,rgba(138,92,255,.35) 65%,transparent 95%)"}}/>
 
-        <div className="cw" style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",gap:16}}>
+        <div className="cw" style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,direction:isAr?"rtl":"ltr"}}>
 
           {/* ── Logo ── */}
           <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:11,flexShrink:0}}>
@@ -109,7 +109,7 @@ export function Navbar() {
           </Link>
 
           {/* ── Desktop nav ── */}
-          <nav style={{display:"flex",alignItems:"center",gap:2}} className="d-nav">
+          <nav style={{display:"flex",alignItems:"center",gap:2,direction:isAr?"rtl":"ltr"}} className="d-nav">
             {links.map(l=>(
               <Link key={l.h} href={l.h} style={{
                 padding:"7px 14px",borderRadius:100,fontSize:13,fontWeight:500,
@@ -159,7 +159,7 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{opacity:0,x:"100%"}} animate={{opacity:1,x:0}} exit={{opacity:0,x:"100%"}}
+            initial={{opacity:0,x:isAr?"-100%":"100%"}} animate={{opacity:1,x:0}} exit={{opacity:0,x:isAr?"-100%":"100%"}}
             transition={{duration:.32,ease:[.4,0,.2,1]}}
             style={{
               position:"fixed",inset:0,zIndex:9998,
@@ -168,7 +168,7 @@ export function Navbar() {
               paddingTop:64,direction:isAr?"rtl":"ltr",
               display:"flex",flexDirection:"column",
             }}>
-            <nav style={{flex:1,display:"flex",flexDirection:"column",padding:"24px 28px",overflowY:"auto"}}>
+            <nav style={{flex:1,display:"flex",flexDirection:"column",padding:"24px 28px",overflowY:"auto",direction:isAr?"rtl":"ltr"}}>
               {links.map((l,i)=>(
                 <Link key={l.h} href={l.h} style={{
                   padding:"20px 0",borderBottom:"1px solid var(--glass-border)",
@@ -176,6 +176,7 @@ export function Navbar() {
                   letterSpacing:isAr?0:"-0.03em",
                   fontFamily:isAr?"'IBM Plex Sans Arabic',sans-serif":"'Inter',sans-serif",
                   color:isActive(l.h)?"var(--cyan)":"var(--text-1)",
+                  textAlign:isAr?"right":"left",
                   animation:`fade-up .42s ${i*55}ms both`,
                 }}>
                   {l.l}

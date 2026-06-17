@@ -26,9 +26,14 @@ export function Reveal({
     return () => io.disconnect();
   }, []);
 
+  // Detect RTL from html element — set by ArabicLayout useEffect
+  const isRTL =
+    typeof document !== 'undefined' &&
+    document.documentElement.dir === 'rtl'
+
   const from =
-    direction === "left"  ? "translateX(-24px)" :
-    direction === "right" ? "translateX(24px)"  :
+    direction === "left"  ? `translateX(${isRTL ? '24px' : '-24px'})` :
+    direction === "right" ? `translateX(${isRTL ? '-24px' : '24px'})` :
     direction === "up"    ? "translateY(24px)"  :
     direction === "scale" ? "scale(0.92)"       : "none";
 
