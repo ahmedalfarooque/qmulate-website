@@ -975,12 +975,16 @@ export default function Home() {
       {/* PROJECTS — CTA */}
       <section className="section" style={{position:"relative",overflow:"hidden",background:"linear-gradient(160deg,var(--bg-1),var(--bg-0))"}}>
         <ArchitecturalBg variant="mixed"/>
+        {/* Glassmorphism logo — decorative background layer */}
+        <div aria-hidden="true" style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:0,overflow:"hidden"}}>
+          <div aria-hidden="true" style={{position:"absolute",width:"200px",height:"200px",borderRadius:"50%",background:"radial-gradient(circle,rgba(91,124,250,0.12) 0%,transparent 70%)",filter:"blur(24px)",pointerEvents:"none",zIndex:-1}}/>
+          <div style={{position:"relative",padding:"28px 36px",borderRadius:"28px",background:"rgba(255,255,255,0.02)",backdropFilter:"blur(20px) saturate(180%)",WebkitBackdropFilter:"blur(20px) saturate(180%)",border:"1px solid rgba(255,255,255,0.04)",boxShadow:"0 4px 24px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.05),inset 0 -1px 0 rgba(0,0,0,0.1)"}}>
+            <img src="/Logo.png" alt="" style={{width:"160px",height:"auto",opacity:0.18,filter:"brightness(1.4) saturate(1.2) contrast(1.1)",mixBlendMode:"screen",display:"block",maskImage:"linear-gradient(135deg,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.2) 100%)",WebkitMaskImage:"linear-gradient(135deg,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.2) 100%)"}}/>
+          </div>
+        </div>
         <div className="container" style={{position:"relative",zIndex:1,textAlign:"center"}}>
           <motion.div {...FI(0)} style={{marginBottom:24}}>
             <span className="pill pill-v"><span className="dot-live" style={{background:"#8A5CFF",boxShadow:"0 0 8px #8A5CFF"}}/>PRIVATE FAMILY OFFICE · RIYADH</span>
-          </motion.div>
-          <motion.div {...FS(0.06)} style={{display:"flex",justifyContent:"center",marginBottom:36}}>
-            <StrataSculpture size={320} opacity={0.22} style={{position:"relative"}}/>
           </motion.div>
           <motion.h2 {...FU(0.1)} className="t-d gt-a" style={{marginBottom:20,fontSize:"clamp(36px,5.5vw,72px)"}}>Ready to become<br/>a case study?</motion.h2>
           <motion.p {...FU(0.08)} className="t-xl" style={{color:"var(--text-3)",maxWidth:500,margin:"0 auto 44px",lineHeight:1.75}}>If your wealth requires governance — not just management — we would be glad to speak with you in confidence.</motion.p>

@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { MagneticButton } from "@/components/Motion";
 import { ThemeSwitcher } from "./ThemeSwitcher";
@@ -24,9 +24,15 @@ export function Navbar() {
   const [compact, setCompact] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const path = usePathname();
+  const router = useRouter();
   const isAr = path.startsWith("/ar");
   const links = isAr ? AR_LINKS : EN_LINKS;
   const { scrollY } = useScroll();
+
+  // Prefetch the other language route on mount for instant switching
+  useEffect(() => {
+    router.prefetch(isAr ? (path.replace(/^\/ar/, "") || "/") : ("/ar" + (path === "/" ? "" : path)));
+  }, [isAr, path, router]);
 
   useMotionValueEvent(scrollY,"change",(v)=>{
     setScrolled(v>16);
@@ -127,15 +133,19 @@ export function Navbar() {
           <div style={{display:"flex",alignItems:"center",gap:10}}>
             <ThemeSwitcher/>
 
-            <Link href={isAr?(path.replace(/^\/ar/,"")||"/"):("/ar"+path)}
+            <button
+              onClick={() => startTransition(() => {
+                router.push(isAr ? (path.replace(/^\/ar/, "") || "/") : ("/ar" + (path === "/" ? "" : path)));
+              })}
               style={{
                 width:32,height:32,borderRadius:"50%",
                 background:"var(--g2)",border:"1px solid var(--glass-border)",
                 display:"flex",alignItems:"center",justifyContent:"center",
                 fontSize:isAr?10:12,color:"var(--text-3)",transition:"all .2s",flexShrink:0,
+                cursor:"pointer",
               }}>
               {isAr?"EN":"ع"}
-            </Link>
+            </button>
 
             <MagneticButton strength={0.25}>
               <Link href={isAr?"/ar#contact":"/#contact"} className="btn btn-primary d-cta"

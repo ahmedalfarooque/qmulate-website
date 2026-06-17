@@ -197,9 +197,16 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h)+12px)}
 body{
   background:var(--bg-0);color:var(--text-1);
   font-family:'Inter',var(--font-geist,system-ui),sans-serif;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  -webkit-overflow-scrolling:touch;overflow-x:hidden;
   line-height:1.6;letter-spacing:-0.012em;
 }
+
+/* View transition — instant fade for language/route switching */
+::view-transition-old(root){animation:80ms ease-out both vt-fade-out}
+::view-transition-new(root){animation:80ms ease-in  both vt-fade-in}
+@keyframes vt-fade-out{from{opacity:1}to{opacity:0}}
+@keyframes vt-fade-in {from{opacity:0}to{opacity:1}}
 
 /* Smooth theme transition */
 body,

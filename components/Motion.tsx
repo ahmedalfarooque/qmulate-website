@@ -18,6 +18,27 @@ import {
 import { useRef, useState, useEffect, useCallback, ReactNode } from "react";
 
 // ══════════════════════════════════════════════════════════════
+// SCROLL VELOCITY — maps scroll speed to animation duration
+// ══════════════════════════════════════════════════════════════
+
+function useScrollVelocityDur(base = 0.2) {
+  const velRef = useRef({ y: 0, t: 0 });
+  useEffect(() => {
+    const onScroll = () => { velRef.current = { y: window.scrollY, t: performance.now() }; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  const sample = () => {
+    const { y, t } = velRef.current;
+    const dy = Math.abs(window.scrollY - y);
+    const dt = performance.now() - t;
+    const v = dt > 0 ? dy / dt : 0;
+    return v < 0.5 ? base : v < 1 ? base * 0.75 : v < 2 ? base * 0.5 : 0.05;
+  };
+  return sample;
+}
+
+// ══════════════════════════════════════════════════════════════
 // DESIGN TOKENS — Easing + Duration
 // ══════════════════════════════════════════════════════════════
 
@@ -248,8 +269,12 @@ export function TextReveal({
 }) {
   const should = useReducedMotion();
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-20px" });
+  const inView = useInView(ref, { once:true, margin:"-10px" });
+  const sampleVelocity = useScrollVelocityDur(0.2);
+  const [dur, setDur] = useState(0.2);
   const words = text.split(" ");
+
+  useEffect(() => { if (inView) setDur(sampleVelocity()); }, [inView]);
 
   if (should) {
     const Tag = tag;
@@ -265,8 +290,8 @@ export function TextReveal({
             initial={{ y:"110%", opacity:0 }}
             animate={inView ? { y:"0%", opacity:1 } : {}}
             transition={{
-              duration: DUR.slow,
-              delay: delay + i * 0.025,
+              duration: dur,
+              delay: delay + i * 0.02,
               ease: EASE.luxury,
             }}
           >

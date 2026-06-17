@@ -211,32 +211,32 @@ export default function ArHome() {
             <div style={{display:"grid",gridTemplateColumns:"1fr 1.1fr",gap:"clamp(40px,5vw,80px)",alignItems:"center",direction:"ltr"}} className="hero-grid">
               {/* LEFT — 3D Logo */}
               <div style={{position:"relative",display:"flex",flexDirection:"column",gap:16,alignItems:"center",justifyContent:"center"}}>
-                <motion.div initial={{opacity:0,scale:.9,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{delay:1.0,duration:1.0,ease:[.34,1.56,.64,1]}}>
+                <motion.div initial={{opacity:0,scale:.9,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{delay:.3,duration:.45,ease:[.34,1.56,.64,1]}}>
                   <Logo3D size={250}/>
                 </motion.div>
               </div>
               {/* RIGHT — Text (RTL internally) */}
               <div style={{direction:"rtl"}}>
-                <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.6,duration:.7}} style={{marginBottom:28}}>
+                <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.05,duration:.3}} style={{marginBottom:28}}>
                   <span className="pill pill-c"><span className="dot-live"/>منصة الثروة العقارية · الرياض</span>
                 </motion.div>
-                <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7,duration:.6}} style={{marginBottom:24}}>
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.08,duration:.25}} style={{marginBottom:24}}>
                   <img src="/Logo.png" alt="QMULATE" style={{width:'150px',height:'auto',objectFit:'contain',filter:'drop-shadow(0 0 20px rgba(91,124,250,0.6)) drop-shadow(0 0 40px rgba(91,124,250,0.25))'}}/>
                 </motion.div>
-                <motion.h1 initial={{opacity:0,y:30,scale:.95}} animate={{opacity:1,y:0,scale:1}} transition={{delay:.8,duration:1.1,ease:[.25,.46,.45,.94]}} className="t-d gt-w" style={{marginBottom:20,fontSize:"clamp(44px,6vw,88px)"}}>
+                <motion.h1 initial={{opacity:0,y:16,scale:.97}} animate={{opacity:1,y:0,scale:1}} transition={{delay:.12,duration:.4,ease:[.25,.46,.45,.94]}} className="t-d gt-w" style={{marginBottom:20,fontSize:"clamp(44px,6vw,88px)"}}>
                   ثروة،<br/><span className="gt-c">منظَّمة</span><br/>لتدوم بعد<br/><span style={{color:"rgba(255,255,255,.25)"}}>صانعيها.</span>
                 </motion.h1>
-                <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1.0,duration:.8}} className="t-xl" style={{color:"var(--text-3)",maxWidth:480,marginBottom:12,lineHeight:1.85}}>
+                <motion.p initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.18,duration:.3}} className="t-xl" style={{color:"var(--text-3)",maxWidth:480,marginBottom:12,lineHeight:1.85}}>
                   نُنظِّم الثروة العقارية — إدارة عقارات، وساطة، استشارات، ومرافق — في منظومة حوكمة واحدة ودائمة.
                 </motion.p>
-                <motion.p initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.05,duration:.7}} style={{fontFamily:"'Inter',sans-serif",fontSize:14,color:"rgba(255,255,255,.2)",marginBottom:44}}>
+                <motion.p initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.22,duration:.25}} style={{fontFamily:"'Inter',sans-serif",fontSize:14,color:"rgba(255,255,255,.2)",marginBottom:44}}>
                   Wealth, structured to outlast its makers.
                 </motion.p>
-                <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:1.15,duration:.7}} style={{display:"flex",gap:14,flexWrap:"wrap",marginBottom:52}}>
+                <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.26,duration:.3}} style={{display:"flex",gap:14,flexWrap:"wrap",marginBottom:52}}>
                   <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 34px"}}>← اطلب مقدمة</Link>
                   <Link href="#about" className="btn btn-ghost" style={{fontSize:15,padding:"14px 30px"}}>نهجنا</Link>
                 </motion.div>
-                <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.3,duration:.8}} style={{display:"flex",gap:28,paddingTop:28,borderTop:"1px solid var(--glass-border)",flexWrap:"wrap"}} className="hero-trust">
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.32,duration:.3}} style={{display:"flex",gap:28,paddingTop:28,borderTop:"1px solid var(--glass-border)",flexWrap:"wrap"}} className="hero-trust">
                   {[{icon:"◈",v:"رعاية العقار",l:"حوكمة الأصول",c:"#00D4FF"},{icon:"⬡",v:"النمو المحكوم",l:"نشر رأس المال",c:"#8A5CFF"},{icon:"◉",v:"الاستمرارية الجيلية",l:"إطار التوريث",c:"#4D8DFF"}].map(item=>(
                     <div key={item.l}>
                       <div style={{fontSize:"clamp(16px,1.5vw,20px)",fontWeight:800,color:item.c,filter:`drop-shadow(0 0 12px ${item.c}66)`,marginBottom:3}}>{item.icon}</div>
@@ -248,7 +248,7 @@ export default function ArHome() {
             </div>
           </HeroGlass>
         </motion.div>
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.8}} style={{position:"absolute",bottom:36,left:"50%",transform:"translateX(-50%)",display:"flex",flexDirection:"column",alignItems:"center",gap:8,zIndex:10}}>
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.5}} style={{position:"absolute",bottom:36,left:"50%",transform:"translateX(-50%)",display:"flex",flexDirection:"column",alignItems:"center",gap:8,zIndex:10}}>
           <div className="t-xs" style={{color:"rgba(255,255,255,.2)"}}>مرر للاستكشاف</div>
           <motion.div animate={{y:[0,8,0]}} transition={{repeat:Infinity,duration:2}} style={{width:1,height:48,background:`linear-gradient(${BRAND_BLUE},transparent)`}}/>
         </motion.div>
@@ -334,7 +334,7 @@ export default function ArHome() {
             ))}
           </div>
           <AnimatePresence mode="wait">
-            <motion.div key={activeService} initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-16}} transition={{duration:.4}}>
+            <motion.div key={activeService} initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-16}} transition={{duration:.25}}>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1.2fr",gap:"clamp(32px,4vw,64px)",alignItems:"start",direction:"rtl"}} className="grid-2">
                 <div>
                   <div style={{marginBottom:16,fontSize:28}}>{SERVICES_AR[activeService].icon}</div>
@@ -344,7 +344,7 @@ export default function ArHome() {
                 </div>
                 <div style={{display:"flex",flexDirection:"column",gap:10}}>
                   {SERVICES_AR[activeService].items.map((item,i)=>(
-                    <motion.div key={item} initial={{opacity:0,x:-20}} animate={{opacity:1,x:0}} transition={{delay:i*.06}}>
+                    <motion.div key={item} initial={{opacity:0,x:-12}} animate={{opacity:1,x:0}} transition={{delay:i*.04,duration:.2}}>
                       <div style={{display:"flex",gap:12,padding:"14px 18px",background:"var(--g1)",border:"1px solid var(--glass-border)",borderRadius:12,alignItems:"center",direction:"rtl"}}>
                         <div style={{width:10,height:3,borderRadius:1,background:SERVICES_AR[activeService].color,flexShrink:0,boxShadow:`0 0 8px ${SERVICES_AR[activeService].color}`}}/>
                         <span style={{fontSize:13,color:"var(--text-2)"}}>{item}</span>
@@ -663,7 +663,7 @@ export default function ArHome() {
             ))}
           </div>
           <AnimatePresence mode="wait">
-            <motion.div key={activeSvc} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}} transition={{duration:.4}}>
+            <motion.div key={activeSvc} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}} transition={{duration:.25}}>
               <div style={{display:"grid",gridTemplateColumns:"1.2fr 1fr",gap:"clamp(40px,5vw,80px)",alignItems:"start",direction:"rtl"}} className="grid-2">
                 <div>
                   <div style={{marginBottom:20,fontSize:28}}>{SVC_LIST_AR[activeSvc].icon}</div>
@@ -843,7 +843,7 @@ export default function ArHome() {
           </motion.div>
 
           <AnimatePresence mode="wait">
-            <motion.div key={activeProject} initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-24}} transition={{duration:0.55,ease:[0.25,0.46,0.45,0.94]}}>
+            <motion.div key={activeProject} initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-16}} transition={{duration:0.25,ease:[0.25,0.46,0.45,0.94]}}>
               <div style={{display:"grid",gridTemplateColumns:"1.2fr 1fr",gap:"clamp(32px,4vw,64px)",marginBottom:40,direction:"rtl"}} className="grid-2">
                 <div>
                   <div style={{display:"flex",gap:10,marginBottom:24,flexWrap:"wrap",direction:"rtl"}}>
