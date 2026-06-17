@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // Generate standalone for faster cold starts on Vercel
   output: "standalone",
+  experimental: {
+    optimizePackageImports: ["framer-motion"],
+  },
 };
 
 export default nextConfig;

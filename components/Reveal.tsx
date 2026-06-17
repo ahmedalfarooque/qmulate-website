@@ -20,7 +20,7 @@ export function Reveal({
   useEffect(() => {
     const io = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) { setV(true); io.disconnect(); } },
-      { threshold: 0.05, rootMargin: "0px 0px -30px 0px" }
+      { threshold: 0, rootMargin: "0px 0px -20px 0px" }
     );
     if (ref.current) io.observe(ref.current);
     return () => io.disconnect();
@@ -32,10 +32,10 @@ export function Reveal({
     document.documentElement.dir === 'rtl'
 
   const from =
-    direction === "left"  ? `translateX(${isRTL ? '20px' : '-20px'})` :
-    direction === "right" ? `translateX(${isRTL ? '-20px' : '20px'})` :
-    direction === "up"    ? "translateY(20px)"  :
-    direction === "scale" ? "scale(0.92)"       : "none";
+    direction === "left"  ? `translateX(${isRTL ? '12px' : '-12px'})` :
+    direction === "right" ? `translateX(${isRTL ? '-12px' : '12px'})` :
+    direction === "up"    ? "translateY(16px)"  :
+    direction === "scale" ? "scale(0.97)"       : "none";
 
   return (
     <div
@@ -45,7 +45,7 @@ export function Reveal({
         opacity: v ? 1 : 0,
         transform: v ? "none" : from,
         willChange: v ? "auto" : "opacity, transform",
-        transition: `opacity 0.32s cubic-bezier(.16,1,.3,1) ${delay}ms, transform 0.32s cubic-bezier(.16,1,.3,1) ${delay}ms`,
+        transition: `opacity 0.2s cubic-bezier(.16,1,.3,1) ${delay}ms, transform 0.2s cubic-bezier(.16,1,.3,1) ${delay}ms`,
         ...style,
       }}
     >

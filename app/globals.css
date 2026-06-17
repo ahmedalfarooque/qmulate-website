@@ -632,6 +632,14 @@ main.hero-page{padding-top:0}
 .will-change-opacity   { will-change:opacity }
 .gpu-layer             { transform:translateZ(0); backface-visibility:hidden }
 
+/* ── GPU acceleration for animated elements ── */
+[data-animate] {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
 /* ── Smooth interactive transitions on all interactive elements ── */
 a, button, [role="button"] {
   transition: color .22s ease, background .22s ease,
@@ -1562,7 +1570,7 @@ main {
 .text-reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.75s cubic-bezier(.16,1,.3,1), transform 0.75s cubic-bezier(.16,1,.3,1);
+  transition: opacity 0.3s cubic-bezier(.16,1,.3,1), transform 0.3s cubic-bezier(.16,1,.3,1);
 }
 .text-reveal.is-visible {
   opacity: 1;

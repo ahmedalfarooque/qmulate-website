@@ -11,29 +11,29 @@ import { useRef } from "react";
 import Link from "next/link";
 
 /* ─── Animation Presets ─── */
-export const FU = (delay=0,distance=20) => ({
+export const FU = (delay=0,distance=16) => ({
   initial:{opacity:0,y:distance,willChange:"opacity, transform"},
   whileInView:{opacity:1,y:0},
-  viewport:{once:true,margin:"-30px"},
-  transition:{duration:.32,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
+  viewport:{once:true,margin:"-20px"},
+  transition:{duration:.2,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
 });
 export const FI = (delay=0) => ({
   initial:{opacity:0,willChange:"opacity"},
   whileInView:{opacity:1},
-  viewport:{once:true,margin:"-30px"},
-  transition:{duration:.28,delay},
+  viewport:{once:true,margin:"-20px"},
+  transition:{duration:.2,delay},
 });
 export const FS = (delay=0) => ({
-  initial:{opacity:0,scale:.92,willChange:"opacity, transform"} as {opacity:number,scale:number,willChange:string},
+  initial:{opacity:0,scale:.97,willChange:"opacity, transform"} as {opacity:number,scale:number,willChange:string},
   whileInView:{opacity:1,scale:1},
-  viewport:{once:true,margin:"-30px"},
-  transition:{duration:.35,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
+  viewport:{once:true,margin:"-20px"},
+  transition:{duration:.2,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
 });
 export const FL = (delay=0) => ({
-  initial:{opacity:0,x:-20,willChange:"opacity, transform"},
+  initial:{opacity:0,x:-12,willChange:"opacity, transform"},
   whileInView:{opacity:1,x:0},
-  viewport:{once:true,margin:"-30px"},
-  transition:{duration:.32,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
+  viewport:{once:true,margin:"-20px"},
+  transition:{duration:.2,delay,ease:[.25,.46,.45,.94] as [number,number,number,number]},
 });
 
 /* ─── Section Heading ─── */
@@ -82,7 +82,7 @@ export function FeatureCard({icon,title,desc,accent,index=0}:{
   icon:string;title:string;desc:string;accent?:string;index?:number
 }) {
   return(
-    <motion.div {...FU(index*0.08)}>
+    <motion.div {...FU(index*0.04)}>
       <GlassCard style={{padding:"clamp(24px,3vw,36px)",height:"100%"}}>
         <div style={{marginBottom:20}}>
           <CapabilityIcon index={index} size="md"/>
@@ -98,9 +98,9 @@ export function FeatureCard({icon,title,desc,accent,index=0}:{
 export function HeroGlass({children,style={}}:{children:React.ReactNode;style?:React.CSSProperties}) {
   return(
     <motion.div
-      initial={{opacity:0,scale:.82,filter:"blur(8px)"}}
+      initial={{opacity:0,scale:.9,filter:"blur(4px)"}}
       animate={{opacity:1,scale:1,filter:"blur(0px)"}}
-      transition={{duration:1.1,ease:[.34,1.08,.64,1]}}
+      transition={{duration:.35,ease:[.34,1.08,.64,1]}}
       className="gf noise hero-panel"
       style={{position:"relative",overflow:"hidden",...style}}
     >
@@ -124,7 +124,7 @@ export function FloatingBadge({children,accent,top,right,left,bottom,delay=0,rot
     <motion.div
       initial={{opacity:0,scale:.7,y:20}}
       animate={{opacity:1,scale:1,y:0}}
-      transition={{duration:.9,delay,ease:[.34,1.56,.64,1]}}
+      transition={{duration:.3,delay,ease:[.34,1.56,.64,1]}}
       style={{
         position:"absolute",top,right,left,bottom,
         background:"var(--g4)",

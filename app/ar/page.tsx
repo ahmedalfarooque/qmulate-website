@@ -189,7 +189,7 @@ export default function ArHome() {
   const handleSubmit = async(e:React.FormEvent)=>{
     e.preventDefault();
     setSending(true);
-    await new Promise(r=>setTimeout(r,1500));
+    await new Promise(r=>setTimeout(r,200));
     setSending(false);
     setSent(true);
   };

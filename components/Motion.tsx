@@ -29,7 +29,7 @@ export const EASE = {
   precise: [0.40, 0.00, 0.20, 1.00] as [number,number,number,number],
 };
 
-export const DUR = { fast:.22, normal:.28, slow:.32, luxury:.35, epic:1.6 };
+export const DUR = { fast:.22, normal:.28, slow:.2, luxury:.2, epic:.35 };
 
 // Spring configs
 export const SPRING = {
@@ -44,39 +44,39 @@ export const SPRING = {
 // ══════════════════════════════════════════════════════════════
 
 export const preset = {
-  fadeUp: (delay=0, distance=20) => ({
+  fadeUp: (delay=0, distance=16) => ({
     initial:{ opacity:0, y:distance, willChange:"opacity, transform" },
     whileInView:{ opacity:1, y:0 },
-    viewport:{ once:true, margin:"-30px" },
+    viewport:{ once:true, margin:"-20px" },
     transition:{ duration:DUR.slow, delay, ease:EASE.luxury },
   }),
   fadeIn: (delay=0) => ({
     initial:{ opacity:0, willChange:"opacity" },
     whileInView:{ opacity:1 },
-    viewport:{ once:true, margin:"-30px" },
+    viewport:{ once:true, margin:"-20px" },
     transition:{ duration:DUR.normal, delay, ease:EASE.smooth },
   }),
   scaleIn: (delay=0) => ({
-    initial:{ opacity:0, scale:.94, willChange:"opacity, transform" },
+    initial:{ opacity:0, scale:.97, willChange:"opacity, transform" },
     whileInView:{ opacity:1, scale:1 },
-    viewport:{ once:true, margin:"-30px" },
+    viewport:{ once:true, margin:"-20px" },
     transition:{ duration:DUR.luxury, delay, ease:EASE.luxury },
   }),
   slideLeft: (delay=0) => ({
-    initial:{ opacity:0, x:-20, willChange:"opacity, transform" },
+    initial:{ opacity:0, x:-12, willChange:"opacity, transform" },
     whileInView:{ opacity:1, x:0 },
-    viewport:{ once:true, margin:"-30px" },
+    viewport:{ once:true, margin:"-20px" },
     transition:{ duration:DUR.slow, delay, ease:EASE.luxury },
   }),
   slideRight: (delay=0) => ({
-    initial:{ opacity:0, x:20, willChange:"opacity, transform" },
+    initial:{ opacity:0, x:12, willChange:"opacity, transform" },
     whileInView:{ opacity:1, x:0 },
-    viewport:{ once:true, margin:"-30px" },
+    viewport:{ once:true, margin:"-20px" },
     transition:{ duration:DUR.slow, delay, ease:EASE.luxury },
   }),
   // Hero entrance — starts from larger offset, blur
   heroEntrance: (delay=0) => ({
-    initial:{ opacity:0, y:48, filter:"blur(8px)", scale:.97 },
+    initial:{ opacity:0, y:16, filter:"blur(4px)", scale:.97 },
     animate:{ opacity:1, y:0, filter:"blur(0px)", scale:1 },
     transition:{ duration:DUR.epic, delay, ease:EASE.luxury },
   }),
@@ -248,7 +248,7 @@ export function TextReveal({
 }) {
   const should = useReducedMotion();
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-30px" });
+  const inView = useInView(ref, { once:true, margin:"-20px" });
   const words = text.split(" ");
 
   if (should) {
@@ -284,7 +284,7 @@ export function TextReveal({
 // ══════════════════════════════════════════════════════════════
 
 export function StaggerReveal({
-  children, delay=0, staggerDelay=0.06, direction="up", className="", style={},
+  children, delay=0, staggerDelay=0.04, direction="up", className="", style={},
 }: {
   children: ReactNode; delay?:number; staggerDelay?:number;
   direction?: "up"|"left"|"right"|"scale";
@@ -292,17 +292,17 @@ export function StaggerReveal({
 }) {
   const should = useReducedMotion();
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-30px" });
+  const inView = useInView(ref, { once:true, margin:"-20px" });
 
   const variants: Variants = {
     hidden: {},
     show: { transition: { staggerChildren: staggerDelay, delayChildren: delay } },
   };
   const childVariants: Record<string, Variants> = {
-    up:     { hidden:{ opacity:0, y:20, willChange:"opacity, transform" as string }, show:{ opacity:1, y:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
-    left:   { hidden:{ opacity:0, x:-20, willChange:"opacity, transform" as string}, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
-    right:  { hidden:{ opacity:0, x:20,  willChange:"opacity, transform" as string}, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
-    scale:  { hidden:{ opacity:0, scale:.92, willChange:"opacity, transform" as string }, show:{ opacity:1, scale:1, transition:{ duration:DUR.luxury, ease:EASE.luxury }} },
+    up:     { hidden:{ opacity:0, y:16, willChange:"opacity, transform" as string }, show:{ opacity:1, y:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
+    left:   { hidden:{ opacity:0, x:-12, willChange:"opacity, transform" as string}, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
+    right:  { hidden:{ opacity:0, x:12,  willChange:"opacity, transform" as string}, show:{ opacity:1, x:0, transition:{ duration:DUR.slow, ease:EASE.luxury }} },
+    scale:  { hidden:{ opacity:0, scale:.97, willChange:"opacity, transform" as string }, show:{ opacity:1, scale:1, transition:{ duration:DUR.luxury, ease:EASE.luxury }} },
   };
   const cv = childVariants[direction];
 
@@ -367,7 +367,7 @@ export function AnimatedNumber({
   const should = useReducedMotion();
   const [display, setDisplay] = useState(0);
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-30px" });
+  const inView = useInView(ref, { once:true, margin:"-20px" });
 
   useEffect(() => {
     if (!inView || should) { setDisplay(value); return; }
@@ -410,7 +410,7 @@ export function DrawLine({
 }) {
   const should = useReducedMotion();
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-30px" });
+  const inView = useInView(ref, { once:true, margin:"-20px" });
 
   return (
     <div ref={ref} className={className} style={{ overflow:"hidden", ...style }}>
@@ -438,7 +438,7 @@ export function RevealSection({
 }) {
   const should = useReducedMotion();
   const ref = useRef(null);
-  const inView = useInView(ref, { once:true, margin:"-30px" });
+  const inView = useInView(ref, { once:true, margin:"-20px" });
 
   return (
     <motion.section
@@ -484,7 +484,7 @@ export function ShimmerButton({
           }}
           initial={{ left:"-100%" }}
           whileHover={{ left:"160%" }}
-          transition={{ duration:.65, ease:EASE.out }}
+          transition={{ duration:.3, ease:EASE.out }}
         />
       )}
       {children}
@@ -531,7 +531,7 @@ export function TimelineNode({
       initial={{ scaleX:0, opacity:0 }}
       whileInView={{ scaleX:1, opacity:1 }}
       viewport={{ once:true }}
-      transition={{ duration:0.4, ease:[0.2,0.8,0.2,1] }}
+      transition={{ duration:0.25, ease:[0.2,0.8,0.2,1] }}
       style={{
         position:"absolute", left:"50%", transform:"translateX(-50%)",
         width:active?28:18, height:active?4:3, borderRadius:2,
