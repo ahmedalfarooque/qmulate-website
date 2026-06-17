@@ -192,10 +192,10 @@ html { scroll-behavior: smooth; }
    BASE RESET
    ═════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h)+12px)}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h)+12px);background:#0A0B0D}
 
 body{
-  background:var(--bg-0);color:var(--text-1);
+  background:transparent;color:var(--text-1);
   font-family:'Inter',var(--font-geist,system-ui),sans-serif;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   -webkit-overflow-scrolling:touch;overflow-x:hidden;
@@ -1907,14 +1907,16 @@ img[alt="QMULATE logo"] {
   backface-visibility: hidden;
 }
 
-/* Reduced motion — disable canvas */
+/* Reduced motion — disable canvas animations, restore solid background */
 @media (prefers-reduced-motion: reduce) {
-  canvas { display: none !important; }
+  canvas[aria-hidden="true"] { display: none !important; }
   [class*="float"],
   [class*="pulse"],
   [class*="rotate"] {
     animation: none !important;
   }
+  html { background: #0A0B0D; }
+  body { background: #0A0B0D; }
 }
 
 /* Mobile performance */

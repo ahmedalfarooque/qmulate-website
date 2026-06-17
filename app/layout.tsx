@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { ScrollProgress, PageTransition } from "@/components/Motion";
 import { EnergyBeam } from "@/components/EnergyBeam";
 import { CrystalScene } from "@/components/ui/CrystalScene";
+import ShaderBackground from "@/components/ui/shader-background";
 
 const geist = localFont({
   src:"../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${geist.variable} ${geistMono.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <ShaderBackground />
           <CrystalScene />
           {/* Global scroll progress bar */}
           <ScrollProgress />
