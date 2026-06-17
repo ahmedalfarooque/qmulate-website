@@ -65,32 +65,6 @@ export function Logo3D({ size = 200 }: { size?: number }) {
         zIndex: 1,
       }}/>
 
-      {/* OUTER CRYSTAL GLASS FRAME */}
-      <div style={{
-        position: 'absolute',
-        inset: `-${fr}px`,
-        borderRadius: Math.round(s * 0.14),
-        background: 'linear-gradient(135deg, rgba(91,124,250,0.06) 0%, rgba(0,196,204,0.03) 100%)',
-        border: '1px solid rgba(91,124,250,0.22)',
-        backdropFilter: 'blur(2px)',
-        WebkitBackdropFilter: 'blur(2px)',
-        boxShadow: '0 0 0 1px rgba(255,255,255,0.04), 0 0 80px rgba(91,124,250,0.15), inset 0 1px 0 rgba(255,255,255,0.08)',
-        zIndex: 2, pointerEvents: 'none', overflow: 'hidden',
-      }}>
-        <div style={{
-          position: 'absolute', top: 0, left: 0,
-          width: '45%', height: '38%',
-          background: 'linear-gradient(135deg, rgba(255,255,255,0.09) 0%, transparent 100%)',
-          borderRadius: `${Math.round(s * 0.14)}px ${Math.round(s * 0.14)}px 0 0`,
-        }}/>
-        <div style={{
-          position: 'absolute', top: '-4px', left: 0, right: 0, height: '3px',
-          background: 'linear-gradient(90deg, transparent, rgba(0,196,204,0.7), transparent)',
-          animation: 'qlogo-scan 5s linear infinite',
-          boxShadow: '0 0 10px rgba(0,196,204,0.7)',
-        }}/>
-      </div>
-
       {/* 3D FLOATING LOGO */}
       <motion.div
         animate={{

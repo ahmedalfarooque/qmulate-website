@@ -228,21 +228,7 @@ export default function Home() {
                 </motion.div>
 
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7,duration:.6}} style={{marginBottom:24}}>
-                  <div style={{
-                    position:'relative',display:'inline-flex',alignItems:'center',justifyContent:'center',
-                    padding:'32px 40px',borderRadius:'20px',
-                    background:'linear-gradient(135deg, rgba(91,124,250,0.08) 0%, rgba(0,196,204,0.04) 100%)',
-                    border:'1px solid rgba(91,124,250,0.20)',
-                    backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',
-                    boxShadow:'0 0 60px rgba(91,124,250,0.15),0 0 120px rgba(91,124,250,0.06),inset 0 1px 0 rgba(255,255,255,0.10),inset 0 -1px 0 rgba(0,0,0,0.20)',
-                  }}>
-                    <div style={{position:'absolute',inset:0,borderRadius:'20px',background:'radial-gradient(ellipse at 40% 40%, rgba(91,124,250,0.18) 0%, transparent 70%)',pointerEvents:'none'}}/>
-                    <div style={{position:'absolute',top:0,left:0,width:'55%',height:'45%',borderRadius:'20px 20px 0 0',background:'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 100%)',pointerEvents:'none'}}/>
-                    <div style={{position:'absolute',inset:0,borderRadius:'20px',overflow:'hidden',pointerEvents:'none'}}>
-                      <div style={{position:'absolute',top:0,left:'-100%',width:'60%',height:'100%',background:'linear-gradient(90deg, transparent 0%, rgba(91,124,250,0.15) 40%, rgba(0,196,204,0.20) 50%, rgba(91,124,250,0.15) 60%, transparent 100%)',animation:'logo-sweep 4s ease-in-out infinite'}}/>
-                    </div>
-                    <img src="/Logo.png" alt="QMULATE" style={{width:'120px',height:'auto',objectFit:'contain',position:'relative',zIndex:1,filter:'drop-shadow(0 0 20px rgba(91,124,250,0.6)) drop-shadow(0 0 40px rgba(91,124,250,0.25))'}}/>
-                  </div>
+                  <img src="/Logo.png" alt="QMULATE" style={{width:'150px',height:'auto',objectFit:'contain',filter:'drop-shadow(0 0 20px rgba(91,124,250,0.6)) drop-shadow(0 0 40px rgba(91,124,250,0.25))'}}/>
                 </motion.div>
 
                 <motion.h1 initial={{opacity:0,y:30,scale:.95}} animate={{opacity:1,y:0,scale:1}} transition={{delay:.8,duration:1.1,ease:[.25,.46,.45,.94]}} className="t-d gt-w" style={{marginBottom:20,fontSize:"clamp(44px,6vw,88px)"}}>
@@ -275,7 +261,7 @@ export default function Home() {
               <div style={{position:"relative",display:"flex",flexDirection:"column",gap:16}}>
                 <motion.div initial={{opacity:0,scale:.9,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{delay:1.0,duration:1.0,ease:[.34,1.56,.64,1]}}>
                   <div style={{position:'relative',background:'transparent',display:'flex',alignItems:'center',justifyContent:'center',minHeight:'460px'}}>
-                    <Logo3D size={200} />
+                    <Logo3D size={250} />
                   </div>
                 </motion.div>
               </div>

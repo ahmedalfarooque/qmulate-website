@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { MagneticButton } from "@/components/Motion";
-import { StrataMark } from "./StrataMark";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { MenuIcon, CloseIcon } from "./icons/GlassIcons";
 
@@ -78,7 +77,9 @@ export function Navbar() {
         {/* Cyan shimmer line on scroll */}
         <motion.div animate={{opacity:scrolled?1:0}}
           style={{position:"absolute",top:0,left:0,right:0,height:1,
-            background:"linear-gradient(90deg,transparent 5%,rgba(0,212,255,.5) 40%,rgba(138,92,255,.35) 65%,transparent 95%)"}}/>
+            background:isAr
+              ?"linear-gradient(270deg,transparent 5%,rgba(0,212,255,.5) 40%,rgba(138,92,255,.35) 65%,transparent 95%)"
+              :"linear-gradient(90deg,transparent 5%,rgba(0,212,255,.5) 40%,rgba(138,92,255,.35) 65%,transparent 95%)"}}/>
 
         <div className="cw" style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,direction:isAr?"rtl":"ltr"}}>
 
@@ -159,7 +160,7 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{opacity:0,x:isAr?"-100%":"100%"}} animate={{opacity:1,x:0}} exit={{opacity:0,x:isAr?"-100%":"100%"}}
+            initial={{opacity:0,x:"100%"}} animate={{opacity:1,x:0}} exit={{opacity:0,x:"100%"}}
             transition={{duration:.32,ease:[.4,0,.2,1]}}
             style={{
               position:"fixed",inset:0,zIndex:9998,
@@ -184,7 +185,7 @@ export function Navbar() {
               ))}
               <Link href={isAr?"/ar#contact":"/#contact"} className="btn btn-primary"
                 style={{marginTop:28,justifyContent:"center",fontSize:15,padding:16}}>
-                {isAr?"طلب تواصل →":"Request an introduction →"}
+                {isAr?"طلب تواصل ←":"Request an introduction →"}
               </Link>
             </nav>
           </motion.div>

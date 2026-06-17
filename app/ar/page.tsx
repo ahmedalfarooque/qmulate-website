@@ -3,7 +3,6 @@ import { ServiceIcon } from "@/components/icons/GlassIcons";
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { StrataMark } from "@/components/StrataMark";
 import {
   FU, FI, FS, SectionHeading, GlassCard, HeroGlass
 } from "@/components/DS";
@@ -43,27 +42,43 @@ export default function ArHome() {
 
         <div style={{position:"relative",zIndex:10,width:"100%",maxWidth:1240}}>
           <HeroGlass style={{borderRadius:36,padding:"clamp(44px,6vw,80px)"}}>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1.1fr",gap:"clamp(40px,5vw,80px)",alignItems:"center",direction:"rtl"}} className="hero-grid">
-              <div>
-                <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.6,duration:.7}} style={{marginBottom:28}}>
+            {/* direction:"ltr" ensures child 1 → LEFT col, child 2 → RIGHT col regardless of inherited RTL */}
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1.1fr",gap:"clamp(40px,5vw,80px)",alignItems:"center",direction:"ltr"}} className="hero-grid">
+
+              {/* LEFT column — 3D Logo */}
+              <div style={{position:"relative",display:"flex",flexDirection:"column",gap:16,alignItems:"center",justifyContent:"center"}}>
+                <motion.div initial={{opacity:0,scale:.9,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{delay:1.0,duration:1.0,ease:[.34,1.56,.64,1]}}>
+                  <Logo3D size={250}/>
+                </motion.div>
+              </div>
+
+              {/* RIGHT column — Text (direction ltr for flex-end = visual right) */}
+              <div style={{direction:"ltr"}}>
+                <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.6,duration:.7}} style={{marginBottom:28,display:"flex",justifyContent:"flex-end"}}>
                   <span className="pill pill-c"><span className="dot-live"/>منصة الثروة العقارية · الرياض</span>
                 </motion.div>
+
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7,duration:.6}} style={{marginBottom:24,display:"flex",justifyContent:"flex-end"}}>
-                  <StrataMark size={48} animate style={{color:"var(--text-1)"}}/>
+                  <img src="/Logo.png" alt="QMULATE" style={{width:'150px',height:'auto',objectFit:'contain',filter:'drop-shadow(0 0 20px rgba(91,124,250,0.6)) drop-shadow(0 0 40px rgba(91,124,250,0.25))'}}/>
                 </motion.div>
-                <motion.h1 initial={{opacity:0,y:30,scale:.95}} animate={{opacity:1,y:0,scale:1}} transition={{delay:.8,duration:1.1}} className="t-d gt-w" style={{marginBottom:20,fontSize:"clamp(44px,6vw,88px)",textAlign:"right"}}>
+
+                <motion.h1 initial={{opacity:0,y:30,scale:.95}} animate={{opacity:1,y:0,scale:1}} transition={{delay:.8,duration:1.1}} className="t-d gt-w" style={{marginBottom:20,fontSize:"clamp(44px,6vw,88px)",textAlign:"right",direction:"rtl"}}>
                   ثروة،<br/><span className="gt-c">منظَّمة</span><br/>لتدوم بعد<br/><span style={{color:"rgba(255,255,255,.2)"}}>صانعيها.</span>
                 </motion.h1>
-                <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1.0,duration:.8}} className="t-xl" style={{color:"var(--text-3)",maxWidth:480,marginBottom:12,lineHeight:1.85,textAlign:"right"}}>
+
+                <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1.0,duration:.8}} className="t-xl" style={{color:"var(--text-3)",maxWidth:480,marginBottom:12,lineHeight:1.85,textAlign:"right",direction:"rtl"}}>
                   نُنظِّم الثروة العقارية — إدارة عقارات، وساطة، استشارات، ومرافق — في منظومة حوكمة واحدة ودائمة.
                 </motion.p>
-                <motion.p initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.05,duration:.7}} style={{fontFamily:"'Inter',sans-serif",direction:"ltr",fontSize:14,color:"rgba(255,255,255,.18)",marginBottom:44,textAlign:"right"}}>
+
+                <motion.p initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.05,duration:.7}} style={{fontFamily:"'Inter',sans-serif",fontSize:14,color:"rgba(255,255,255,.18)",marginBottom:44,textAlign:"right"}}>
                   Wealth, structured to outlast its makers.
                 </motion.p>
+
                 <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:1.15,duration:.7}} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-end",marginBottom:52}}>
-                  <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 34px"}}>اطلب مقدمة ←</Link>
+                  <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 34px"}}>← اطلب مقدمة</Link>
                   <Link href="#about" className="btn btn-ghost" style={{fontSize:15,padding:"14px 30px"}}>نهجنا</Link>
                 </motion.div>
+
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.3,duration:.8}} style={{display:"flex",gap:28,paddingTop:28,borderTop:"1px solid var(--glass-border)",justifyContent:"flex-end",flexWrap:"wrap"}} className="hero-trust">
                   {[{icon:"◈",v:"رعاية العقار",l:"حوكمة الأصول"},{icon:"⬡",v:"النمو المحكوم",l:"نشر رأس المال"},{icon:"◉",v:"الاستمرارية الجيلية",l:"إطار التوريث"}].map(item=>(
                     <div key={item.l} style={{textAlign:"right"}}>
@@ -77,11 +92,7 @@ export default function ArHome() {
                   ))}
                 </motion.div>
               </div>
-              <div style={{position:"relative",display:"flex",flexDirection:"column",gap:16,alignItems:"center",justifyContent:"center"}}>
-                <motion.div initial={{opacity:0,scale:.9,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{delay:1.0,duration:1.0,ease:[.34,1.56,.64,1]}}>
-                  <Logo3D size={200}/>
-                </motion.div>
-              </div>
+
             </div>
           </HeroGlass>
         </div>
@@ -113,26 +124,27 @@ export default function ArHome() {
             <motion.h2 {...FU(.08)} className="t-h2 gt-w">كل ما تحتاجه ثروتك.</motion.h2>
             <motion.p {...FU(.14)} className="t-lg" style={{color:"var(--text-3)",marginTop:16}}>ست خطوط خدمة. منظومة حوكمة موحَّدة واحدة.</motion.p>
           </div>
-          <div style={{display:"flex",gap:8,marginBottom:40,flexWrap:"wrap",justifyContent:"center"}}>
+          <div style={{display:"flex",gap:8,marginBottom:40,flexWrap:"wrap",justifyContent:"center",direction:"ltr"}}>
             {SERVICES_AR.map((s,i)=>(
-              <motion.button key={s.id} onClick={()=>setActiveService(i)} whileHover={{scale:1.03}} whileTap={{scale:.97}} style={{padding:"10px 20px",borderRadius:100,fontSize:13,fontWeight:500,cursor:"pointer",background:activeService===i?s.color:"rgba(255,255,255,.04)",color:activeService===i?"#020408":"var(--text-3)",border:`1px solid ${activeService===i?s.color:"rgba(255,255,255,.08)"}`,transition:"all .25s"}}>
-                <ServiceIcon id={s.id} size="xs"/><span style={{marginRight:4}}>{s.label}</span>
+              <motion.button key={s.id} onClick={()=>setActiveService(i)} whileHover={{scale:1.03}} whileTap={{scale:.97}} style={{padding:"10px 20px",borderRadius:100,fontSize:13,fontWeight:500,cursor:"pointer",background:activeService===i?s.color:"rgba(255,255,255,.04)",color:activeService===i?"#020408":"var(--text-3)",border:`1px solid ${activeService===i?s.color:"rgba(255,255,255,.08)"}`,transition:"all .25s",display:"flex",alignItems:"center",gap:6}}>
+                <ServiceIcon id={s.id} size="xs"/><span>{s.label}</span>
               </motion.button>
             ))}
           </div>
           <AnimatePresence mode="wait">
             <motion.div key={activeService} initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-16}} transition={{duration:.4}}>
+              {/* direction:"rtl" on grid: text col is child-1 → RIGHT, items col is child-2 → LEFT */}
               <div style={{display:"grid",gridTemplateColumns:"1fr 1.2fr",gap:"clamp(32px,4vw,64px)",alignItems:"start",direction:"rtl"}} className="grid-2">
                 <div>
-                  <div style={{fontSize:28,marginBottom:16}}>{SERVICES_AR[activeService].icon}</div>
-                  <h3 className="t-h3" style={{color:"var(--text-1)",marginBottom:16,lineHeight:1.25}}>{SERVICES_AR[activeService].headline}</h3>
-                  <p className="t-lg" style={{color:"var(--text-3)",marginBottom:32,lineHeight:1.9}}>{SERVICES_AR[activeService].body}</p>
-                  <Link href="#services" className="btn btn-primary">استكشف الخدمة ←</Link>
+                  <div style={{fontSize:28,marginBottom:16,textAlign:"right"}}>{SERVICES_AR[activeService].icon}</div>
+                  <h3 className="t-h3" style={{color:"var(--text-1)",marginBottom:16,lineHeight:1.25,textAlign:"right"}}>{SERVICES_AR[activeService].headline}</h3>
+                  <p className="t-lg" style={{color:"var(--text-3)",marginBottom:32,lineHeight:1.9,textAlign:"right"}}>{SERVICES_AR[activeService].body}</p>
+                  <Link href="#services" className="btn btn-primary">← استكشف الخدمة</Link>
                 </div>
                 <div style={{display:"flex",flexDirection:"column",gap:10}}>
                   {SERVICES_AR[activeService].items.map((item,i)=>(
-                    <motion.div key={item} initial={{opacity:0,x:-20}} animate={{opacity:1,x:0}} transition={{delay:i*.06}}>
-                      <div style={{display:"flex",gap:12,padding:"14px 18px",background:"var(--g1)",border:"1px solid var(--glass-border)",borderRadius:12,alignItems:"center",flexDirection:"row-reverse"}}>
+                    <motion.div key={item} initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:i*.06}}>
+                      <div style={{display:"flex",gap:12,padding:"14px 18px",background:"var(--g1)",border:"1px solid var(--glass-border)",borderRadius:12,alignItems:"center",direction:"rtl"}}>
                         <div style={{width:10,height:3,borderRadius:1,background:SERVICES_AR[activeService].color,flexShrink:0,boxShadow:`0 0 8px ${SERVICES_AR[activeService].color}`}}/>
                         <span style={{fontSize:13,color:"var(--text-2)"}}>{item}</span>
                       </div>
@@ -153,7 +165,7 @@ export default function ArHome() {
           <motion.h2 {...FU(.08)} className="t-d gt-a" style={{marginBottom:20,fontSize:"clamp(44px,7vw,96px)"}}>مبني للحوكمة.<br/>مصمَّم ليدوم.</motion.h2>
           <motion.p {...FU(.16)} className="t-xl" style={{color:"var(--text-3)",maxWidth:540,margin:"0 auto 44px",lineHeight:1.85}}>إذا كنت مستعداً للانتقال من إدارة الأصول إلى حوكمة الثروة، يسعدنا التحدث معك بسرية تامة.</motion.p>
           <motion.div {...FU(.22)} style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:16,padding:"16px 40px"}}>اطلب مقدمة ←</Link>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:16,padding:"16px 40px"}}>← اطلب مقدمة</Link>
             <Link href="#services" className="btn btn-ghost" style={{fontSize:16,padding:"16px 36px"}}>استكشف خدماتنا</Link>
           </motion.div>
         </div>
@@ -165,11 +177,13 @@ export default function ArHome() {
       <section id="about" style={{scrollMarginTop:"64px",minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
         <ArchitecturalBg variant="mixed"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
-          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-end"}}><span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.about.badge}</span></motion.div>
+          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-start"}}>
+            <span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.about.badge}</span>
+          </motion.div>
           <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{maxWidth:720,marginBottom:24,textAlign:"right"}}>{AR_STUBS.about.h1}</motion.h1>
           <motion.p {...FU(.16)} className="t-xl" style={{color:"var(--text-3)",maxWidth:560,lineHeight:1.85,marginLeft:"auto",textAlign:"right"}}>{AR_STUBS.about.sub}</motion.p>
-          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-end",marginTop:36}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>اطلب مقدمة ←</Link>
+          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-start",marginTop:36}}>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>← اطلب مقدمة</Link>
             <Link href="#home" className="btn btn-ghost" style={{fontSize:14}}>الرئيسية</Link>
           </motion.div>
         </div>
@@ -179,7 +193,7 @@ export default function ArHome() {
           <SectionHeading eyebrow={AR_STUBS.about.badge} title={AR_STUBS.about.h1} center/>
           <motion.p {...FU(.1)} className="t-lg" style={{color:"var(--text-3)",marginTop:16}}>{AR_STUBS.about.sub}</motion.p>
           <motion.div {...FU(.2)} style={{marginTop:40,display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>اطلب مقدمة ←</Link>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>← اطلب مقدمة</Link>
             <Link href="#about" className="btn btn-ghost" style={{fontSize:15}}>من نحن</Link>
           </motion.div>
         </div>
@@ -191,11 +205,13 @@ export default function ArHome() {
       <section id="services" style={{scrollMarginTop:"64px",minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
         <ArchitecturalBg variant="mixed"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
-          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-end"}}><span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.services.badge}</span></motion.div>
+          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-start"}}>
+            <span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.services.badge}</span>
+          </motion.div>
           <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{maxWidth:720,marginBottom:24,textAlign:"right"}}>{AR_STUBS.services.h1}</motion.h1>
           <motion.p {...FU(.16)} className="t-xl" style={{color:"var(--text-3)",maxWidth:560,lineHeight:1.85,marginLeft:"auto",textAlign:"right"}}>{AR_STUBS.services.sub}</motion.p>
-          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-end",marginTop:36}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>اطلب مقدمة ←</Link>
+          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-start",marginTop:36}}>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>← اطلب مقدمة</Link>
             <Link href="#home" className="btn btn-ghost" style={{fontSize:14}}>الرئيسية</Link>
           </motion.div>
         </div>
@@ -205,7 +221,7 @@ export default function ArHome() {
           <SectionHeading eyebrow={AR_STUBS.services.badge} title={AR_STUBS.services.h1} center/>
           <motion.p {...FU(.1)} className="t-lg" style={{color:"var(--text-3)",marginTop:16}}>{AR_STUBS.services.sub}</motion.p>
           <motion.div {...FU(.2)} style={{marginTop:40,display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>اطلب مقدمة ←</Link>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>← اطلب مقدمة</Link>
             <Link href="#about" className="btn btn-ghost" style={{fontSize:15}}>من نحن</Link>
           </motion.div>
         </div>
@@ -217,11 +233,13 @@ export default function ArHome() {
       <section id="solutions" style={{scrollMarginTop:"64px",minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
         <ArchitecturalBg variant="mixed"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
-          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-end"}}><span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.solutions.badge}</span></motion.div>
+          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-start"}}>
+            <span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.solutions.badge}</span>
+          </motion.div>
           <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{maxWidth:720,marginBottom:24,textAlign:"right"}}>{AR_STUBS.solutions.h1}</motion.h1>
           <motion.p {...FU(.16)} className="t-xl" style={{color:"var(--text-3)",maxWidth:560,lineHeight:1.85,marginLeft:"auto",textAlign:"right"}}>{AR_STUBS.solutions.sub}</motion.p>
-          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-end",marginTop:36}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>اطلب مقدمة ←</Link>
+          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-start",marginTop:36}}>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>← اطلب مقدمة</Link>
             <Link href="#home" className="btn btn-ghost" style={{fontSize:14}}>الرئيسية</Link>
           </motion.div>
         </div>
@@ -231,7 +249,7 @@ export default function ArHome() {
           <SectionHeading eyebrow={AR_STUBS.solutions.badge} title={AR_STUBS.solutions.h1} center/>
           <motion.p {...FU(.1)} className="t-lg" style={{color:"var(--text-3)",marginTop:16}}>{AR_STUBS.solutions.sub}</motion.p>
           <motion.div {...FU(.2)} style={{marginTop:40,display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>اطلب مقدمة ←</Link>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>← اطلب مقدمة</Link>
             <Link href="#about" className="btn btn-ghost" style={{fontSize:15}}>من نحن</Link>
           </motion.div>
         </div>
@@ -243,11 +261,13 @@ export default function ArHome() {
       <section id="projects" style={{scrollMarginTop:"64px",minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
         <ArchitecturalBg variant="mixed"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
-          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-end"}}><span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.projects.badge}</span></motion.div>
+          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-start"}}>
+            <span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.projects.badge}</span>
+          </motion.div>
           <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{maxWidth:720,marginBottom:24,textAlign:"right"}}>{AR_STUBS.projects.h1}</motion.h1>
           <motion.p {...FU(.16)} className="t-xl" style={{color:"var(--text-3)",maxWidth:560,lineHeight:1.85,marginLeft:"auto",textAlign:"right"}}>{AR_STUBS.projects.sub}</motion.p>
-          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-end",marginTop:36}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>اطلب مقدمة ←</Link>
+          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-start",marginTop:36}}>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>← اطلب مقدمة</Link>
             <Link href="#home" className="btn btn-ghost" style={{fontSize:14}}>الرئيسية</Link>
           </motion.div>
         </div>
@@ -257,7 +277,7 @@ export default function ArHome() {
           <SectionHeading eyebrow={AR_STUBS.projects.badge} title={AR_STUBS.projects.h1} center/>
           <motion.p {...FU(.1)} className="t-lg" style={{color:"var(--text-3)",marginTop:16}}>{AR_STUBS.projects.sub}</motion.p>
           <motion.div {...FU(.2)} style={{marginTop:40,display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>اطلب مقدمة ←</Link>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>← اطلب مقدمة</Link>
             <Link href="#about" className="btn btn-ghost" style={{fontSize:15}}>من نحن</Link>
           </motion.div>
         </div>
@@ -269,11 +289,13 @@ export default function ArHome() {
       <section id="contact" style={{scrollMarginTop:"64px",minHeight:"60vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
         <ArchitecturalBg variant="mixed"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
-          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-end"}}><span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.contact.badge}</span></motion.div>
+          <motion.div {...FI()} style={{marginBottom:24,display:"flex",justifyContent:"flex-start"}}>
+            <span className="pill pill-c"><span className="dot-live"/>{AR_STUBS.contact.badge}</span>
+          </motion.div>
           <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{maxWidth:720,marginBottom:24,textAlign:"right"}}>{AR_STUBS.contact.h1}</motion.h1>
           <motion.p {...FU(.16)} className="t-xl" style={{color:"var(--text-3)",maxWidth:560,lineHeight:1.85,marginLeft:"auto",textAlign:"right"}}>{AR_STUBS.contact.sub}</motion.p>
-          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-end",marginTop:36}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>اطلب مقدمة ←</Link>
+          <motion.div {...FU(.24)} style={{display:"flex",gap:14,flexWrap:"wrap",justifyContent:"flex-start",marginTop:36}}>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:14}}>← اطلب مقدمة</Link>
             <Link href="#home" className="btn btn-ghost" style={{fontSize:14}}>الرئيسية</Link>
           </motion.div>
         </div>
@@ -283,13 +305,13 @@ export default function ArHome() {
           <SectionHeading eyebrow={AR_STUBS.contact.badge} title={AR_STUBS.contact.h1} center/>
           <motion.p {...FU(.1)} className="t-lg" style={{color:"var(--text-3)",marginTop:16}}>{AR_STUBS.contact.sub}</motion.p>
           <motion.div {...FU(.2)} style={{marginTop:40,display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
-            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>اطلب مقدمة ←</Link>
+            <Link href="#contact" className="btn btn-primary" style={{fontSize:15,padding:"14px 36px"}}>← اطلب مقدمة</Link>
             <Link href="#about" className="btn btn-ghost" style={{fontSize:15}}>من نحن</Link>
           </motion.div>
         </div>
       </section>
 
-      <style>{`@media(max-width:900px){.hero-grid{grid-template-columns:1fr!important;direction:rtl}}`}</style>
+      <style>{`@media(max-width:900px){.hero-grid{grid-template-columns:1fr!important}}`}</style>
     </main>
   );
 }
