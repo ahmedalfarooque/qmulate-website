@@ -194,6 +194,49 @@ html { scroll-behavior: smooth; }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h)+12px);background:#0A0B0D}
 
+/* Mobile fallback — shows when WebGL/Three.js is disabled */
+@media (max-width: 768px) {
+  html {
+    background: linear-gradient(
+      135deg,
+      #0A0B0D 0%,
+      #0B1120 40%,
+      #0A0B0D 100%
+    );
+    background-attachment: fixed;
+  }
+
+  /* Subtle CSS-only animated glow for mobile */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      rgba(91, 124, 250, 0.06) 0%,
+      rgba(0, 196, 204, 0.04) 30%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: -1;
+    animation: mobileBgPulse 8s ease-in-out infinite;
+  }
+}
+
+@keyframes mobileBgPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  canvas[aria-hidden="true"] { display: none; }
+  body::before { animation: none; }
+  html { background: #0A0B0D; }
+}
+
 body{
   background:transparent;color:var(--text-1);
   font-family:'Inter',var(--font-geist,system-ui),sans-serif;

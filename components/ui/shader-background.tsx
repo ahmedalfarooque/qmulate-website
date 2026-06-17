@@ -36,7 +36,7 @@ const ShaderBackground = () => {
     const float offsetSpeed        = 1.33 * overallSpeed;
     const float minOffsetSpread    = 0.6;
     const float maxOffsetSpread    = 2.0;
-    const int   linesPerGroup      = 16;
+    const int   linesPerGroup      = 10;
 
     #define drawCircle(pos, radius, coord) smoothstep(radius + gridSmoothWidth, radius, length(coord - (pos)))
     #define drawSmoothLine(pos, halfWidth, t) smoothstep(halfWidth, 0.0, abs(pos - (t)))
@@ -144,19 +144,49 @@ const ShaderBackground = () => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const gl = canvas.getContext('webgl')
+    // MOBILE SAFETY CHECK
+    // Detect low-end or mobile devices and skip WebGL entirely
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+    const isLowEnd = navigator.hardwareConcurrency !== undefined
+      && navigator.hardwareConcurrency <= 4
+    const prefersReduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
+
+    if (isMobile || isLowEnd || prefersReduced) {
+      // On mobile: hide canvas, CSS gradient handles background
+      canvas.style.display = 'none'
+      return
+    }
+
+    // WEBGL SAFETY — wrap everything in try/catch
+    let gl: WebGLRenderingContext | null = null
+    try {
+      gl = canvas.getContext('webgl', {
+        powerPreference: 'low-power',      // critical for mobile GPU
+        antialias: false,                   // saves memory
+        depth: false,                       // not needed
+        stencil: false,                     // not needed
+        preserveDrawingBuffer: false,
+        failIfMajorPerformanceCaveat: true, // bail if GPU is too slow
+      })
+    } catch (e) {
+      canvas.style.display = 'none'
+      return
+    }
+
     if (!gl) {
-      console.warn('WebGL not supported — shader background skipped.')
+      canvas.style.display = 'none'
       return
     }
 
     const loadShader = (type: number, source: string) => {
-      const shader = gl.createShader(type)!
-      gl.shaderSource(shader, source)
-      gl.compileShader(shader)
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error('Shader compile error:', gl.getShaderInfoLog(shader))
-        gl.deleteShader(shader)
+      const shader = gl!.createShader(type)!
+      gl!.shaderSource(shader, source)
+      gl!.compileShader(shader)
+      if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
+        console.error('Shader compile error:', gl!.getShaderInfoLog(shader))
+        gl!.deleteShader(shader)
         return null
       }
       return shader
@@ -187,10 +217,18 @@ const ShaderBackground = () => {
     const uResolution = gl.getUniformLocation(program, 'iResolution')
     const uTime       = gl.getUniformLocation(program, 'iTime')
 
+    // FRAME RATE LIMITER — max 30fps instead of 60fps
+    let lastFrame = 0
+    const FPS_LIMIT = 30
+    const FRAME_MIN = 1000 / FPS_LIMIT
+
     const resize = () => {
-      canvas.width  = window.innerWidth
-      canvas.height = window.innerHeight
-      gl.viewport(0, 0, canvas.width, canvas.height)
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+      canvas.width  = Math.floor(window.innerWidth  * dpr)
+      canvas.height = Math.floor(window.innerHeight * dpr)
+      canvas.style.width  = window.innerWidth  + 'px'
+      canvas.style.height = window.innerHeight + 'px'
+      gl!.viewport(0, 0, canvas.width, canvas.height)
     }
     window.addEventListener('resize', resize)
     resize()
@@ -198,25 +236,45 @@ const ShaderBackground = () => {
     const startTime = Date.now()
     let rafId: number
 
-    const render = () => {
+    const render = (timestamp: number) => {
+      // Throttle to 30fps
+      if (timestamp - lastFrame < FRAME_MIN) {
+        rafId = requestAnimationFrame(render)
+        return
+      }
+      lastFrame = timestamp
+
       const t = (Date.now() - startTime) / 1000
-      gl.clearColor(0.039, 0.043, 0.051, 1.0)
-      gl.clear(gl.COLOR_BUFFER_BIT)
-      gl.useProgram(program)
-      gl.uniform2f(uResolution, canvas.width, canvas.height)
-      gl.uniform1f(uTime, t)
-      gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer)
-      gl.vertexAttribPointer(attribPos, 2, gl.FLOAT, false, 0, 0)
-      gl.enableVertexAttribArray(attribPos)
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+      gl!.clearColor(0.039, 0.043, 0.051, 1.0)
+      gl!.clear(gl!.COLOR_BUFFER_BIT)
+      gl!.useProgram(program)
+      gl!.uniform2f(uResolution, canvas.width, canvas.height)
+      gl!.uniform1f(uTime, t)
+      gl!.bindBuffer(gl!.ARRAY_BUFFER, posBuffer)
+      gl!.vertexAttribPointer(attribPos, 2, gl!.FLOAT, false, 0, 0)
+      gl!.enableVertexAttribArray(attribPos)
+      gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4)
       rafId = requestAnimationFrame(render)
     }
     rafId = requestAnimationFrame(render)
 
+    // VISIBILITY API — pause shader when tab is hidden
+    const handleVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(rafId)
+      } else {
+        rafId = requestAnimationFrame(render)
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+
     return () => {
       cancelAnimationFrame(rafId)
       window.removeEventListener('resize', resize)
-      gl.deleteProgram(program)
+      document.removeEventListener('visibilitychange', handleVisibility)
+      try {
+        gl!.deleteProgram(program)
+      } catch (e) {}
     }
   }, [])
 

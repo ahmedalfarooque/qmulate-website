@@ -13,12 +13,23 @@ export function CrystalScene() {
     const mount = mountRef.current
     if (!mount) return
 
-    // ── RENDERER ──
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance',
-    })
+    // MOBILE SAFETY: Skip Three.js entirely on mobile — too heavy for most mobile GPUs
+    const isMobileUA = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (isMobileUA || prefersReducedMotion) return
+
+    // ── RENDERER — wrapped in try/catch for WebGL failure safety ──
+    let renderer: THREE.WebGLRenderer
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance',
+      })
+    } catch (e) {
+      console.warn('CrystalScene: WebGL unavailable, skipping 3D background.')
+      return
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setClearColor(0x000000, 0)
