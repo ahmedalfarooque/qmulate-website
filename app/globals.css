@@ -285,6 +285,38 @@ main.hero-page{padding-top:0}
     0 1px 0 rgba(255,255,255,.98) inset;
 }
 
+/* ══ MOBILE SAFARI FIX ══════════════════════════════════════════════════
+   backdrop-filter:blur() creates a full GPU compositor layer per element.
+   50+ blurred GlassCards simultaneously exhausts iPhone GPU memory and
+   causes the "A problem repeatedly occurred" WebContent process crash.
+   On mobile we fall back to a semi-opaque solid background instead.
+   ═══════════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .gc {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(12,18,32,0.88);
+  }
+  :is([data-theme="light"],.light) .gc {
+    background: rgba(255,255,255,0.90);
+  }
+  .gp {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(6,11,20,0.92);
+  }
+  :is([data-theme="light"],.light) .gp {
+    background: rgba(255,255,255,0.94);
+  }
+  /* Hero panel keeps a light blur — only one instance on the page */
+  .gf {
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+  }
+  /* Disable hover 3D lift on touch devices */
+  .gc:hover { transform: none; }
+}
+
 /* Noise texture */
 .noise::after{
   content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;

@@ -13,8 +13,8 @@
  *   - Themed for dark and light mode
  */
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 // ─── Brand Accent ───────────────────────────────────────────────
 export const BRAND_BLUE = "#5B7CFA";
@@ -60,7 +60,6 @@ export function StrataStack({
               width: b.w, height: b.h,
               background: b.c,
               borderRadius: 2,
-              backdropFilter: b.c === BRAND_BLUE ? undefined : "blur(1px)",
             }}
             animate={pref ? {} : {
               opacity: [1, .7, 1],
@@ -342,9 +341,8 @@ export function StrataLines({
 
 type BgVariant = "strata-left" | "strata-right" | "lattice" | "fins" | "facade" | "pulse" | "mixed";
 
-export function ArchitecturalBg({
-  variant = "mixed", className = "", style = {},
-}: { variant?: BgVariant; className?: string; style?: React.CSSProperties }) {
+export function ArchitecturalBg(props: { variant?: BgVariant; className?: string; style?: React.CSSProperties }) {
+  void props;
   return null;
 }
 
@@ -392,7 +390,6 @@ export function StrataSculpture({
             height: l.h,
             background: l.fill,
             borderRadius: 2,
-            backdropFilter: "blur(4px)",
           }}
           animate={pref ? {} : {
             opacity: [1, .75, 1],
@@ -409,8 +406,7 @@ export function StrataSculpture({
 }
 
 // ─── 9. Light mode variants ───────────────────────────────────────
-export function ArchitecturalBgLight({
-  variant = "mixed", className = "", style = {},
-}: { variant?: BgVariant; className?: string; style?: React.CSSProperties }) {
+export function ArchitecturalBgLight(props: { variant?: BgVariant; className?: string; style?: React.CSSProperties }) {
+  void props;
   return null;
 }

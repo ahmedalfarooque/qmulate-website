@@ -10,10 +10,11 @@ export function CrystalScene() {
   const mountRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Skip WebGL entirely on mobile and tablet — MeshPhysicalMaterial with
+    // Skip WebGL on mobile, tablet, and smaller laptops — MeshPhysicalMaterial with
     // transmission requires a full GPU render-target per frame and exhausts
-    // mobile GPU memory within seconds, crashing iOS Safari and Android Chrome.
-    if (window.innerWidth < 1024) return
+    // iOS/iPadOS GPU memory (iPad Mini=1024px, iPad Air=1180px, iPad Pro=1366px).
+    // 1280px threshold skips all iPad form factors while keeping full desktops.
+    if (window.innerWidth < 1280) return
 
     const mount = mountRef.current
     if (!mount) return
@@ -101,6 +102,9 @@ export function CrystalScene() {
     scanLight.position.set(0, 24, 16)
     scene.add(scanLight)
 
+    // ── CLEANUP FLAG — stops recursive gsap.delayedCall chains after unmount ──
+    let killed = false
+
     // ── HELPER ──
     const rnd = (min: number, max: number) => Math.random() * (max - min) + min
     const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)]
@@ -163,14 +167,15 @@ export function CrystalScene() {
 
     // ── RANDOM BLOCK ZOOM ──
     const triggerBlockZoom = (b: BlockData) => {
-      if (b.isZooming) return
+      if (b.isZooming || killed) return
       b.isZooming = true
       const mat = b.mesh.material as THREE.MeshPhysicalMaterial
       const baseOp = b.baseMat.opacity
       gsap.timeline({
         onComplete: () => {
+          if (killed) return
           b.isZooming = false
-          gsap.delayedCall(rnd(3, 16), () => triggerBlockZoom(b))
+          gsap.delayedCall(rnd(3, 16), () => { if (!killed) triggerBlockZoom(b) })
         }
       })
         .to(b.mesh.scale, { x: 1.8, y: 1.8, z: 2.5, duration: 0.9, ease: 'power2.out' })
@@ -185,11 +190,13 @@ export function CrystalScene() {
 
     // ── RANDOM BLOCK LIGHTING PULSE ──
     const pulseLighting = (b: BlockData) => {
+      if (killed) return
       const mat = b.mesh.material as THREE.MeshPhysicalMaterial
       const base = b.baseMat.opacity
       gsap.timeline({
         onComplete: () => {
-          gsap.delayedCall(rnd(1.5, 9), () => pulseLighting(b))
+          if (killed) return
+          gsap.delayedCall(rnd(1.5, 9), () => { if (!killed) pulseLighting(b) })
         }
       })
         .to(mat, { opacity: base * rnd(2.5, 5), emissiveIntensity: rnd(0.1, 0.3), duration: rnd(0.35, 1.1), ease: 'sine.inOut' })
@@ -286,8 +293,9 @@ export function CrystalScene() {
     scene.add(beamGlow)
 
     const sweepBeam = () => {
+      if (killed) return
       const targetY = rnd(-16, 16)
-      gsap.timeline({ onComplete: () => gsap.delayedCall(rnd(3, 10), sweepBeam) })
+      gsap.timeline({ onComplete: () => { if (!killed) gsap.delayedCall(rnd(3, 10), sweepBeam) } })
         .to(beamMat,     { opacity: 0.75, duration: 0.4, ease: 'power2.out' })
         .to(beamGlowMat, { opacity: 0.22, duration: 0.4, ease: 'power2.out' }, '<')
         .to(beam.position,     { y: targetY, duration: rnd(1.8, 4.5), ease: 'power1.inOut' })
@@ -327,7 +335,7 @@ export function CrystalScene() {
           scene.remove(line)
           geo.dispose()
           mat.dispose()
-          gsap.delayedCall(rnd(1.5, 7), addLightningStreak)
+          if (!killed) gsap.delayedCall(rnd(1.5, 7), addLightningStreak)
         }
       })
         .to(mat, { opacity: rnd(0.55, 0.95), duration: 0.06, ease: 'power4.out' })
@@ -481,10 +489,12 @@ export function CrystalScene() {
 
     // ── CLEANUP ──
     return () => {
+      killed = true
       cancelAnimationFrame(rafId)
       window.removeEventListener('resize', handleResize)
       if (!isMobile) window.removeEventListener('mousemove', handleMouseMove)
       ScrollTrigger.getAll().forEach(t => t.kill())
+      gsap.globalTimeline.clear()
       renderer.dispose()
       if (mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement)

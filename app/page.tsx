@@ -14,7 +14,7 @@ import {
   HeroGlass, Divider
 } from "@/components/DS";
 import {
-  ArchitecturalBg, ArchitecturalBgLight, StrataStack, StrataLines,
+  ArchitecturalBg, StrataLines,
   GovernancePulse, GlassFacade, VerticalFins, StructuralLattice,
   StrataSculpture, BRAND_BLUE
 } from "@/components/Strata";

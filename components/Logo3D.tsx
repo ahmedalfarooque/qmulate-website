@@ -4,11 +4,42 @@ import { motion } from 'framer-motion'
 
 export function Logo3D({ size = 200 }: { size?: number }) {
   const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    setIsMobile(window.innerWidth < 768)
+  }, [])
+
   if (!mounted) return null
 
   const s = size
   const fr = Math.round(s * 0.12)
+
+  // Mobile: simple floating logo — no backdrop-filter, no blur(), no 3D transforms.
+  // Each filter:blur() on a large div = full offscreen GPU buffer. Two aura blurs +
+  // four backdropFilter glass cubes = ~6 compositor layers that exhaust iPhone GPU RAM.
+  if (isMobile) {
+    return (
+      <motion.div
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ position: 'relative', width: s, height: s, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <img
+          src="/Logo.png"
+          alt="QMULATE"
+          width={s}
+          height={s}
+          style={{
+            objectFit: 'contain',
+            display: 'block',
+            filter: 'drop-shadow(0 0 20px rgba(91,124,250,0.7))',
+          }}
+        />
+      </motion.div>
+    )
+  }
 
   return (
     <div style={{ position: 'relative', width: s, height: s, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
