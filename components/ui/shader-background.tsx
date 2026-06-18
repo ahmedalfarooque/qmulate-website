@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
+import { isIOS, isMobileDevice, isSafariBrowser } from '@/lib/device'
 
 const ShaderBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -144,17 +145,11 @@ const ShaderBackground = () => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    // MOBILE SAFETY CHECK
-    // Detect low-end or mobile devices and skip WebGL entirely
-    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
-    const isLowEnd = navigator.hardwareConcurrency !== undefined
-      && navigator.hardwareConcurrency <= 4
-    const prefersReduced = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches
+    // Skip WebGL on iOS, mobile, Safari, low-end, or reduced-motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const shouldSkip = isIOS() || isMobileDevice() || isSafariBrowser() || prefersReduced
 
-    if (isMobile || isLowEnd || prefersReduced) {
-      // On mobile: hide canvas, CSS gradient handles background
+    if (shouldSkip) {
       canvas.style.display = 'none'
       return
     }

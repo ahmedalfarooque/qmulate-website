@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { isIOS, isMobileDevice } from '@/lib/device'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -13,10 +14,9 @@ export function CrystalScene() {
     const mount = mountRef.current
     if (!mount) return
 
-    // MOBILE SAFETY: Skip Three.js entirely on mobile — too heavy for most mobile GPUs
-    const isMobileUA = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+    // Skip Three.js on iOS, mobile, or reduced-motion — too heavy and crashes on iOS Safari
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (isMobileUA || prefersReducedMotion) return
+    if (isIOS() || isMobileDevice() || prefersReducedMotion) return
 
     // ── RENDERER — wrapped in try/catch for WebGL failure safety ──
     let renderer: THREE.WebGLRenderer

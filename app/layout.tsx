@@ -18,6 +18,13 @@ const geistMono = localFont({
   variable:"--font-geist-mono",display:"swap",
 });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
+
 export const metadata: Metadata = {
   title:{default:"QMULATE — Real Estate Wealth Platform",template:"%s | QMULATE"},
   description:"QMULATE organises real estate wealth through one integrated governance platform.",

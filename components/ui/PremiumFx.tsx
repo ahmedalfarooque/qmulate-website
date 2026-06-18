@@ -1,10 +1,18 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { getAnimationLevel } from '@/lib/device'
 
+/* ── Flowing Lines — RIGHT to LEFT groups ── */
 export function FlowingLines({ className = '' }: { className?: string }) {
   const ref = useRef<HTMLCanvasElement>(null)
+  const [level, setLevel] = useState<string>('none')
 
   useEffect(() => {
+    setLevel(getAnimationLevel())
+  }, [])
+
+  useEffect(() => {
+    if (level !== 'canvas') return
     const canvas = ref.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -17,26 +25,26 @@ export function FlowingLines({ className = '' }: { className?: string }) {
     resize()
     window.addEventListener('resize', resize)
 
-    // Brand colors
     const COLORS = [
-      'rgba(91,124,250,',   // #5B7CFA blue
-      'rgba(0,196,204,',    // #00C4CC cyan
-      'rgba(168,184,255,',  // soft blue-white
+      'rgba(91,124,250,',
+      'rgba(0,196,204,',
+      'rgba(168,184,255,',
     ]
 
+    type Line = {
+      y: number
+      amplitude: number
+      frequency: number
+      phase: number
+      color: string
+      width: number
+      alpha: number
+    }
+
     type Group = {
-      lines: {
-        y: number
-        amplitude: number
-        frequency: number
-        phase: number
-        color: string
-        width: number
-        alpha: number
-      }[]
+      lines: Line[]
       x: number
       speed: number
-      width: number
       active: boolean
     }
 
@@ -45,22 +53,20 @@ export function FlowingLines({ className = '' }: { className?: string }) {
 
     const createGroup = () => {
       const lineCount = 4 + Math.floor(Math.random() * 4)
-      const baseY = 80 + Math.random() * (canvas.height - 160)
+      const baseY = 60 + Math.random() * (canvas.height - 120)
       const colorBase = COLORS[Math.floor(Math.random() * COLORS.length)]
-
       return {
         lines: Array.from({ length: lineCount }, (_, i) => ({
-          y: baseY + (i - lineCount / 2) * (15 + Math.random() * 20),
-          amplitude: 20 + Math.random() * 40,
+          y: baseY + (i - lineCount / 2) * (12 + Math.random() * 18),
+          amplitude: 15 + Math.random() * 35,
           frequency: 0.004 + Math.random() * 0.003,
           phase: Math.random() * Math.PI * 2,
           color: colorBase,
           width: 0.4 + Math.random() * 1.2,
-          alpha: 0.12 + Math.random() * 0.18,
+          alpha: 0.10 + Math.random() * 0.15,
         })),
         x: canvas.width + 100,
-        speed: 1.2 + Math.random() * 1.0,
-        width: canvas.width + 200,
+        speed: 1.0 + Math.random() * 0.8,
         active: true,
       }
     }
@@ -84,7 +90,7 @@ export function FlowingLines({ className = '' }: { className?: string }) {
         const group = groups[g]
         group.x -= group.speed
 
-        if (group.x + group.width < 0) {
+        if (group.x + canvas.width + 200 < 0) {
           groups.splice(g, 1)
           continue
         }
@@ -106,13 +112,12 @@ export function FlowingLines({ className = '' }: { className?: string }) {
               * line.amplitude
               + Math.sin(worldX * line.frequency * 0.4 + frame * 0.005)
               * (line.amplitude * 0.3)
-
             if (x === 0) ctx.moveTo(x, y)
             else ctx.lineTo(x, y)
           }
 
-          const alpha = line.alpha * edgeFade
-          ctx.strokeStyle = line.color + Math.max(0, alpha) + ')'
+          const alpha = line.alpha * Math.max(0, edgeFade)
+          ctx.strokeStyle = line.color + alpha + ')'
           ctx.stroke()
         })
       }
@@ -120,14 +125,32 @@ export function FlowingLines({ className = '' }: { className?: string }) {
       frame++
       raf = requestAnimationFrame(draw)
     }
-
     raf = requestAnimationFrame(draw)
 
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
     }
-  }, [])
+  }, [level])
+
+  if (level === 'css' || level === 'none') {
+    return (
+      <div
+        className={className}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 0,
+          background: `
+            radial-gradient(ellipse at 20% 50%, rgba(91,124,250,0.06) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 50%, rgba(0,196,204,0.05) 0%, transparent 60%)
+          `,
+        }}
+        aria-hidden="true"
+      />
+    )
+  }
 
   return (
     <canvas
@@ -146,13 +169,21 @@ export function FlowingLines({ className = '' }: { className?: string }) {
   )
 }
 
+/* ── Floating Particles ── */
 export function FloatingParticles({
   className = '',
   count = 25,
-}: { className?: string; count?: number }) {
+}: {
+  className?: string
+  count?: number
+}) {
   const ref = useRef<HTMLCanvasElement>(null)
+  const [level, setLevel] = useState<string>('none')
+
+  useEffect(() => { setLevel(getAnimationLevel()) }, [])
 
   useEffect(() => {
+    if (level !== 'canvas') return
     const canvas = ref.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -165,16 +196,13 @@ export function FloatingParticles({
       canvas.height = canvas.offsetHeight
     })
 
-    const isMobile = window.innerWidth < 768
-    const total = isMobile ? Math.floor(count / 2) : count
-
-    const particles = Array.from({ length: total }, () => ({
+    const particles = Array.from({ length: count }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: 0.8 + Math.random() * 2.5,
+      size: 0.8 + Math.random() * 2,
       speedX: (Math.random() - 0.5) * 0.3,
       speedY: -0.15 - Math.random() * 0.3,
-      alpha: 0.08 + Math.random() * 0.3,
+      alpha: 0.08 + Math.random() * 0.25,
       color: Math.random() > 0.5 ? [91, 124, 250] : [0, 196, 204],
       pulse: Math.random() * Math.PI * 2,
     }))
@@ -189,7 +217,6 @@ export function FloatingParticles({
         if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width }
         if (p.x < -10) p.x = canvas.width + 10
         if (p.x > canvas.width + 10) p.x = -10
-
         const a = p.alpha * (0.7 + Math.sin(p.pulse) * 0.3)
         const [r, g, b] = p.color
         ctx.beginPath()
@@ -201,7 +228,23 @@ export function FloatingParticles({
     }
     raf = requestAnimationFrame(draw)
     return () => cancelAnimationFrame(raf)
-  }, [count])
+  }, [level, count])
+
+  if (level === 'css' || level === 'none') {
+    return (
+      <div
+        className={className}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 0,
+          background: `radial-gradient(ellipse at 50% 80%, rgba(91,124,250,0.05) 0%, transparent 60%)`,
+        }}
+        aria-hidden="true"
+      />
+    )
+  }
 
   return (
     <canvas
@@ -220,10 +263,15 @@ export function FloatingParticles({
   )
 }
 
+/* ── Grid Pulse ── */
 export function GridPulse({ className = '' }: { className?: string }) {
   const ref = useRef<HTMLCanvasElement>(null)
+  const [level, setLevel] = useState<string>('none')
+
+  useEffect(() => { setLevel(getAnimationLevel()) }, [])
 
   useEffect(() => {
+    if (level !== 'canvas') return
     const canvas = ref.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -250,7 +298,8 @@ export function GridPulse({ className = '' }: { className?: string }) {
           const x = i * gridSize
           const y = j * gridSize
           const dist = Math.sqrt(
-            Math.pow(x - canvas.width / 2, 2) + Math.pow(y - canvas.height / 2, 2)
+            Math.pow(x - canvas.width / 2, 2) +
+            Math.pow(y - canvas.height / 2, 2)
           )
           const wave = Math.sin(dist * 0.015 - t * 0.025) * 0.5 + 0.5
           ctx.beginPath()
@@ -273,7 +322,27 @@ export function GridPulse({ className = '' }: { className?: string }) {
     }
     raf = requestAnimationFrame(draw)
     return () => cancelAnimationFrame(raf)
-  }, [])
+  }, [level])
+
+  if (level === 'css' || level === 'none') {
+    return (
+      <div
+        className={className}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 0,
+          backgroundImage: `
+            linear-gradient(rgba(91,124,250,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(91,124,250,0.04) 1px, transparent 1px)
+          `,
+          backgroundSize: '55px 55px',
+        }}
+        aria-hidden="true"
+      />
+    )
+  }
 
   return (
     <canvas
@@ -292,12 +361,18 @@ export function GridPulse({ className = '' }: { className?: string }) {
   )
 }
 
+/* ── Aurora Glow — CSS works everywhere, JS animation on desktop ── */
 export function AuroraGlow({ className = '' }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
+  const [level, setLevel] = useState<string>('none')
+
+  useEffect(() => { setLevel(getAnimationLevel()) }, [])
 
   useEffect(() => {
+    if (level === 'none' || level === 'css') return
     const el = ref.current
     if (!el) return
+
     let t = 0
     let raf: number
     const animate = () => {
@@ -314,7 +389,7 @@ export function AuroraGlow({ className = '' }: { className?: string }) {
     }
     raf = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(raf)
-  }, [])
+  }, [level])
 
   return (
     <div
@@ -325,6 +400,13 @@ export function AuroraGlow({ className = '' }: { className?: string }) {
         inset: 0,
         pointerEvents: 'none',
         zIndex: 0,
+        background: level === 'css' || level === 'none' ? `
+          radial-gradient(ellipse at 25% 35%, rgba(91,124,250,0.08) 0%, transparent 55%),
+          radial-gradient(ellipse at 75% 65%, rgba(0,196,204,0.06) 0%, transparent 55%)
+        ` : undefined,
+        animation: level === 'css'
+          ? 'auroraShift 8s ease-in-out infinite'
+          : undefined,
       }}
       aria-hidden="true"
     />

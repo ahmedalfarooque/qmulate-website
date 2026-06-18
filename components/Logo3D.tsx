@@ -1,11 +1,40 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
+import { isIOS } from '@/lib/device'
 
 export function Logo3D({ size = 200 }: { size?: number }) {
   const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const [showFallback, setShowFallback] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    setShowFallback(isIOS())
+  }, [])
+
   if (!mounted) return null
+
+  if (showFallback) {
+    return (
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: size,
+        height: size,
+      }}>
+        <Image
+          src="/Logo.png"
+          alt="QMULATE"
+          width={size}
+          height={size}
+          priority
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
+    )
+  }
 
   const s = size
   const fr = Math.round(s * 0.12)
