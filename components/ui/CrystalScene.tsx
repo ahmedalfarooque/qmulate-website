@@ -9,6 +9,10 @@ gsap.registerPlugin(ScrollTrigger)
 export function CrystalScene() {
   const mountRef = useRef<HTMLDivElement>(null)
 
+  // Floating 3D geometry (glass blocks, diamonds, cubes) removed per design decision.
+  return <div ref={mountRef} style={{ display: 'none' }} aria-hidden="true" />
+
+  // eslint-disable-next-line no-unreachable
   useEffect(() => {
     // Skip WebGL on mobile, tablet, and smaller laptops — MeshPhysicalMaterial with
     // transmission requires a full GPU render-target per frame and exhausts
