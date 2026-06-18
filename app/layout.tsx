@@ -7,7 +7,7 @@ import { WhatsApp } from "@/components/WhatsApp";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ScrollProgress, PageTransition } from "@/components/Motion";
 import { EnergyBeam } from "@/components/EnergyBeam";
-import { ShaderWrapper } from "@/components/ui/shader-wrapper";
+import { CrystalScene } from "@/components/ui/CrystalScene";
 
 const geist = localFont({
   src:"../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
@@ -17,13 +17,6 @@ const geistMono = localFont({
   src:"../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2",
   variable:"--font-geist-mono",display:"swap",
 });
-
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-}
 
 export const metadata: Metadata = {
   title:{default:"QMULATE — Real Estate Wealth Platform",template:"%s | QMULATE"},
@@ -52,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${geist.variable} ${geistMono.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <ShaderWrapper />
+          <CrystalScene />
           {/* Global scroll progress bar */}
           <ScrollProgress />
           <EnergyBeam />

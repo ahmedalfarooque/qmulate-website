@@ -19,7 +19,6 @@ import {
 import { PageBackground } from "@/components/PageBackground";
 import { Logo3D } from "@/components/Logo3D";
 import { GlassIcon } from "@/components/GlassIcon";
-import { FlowingLines, FloatingParticles, GridPulse, AuroraGlow } from "@/components/ui/PremiumFx";
 
 /* ══════════════════════════════════════════════════
    HOME DATA
@@ -203,7 +202,6 @@ export default function ArHome() {
           HOME — Hero
           ══════════════════════════════ */}
       <section id="home" ref={heroRef} style={{minHeight:"100vh",position:"relative",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"linear-gradient(160deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%)"}}>
-        <FlowingLines />
         <motion.div style={{position:"absolute",inset:0,y:heroY}} className="will-change-transform">
           <ArchitecturalBg variant="mixed"/>
         </motion.div>
@@ -377,7 +375,6 @@ export default function ArHome() {
 
       {/* HOME — Philosophy */}
       <section className="section" style={{background:"var(--bg-alt)",position:"relative",overflow:"hidden"}}>
-        <FloatingParticles count={25} />
         <ArchitecturalBg variant="lattice"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"clamp(48px,6vw,96px)",alignItems:"center",direction:"rtl"}} className="grid-2">
@@ -656,7 +653,6 @@ export default function ArHome() {
 
       {/* SERVICES — Tabs */}
       <section className="section" style={{position:"relative",overflow:"hidden"}}>
-        <FloatingParticles count={20} />
         <ArchitecturalBg variant="lattice"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <div style={{display:"flex",gap:8,marginBottom:48,flexWrap:"wrap"}}>
@@ -811,7 +807,6 @@ export default function ArHome() {
           PROJECTS
           ══════════════════════════════ */}
       <section id="projects" style={{scrollMarginTop:"64px",minHeight:"60vh",position:"relative",display:"flex",alignItems:"center",overflow:"hidden",background:"linear-gradient(160deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%)"}}>
-        <GridPulse />
         <ArchitecturalBg variant="mixed"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.div {...FI(0.05)} style={{marginBottom:20}}>
@@ -923,7 +918,6 @@ export default function ArHome() {
 
       {/* PROJECTS — CTA */}
       <section className="section" style={{position:"relative",overflow:"hidden",background:"linear-gradient(160deg,var(--bg-1),var(--bg-0))"}}>
-        <AuroraGlow />
         <ArchitecturalBg variant="mixed"/>
         {/* Glassmorphism logo — decorative background layer */}
         <div aria-hidden="true" style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:0,overflow:"hidden"}}>
@@ -949,7 +943,6 @@ export default function ArHome() {
           CONTACT
           ══════════════════════════════ */}
       <section id="contact" style={{scrollMarginTop:"64px",minHeight:"50vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",paddingTop:"clamp(120px,15vw,180px)",paddingBottom:"clamp(60px,8vw,100px)"}}>
-        <GridPulse />
         <ArchitecturalBg variant="mixed"/>
         <div className="container" style={{position:"relative",zIndex:1}}>
           <motion.div {...FI()} style={{marginBottom:24}}><span className="pill pill-c"><span className="dot-live"/>خاص وسري</span></motion.div>
