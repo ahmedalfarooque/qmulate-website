@@ -7,6 +7,9 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
   if (!mounted) return null
+  // Skip on mobile — each backdropFilter:blur() creates a GPU compositing layer.
+  // 10+ blurred elements simultaneously on a phone kills performance.
+  if (typeof window !== 'undefined' && window.innerWidth < 768) return null
 
   const isBlue = ['home', 'about', 'solutions', 'contact'].includes(variant)
   const accentA = isBlue ? '91,124,250' : '0,196,204'

@@ -1924,3 +1924,58 @@ img[alt="QMULATE logo"] {
     display: none;
   }
 }
+
+/* ── MOBILE & CROSS-BROWSER FIXES ───────────────────────────────────────── */
+
+/* iOS Safari 100vh fix — address bar pushes content off screen.
+   Use dvh (dynamic viewport height) where supported, fall back to -webkit-fill-available */
+@supports (height: 100dvh) {
+  .hero-full-height { height: 100dvh; min-height: 100dvh; }
+}
+
+/* Safe area insets for iPhone notch / Dynamic Island */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+nav { padding-top: max(0px, env(safe-area-inset-top)); }
+
+/* On mobile, reduce backdrop-filter blur intensity to prevent GPU overload.
+   Safari iOS requires explicit -webkit- prefix and tolerates only light blur values. */
+@media (max-width: 767px) {
+  .gc, .gp, .gf {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+  /* Reduce glow shadows that create extra compositing layers */
+  .glow-border { box-shadow: none !important; }
+  /* Prevent horizontal overflow on small screens */
+  main, section, .container { max-width: 100vw; overflow-x: hidden; }
+  /* Stack all 2-column grids to 1 column on phones */
+  .grid-2 { grid-template-columns: 1fr !important; }
+  .grid-3 { grid-template-columns: 1fr !important; }
+  .grid-4 { grid-template-columns: 1fr 1fr !important; }
+  /* Ensure hero sections don't overflow on small screens */
+  .hero-page { overflow-x: hidden; }
+}
+
+/* Tablet-specific: allow backdrop-filter but cap at 12px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .gc, .gp, .gf {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* Prevent -webkit-overflow-scrolling from causing blank-screen flashes on iOS */
+@media (max-width: 1023px) {
+  * { -webkit-overflow-scrolling: auto; }
+  html, body { -webkit-overflow-scrolling: touch; }
+}
+
+/* Fix for Samsung Internet / older Android WebView — flex gap not always supported */
+@supports not (gap: 1px) {
+  .grid-2 > *, .grid-3 > *, .grid-4 > * { margin: 8px; }
+}

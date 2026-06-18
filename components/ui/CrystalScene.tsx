@@ -10,14 +10,19 @@ export function CrystalScene() {
   const mountRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Skip WebGL entirely on mobile and tablet — MeshPhysicalMaterial with
+    // transmission requires a full GPU render-target per frame and exhausts
+    // mobile GPU memory within seconds, crashing iOS Safari and Android Chrome.
+    if (window.innerWidth < 1024) return
+
     const mount = mountRef.current
     if (!mount) return
 
     // ── RENDERER ──
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: false,
       alpha: true,
-      powerPreference: 'high-performance',
+      powerPreference: 'default',
     })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setSize(window.innerWidth, window.innerHeight)

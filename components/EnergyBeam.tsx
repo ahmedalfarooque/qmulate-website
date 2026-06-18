@@ -159,6 +159,13 @@ export function EnergyBeam() {
           .energy-beam-mid,
           .energy-beam-outer { display: none; }
         }
+        /* Hide on mobile/tablet — too many GPU compositing layers + box-shadow stacking */
+        @media (max-width: 1023px) {
+          .energy-beam-core,
+          .energy-beam-inner,
+          .energy-beam-mid,
+          .energy-beam-outer { display: none !important; }
+        }
       `}</style>
       <div className="energy-beam-outer" aria-hidden="true" />
       <div className="energy-beam-mid"   aria-hidden="true" />
