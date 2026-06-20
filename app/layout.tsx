@@ -4,7 +4,6 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsApp } from "@/components/WhatsApp";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import { ScrollProgress, PageTransition } from "@/components/Motion";
 import { EnergyBeam } from "@/components/EnergyBeam";
 import { CrystalScene } from "@/components/ui/CrystalScene";
@@ -33,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark">
       <head>
         <link rel="preload" href="/Logo.png" as="image"/>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -44,7 +43,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${geist.variable} ${geistMono.variable}`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <CrystalScene />
           {/* Global scroll progress bar */}
           <ScrollProgress />
@@ -56,7 +54,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </PageTransition>
           <Footer/>
           <WhatsApp/>
-        </ThemeProvider>
       </body>
     </html>
   );

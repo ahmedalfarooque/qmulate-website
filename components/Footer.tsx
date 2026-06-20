@@ -7,26 +7,22 @@ export function Footer() {
   const isAr = path.startsWith("/ar");
 
   const en = {
-    links:[
-      {h:"About",items:[{l:"Our Story",h:"/#about"},{l:"Mission & Vision",h:"/#about"},{l:"Governance Philosophy",h:"/#about"},{l:"Leadership",h:"/#about"}]},
-      {h:"Services",items:[{l:"Property Stewardship",h:"/#services"},{l:"Governed Growth",h:"/#services"},{l:"Property Advisory",h:"/#services"},{l:"Wealth Reporting",h:"/#services"},{l:"Risk Management",h:"/#services"}]},
-      {h:"Platform",items:[{l:"Solutions",h:"/#solutions"},{l:"Projects",h:"/#projects"},{l:"Intelligence",h:"/#solutions"},{l:"Technology",h:"/#solutions"}]},
-      {h:"Company",items:[{l:"Contact Us",h:"/#contact"},{l:"Privacy Policy",h:"/#contact"},{l:"Terms of Service",h:"/#contact"},{l:"Confidentiality",h:"/#contact"}]},
+    navLinks:[
+      {l:"Home",h:"/"},{l:"About",h:"/about"},{l:"Services",h:"/services"},{l:"Contact",h:"/contact"},
     ],
-    tagline:"Wealth, structured to outlast its makers.",
-    sub:"QMULATE is a specialist real estate family office. All communications are private and confidential.",
+    tagline:"Transforming Ownership into Enduring Value.",
+    sub:"QMULATE is a specialist real estate platform. All communications are private and confidential.",
     copy:"© 2026 QMULATE. All rights reserved. Private & Confidential.",
+    email:"enquiries@qmulate.com",
   };
   const ar = {
-    links:[
-      {h:"الشركة",items:[{l:"قصتنا",h:"/ar#about"},{l:"الرؤية والرسالة",h:"/ar#about"},{l:"فلسفة الحوكمة",h:"/ar#about"},{l:"القيادة",h:"/ar#about"}]},
-      {h:"الخدمات",items:[{l:"إدارة العقارات",h:"/ar#services"},{l:"النمو المحكوم",h:"/ar#services"},{l:"الاستشارات",h:"/ar#services"},{l:"تقارير الثروة",h:"/ar#services"},{l:"إدارة المخاطر",h:"/ar#services"}]},
-      {h:"المنصة",items:[{l:"الحلول",h:"/ar#solutions"},{l:"المشاريع",h:"/ar#projects"},{l:"الذكاء الاستثماري",h:"/ar#solutions"},{l:"التكنولوجيا",h:"/ar#solutions"}]},
-      {h:"التواصل",items:[{l:"اتصل بنا",h:"/ar#contact"},{l:"سياسة الخصوصية",h:"/ar#contact"},{l:"شروط الخدمة",h:"/ar#contact"},{l:"السرية",h:"/ar#contact"}]},
+    navLinks:[
+      {l:"الرئيسية",h:"/ar"},{l:"من نحن",h:"/ar/about"},{l:"خدماتنا",h:"/ar/services"},{l:"تواصل",h:"/ar/contact"},
     ],
-    tagline:"ثروة مبنية لتدوم بعد صانعيها.",
-    sub:"كيوميليت مكتب عائلي متخصص في العقارات. جميع المراسلات سرية وخاصة.",
-    copy:"© 2026 كيوميليت. جميع الحقوق محفوظة.",
+    tagline:"نحوّل الملكية إلى قيمة مستدامة.",
+    sub:"كيوميليت منظومة عقارية متكاملة. جميع المراسلات سرية وخاصة.",
+    copy:"© 2026 كيوميليت. جميع الحقوق محفوظة. خاص وسري.",
+    email:"enquiries@qmulate.com",
   };
   const t = isAr ? ar : en;
 
@@ -44,36 +40,35 @@ export function Footer() {
 
       <div className="container" style={{position:"relative",zIndex:1,paddingTop:"clamp(60px,8vw,96px)",paddingBottom:"clamp(40px,5vw,60px)"}}>
         {/* Top section */}
-        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr",gap:"clamp(24px,3vw,48px)",marginBottom:"clamp(48px,6vw,72px)"}} className="footer-grid">
+        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:"clamp(24px,3vw,48px)",marginBottom:"clamp(48px,6vw,72px)",alignItems:"start"}} className="footer-grid">
           {/* Brand column */}
           <div>
             <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,textDecoration:"none"}}>
               <img src="/Logo.png" alt="QMULATE" style={{height:'36px',width:'auto',display:'block',objectFit:'contain',mixBlendMode:'screen',filter:'drop-shadow(0 0 4px rgba(91,124,250,0.45))'}} />
               <div>
                 <div style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:13,letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
-                <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,color:"rgba(148,163,184,.45)",letterSpacing:"0.10em",marginTop:2}}>FAMILY OFFICE</div>
+                <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,color:"rgba(148,163,184,.45)",letterSpacing:"0.10em",marginTop:2}}>REAL ESTATE PLATFORM</div>
               </div>
             </Link>
-            <p style={{fontSize:15,color:"var(--text-3)",lineHeight:1.75,marginBottom:16,maxWidth:280}}>{t.tagline}</p>
-            <p style={{fontSize:12,color:"var(--text-4)",lineHeight:1.7,maxWidth:300}}>{t.sub}</p>
+            <p style={{fontSize:15,color:"var(--text-3)",lineHeight:1.75,marginBottom:12,maxWidth:320}}>{t.tagline}</p>
+            <p style={{fontSize:12,color:"var(--text-4)",lineHeight:1.7,maxWidth:320,marginBottom:12}}>{t.sub}</p>
+            <a href={`mailto:${t.email}`} style={{fontSize:12,color:"var(--cyan)",lineHeight:1.7}}>{t.email}</a>
           </div>
 
-          {/* Link columns */}
-          {t.links.map(col=>(
-            <div key={col.h}>
-              <div className="t-xs" style={{color:"var(--text-4)",marginBottom:16}}>{col.h}</div>
-              <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                {col.items.map(item=>(
-                  <Link key={item.l} href={item.h} style={{
-                    fontSize:13,color:"var(--text-3)",transition:"color .2s",lineHeight:1.5,
-                  }}
-                  onMouseEnter={e=>(e.currentTarget.style.color="var(--text-2)")}
-                  onMouseLeave={e=>(e.currentTarget.style.color="var(--text-3)")}
-                  >{item.l}</Link>
-                ))}
-              </div>
+          {/* Navigation column */}
+          <div>
+            <div className="t-xs" style={{color:"var(--text-4)",marginBottom:16}}>{isAr?"روابط":"Navigation"}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+              {t.navLinks.map(item=>(
+                <Link key={item.l} href={item.h} style={{
+                  fontSize:13,color:"var(--text-3)",transition:"color .2s",lineHeight:1.5,
+                }}
+                onMouseEnter={e=>(e.currentTarget.style.color="var(--text-2)")}
+                onMouseLeave={e=>(e.currentTarget.style.color="var(--text-3)")}
+                >{item.l}</Link>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
 
         {/* Bottom bar */}
@@ -92,7 +87,6 @@ export function Footer() {
       </div>
 
       <style>{`
-        @media(max-width:1000px){.footer-grid{grid-template-columns:1fr 1fr!important}}
         @media(max-width:600px){.footer-grid{grid-template-columns:1fr!important}}
       `}</style>
     </footer>

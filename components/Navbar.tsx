@@ -4,19 +4,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { MagneticButton } from "@/components/Motion";
-import { ThemeSwitcher } from "./ThemeSwitcher";
 import { MenuIcon, CloseIcon } from "./icons/GlassIcons";
 
 const EN_LINKS = [
-  {h:"/",l:"Home"},{h:"/#about",l:"About"},{h:"/#services",l:"Services"},
-  {h:"/#solutions",l:"Solutions"},{h:"/#projects",l:"Projects"},{h:"/#contact",l:"Contact"},
+  {h:"/",l:"Home"},{h:"/#about",l:"About"},{h:"/#services",l:"Services"},{h:"/#contact",l:"Contact"},
 ];
 const AR_LINKS = [
-  {h:"/ar",l:"الرئيسية"},{h:"/ar#about",l:"من نحن"},{h:"/ar#services",l:"خدماتنا"},
-  {h:"/ar#solutions",l:"الحلول"},{h:"/ar#projects",l:"المشاريع"},{h:"/ar#contact",l:"تواصل"},
+  {h:"/ar",l:"الرئيسية"},{h:"/ar#about",l:"من نحن"},{h:"/ar#services",l:"خدماتنا"},{h:"/ar#contact",l:"تواصل"},
 ];
 
-const SECTION_IDS = ["home","about","services","solutions","projects","contact"];
+const SECTION_IDS = ["home","about","services","contact"];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -59,7 +56,7 @@ export function Navbar() {
   },[path]);
 
   const isActive = (h:string) => {
-    if (h==="/"||h==="/ar") return (activeSection==="home") && path===h;
+    if (h==="/"||h==="/ar") return (activeSection==="home") && (path==="/"||path==="/ar");
     const hash = h.split("#")[1];
     return hash ? activeSection===hash : false;
   };
@@ -102,7 +99,6 @@ export function Navbar() {
                 display: 'block',
                 background: 'transparent',
                 mixBlendMode: 'screen',
-                filter: 'drop-shadow(0 0 6px rgba(91,124,250,0.55))',
               }}
             />
             <div>
@@ -131,8 +127,6 @@ export function Navbar() {
 
           {/* ── Right actions ── */}
           <div style={{display:"flex",alignItems:"center",gap:10}}>
-            <ThemeSwitcher/>
-
             <button
               onClick={() => startTransition(() => {
                 router.push(isAr ? (path.replace(/^\/ar/, "") || "/") : ("/ar" + (path === "/" ? "" : path)));
@@ -206,9 +200,6 @@ export function Navbar() {
         @keyframes fade-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
         @media(max-width:900px){.d-nav,.d-cta{display:none!important}.m-btn{display:flex!important;align-items:center}}
         @media(min-width:901px){.m-btn{display:none!important}}
-        [data-theme="light"] header{--nav-bg-rgb:255,255,255;background:rgba(255,255,255,.0)!important}
-        [data-theme="light"] header[style*="rgba(var(--nav-bg-rgb,2,4,10),.88)"]{background:rgba(255,255,255,.88)!important}
-        [data-theme="light"] .mob-overlay{--mob-bg-rgb:248,247,244}
       `}</style>
     </>
   );
