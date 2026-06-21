@@ -336,7 +336,7 @@ export default function ArHome() {
     padding: "12px 16px",
     fontSize: 16,
     outline: "none",
-    fontFamily: "'IBM Plex Sans Arabic',sans-serif",
+    fontFamily: "'Madani Arabic',sans-serif",
     direction: "rtl",
     textAlign: "right",
     transition: "all 0.25s ease",
@@ -356,7 +356,7 @@ export default function ArHome() {
   };
 
   return (
-    <main className="hero-page" style={{ position: "relative", fontFamily: "'IBM Plex Sans Arabic',sans-serif" }}>
+    <main className="hero-page" style={{ position: "relative", fontFamily: "'Madani Arabic',sans-serif" }}>
       <PageBackground variant="home" />
 
       {/* ════════════════════════════════════════════════════════
@@ -678,7 +678,7 @@ export default function ArHome() {
             )}
             <div className="container" style={{ position: "relative", zIndex: 1, padding: "clamp(48px,6vw,80px) 0", direction: "rtl" }}>
               <motion.div {...FI()} style={{ marginBottom: 12 }}>
-                <span style={{ ...glassPill, display: "inline-block", padding: "4px 14px", color: svc.color, fontFamily: "monospace", fontSize: 12, letterSpacing: "0.10em" }}>
+                <span style={{ ...glassPill, display: "inline-block", padding: "4px 14px", color: svc.color, fontFamily: "var(--font-geist-mono,'Courier New'),monospace", fontSize: 12, letterSpacing: "0.10em" }}>
                   {svc.num}
                 </span>
               </motion.div>

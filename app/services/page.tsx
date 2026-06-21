@@ -112,7 +112,7 @@ export default function ServicesPage() {
           <ArchitecturalBg variant={si % 2 === 0 ? "strata-left" : "lattice"} />
           <div className="container" style={{ position: "relative", zIndex: 1 }}>
             <motion.div {...FI()} style={{ marginBottom: 12 }}>
-              <span className="t-xs" style={{ color: svc.color, fontFamily: "monospace" }}>{svc.num}</span>
+              <span className="t-xs" style={{ color: svc.color, fontFamily: "var(--font-geist-mono,'Courier New'),monospace" }}>{svc.num}</span>
             </motion.div>
             <motion.h2 {...FU(.06)} className="t-h2" style={{ color: "var(--text-1)", marginBottom: "clamp(40px,5vw,64px)", borderLeft: `3px solid ${svc.color}`, paddingLeft: 20 }}>
               {svc.title}

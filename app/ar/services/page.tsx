@@ -67,7 +67,7 @@ const SERVICES_AR = [
 
 export default function ArServicesPage() {
   return (
-    <main style={{ position: "relative", fontFamily: "'IBM Plex Sans Arabic',sans-serif" }}>
+    <main style={{ position: "relative", fontFamily: "'Madani Arabic',sans-serif" }}>
       <PageBackground variant="services" />
 
       {/* ── Hero ── */}
@@ -111,7 +111,7 @@ export default function ArServicesPage() {
           <ArchitecturalBg variant={si % 2 === 0 ? "strata-left" : "lattice"} />
           <div className="container" style={{ position: "relative", zIndex: 1, direction: "rtl" }}>
             <motion.div {...FI()} style={{ marginBottom: 12 }}>
-              <span className="t-xs" style={{ color: svc.color, fontFamily: "monospace" }}>{svc.num}</span>
+              <span className="t-xs" style={{ color: svc.color, fontFamily: "var(--font-geist-mono,'Courier New'),monospace" }}>{svc.num}</span>
             </motion.div>
             <motion.h2 {...FU(.06)} className="t-h2" style={{ color: "var(--text-1)", marginBottom: "clamp(40px,5vw,64px)", borderRight: `3px solid ${svc.color}`, paddingRight: 20 }}>
               {svc.title}

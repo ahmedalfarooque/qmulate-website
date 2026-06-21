@@ -7,7 +7,7 @@ import { PageBackground } from "@/components/PageBackground";
 
 export default function ArAboutPage() {
   return (
-    <main style={{ position: "relative", fontFamily: "'IBM Plex Sans Arabic',sans-serif" }}>
+    <main style={{ position: "relative", fontFamily: "'Madani Arabic',sans-serif" }}>
       <PageBackground variant="about" />
 
       {/* ── Hero ── */}

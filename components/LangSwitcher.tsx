@@ -15,7 +15,7 @@ export function LangSwitcher() {
       onClick={() => startTransition(() => router.push(target))}
       style={{
         display: "inline-flex", alignItems: "center", gap: "6px",
-        fontSize: "11px", fontFamily: "DM Mono, monospace",
+        fontSize: "11px", fontFamily: "var(--font-geist-mono,'Courier New'),monospace",
         letterSpacing: "0.08em", color: "var(--text-muted)",
         border: "1px solid var(--border)", borderRadius: "4px",
         padding: "5px 10px",
@@ -27,7 +27,7 @@ export function LangSwitcher() {
       {isAr ? (
         <><span>EN</span><span style={{ color: "var(--accent)" }}></span></>
       ) : (
-        <><span style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}>ع</span><span style={{ color: "var(--accent)" }}></span></>
+        <><span style={{ fontFamily: "'Madani Arabic', sans-serif" }}>ع</span><span style={{ color: "var(--accent)" }}></span></>
       )}
     </button>
   );

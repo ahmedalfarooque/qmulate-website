@@ -347,7 +347,7 @@ export default function Home() {
     padding:"12px 16px",
     fontSize:16,
     outline:"none",
-    fontFamily:"'Inter',sans-serif",
+    fontFamily:"var(--font-geist,'Inter',sans-serif)",
     transition:"all 0.25s ease",
     boxShadow: focus===field
       ? '0 0 0 3px rgba(0,200,255,0.10), inset 0 1px 0 rgba(0,220,255,0.20)'
@@ -690,7 +690,7 @@ export default function Home() {
             </>}
             <div className="container" style={{position:"relative",zIndex:1,padding:"clamp(48px,6vw,80px) 0"}}>
               <motion.div {...FI()} style={{marginBottom:12}}>
-                <span style={{...glassPill,display:"inline-block",padding:"4px 14px",color:svc.color,fontFamily:"monospace",fontSize:12,letterSpacing:"0.10em"}}>
+                <span style={{...glassPill,display:"inline-block",padding:"4px 14px",color:svc.color,fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:12,letterSpacing:"0.10em"}}>
                   {svc.num}
                 </span>
               </motion.div>

@@ -32,7 +32,7 @@ export function Footer() {
       borderTop:"1px solid var(--hr-color)",
       position:"relative",overflow:"hidden",
       direction:isAr?"rtl":"ltr",
-      fontFamily:isAr?"'IBM Plex Sans Arabic',sans-serif":"'Inter',sans-serif",
+      fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
     }}>
       {/* Background gradient */}
       <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 80% 50% at 50% 100%,color-mix(in srgb,var(--cyan) 5%,transparent),transparent 70%)",pointerEvents:"none"}}/>
@@ -46,7 +46,7 @@ export function Footer() {
             <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,textDecoration:"none"}}>
               <img src="/Logo.png" alt="QMULATE" style={{height:'36px',width:'auto',display:'block',objectFit:'contain',mixBlendMode:'screen',filter:'drop-shadow(0 0 4px rgba(91,124,250,0.45))'}} />
               <div>
-                <div style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:13,letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
+                <div style={{fontFamily:"var(--font-geist,'Inter',sans-serif)",fontWeight:800,fontSize:13,letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
                 <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,color:"rgba(148,163,184,.45)",letterSpacing:"0.10em",marginTop:2}}>REAL ESTATE PLATFORM</div>
               </div>
             </Link>

@@ -102,10 +102,10 @@ export function Navbar() {
               }}
             />
             <div>
-              <div style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:12,
+              <div style={{fontFamily:"var(--font-geist,'Inter',sans-serif)",fontWeight:800,fontSize:12,
                 letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
               {isAr
-                ? <div style={{fontFamily:"'IBM Plex Sans Arabic',sans-serif",fontSize:9,color:"var(--text-4)",marginTop:2}}>كيوميليت</div>
+                ? <div style={{fontFamily:"'Madani Arabic',sans-serif",fontSize:9,color:"var(--text-4)",marginTop:2}}>كيوميليت</div>
                 : <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,
                     color:"var(--text-4)",letterSpacing:"0.10em",marginTop:2}}>FAMILY OFFICE</div>}
             </div>
@@ -116,7 +116,7 @@ export function Navbar() {
             {links.map(l=>(
               <Link key={l.h} href={l.h} style={{
                 padding:"7px 14px",borderRadius:100,fontSize:13,fontWeight:500,
-                fontFamily:isAr?"'IBM Plex Sans Arabic',sans-serif":"'Inter',sans-serif",
+                fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
                 color:isActive(l.h)?"var(--text-1)":"var(--text-3)",
                 background:isActive(l.h)?"rgba(0,212,255,.09)":"transparent",
                 border:`1px solid ${isActive(l.h)?"rgba(0,212,255,.22)":"transparent"}`,
@@ -179,7 +179,7 @@ export function Navbar() {
                   padding:"20px 0",borderBottom:"1px solid var(--glass-border)",
                   fontSize:"clamp(22px,6vw,34px)",fontWeight:800,
                   letterSpacing:isAr?0:"-0.03em",
-                  fontFamily:isAr?"'IBM Plex Sans Arabic',sans-serif":"'Inter',sans-serif",
+                  fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
                   color:isActive(l.h)?"var(--cyan)":"var(--text-1)",
                   textAlign:isAr?"right":"left",
                   animation:`fade-up .42s ${i*55}ms both`,
