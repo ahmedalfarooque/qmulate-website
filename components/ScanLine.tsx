@@ -20,7 +20,7 @@ export default function ScanLine() {
 
     let start: number | null = null;
     let raf: number;
-    const duration = 8000; // ms for one full pass
+    const duration = 16000; // ms for one full pass
 
     function animate(timestamp: number) {
       if (!start) start = timestamp;
@@ -58,9 +58,9 @@ export default function ScanLine() {
           top: '-2px',
           left: 0,
           right: 0,
-          height: '2px',
-          background: 'linear-gradient(90deg, transparent 0%, rgba(0,200,255,0.15) 20%, rgba(0,200,255,0.6) 50%, rgba(0,200,255,0.15) 80%, transparent 100%)',
-          boxShadow: '0 0 8px rgba(0,200,255,0.4), 0 0 20px rgba(0,200,255,0.15)',
+          height: '1.5px',
+          background: 'linear-gradient(90deg, transparent 0%, rgba(0,200,255,0.12) 20%, rgba(0,200,255,0.50) 50%, rgba(0,200,255,0.12) 80%, transparent 100%)',
+          boxShadow: '0 0 6px rgba(0,200,255,0.30), 0 0 14px rgba(0,200,255,0.10)',
           willChange: 'transform',
         }}
       />

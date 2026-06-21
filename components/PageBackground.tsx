@@ -19,7 +19,7 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
     <>
       <style>{`
         @keyframes qbg-glow {
-          0%,100%{opacity:0.08} 50%{opacity:0.22}
+          0%,100%{opacity:0.55} 50%{opacity:0.85}
         }
         .qbg-root {
           position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
@@ -31,19 +31,27 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
 
         {/* ── AMBIENT RADIAL GLOW ── */}
         <div style={{
-          position:'absolute', top:'5%', left:'15%',
-          width:900, height:700, borderRadius:'50%',
-          background:`radial-gradient(ellipse, rgba(${accentA},0.13) 0%, rgba(${accentB},0.05) 40%, transparent 70%)`,
-          filter:'blur(40px)',
+          position:'absolute', top:'5%', left:'10%',
+          width:1100, height:900, borderRadius:'50%',
+          background:`radial-gradient(ellipse, rgba(${accentA},0.32) 0%, rgba(${accentB},0.14) 40%, transparent 70%)`,
+          filter:'blur(60px)',
           animation:'qbg-glow 7s ease-in-out infinite',
         }}/>
         <div style={{
-          position:'absolute', bottom:'10%', right:'10%',
-          width:500, height:400, borderRadius:'50%',
-          background:`radial-gradient(ellipse, rgba(${accentB},0.09) 0%, transparent 70%)`,
-          filter:'blur(50px)',
+          position:'absolute', bottom:'5%', right:'5%',
+          width:800, height:700, borderRadius:'50%',
+          background:`radial-gradient(ellipse, rgba(${accentB},0.28) 0%, transparent 70%)`,
+          filter:'blur(60px)',
           animation:'qbg-glow 10s ease-in-out infinite',
           animationDelay:'3s',
+        }}/>
+        <div style={{
+          position:'absolute', top:'40%', right:'20%',
+          width:600, height:600, borderRadius:'50%',
+          background:`radial-gradient(ellipse, rgba(${accentA},0.18) 0%, transparent 70%)`,
+          filter:'blur(80px)',
+          animation:'qbg-glow 12s ease-in-out infinite',
+          animationDelay:'6s',
         }}/>
 
       </div>
