@@ -5,7 +5,6 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsApp } from "@/components/WhatsApp";
 import { ScrollProgress, PageTransition } from "@/components/Motion";
-import { EnergyBeam } from "@/components/EnergyBeam";
 import { CrystalScene } from "@/components/ui/CrystalScene";
 
 const geist = localFont({
@@ -46,7 +45,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CrystalScene />
           {/* Global scroll progress bar */}
           <ScrollProgress />
-          <EnergyBeam />
           <Navbar/>
           {/* Page-level entrance transition */}
           <PageTransition>

@@ -1,8 +1,5 @@
 "use client";
-import {
-  LocationIcon, EmailIcon, LockIcon, ClockIcon, PhoneIcon,
-} from "@/components/icons/GlassIcons";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import {
   FU, FI, FS, SectionHeading,
@@ -272,34 +269,6 @@ const SERVICES_AR = [
   },
 ];
 
-const SERVICES_DETAIL_AR = [
-  {
-    num: "01", title: "هيكلة الملكية والحوكمة", color: "var(--cyan)",
-    clients: [
-      { label: "الشركات", body: "هيكلة ملكية الشركات والأصول وتنظيم العلاقة بين الشركاء والمستثمرين بما يضمن وضوح الصلاحيات، وفعالية اتخاذ القرار، واستدامة الاستثمار." },
-      { label: "الأوقاف", body: "تنظيم ملكية الأصول الوقفية ووضع أطر حوكمة واضحة تدعم تحقيق مقاصد الوقف، وتعزز الاستدامة والاستمرارية عبر الأجيال." },
-      { label: "الأفراد والعائلات", body: "تنظيم الأصول والاستثمارات الشخصية ضمن هيكل واضح يساعد على الحوكمة واتخاذ القرار والتخطيط للمستقبل." },
-    ],
-  },
-  {
-    num: "02", title: "إدارة الأصول العقارية", color: "#8A5CFF",
-    clients: [
-      { label: "الشركات", body: "إدارة المحافظ والأصول العقارية من خلال التشغيل والتأجير والصيانة والتحصيل، بما يحافظ على قيمة الأصول ويعزز كفاءتها التشغيلية." },
-      { label: "الأوقاف", body: "إدارة وتشغيل الأصول الوقفية بما يحقق أفضل استفادة منها ويحافظ على استدامة منافعها وفق شروط الوقف." },
-      { label: "الأفراد والعائلات", body: "إدارة العقارات الشخصية والاستثمارية بطريقة توفر رؤية واضحة للأداء وتساعد على المحافظة على القيمة وتعزيز العوائد." },
-    ],
-  },
-  {
-    num: "03", title: "التطوير والاستثمار", color: "#4D8DFF",
-    clients: [
-      { label: "الشركات", body: "دراسة فرص التوسع والتطوير وإعادة توظيف الأصول بما يدعم النمو ويحقق أفضل عائد استثماري." },
-      { label: "الأوقاف", body: "تحديد الفرص المناسبة لتنمية الأصول الوقفية وتطويرها بما يحقق الاستدامة ويعزز أثر الوقف." },
-      { label: "الأفراد والعائلات", body: "تقييم الفرص الاستثمارية وتحديد المسار الأنسب للتطوير أو الاحتفاظ أو التخارج بما يتوافق مع الأهداف المالية طويلة المدى." },
-    ],
-  },
-];
-
-const AREAS_AR = ["هيكلة الملكية والحوكمة", "إدارة الأصول العقارية", "التطوير والاستثمار", "استفسار عام"];
 
 const WATERMARK = (
   <div aria-hidden="true" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
@@ -311,11 +280,7 @@ const WATERMARK = (
    PAGE
    ════════════════════════════════════════════════════════ */
 export default function ArHome() {
-  const [form, setForm] = useState({ name: "", email: "", entity: "", reason: "", message: "" });
-  const [focus, setFocus] = useState<string | null>(null);
-  const [sent, setSent] = useState(false);
   const [hoveredService, setHoveredService] = useState<number | null>(null);
-  const [hoveredValue, setHoveredValue] = useState<number | null>(null);
 
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -324,36 +289,6 @@ export default function ArHome() {
 
   const wwaRef = useRef<HTMLDivElement>(null);
   const wwaVisible = useInView(wwaRef, { once: true, margin: "-20px" });
-
-  const inp = (field: string): React.CSSProperties => ({
-    width: "100%",
-    background: focus === field ? 'rgba(0, 200, 255, 0.08)' : 'rgba(255, 255, 255, 0.06)',
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
-    border: `1px solid ${focus === field ? "rgba(0, 220, 255, 0.45)" : "rgba(255, 255, 255, 0.15)"}`,
-    borderRadius: 12,
-    color: "#ffffff",
-    padding: "12px 16px",
-    fontSize: 16,
-    outline: "none",
-    fontFamily: "'Madani Arabic',sans-serif",
-    direction: "rtl",
-    textAlign: "right",
-    transition: "all 0.25s ease",
-    boxShadow: focus === field
-      ? '0 0 0 3px rgba(0,200,255,0.10), inset 0 1px 0 rgba(0,220,255,0.20)'
-      : 'inset 0 1px 0 rgba(255,255,255,0.10)',
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const subject = encodeURIComponent("طلب تواصل — كيوميليت");
-    const body = encodeURIComponent(
-      `الاسم: ${form.name}\nالبريد الإلكتروني: ${form.email}\nالعائلة / الجهة: ${form.entity}\nمجال الاهتمام: ${form.reason}\n\nالرسالة:\n${form.message}`
-    );
-    window.location.href = `mailto:enquiries@qmulate.com?subject=${subject}&body=${body}`;
-    setSent(true);
-  };
 
   return (
     <main className="hero-page" style={{ position: "relative", fontFamily: "'Madani Arabic',sans-serif" }}>
@@ -381,8 +316,8 @@ export default function ArHome() {
                 منظومة عقارية متكاملة للعائلات والشركات والأفراد، تتخصص في إدارة الأصول والحفاظ على قيمتها وتحقيق النمو المستدام على المدى البعيد.
               </motion.p>
               <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.15, duration: .7 }} style={{ display: "flex", gap: 14, flexWrap: "wrap", direction: "rtl" }}>
-                <a href="#contact" className="btn btn-primary" style={{ fontSize: 15, padding: "14px 34px" }}>← طلب تواصل خاص</a>
-                <a href="#about" className="btn btn-ghost" style={{ fontSize: 15, padding: "14px 30px" }}>من نحن</a>
+                <a href="/ar/contact" className="btn btn-primary" style={{ fontSize: 15, padding: "14px 34px" }}>← طلب تواصل خاص</a>
+                <a href="/ar/about" className="btn btn-ghost" style={{ fontSize: 15, padding: "14px 30px" }}>من نحن</a>
               </motion.div>
             </div>
           </HeroGlass>
@@ -536,323 +471,13 @@ export default function ArHome() {
             ))}
           </div>
           <div style={{ textAlign: "center" }}>
-            <a href="#services" className="btn btn-ghost" style={{ fontSize: 15, padding: "14px 32px" }}>← عرض جميع الخدمات</a>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════
-          5. ABOUT
-          ════════════════════════════════════════════════════════ */}
-      <section id="about" style={{ scrollMarginTop: 64, position: "relative", overflow: "hidden" }} className="section">
-        <ScanLine />
-        <ArchitecturalBg variant="fins" />
-        {WATERMARK}
-        <AmbientBlobs cyan={false} />
-        <div className="container" style={{ position: "relative", zIndex: 1, direction: "rtl" }}>
-          <motion.div {...FI()} style={{ marginBottom: 24 }}>
-            <span className="pill pill-c"><span className="dot-live" />من نحن</span>
-          </motion.div>
-          <motion.h2 {...FU(.08)} className="t-h1 gt-w" style={{ marginBottom: 24 }}>
-            نؤمن بأن العقار أكثر من مجرد أصل.
-          </motion.h2>
-          <motion.p {...FU(.16)} className="t-xl" style={{ color: "var(--text-3)", maxWidth: "100%", lineHeight: 1.9, marginBottom: "clamp(48px,6vw,72px)" }}>
-            نؤمن بأن العقار ليس مجرد أصل يُمتلك، بل قيمة تحتاج إلى إدارة واعية ورؤية طويلة المدى. لذلك نقدم منظومة عقارية متكاملة تجمع بين إدارة الأصول، والحوكمة، والتنمية، لمساعدة العائلات والشركات والأفراد على الحفاظ على قيمة أصولهم وتعزيز أدائها واستدامتها عبر الزمن.
-          </motion.p>
-
-          {/* Vision / Mission */}
-          <div className="grid-2" style={{ gap: "clamp(24px,3vw,40px)", marginBottom: "clamp(40px,5vw,64px)" }}>
-            {[
-              { label: "الرؤية", color: "var(--cyan)", title: "شريك موثوق عبر الأجيال.", body: "أن نكون الشريك الموثوق للعائلات والشركات والأفراد في هيكلة الملكية العقارية وإدارة الأصول وتحويلها إلى فرص مستدامة تحافظ على القيمة وتدعم النمو عبر الأجيال." },
-              { label: "المهمة", color: "#8A5CFF", title: "أطر حوكمة راسخة ودائمة.", body: "نطور ونُدير الأصول العقارية وفق أطر حوكمة وإدارة واضحة تحافظ على قيمتها وتعزز عوائدها وتدعم استدامة الاستثمار على المدى البعيد." },
-            ].map((item, i) => (
-              <motion.div key={item.label} {...FU(i * .1)}>
-                <div style={{ ...(i === 0 ? glassCyan : glassPurple), padding: "clamp(32px,4vw,52px)", height: "100%" }}>
-                  <GlassHighlight color={i === 0 ? "rgba(0,220,255,0.35)" : "rgba(160,110,255,0.35)"} />
-                  <GlassLeftEdge color={i === 0 ? "rgba(0,220,255,0.18)" : "rgba(150,100,255,0.18)"} />
-                  <GlassInnerGlow color={i === 0 ? "rgba(0,200,255,0.08)" : "rgba(120,80,255,0.10)"} />
-                  <GlassSheen />
-                  <div style={{ position: "relative", zIndex: 2 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24, direction: "rtl" }}>
-                      <span className="t-xs" style={{ color: item.color }}>{item.label}</span>
-                      <div style={{ flex: 1, height: 1, background: `linear-gradient(270deg,${item.color}44,transparent)` }} />
-                    </div>
-                    <h3 className="t-h3" style={{ color: "#ffffff", marginBottom: 16, lineHeight: 1.4 }}>{item.title}</h3>
-                    <p className="t-md" style={{ color: "rgba(255,255,255,0.82)", lineHeight: 1.9 }}>{item.body}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Values */}
-          <div style={{ textAlign: "center", marginBottom: 16 }}>
-            <div className="t-xs" style={{ color: "var(--text-4)", marginBottom: "clamp(24px,3vw,36px)" }}>القيم</div>
-          </div>
-          <div className="grid-3" style={{ gap: "clamp(16px,2vw,24px)" }}>
-            {[
-              { title: "تراكم", body: "دع الهيكل لا الضجيج يقود العوائد على مدى عقود.", color: "var(--cyan)", icon: "◈" },
-              { title: "حماية", body: "تحكّم لدرء المخاطر؛ احفظ القيمة قبل أن تنمو.", color: "#8A5CFF", icon: "⬡" },
-              { title: "انتقال", body: "انقل النية لا الأصول فحسب بين الأجيال.", color: "#4D8DFF", icon: "◉" },
-            ].map((v, i) => (
-              <motion.div key={v.title} {...FU(i * .1)}>
-                <div
-                  style={{ ...(i === 1 ? glassPurple : glass), ...(hoveredValue === i ? (i === 1 ? glassHoverPurple : glassHoverCyan) : {}), padding: "clamp(28px,3.5vw,44px)", textAlign: "center", height: "100%" }}
-                  onMouseEnter={() => setHoveredValue(i)}
-                  onMouseLeave={() => setHoveredValue(null)}
-                >
-                  <GlassHighlight color={i === 1 ? "rgba(160,110,255,0.28)" : "rgba(255,255,255,0.22)"} />
-                  <GlassLeftEdge />
-                  <GlassInnerGlow color={i === 1 ? "rgba(120,80,255,0.08)" : "rgba(255,255,255,0.05)"} />
-                  <GlassSheen />
-                  <div style={{ position: "relative", zIndex: 2 }}>
-                    <div style={{
-                      width: 64, height: 64, borderRadius: 18, margin: "0 auto 20px",
-                      background: 'rgba(255,255,255,0.07)',
-                      backdropFilter: 'blur(20px) saturate(160%)',
-                      WebkitBackdropFilter: 'blur(20px) saturate(160%)',
-                      border: `1px solid ${v.color}55`,
-                      boxShadow: `inset 0 1px 0 rgba(255,255,255,0.35), inset 1px 0 0 rgba(255,255,255,0.12), 0 8px 32px rgba(0,0,0,0.50), 0 0 20px ${v.color}22`,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      position: 'relative', overflow: 'hidden',
-                    }}>
-                      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: `linear-gradient(90deg,transparent,${v.color}99,rgba(255,255,255,0.5),${v.color}99,transparent)`, zIndex: 2 }} />
-                      <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(circle at 50% 0%, ${v.color}22 0%, transparent 70%)`, zIndex: 0 }} />
-                      <span style={{ fontSize: 26, color: v.color, filter: `drop-shadow(0 0 10px ${v.color}) drop-shadow(0 0 20px ${v.color}66)`, position: 'relative', zIndex: 1 }}>{v.icon}</span>
-                    </div>
-                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "#ffffff", marginBottom: 12 }}>{v.title}</h3>
-                    <p className="t-sm" style={{ color: "rgba(255,255,255,0.82)", lineHeight: 1.9 }}>{v.body}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════
-          6. SERVICES DETAIL
-          ════════════════════════════════════════════════════════ */}
-      <section id="services" style={{ scrollMarginTop: 64, position: "relative", overflow: "hidden" }}>
-        <ScanLine />
-        <div style={{ background: "var(--bg-alt)", padding: "clamp(60px,8vw,96px) 0", position: "relative" }}>
-          <ArchitecturalBg variant="mixed" />
-          <div className="container" style={{ position: "relative", zIndex: 1, direction: "rtl" }}>
-            <motion.div {...FI()} style={{ marginBottom: 24 }}>
-              <span className="pill pill-c"><span className="dot-live" />الخدمات</span>
-            </motion.div>
-            <motion.h2 {...FU(.08)} className="t-h1 gt-w" style={{ marginBottom: 24 }}>
-              هيكلة مناسبة لكل نوع من أنواع الملكية.
-            </motion.h2>
-            <motion.p {...FU(.16)} className="t-xl" style={{ color: "var(--text-3)", maxWidth: "100%", lineHeight: 1.9 }}>
-              صُممت خدماتنا لتغطية مختلف احتياجات الملكية العقارية، من الهيكلة والحوكمة إلى الإدارة والتطوير والاستثمار.
-            </motion.p>
-          </div>
-        </div>
-
-        {SERVICES_DETAIL_AR.map((svc, si) => (
-          <div key={svc.num} style={{ background: "var(--bg-0)", position: "relative", overflow: "hidden" }}>
-            {si === 0 && (
-              <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-                <div style={{ position: "absolute", top: "-5%", left: "-5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle,rgba(0,210,255,0.55) 0%,rgba(0,160,255,0.25) 40%,transparent 70%)", filter: "blur(60px)" }} />
-                <div style={{ position: "absolute", top: "20%", right: "-8%", width: 420, height: 420, borderRadius: "50%", background: "radial-gradient(circle,rgba(150,80,255,0.50) 0%,rgba(120,60,240,0.22) 40%,transparent 70%)", filter: "blur(55px)" }} />
-                <div style={{ position: "absolute", bottom: "-10%", left: "35%", width: 350, height: 350, borderRadius: "50%", background: "radial-gradient(circle,rgba(0,200,255,0.40) 0%,transparent 65%)", filter: "blur(48px)" }} />
-                <div style={{ position: "absolute", top: "50%", left: "15%", width: 180, height: 180, borderRadius: "50%", background: "radial-gradient(circle,rgba(120,60,255,0.45) 0%,transparent 70%)", filter: "blur(30px)" }} />
-              </div>
-            )}
-            {si === 1 && (
-              <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-                <div style={{ position: "absolute", top: "-8%", left: "-6%", width: 520, height: 520, borderRadius: "50%", background: "radial-gradient(circle,rgba(150,80,255,0.58) 0%,rgba(120,50,240,0.28) 40%,transparent 70%)", filter: "blur(65px)" }} />
-                <div style={{ position: "absolute", bottom: "-5%", right: "-5%", width: 440, height: 440, borderRadius: "50%", background: "radial-gradient(circle,rgba(0,210,190,0.48) 0%,rgba(0,180,160,0.22) 40%,transparent 70%)", filter: "blur(58px)" }} />
-                <div style={{ position: "absolute", top: "35%", left: "42%", width: 260, height: 260, borderRadius: "50%", background: "radial-gradient(circle,rgba(190,80,255,0.38) 0%,transparent 68%)", filter: "blur(36px)" }} />
-                <div style={{ position: "absolute", top: "10%", right: "22%", width: 160, height: 160, borderRadius: "50%", background: "radial-gradient(circle,rgba(0,230,200,0.42) 0%,transparent 70%)", filter: "blur(26px)" }} />
-              </div>
-            )}
-            {si === 2 && (
-              <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-                <div style={{ position: "absolute", top: "-5%", right: "-5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle,rgba(60,130,255,0.55) 0%,rgba(40,100,240,0.28) 40%,transparent 70%)", filter: "blur(62px)" }} />
-                <div style={{ position: "absolute", bottom: "-8%", left: "-6%", width: 460, height: 460, borderRadius: "50%", background: "radial-gradient(circle,rgba(0,190,255,0.48) 0%,rgba(0,160,240,0.22) 40%,transparent 70%)", filter: "blur(55px)" }} />
-                <div style={{ position: "absolute", top: "30%", left: "30%", width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle,rgba(80,80,240,0.42) 0%,transparent 68%)", filter: "blur(44px)" }} />
-                <div style={{ position: "absolute", top: "15%", left: "8%", width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle,rgba(100,210,255,0.38) 0%,transparent 70%)", filter: "blur(30px)" }} />
-              </div>
-            )}
-            <div className="container" style={{ position: "relative", zIndex: 1, padding: "clamp(48px,6vw,80px) 0", direction: "rtl" }}>
-              <motion.div {...FI()} style={{ marginBottom: 12 }}>
-                <span style={{ ...glassPill, display: "inline-block", padding: "4px 14px", color: svc.color, fontFamily: "var(--font-geist-mono,'Courier New'),monospace", fontSize: 12, letterSpacing: "0.10em" }}>
-                  {svc.num}
-                </span>
-              </motion.div>
-              <motion.h3 {...FU(.06)} className="t-h2" style={{ color: "var(--text-1)", marginBottom: "clamp(40px,5vw,64px)", borderRight: `3px solid ${svc.color}`, paddingRight: 20 }}>
-                {svc.title}
-              </motion.h3>
-              <motion.div
-                className="grid-3"
-                style={{ gap: "clamp(20px,2.5vw,32px)" }}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-30px", amount: 0.1 }}
-                variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-              >
-                {svc.clients.map((c, ci) => (
-                  <motion.div
-                    key={c.label}
-                    variants={{
-                      hidden: { opacity: 0, x: 40 },
-                      visible: { opacity: 1, x: 0, transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] } },
-                    }}
-                    style={{ position: "relative", paddingBottom: 22 }}
-                  >
-                    <div style={{ position: "absolute", left: "4%", right: "4%", bottom: 4, height: "80%", borderRadius: 20, background: "rgba(0,0,0,0.40)", filter: "blur(12px)", zIndex: 0, pointerEvents: "none" }} />
-                    <div style={{ position: "absolute", left: "8%", right: "8%", bottom: 0, height: "60%", borderRadius: 20, background: "rgba(0,0,0,0.25)", filter: "blur(20px)", zIndex: 0, pointerEvents: "none" }} />
-                    <div style={{ ...glassLight3D, padding: "clamp(24px,3vw,40px)", height: "100%", position: "relative", zIndex: 1 }}>
-                      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1.5px", background: "linear-gradient(90deg,transparent,rgba(255,255,255,0.55) 30%,rgba(255,255,255,0.75) 50%,rgba(255,255,255,0.55) 70%,transparent)", zIndex: 3, pointerEvents: "none" }} />
-                      <div style={{ position: "relative", zIndex: 2 }}>
-                        <div style={{ fontSize: 11, color: svc.color, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 16, direction: "rtl", filter: `drop-shadow(0 0 6px ${svc.color}88)` }}>{c.label}</div>
-                        <p className="t-sm" style={{ color: "rgba(255,255,255,0.90)", lineHeight: 1.9 }}>{c.body}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* ════════════════════════════════════════════════════════
-          7. CONTACT
-          ════════════════════════════════════════════════════════ */}
-      <section id="contact" style={{ scrollMarginTop: 64, position: "relative", overflow: "hidden", background: "linear-gradient(160deg,var(--bg-0) 0%,var(--bg-1) 60%,var(--bg-0) 100%)" }}>
-        <ScanLine />
-        <ArchitecturalBg variant="strata-right" />
-        <AmbientBlobs cyan={true} />
-        <div className="container" style={{ position: "relative", zIndex: 1, padding: "clamp(80px,10vw,120px) 0" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "clamp(48px,6vw,96px)", alignItems: "start", direction: "rtl" }} className="grid-2">
-
-            {/* ── RTL first column — details ── */}
-            <div>
-              <motion.div {...FI()} style={{ marginBottom: 24 }}>
-                <span className="pill pill-c"><span className="dot-live" />تواصل</span>
-              </motion.div>
-              <motion.h2 {...FU(.08)} className="t-h2 gt-w" style={{ marginBottom: 40, lineHeight: 1.2 }}>
-                تواصل خاص وحصري.
-              </motion.h2>
-
-              <motion.div {...FU(.14)} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {[
-                  { Icon: LocationIcon, label: "المكتب",   value: "جدة، المملكة العربية السعودية",  href: undefined },
-                  { Icon: EmailIcon,    label: "المراسلة", value: "enquiries@qmulate.com",           href: "mailto:enquiries@qmulate.com" },
-                  { Icon: PhoneIcon,    label: "الهاتف",   value: "+966 53 333 9052",                href: "tel:+966533339052" },
-                  { Icon: LockIcon,     label: "السرية",   value: "جميع طلبات التواصل خاصة وسرية",  href: undefined },
-                  { Icon: ClockIcon,    label: "وقت الرد", value: "خلال يوم عمل واحد",              href: undefined },
-                ].map(({ Icon, label, value, href }) => (
-                  <div key={label} style={{ ...glassPill, padding: "16px 20px" }}>
-                    <GlassHighlight color="rgba(255,255,255,0.20)" />
-                    <div style={{ display: "flex", gap: 16, alignItems: "flex-start", direction: "rtl", position: "relative", zIndex: 2 }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        <Icon size="sm" />
-                      </div>
-                      <div>
-                        <div className="t-xs" style={{ color: "var(--text-4)", marginBottom: 4 }}>{label}</div>
-                        {href
-                          ? <a href={href} style={{ fontSize: 14, color: "var(--cyan)", fontWeight: 500, direction: "ltr", display: "block", textAlign: "right" }}>{value}</a>
-                          : <div style={{ fontSize: 14, color: "rgba(255,255,255,0.82)", fontWeight: 500 }}>{value}</div>
-                        }
-                      </div>
-                    </div>
-                  </div>
-                ))}
-
-                {/* Address */}
-                <div style={{ ...glassPill, padding: "16px 20px" }}>
-                  <GlassHighlight color="rgba(255,255,255,0.20)" />
-                  <div style={{ position: "relative", zIndex: 2 }}>
-                    <div className="t-xs" style={{ color: "var(--text-4)", marginBottom: 4 }}>العنوان</div>
-                    <p style={{ fontSize: 13, color: "rgba(255,255,255,0.82)", lineHeight: 1.8 }}>
-                      طريق الملك عبدالعزيز، حي البساتين<br />
-                      ص.ب 23718، جدة 9351<br />
-                      المملكة العربية السعودية
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.p {...FU(.32)} style={{ fontSize: 11, color: "var(--text-5)", marginTop: 28, fontFamily: "var(--font-geist-mono,'Courier New'),monospace", direction: "ltr", textAlign: "right" }}>
-                خاص وسري · السجل التجاري: 7054453274 · الرقم الضريبي: 314819612900003
-              </motion.p>
-            </div>
-
-            {/* ── RTL second column — form ── */}
-            <motion.div {...FU(.1)}>
-              <div style={{ ...glassHeavy, padding: "clamp(32px,4vw,52px)" }}>
-                <GlassHighlight color="rgba(255,255,255,0.30)" />
-                <GlassLeftEdge color="rgba(255,255,255,0.15)" />
-                <GlassInnerGlow color="rgba(255,255,255,0.07)" />
-                <GlassSheen />
-                <div style={{ position: "relative", zIndex: 2 }}>
-                  <div className="t-xs" style={{ color: "var(--cyan)", marginBottom: 28, direction: "rtl" }}>طلب تواصل</div>
-
-                  {sent ? (
-                    <div style={{ textAlign: "center", padding: "40px 0" }}>
-                      <div style={{ fontSize: 32, marginBottom: 16 }}>✓</div>
-                      <h3 style={{ fontSize: 20, fontWeight: 700, color: "#ffffff", marginBottom: 8 }}>تم إرسال الطلب.</h3>
-                      <p style={{ fontSize: 14, color: "rgba(255,255,255,0.82)" }}>سنتواصل معك خلال يوم عمل واحد.</p>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16, direction: "rtl" }}>
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }} className="form-grid">
-                        <div>
-                          <label style={{ fontSize: 11, color: "var(--text-4)", display: "block", marginBottom: 6 }}>الاسم الكامل *</label>
-                          <input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                            onFocus={() => setFocus("name")} onBlur={() => setFocus(null)}
-                            style={inp("name")} placeholder="اسمك الكامل" />
-                        </div>
-                        <div>
-                          <label style={{ fontSize: 11, color: "var(--text-4)", display: "block", marginBottom: 6 }}>البريد الإلكتروني *</label>
-                          <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                            onFocus={() => setFocus("email")} onBlur={() => setFocus(null)}
-                            style={{ ...inp("email"), direction: "ltr", textAlign: "left" }} placeholder="you@example.com" />
-                        </div>
-                      </div>
-                      <div>
-                        <label style={{ fontSize: 11, color: "var(--text-4)", display: "block", marginBottom: 6 }}>اسم العائلة / الجهة</label>
-                        <input value={form.entity} onChange={e => setForm(f => ({ ...f, entity: e.target.value }))}
-                          onFocus={() => setFocus("entity")} onBlur={() => setFocus(null)}
-                          style={inp("entity")} placeholder="اسم العائلة أو المؤسسة" />
-                      </div>
-                      <div>
-                        <label style={{ fontSize: 11, color: "var(--text-4)", display: "block", marginBottom: 6 }}>مجال الاهتمام</label>
-                        <select value={form.reason} onChange={e => setForm(f => ({ ...f, reason: e.target.value }))}
-                          onFocus={() => setFocus("reason")} onBlur={() => setFocus(null)}
-                          style={{ ...inp("reason"), appearance: "none", cursor: "pointer" }}>
-                          <option value="">اختر مجالاً</option>
-                          {AREAS_AR.map(a => <option key={a} value={a}>{a}</option>)}
-                        </select>
-                      </div>
-                      <div>
-                        <label style={{ fontSize: 11, color: "var(--text-4)", display: "block", marginBottom: 6 }}>الرسالة *</label>
-                        <textarea required value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                          onFocus={() => setFocus("message")} onBlur={() => setFocus(null)}
-                          style={{ ...inp("message"), resize: "vertical", minHeight: 120 }} rows={5}
-                          placeholder="أخبرنا عن محفظتك وأهدافك" />
-                      </div>
-                      <button type="submit" className="btn btn-primary btn-submit-full" style={{ fontSize: 15, padding: "14px", justifyContent: "center", width: "100%" }}>
-                        إرسال الطلب ←
-                      </button>
-                      <p style={{ fontSize: 11, color: "var(--text-5)", textAlign: "center", lineHeight: 1.7 }}>
-                        جميع طلبات التواصل خاصة وسرية. لا نشارك معلوماتك مع أي طرف آخر.
-                      </p>
-                    </form>
-                  )}
-                </div>
-              </div>
-            </motion.div>
+            <a href="/ar/services" className="btn btn-ghost" style={{ fontSize: 15, padding: "14px 32px" }}>← عرض جميع الخدمات</a>
           </div>
         </div>
       </section>
 
       <style>{`
-        @media(max-width:900px){.hero-grid,.grid-2,.form-grid{grid-template-columns:1fr!important}}
+        @media(max-width:900px){.grid-2{grid-template-columns:1fr!important}}
         @media(max-width:640px){.grid-3{grid-template-columns:1fr!important}}
       `}</style>
     </main>

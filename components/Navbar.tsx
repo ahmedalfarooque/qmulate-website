@@ -7,10 +7,10 @@ import { MagneticButton } from "@/components/Motion";
 import { MenuIcon, CloseIcon } from "./icons/GlassIcons";
 
 const EN_LINKS = [
-  {h:"/",l:"Home"},{h:"/#about",l:"About"},{h:"/#services",l:"Services"},{h:"/#contact",l:"Contact"},
+  {h:"/",l:"Home"},{h:"/about",l:"About"},{h:"/services",l:"Services"},{h:"/contact",l:"Contact"},
 ];
 const AR_LINKS = [
-  {h:"/ar",l:"الرئيسية"},{h:"/ar#about",l:"من نحن"},{h:"/ar#services",l:"خدماتنا"},{h:"/ar#contact",l:"تواصل"},
+  {h:"/ar",l:"الرئيسية"},{h:"/ar/about",l:"من نحن"},{h:"/ar/services",l:"خدماتنا"},{h:"/ar/contact",l:"تواصل"},
 ];
 
 const SECTION_IDS = ["home","about","services","contact"];
@@ -56,9 +56,8 @@ export function Navbar() {
   },[path]);
 
   const isActive = (h:string) => {
-    if (h==="/"||h==="/ar") return (activeSection==="home") && (path==="/"||path==="/ar");
-    const hash = h.split("#")[1];
-    return hash ? activeSection===hash : false;
+    if (h==="/"||h==="/ar") return path==="/"||path==="/ar";
+    return path===h || path.startsWith(h+"/");
   };
 
   return (
@@ -142,7 +141,7 @@ export function Navbar() {
             </button>
 
             <MagneticButton strength={0.25}>
-              <Link href={isAr?"/ar#contact":"/#contact"} className="btn btn-primary d-cta"
+              <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary d-cta"
                 style={{padding:"8px 18px",fontSize:12,borderRadius:100}}>
                 {isAr?"تواصل":"Get in touch"}
               </Link>
@@ -187,10 +186,11 @@ export function Navbar() {
                   {l.l}
                 </Link>
               ))}
-              <Link href={isAr?"/ar#contact":"/#contact"} className="btn btn-primary"
+              <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary"
                 style={{marginTop:28,justifyContent:"center",fontSize:15,padding:16}}>
                 {isAr?"طلب تواصل ←":"Request an introduction →"}
               </Link>
+
             </nav>
           </motion.div>
         )}
