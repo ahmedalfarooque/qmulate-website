@@ -13,13 +13,10 @@ const AR_LINKS = [
   {h:"/ar",l:"الرئيسية"},{h:"/ar/about",l:"من نحن"},{h:"/ar/services",l:"خدماتنا"},{h:"/ar/contact",l:"تواصل"},
 ];
 
-const SECTION_IDS = ["home","about","services","contact"];
-
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [compact, setCompact] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
   const path = usePathname();
   const router = useRouter();
   const isAr = path.startsWith("/ar");
@@ -36,24 +33,6 @@ export function Navbar() {
     setCompact(v>72);
   });
   useEffect(()=>setOpen(false),[path]);
-
-  useEffect(()=>{
-    const onScroll = () => {
-      const sy = window.scrollY + 80;
-      let current = "home";
-      for (const id of SECTION_IDS) {
-        const el = document.getElementById(id);
-        if (el) {
-          const top = el.getBoundingClientRect().top + window.scrollY;
-          if (sy >= top) current = id;
-        }
-      }
-      setActiveSection(current);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  },[path]);
 
   const isActive = (h:string) => {
     if (h==="/"||h==="/ar") return path==="/"||path==="/ar";
