@@ -2,7 +2,7 @@
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import {
-  FU, FI, FS, SectionHeading,
+  FU, SectionHeading,
   HeroGlass,
 } from "@/components/DS";
 import { ArchitecturalBg } from "@/components/Strata";
@@ -70,40 +70,6 @@ const glassPurple = {
   `,
 };
 
-// Heavy glass — contact form, large containers
-const glassHeavy = {
-  ...GLASS_BASE,
-  borderRadius: '26px',
-  background: 'rgba(6, 10, 36, 0.68)',
-  border: '1px solid rgba(255,255,255,0.16)',
-  boxShadow: `
-    inset 0 2px 0 rgba(255,255,255,0.50),
-    inset 1px 0 0 rgba(255,255,255,0.22),
-    inset -1px 0 0 rgba(255,255,255,0.08),
-    inset 0 -1px 0 rgba(255,255,255,0.04),
-    0 32px 80px rgba(0,0,0,0.70),
-    0 12px 32px rgba(0,0,0,0.50),
-    0 0 0 1px rgba(255,255,255,0.08)
-  `,
-};
-
-// Pill glass — small info rows
-const glassPill = {
-  backdropFilter: 'blur(16px) saturate(140%)',
-  WebkitBackdropFilter: 'blur(16px) saturate(140%)',
-  background: 'rgba(8, 14, 44, 0.55)',
-  border: '1px solid rgba(255,255,255,0.12)',
-  borderRadius: '14px',
-  boxShadow: `
-    inset 0 1px 0 rgba(255,255,255,0.35),
-    inset 1px 0 0 rgba(255,255,255,0.10),
-    0 8px 24px rgba(0,0,0,0.50)
-  `,
-  position: 'relative' as const,
-  overflow: 'hidden' as const,
-  transition: 'all 0.3s ease',
-};
-
 // Hover states
 const glassHoverCyan = {
   background: 'rgba(0, 40, 100, 0.70)',
@@ -113,18 +79,6 @@ const glassHoverCyan = {
     inset 1px 0 0 rgba(0,200,255,0.30),
     0 32px 80px rgba(0,0,0,0.70),
     0 0 60px rgba(0,150,255,0.20)
-  `,
-  transform: 'translateY(-5px)',
-};
-
-const glassHoverPurple = {
-  background: 'rgba(30, 10, 80, 0.70)',
-  border: '1px solid rgba(160,110,255,0.45)',
-  boxShadow: `
-    inset 0 1.5px 0 rgba(160,110,255,0.70),
-    inset 1px 0 0 rgba(140,90,255,0.30),
-    0 32px 80px rgba(0,0,0,0.70),
-    0 0 60px rgba(120,60,255,0.20)
   `,
   transform: 'translateY(-5px)',
 };
@@ -153,9 +107,6 @@ const glassLight3D = {
   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
 };
 
-// Sub-card glass per client index (0=Corporates→cyan, 1=Endowments→purple, 2=Individuals→base)
-const SUB_GLASS = [glassCyan, glassPurple, glass];
-const SUB_HIGHLIGHT = ['rgba(0,220,255,0.55)', 'rgba(160,110,255,0.55)', 'rgba(255,255,255,0.40)'];
 
 /* ─── GLASS DECORATOR COMPONENTS ─────────────────────────────────────────── */
 
