@@ -208,7 +208,7 @@ export default function ContactPage() {
                   <div style={{ textAlign: "center", padding: "48px 20px" }}>
                     <div style={{ fontSize: 40, marginBottom: 20 }}>✓</div>
                     <h3 style={{ fontSize: 22, fontWeight: 700, color: "var(--text-1)", marginBottom: 12 }}>Introduction received.</h3>
-                    <p style={{ fontSize: 15, color: "var(--text-3)", lineHeight: 1.7 }}>We'll be in touch within one business day. Every communication is private and confidential.</p>
+                    <p style={{ fontSize: 15, color: "var(--text-3)", lineHeight: 1.7 }}>We&apos;ll be in touch within one business day. Every communication is private and confidential.</p>
                   </div>
                 ) : (
                   <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 22, position: "relative", zIndex: 1 }}>
