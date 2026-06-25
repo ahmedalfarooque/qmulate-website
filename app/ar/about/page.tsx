@@ -1,9 +1,14 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FU, FI, SectionHeading, GlassCard } from "@/components/DS";
+import { FU } from "@/components/DS";
 import { ArchitecturalBg } from "@/components/Strata";
 import { PageBackground } from "@/components/PageBackground";
+import { Reveal } from "@/components/Reveal";
+import {
+  PortfolioIcon, DocumentIcon,
+  LockIcon, UserIcon, StarIcon, WealthIcon, GovernanceIcon,
+} from "@/components/icons/GlassIcons";
 
 export default function ArAboutPage() {
   return (
@@ -11,90 +16,145 @@ export default function ArAboutPage() {
       <PageBackground variant="about" />
 
       {/* ── Hero ── */}
-      <section style={{
-        minHeight: "72vh", display: "flex", alignItems: "center",
-        position: "relative", overflow: "hidden",
-        paddingTop: "clamp(120px,15vw,180px)", paddingBottom: "clamp(60px,8vw,100px)",
+      <section dir="rtl" style={{
+        paddingTop: 'clamp(100px, 12vw, 140px)', paddingBottom: 'clamp(60px, 8vw, 100px)',
+        position: 'relative', overflow: 'hidden', direction: 'rtl',
         background: "linear-gradient(160deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%)",
       }}>
         <ArchitecturalBg variant="mixed" />
-        {/* Logo watermark */}
         <div aria-hidden="true" style={{
           position: "absolute", inset: 0, display: "flex", alignItems: "center",
           justifyContent: "center", pointerEvents: "none", zIndex: 0, overflow: "hidden",
         }}>
           <img src="/Logo.png" alt="" style={{
             width: "55%", maxWidth: "580px", height: "auto",
-            opacity: 0.03, filter: "brightness(10) saturate(0)",
-            userSelect: "none",
+            opacity: 0.03, filter: "brightness(10) saturate(0)", userSelect: "none",
           }} />
         </div>
-        <div className="container" style={{ position: "relative", zIndex: 1, direction: "rtl" }}>
-          <motion.div {...FI()} style={{ marginBottom: 24 }}>
-            <span className="pill pill-c"><span className="dot-live" />من نحن</span>
-          </motion.div>
-          <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{ maxWidth: 780, marginBottom: 24 }}>
-            نؤمن بأن العقار أكثر من مجرد أصل.
-          </motion.h1>
-          <motion.p {...FU(.16)} className="t-xl" style={{ color: "var(--text-3)", maxWidth: 620, lineHeight: 1.9 }}>
-            إنه قيمة تحتاج إلى إدارة واعية ورؤية طويلة المدى. لذلك نقدم منظومة عقارية متكاملة تجمع بين إدارة الأصول والحوكمة والتنمية،
-            لمساعدة العائلات والشركات والأفراد على الحفاظ على قيمة أصولهم.
-          </motion.p>
+        <div className="container" style={{ position: 'relative', zIndex: 1, direction: 'rtl', textAlign: 'right' }}>
+          <Reveal direction="right">
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+              padding: '6px 16px', borderRadius: '999px',
+              border: '1px solid rgba(91,124,250,0.28)',
+              background: 'rgba(91,124,250,0.10)',
+              backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+              marginBottom: '1.5rem', flexDirection: 'row-reverse',
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#5B7CFA', boxShadow: '0 0 8px rgba(91,124,250,0.8)' }}/>
+              <span style={{ color: 'rgba(91,124,250,0.9)', fontSize: 11, letterSpacing: '0.05em', fontFamily: 'var(--font-geist-mono), monospace' }}>
+                عن كيوميليت
+              </span>
+            </div>
+          </Reveal>
+
+          <Reveal direction="right" delay={0.1}>
+            <h1 style={{
+              fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 800,
+              color: 'var(--text-1)', lineHeight: 1.2, maxWidth: '900px', marginBottom: '1.5rem',
+            }}>
+              نحوّل الأصول العقارية إلى فرص نمو مستدامة على المدى البعيد.
+            </h1>
+          </Reveal>
+
+          <Reveal direction="right" delay={0.2}>
+            <p style={{ fontSize: 'clamp(16px, 1.4vw, 19px)', lineHeight: 1.8, color: 'var(--text-3)', maxWidth: '760px' }}>
+              من خلال مساعدة الملاك والعائلات والشركات والأوقاف على إرساء
+              أطر ملكية وإدارة واضحة، نعمل على تعزيز أداء الأصول وإطلاق
+              إمكاناتها الحقيقية وخلق قيمة دائمة تمتد عبر الأجيال.
+            </p>
+          </Reveal>
         </div>
       </section>
 
       {/* ── Vision & Mission ── */}
-      <section className="section" style={{ position: "relative", overflow: "hidden" }}>
+      <section dir="rtl" style={{ padding: 'clamp(40px, 6vw, 80px) 0', position: 'relative', overflow: 'hidden', direction: 'rtl' }}>
         <ArchitecturalBg variant="fins" />
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="grid-2" style={{ gap: "clamp(24px,3vw,40px)" }}>
-            {[
-              {
-                label: "الرؤية", color: "var(--cyan)",
-                title: "شريك موثوق عبر الأجيال.",
-                body: "أن نكون الشريك الموثوق في تنظيم الملكية وإدارة الأصول العقارية، وتحويلها إلى فرص استثمارية مستدامة تعزز القيمة وتدعم استمرارية الثروة عبر الأجيال.",
-              },
-              {
-                label: "الرسالة", color: "#8A5CFF",
-                title: "أُطر حوكمة راسخة ومستدامة.",
-                body: "نطوّر وننظّم الأصول العقارية ضمن أطر حوكمة وإدارة واضحة، بما يحفظ القيمة، ويعزز العائد، ويحقق استدامة الاستثمار.",
-              },
-            ].map((item, i) => (
-              <motion.div key={item.label} {...FU(i * .1)}>
-                <GlassCard style={{ padding: "clamp(32px,4vw,52px)", height: "100%" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24, direction: "rtl" }}>
-                    <span className="t-xs" style={{ color: item.color }}>{item.label}</span>
-                    <div style={{ flex: 1, height: 1, background: `linear-gradient(270deg,${item.color}44,transparent)` }} />
-                  </div>
-                  <h3 className="t-h3" style={{ color: "var(--text-1)", marginBottom: 16, lineHeight: 1.3, direction: "rtl" }}>{item.title}</h3>
-                  <p className="t-md" style={{ color: "var(--text-3)", lineHeight: 1.9, direction: "rtl" }}>{item.body}</p>
-                </GlassCard>
-              </motion.div>
-            ))}
+        <div className="container" style={{ position: 'relative', zIndex: 1, direction: 'rtl' }}>
+          <div className="grid-2" style={{ gap: 'clamp(24px,3vw,40px)' }}>
+            <Reveal direction="right">
+              <div style={{
+                backdropFilter: 'blur(24px) saturate(160%)',
+                WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+                background: 'rgba(8,14,44,0.62)',
+                border: '1px solid rgba(0,200,255,0.28)',
+                borderRadius: '20px',
+                padding: 'clamp(28px, 3vw, 40px)',
+                height: '100%',
+                boxShadow: 'inset 0 1.5px 0 rgba(0,220,255,0.55), 0 24px 60px rgba(0,0,0,0.65)',
+                direction: 'rtl', textAlign: 'right',
+              }}>
+                <PortfolioIcon size="lg" />
+                <h3 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-1)', marginTop: '1.25rem', marginBottom: '0.75rem' }}>الرؤية</h3>
+                <p style={{ fontSize: 15.5, lineHeight: 1.8, color: 'var(--text-3)' }}>
+                  أن نكون الشريك الموثوق في تنظيم الملكية وإدارة الأصول العقارية،
+                  وتحويلها إلى فرص استثمارية مستدامة تعزز القيمة وتدعم استمرارية
+                  الثروة عبر الأجيال.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal direction="left" delay={0.1}>
+              <div style={{
+                backdropFilter: 'blur(24px) saturate(160%)',
+                WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+                background: 'rgba(0,30,80,0.62)',
+                border: '1px solid rgba(0,200,255,0.28)',
+                borderRadius: '20px',
+                padding: 'clamp(28px, 3vw, 40px)',
+                height: '100%',
+                boxShadow: 'inset 0 1.5px 0 rgba(0,220,255,0.55), 0 24px 60px rgba(0,0,0,0.65)',
+                direction: 'rtl', textAlign: 'right',
+              }}>
+                <DocumentIcon size="lg" />
+                <h3 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-1)', marginTop: '1.25rem', marginBottom: '0.75rem' }}>الرسالة</h3>
+                <p style={{ fontSize: 15.5, lineHeight: 1.8, color: 'var(--text-3)' }}>
+                  نطوّر وننظّم الأصول العقارية ضمن أطر حوكمة وإدارة واضحة،
+                  بما يحفظ القيمة، ويعزز العائد، ويحقق استدامة الاستثمار
+                  على المدى الطويل.
+                </p>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* ── Values ── */}
-      <section className="section" style={{ background: "var(--bg-alt)", position: "relative", overflow: "hidden" }}>
+      <section dir="rtl" style={{ padding: 'clamp(60px, 8vw, 100px) 0', background: 'var(--bg-alt)', position: 'relative', overflow: 'hidden', direction: 'rtl' }}>
         <ArchitecturalBg variant="lattice" />
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          <div style={{ textAlign: "center", marginBottom: "clamp(40px,5vw,64px)" }}>
-            <SectionHeading eyebrow="القيم" title="ما يُوجِّه كل قرار." center />
-          </div>
-          <div className="grid-3">
-            {[
-              { title: "المضاعفة", body: "دع الهيكل، لا الضجيج، يقود العوائد على مدى عقود.", color: "var(--cyan)", icon: "◈" },
-              { title: "الحماية", body: "تحوّط للمخاطر السلبية؛ احفظ القيمة قبل أن تنمو.", color: "#8A5CFF", icon: "⬡" },
-              { title: "الاستمرارية", body: "انقل النوايا — لا الأصول فحسب — بين الأجيال.", color: "#4D8DFF", icon: "◉" },
-            ].map((v, i) => (
-              <motion.div key={v.title} {...FU(i * .1)}>
-                <GlassCard style={{ padding: "clamp(28px,3.5vw,44px)", textAlign: "center", height: "100%" }}>
-                  <div style={{ fontSize: 28, marginBottom: 16, color: v.color, filter: `drop-shadow(0 0 12px ${v.color}66)` }}>{v.icon}</div>
-                  <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--text-1)", marginBottom: 12, direction: "rtl" }}>{v.title}</h3>
-                  <p className="t-sm" style={{ color: "var(--text-3)", lineHeight: 1.8, direction: "rtl" }}>{v.body}</p>
-                </GlassCard>
-              </motion.div>
+        <div className="container" style={{ position: 'relative', zIndex: 1, direction: 'rtl' }}>
+          <Reveal direction="up">
+            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+              <h2 style={{ fontSize: 'clamp(28px, 3.4vw, 42px)', fontWeight: 700, color: 'var(--text-1)', marginBottom: '0.75rem' }}>قيمنا</h2>
+              <p style={{ fontSize: 16, color: 'var(--text-3)' }}>المبادئ التي توجّه كل قرار نتخذه</p>
+            </div>
+          </Reveal>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
+            {([
+              { Icon: LockIcon,       title: 'النزاهة',            desc: 'نلتزم بالشفافية والصدق والمساءلة في كل ما نقوم به، بناءً على ثقة راسخة مع عملائنا وشركائنا.' },
+              { Icon: UserIcon,       title: 'التركيز على العميل', desc: 'نصمم حلولنا وفق الاحتياجات الفريدة لكل عميل، لضمان نهج شخصي يحقق القيمة المطلوبة.' },
+              { Icon: StarIcon,       title: 'التميّز',             desc: 'نلتزم بتقديم عمل عالي الجودة يجمع بين الخبرة العقارية العميقة والممارسات المؤسسية الرصينة.' },
+              { Icon: WealthIcon,     title: 'الاستدامة',           desc: 'نسعى إلى حماية قيمة الأصول وتعزيزها مع دعم النمو طويل الأمد واستمراريتها عبر الأجيال.' },
+              { Icon: GovernanceIcon, title: 'المسؤولية',           desc: 'نتعامل مع كل أصل بجدية وعناية، مدركين الأثر البعيد المدى للقرارات التي نتخذها.' },
+            ] as const).map((value, i) => (
+              <Reveal key={i} direction="up" delay={i * 0.08}>
+                <div style={{
+                  backdropFilter: 'blur(24px) saturate(160%)',
+                  WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+                  background: 'rgba(8,14,44,0.62)',
+                  border: '1px solid rgba(255,255,255,0.14)',
+                  borderRadius: '18px',
+                  padding: '28px 24px',
+                  height: '100%',
+                  boxShadow: 'inset 0 1.5px 0 rgba(255,255,255,0.45), 0 24px 60px rgba(0,0,0,0.65)',
+                  direction: 'rtl', textAlign: 'right',
+                }}>
+                  <value.Icon size="md" />
+                  <h4 style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-1)', marginTop: '1rem', marginBottom: '0.5rem' }}>{value.title}</h4>
+                  <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--text-3)' }}>{value.desc}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -114,6 +174,10 @@ export default function ArAboutPage() {
           </motion.div>
         </div>
       </section>
+
+      <style>{`
+        @media(max-width:900px){.grid-2{grid-template-columns:1fr!important}}
+      `}</style>
     </main>
   );
 }

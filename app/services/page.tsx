@@ -2,8 +2,11 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FU, FI, SectionHeading, GlassCard } from "@/components/DS";
+import { GovernanceIcon, PortfolioIcon, DigitalIcon } from "@/components/icons/GlassIcons";
 import { ArchitecturalBg } from "@/components/Strata";
 import { PageBackground } from "@/components/PageBackground";
+
+const SERVICE_ICONS = [GovernanceIcon, PortfolioIcon, DigitalIcon];
 
 const SERVICES = [
   {
@@ -104,14 +107,17 @@ export default function ServicesPage() {
       </section>
 
       {/* ── Services ── */}
-      {SERVICES.map((svc, si) => (
+      {SERVICES.map((svc, si) => {
+        const SvcIcon = SERVICE_ICONS[si];
+        return (
         <section key={svc.num} className="section" style={{
           position: "relative", overflow: "hidden",
           background: si % 2 === 1 ? "var(--bg-alt)" : undefined,
         }}>
           <ArchitecturalBg variant={si % 2 === 0 ? "strata-left" : "lattice"} />
           <div className="container" style={{ position: "relative", zIndex: 1 }}>
-            <motion.div {...FI()} style={{ marginBottom: 12 }}>
+            <motion.div {...FI()} style={{ marginBottom: 16, display: "flex", alignItems: "center", gap: 16 }}>
+              <SvcIcon size="md" />
               <span className="t-xs" style={{ color: svc.color, fontFamily: "var(--font-geist-mono,'Courier New'),monospace" }}>{svc.num}</span>
             </motion.div>
             <motion.h2 {...FU(.06)} className="t-h2" style={{ color: "var(--text-1)", marginBottom: "clamp(40px,5vw,64px)", borderLeft: `3px solid ${svc.color}`, paddingLeft: 20 }}>
@@ -131,7 +137,8 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-      ))}
+        );
+      })}
 
       {/* ── CTA ── */}
       <section className="section" style={{

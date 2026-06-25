@@ -9,6 +9,8 @@ import { ArchitecturalBg } from "@/components/Strata";
 import { PageBackground } from "@/components/PageBackground";
 import { Logo3D } from "@/components/Logo3D";
 import ScanLine from "@/components/ScanLine";
+import { Reveal } from "@/components/Reveal";
+import { HomeIcon, SuccessionIcon, GovernanceIcon, DocumentIcon } from "@/components/icons/GlassIcons";
 
 /* ─── TRUE GLASSMORPHISM SYSTEM ──────────────────────────────────────────── */
 // Matches reference: dark semi-opaque panel, strong blur, thick bright top edge, deep shadow
@@ -284,6 +286,93 @@ export default function Home() {
             </div>
           </HeroGlass>
         </motion.div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════
+          1b. WHO ARE WE — Integrated Real Estate Platform
+          ════════════════════════════════════════════════════════ */}
+      <section style={{
+        position: 'relative',
+        padding: 'clamp(80px, 10vw, 140px) 0',
+        overflow: 'hidden',
+      }}>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: '2.5rem',
+            maxWidth: '880px',
+          }}>
+            <Reveal direction="up">
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                padding: '6px 16px', borderRadius: '999px',
+                border: '1px solid rgba(91,124,250,0.28)',
+                background: 'rgba(91,124,250,0.10)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                marginBottom: '1.5rem',
+              }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#5B7CFA', boxShadow: '0 0 8px rgba(91,124,250,0.8)' }}/>
+                <span style={{
+                  color: 'rgba(91,124,250,0.9)', fontSize: 11, letterSpacing: '0.13em',
+                  fontFamily: 'var(--font-geist-mono), monospace', textTransform: 'uppercase',
+                }}>Who Are We</span>
+              </div>
+            </Reveal>
+
+            <Reveal direction="up" delay={0.1}>
+              <h2 style={{
+                fontSize: 'clamp(28px, 3.4vw, 44px)', fontWeight: 700,
+                color: 'var(--text-1)', lineHeight: 1.2, marginBottom: '1.25rem',
+              }}>
+                An Integrated Real Estate Platform
+              </h2>
+            </Reveal>
+
+            <Reveal direction="up" delay={0.2}>
+              <p style={{
+                fontSize: 'clamp(16px, 1.4vw, 19px)', lineHeight: 1.65,
+                color: 'var(--text-3)', maxWidth: '760px',
+              }}>
+                We support property owners, families, businesses, and endowments in
+                managing their real estate assets through a clear and structured
+                framework that facilitates decision-making and promotes long-term
+                sustainability. By combining real estate expertise with institutional
+                best practices, we help enhance asset performance, preserve value,
+                and support sustainable growth over time.
+              </p>
+            </Reveal>
+
+            <Reveal direction="up" delay={0.3}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                gap: '1rem', marginTop: '1rem',
+              }}>
+                {[
+                  { Icon: HomeIcon, label: 'Property Owners' },
+                  { Icon: SuccessionIcon, label: 'Families' },
+                  { Icon: GovernanceIcon, label: 'Businesses' },
+                  { Icon: DocumentIcon, label: 'Endowments' },
+                ].map((item, i) => (
+                  <div key={i} style={{
+                    ...glass,
+                    padding: '20px 18px', textAlign: 'center',
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem',
+                  }}>
+                    <GlassHighlight />
+                    <GlassInnerGlow />
+                    <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
+                      <item.Icon size="md" />
+                      <span style={{ fontSize: 13.5, color: 'var(--text-2)', fontWeight: 500 }}>{item.label}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </div>
       </section>
 
       {/* ════════════════════════════════════════════════════════

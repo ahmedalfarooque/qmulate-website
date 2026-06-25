@@ -342,22 +342,65 @@ main.hero-page{padding-top:0}
 }
 .btn:hover::after{left:100%}
 
+/* ── btn-primary — transparent glass with cyan accent ── */
 .btn-primary{
-  background:var(--grad-cyan);color:#020408;
-  box-shadow:0 4px 24px rgba(0,212,255,.45),0 1px 0 rgba(255,255,255,.3) inset;
+  background: rgba(0,212,255,0.07);
+  color: #b8f0ff;
+  border: 1px solid rgba(0,212,255,0.30);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,0.16),
+    inset 0 -1px 0 rgba(0,212,255,0.05),
+    0 0 0 1px rgba(0,212,255,0.08),
+    0 4px 24px rgba(0,212,255,0.16),
+    0 0 48px rgba(0,212,255,0.06);
 }
-:is([data-theme="light"],.light) .btn-primary{color:#fff;box-shadow:0 4px 24px rgba(2,132,199,.40),0 1px 0 rgba(255,255,255,.35) inset}
-.btn-primary:hover{transform:scale(1.04) translateY(-1px)}
-.btn-primary:hover{box-shadow:0 8px 40px rgba(0,212,255,.6),0 1px 0 rgba(255,255,255,.3) inset}
-:is([data-theme="light"],.light) .btn-primary:hover{box-shadow:0 8px 40px rgba(2,132,199,.5),0 1px 0 rgba(255,255,255,.35) inset}
+.btn-primary:hover{
+  background: rgba(0,212,255,0.13);
+  color: #ffffff;
+  border-color: rgba(0,212,255,0.52);
+  transform: scale(1.04) translateY(-1px);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,0.22),
+    0 0 0 1px rgba(0,212,255,0.20),
+    0 8px 40px rgba(0,212,255,0.28),
+    0 0 70px rgba(0,212,255,0.14);
+  filter: brightness(1.08);
+}
+:is([data-theme="light"],.light) .btn-primary{
+  background: rgba(2,132,199,0.08);
+  color: #0369A1;
+  border: 1px solid rgba(2,132,199,0.28);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 4px 20px rgba(2,132,199,0.12);
+}
+:is([data-theme="light"],.light) .btn-primary:hover{
+  background: rgba(2,132,199,0.13);
+  color: #025a8a;
+  border-color: rgba(2,132,199,0.48);
+  transform: scale(1.04) translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.75), 0 8px 30px rgba(2,132,199,0.20);
+  filter: brightness(1.04);
+}
 
+/* ── btn-ghost — neutral glass ── */
 .btn-ghost{
-  background:var(--g2);color:var(--text-1);
-  border:1px solid var(--glass-border);
-  backdrop-filter:var(--blur-sm);-webkit-backdrop-filter:var(--blur-sm);
-  box-shadow:var(--sh-card);
+  background: rgba(255,255,255,0.05);
+  color: var(--text-2);
+  border: 1px solid rgba(255,255,255,0.11);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 4px 16px rgba(0,0,0,0.28);
 }
-.btn-ghost:hover{background:var(--g3);border-color:var(--cyan);box-shadow:var(--sh-lift),var(--sh-glow-c);transform:scale(1.02)}
+.btn-ghost:hover{
+  background: rgba(0,212,255,0.05);
+  color: var(--text-1);
+  border-color: rgba(0,212,255,0.28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.13), 0 0 0 1px rgba(0,212,255,0.09), 0 8px 32px rgba(0,0,0,0.32), 0 0 32px rgba(0,212,255,0.07);
+  transform: scale(1.02);
+}
 
 .btn-violet{background:var(--grad-violet);color:#fff;box-shadow:0 4px 24px rgba(138,92,255,.45)}
 .btn-violet:hover{transform:scale(1.04) translateY(-1px);box-shadow:0 8px 40px rgba(138,92,255,.65)}
@@ -1109,29 +1152,22 @@ input:focus, select:focus, textarea:focus {
    BUTTONS
    ══════════════════════════════ */
 
-:is([data-theme="light"],.light) .btn-primary {
-  background: var(--grad-cyan);
-  color: #FFFFFF;
-  box-shadow: 0 3px 14px rgba(2,132,199,0.38), 0 1px 0 rgba(255,255,255,0.28) inset;
-}
-:is([data-theme="light"],.light) .btn-primary:hover {
-  transform: scale(1.04) translateY(-1px);
-  box-shadow: 0 6px 28px rgba(2,132,199,0.52), 0 1px 0 rgba(255,255,255,0.28) inset;
-  filter: brightness(1.06);
-}
+/* light btn-primary already defined above — no override needed, inherits the glass style */
 
 :is([data-theme="light"],.light) .btn-ghost {
-  background: rgba(255,255,255,0.82);
-  color: #0D1117;
+  background: rgba(255,255,255,0.55);
+  color: #2A3140;
   border: 1px solid rgba(0,0,0,0.09);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(255,255,255,0.92) inset;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.90), 0 2px 8px rgba(0,0,0,0.06);
 }
 :is([data-theme="light"],.light) .btn-ghost:hover {
-  background: rgba(255,255,255,0.96);
-  border-color: rgba(2,132,199,0.22);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08), var(--glow-c);
+  background: rgba(255,255,255,0.80);
+  color: #0D1117;
+  border-color: rgba(2,132,199,0.24);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.98), 0 4px 16px rgba(0,0,0,0.08), var(--glow-c);
+  transform: scale(1.02);
 }
 
 :is([data-theme="light"],.light) .btn-violet {

@@ -8,6 +8,8 @@ import {
 import {
   ArchitecturalBg,
 } from "@/components/Strata";
+import { Reveal } from "@/components/Reveal";
+import { HomeIcon, SuccessionIcon, GovernanceIcon, DocumentIcon } from "@/components/icons/GlassIcons";
 import { PageBackground } from "@/components/PageBackground";
 import { Logo3D } from "@/components/Logo3D";
 import ScanLine from "@/components/ScanLine";
@@ -276,6 +278,86 @@ export default function ArHome() {
             </div>
           </HeroGlass>
         </motion.div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════
+          1b. من نحن — منظومة عقارية متكاملة
+          ════════════════════════════════════════════════════════ */}
+      <section dir="rtl" style={{
+        position: 'relative', padding: 'clamp(80px, 10vw, 140px) 0',
+        overflow: 'hidden', direction: 'rtl',
+      }}>
+        <div className="container" style={{ position: 'relative', zIndex: 1, direction: 'rtl' }}>
+          <div style={{
+            display: 'grid', gridTemplateColumns: '1fr', gap: '2.5rem',
+            maxWidth: '880px', marginRight: 0, marginLeft: 'auto', textAlign: 'right',
+          }}>
+            <Reveal direction="right">
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                padding: '6px 16px', borderRadius: '999px',
+                border: '1px solid rgba(91,124,250,0.28)',
+                background: 'rgba(91,124,250,0.10)',
+                backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+                marginBottom: '1.5rem', flexDirection: 'row-reverse',
+              }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#5B7CFA', boxShadow: '0 0 8px rgba(91,124,250,0.8)' }}/>
+                <span style={{ color: 'rgba(91,124,250,0.9)', fontSize: 11, letterSpacing: '0.05em', fontFamily: 'var(--font-geist-mono), monospace' }}>
+                  من نحن
+                </span>
+              </div>
+            </Reveal>
+
+            <Reveal direction="right" delay={0.1}>
+              <h2 style={{
+                fontSize: 'clamp(28px, 3.4vw, 44px)', fontWeight: 700,
+                color: 'var(--text-1)', lineHeight: 1.3, marginBottom: '1.25rem', textAlign: 'right',
+              }}>
+                منظومة عقارية متكاملة
+              </h2>
+            </Reveal>
+
+            <Reveal direction="right" delay={0.2}>
+              <p style={{
+                fontSize: 'clamp(16px, 1.4vw, 19px)', lineHeight: 1.8,
+                color: 'var(--text-3)', maxWidth: '760px', textAlign: 'right',
+                marginRight: 0, marginLeft: 'auto',
+              }}>
+                نساعد الملاك والعائلات والشركات والأوقاف على إدارة أصولهم العقارية
+                ضمن إطار واضح ومنظم يسهّل اتخاذ القرار ويحافظ على استدامة الأصول.
+                من خلال الجمع بين الخبرة العقارية والممارسات المؤسسية، نعمل على
+                تعزيز كفاءة الأصول ودعم نموها على المدى الطويل.
+              </p>
+            </Reveal>
+
+            <Reveal direction="right" delay={0.3}>
+              <div style={{
+                display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                gap: '1rem', marginTop: '1rem', direction: 'rtl',
+              }}>
+                {[
+                  { Icon: HomeIcon, label: 'ملاك العقارات' },
+                  { Icon: SuccessionIcon, label: 'العائلات' },
+                  { Icon: GovernanceIcon, label: 'الشركات' },
+                  { Icon: DocumentIcon, label: 'الأوقاف' },
+                ].map((item, i) => (
+                  <div key={i} style={{
+                    ...glass,
+                    padding: '20px 18px', textAlign: 'center',
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem',
+                  }}>
+                    <GlassHighlight />
+                    <GlassInnerGlow />
+                    <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
+                      <item.Icon size="md" />
+                      <span style={{ fontSize: 13.5, color: 'var(--text-2)', fontWeight: 500 }}>{item.label}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </div>
       </section>
 
       {/* ════════════════════════════════════════════════════════
