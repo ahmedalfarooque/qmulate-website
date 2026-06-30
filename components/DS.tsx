@@ -1,14 +1,8 @@
 "use client";
 import { CapabilityIcon } from "@/components/icons/GlassIcons";
-import { CardTilt3D, HoverLift, SPRING, EASE, DUR } from "@/components/Motion";
+import { CardTilt3D, HoverLift } from "@/components/Motion";
 import { BRAND_BLUE } from "@/components/Strata";
-/**
- * QMULATE Design System — Shared Components
- * Full dual-theme (dark + light) support via CSS variables
- */
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import Link from "next/link";
+import { motion } from "framer-motion";
 
 /* ─── Animation Presets ─── */
 export const FU = (delay=0,distance=16) => ({
@@ -37,11 +31,11 @@ export const FL = (delay=0) => ({
 });
 
 /* ─── Section Heading ─── */
-export function SectionHeading({eyebrow,title,subtitle,center=false,className=""}:{
-  eyebrow?:string;title:React.ReactNode;subtitle?:string;center?:boolean;className?:string
+export function SectionHeading({eyebrow,title,subtitle,center=false,wide=false,className=""}:{
+  eyebrow?:string;title:React.ReactNode;subtitle?:string;center?:boolean;wide?:boolean;className?:string
 }) {
   return(
-    <div className={className} style={{textAlign:center?"center":"left",maxWidth:center?680:720}}>
+    <div className={className} style={{textAlign:center?"center":"left",maxWidth:wide?"100%":center?680:720}}>
       {eyebrow&&(
         <motion.div {...FI(0)} style={{marginBottom:16}}>
           <span className="pill pill-c"><span style={{display:"inline-block",width:10,height:3,borderRadius:1,background:BRAND_BLUE,marginRight:8,verticalAlign:"middle"}}/>{eyebrow}</span>
@@ -78,8 +72,8 @@ export function GlassCard({children,className="",style={},hover=true,onClick,til
 }
 
 /* ─── Feature Card ─── */
-export function FeatureCard({icon,title,desc,accent,index=0}:{
-  icon:string;title:string;desc:string;accent?:string;index?:number
+export function FeatureCard({title,desc,index=0}:{
+  icon?:string;title:string;desc:string;accent?:string;index?:number
 }) {
   return(
     <motion.div {...FU(index*0.04)}>

@@ -4,9 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsApp } from "@/components/WhatsApp";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import { ScrollProgress, PageTransition } from "@/components/Motion";
-import { EnergyBeam } from "@/components/EnergyBeam";
 import { CrystalScene } from "@/components/ui/CrystalScene";
 
 const geist = localFont({
@@ -33,22 +31,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <link rel="preload" href="/Logo.png" as="image"/>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
         <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Madani+Arabic:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className={`${geist.variable} ${geistMono.variable}`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <body className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
           <CrystalScene />
           {/* Global scroll progress bar */}
           <ScrollProgress />
-          <EnergyBeam />
           <Navbar/>
           {/* Page-level entrance transition */}
           <PageTransition>
@@ -56,7 +52,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </PageTransition>
           <Footer/>
           <WhatsApp/>
-        </ThemeProvider>
       </body>
     </html>
   );

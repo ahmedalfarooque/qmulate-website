@@ -4,9 +4,13 @@ import { useEffect, useRef, useState } from 'react'
 export function Reveal({
   children,
   className = '',
+  direction = 'up',
+  delay = 0,
 }: {
   children: React.ReactNode
   className?: string
+  direction?: 'up' | 'down' | 'left' | 'right'
+  delay?: number
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
@@ -53,15 +57,22 @@ export function Reveal({
     }
   }, [])
 
+  const hiddenTransform = {
+    up:    'translateY(14px)',
+    down:  'translateY(-14px)',
+    left:  'translateX(14px)',
+    right: 'translateX(-14px)',
+  }[direction]
+
   return (
     <div
       ref={ref}
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(14px)',
-        transition: `opacity ${duration}s cubic-bezier(0.16,1,0.3,1),
-                     transform ${duration}s cubic-bezier(0.16,1,0.3,1)`,
+        transform: visible ? 'translate(0,0)' : hiddenTransform,
+        transition: `opacity ${duration}s ${delay}s cubic-bezier(0.16,1,0.3,1),
+                     transform ${duration}s ${delay}s cubic-bezier(0.16,1,0.3,1)`,
         willChange: 'opacity, transform',
       }}
     >

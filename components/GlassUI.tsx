@@ -1,6 +1,6 @@
 "use client";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion, useTransform, type MotionValue } from "framer-motion";
+import { useEffect, useState } from "react";
 
 /* ────────────────────────────────────────────────
    SceneBg — section background (3 layers + aurora)
@@ -89,7 +89,7 @@ export function PageHero({children,minH="64vh",particles=true}:{children:React.R
 /* ─────────────────────────────────
    SectionHead — centred / left header
    ───────────────────────────────── */
-export function SectionHead({badge,h2,sub,left=false,cyan=false}:{
+export function SectionHead({badge,h2,sub,left=false}:{
   badge:string;h2:React.ReactNode;sub?:string;left?:boolean;cyan?:boolean
 }){
   const FU={initial:{opacity:0,y:28},whileInView:{opacity:1,y:0},viewport:{once:true},transition:{duration:.8}};
@@ -416,7 +416,7 @@ export function FloatingBubbles(){
    HeroGlassPanel — large central frosted glass hero container
    (ref: images 1, 2, 3 — the big glass rectangle that zooms in)
    ───────────────────────────────────────────────────────────── */
-export function HeroGlassPanel({children,right=false}:{children:React.ReactNode;right?:boolean}){
+export function HeroGlassPanel({children}:{children:React.ReactNode;right?:boolean}){
   return(
     <div className="hero-glass glass-zoom" style={{
       padding:"44px 48px",height:"100%",

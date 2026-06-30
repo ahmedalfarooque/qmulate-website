@@ -81,13 +81,10 @@ function GlassSVG({
   useEffect(()=>setMounted(true),[]);
   const isDark = !mounted || resolvedTheme !== "light";
 
-  const scale = size / 48;
   // Overlay opacity — stronger in dark, softer in light
   const overlayOpacity = isDark ? 0.13 : 0.55;
   // Border opacity
   const borderOpacity = isDark ? 0.32 : 0.22;
-  // Symbol stroke colour
-  const symbolColor = isDark ? "#FFFFFF" : (colors[2]);
   const symbolOpacity = isDark ? 0.95 : 0.9;
   // Shine brightness
   const shineOpacity = isDark ? 0.55 : 0.80;
@@ -570,6 +567,7 @@ export function ProcessIcon({ step, size="md" as GlassSize }: { step:number; siz
   const Icon = Icons[Math.min(step, Icons.length-1)];
   return <Icon size={size}/>;
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ChallengeIcon = ({ size = "sm" }: { size?: string }) => (
   <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
     <path
@@ -582,6 +580,7 @@ export const ChallengeIcon = ({ size = "sm" }: { size?: string }) => (
   </svg>
 );
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const SolutionCheckIcon = ({ size = "sm" }: { size?: string }) => (
   <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8" />
