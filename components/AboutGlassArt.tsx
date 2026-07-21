@@ -17,10 +17,10 @@ export function AboutGlassArt() {
       <div className="about-art-glow about-art-glow-c" />
 
       <svg className="about-art-ring about-art-ring-a" viewBox="0 0 200 200" fill="none">
-        <circle cx="100" cy="100" r="98" stroke="rgba(18,58,87,0.16)" strokeWidth="1" />
+        <circle cx="100" cy="100" r="98" stroke="rgba(10,11,13,0.16)" strokeWidth="1" />
       </svg>
       <svg className="about-art-ring about-art-ring-b" viewBox="0 0 200 200" fill="none">
-        <circle cx="100" cy="100" r="98" stroke="rgba(176,141,87,0.20)" strokeWidth="1" />
+        <circle cx="100" cy="100" r="98" stroke="rgba(91,124,250,0.20)" strokeWidth="1" />
       </svg>
 
       <motion.div

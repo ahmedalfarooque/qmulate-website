@@ -7,22 +7,34 @@ export function Footer() {
   const isAr = path.startsWith("/ar");
 
   const en = {
+    navTitle:"Navigation",
     navLinks:[
       {l:"Home",h:"/"},{l:"About",h:"/about"},{l:"Services",h:"/services"},{l:"Contact",h:"/contact"},
     ],
+    contactTitle:"Get In Touch",
     tagline:"Transforming Ownership into Enduring Value.",
     sub:"QMULATE is a specialist real estate platform. All communications are private and confidential.",
     copy:"© 2026 QMULATE. All rights reserved. Private & Confidential.",
     email:"ceo@qmulate.com",
+    phone:"+966 53 333 9052",
+    phoneHref:"+966533339052",
+    langLabel:"Language",
+    langSwitch:"العربية",
   };
   const ar = {
+    navTitle:"روابط",
     navLinks:[
       {l:"الرئيسية",h:"/ar"},{l:"من نحن",h:"/ar/about"},{l:"خدماتنا",h:"/ar/services"},{l:"تواصل",h:"/ar/contact"},
     ],
+    contactTitle:"تواصل معنا",
     tagline:"نحوّل الملكية إلى قيمة مستدامة.",
     sub:"كيوميليت منظومة عقارية متكاملة. جميع المراسلات سرية وخاصة.",
     copy:"© 2026 كيوميليت. جميع الحقوق محفوظة. خاص وسري.",
     email:"ceo@qmulate.com",
+    phone:"+966 53 333 9052",
+    phoneHref:"+966533339052",
+    langLabel:"اللغة",
+    langSwitch:"English",
   };
   const t = isAr ? ar : en;
 
@@ -32,71 +44,90 @@ export function Footer() {
       direction:isAr?"rtl":"ltr",
       fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
     }}>
-      {/* Background gradient */}
-      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 80% 50% at 50% 100%,color-mix(in srgb,var(--gold) 8%,transparent),transparent 70%)",pointerEvents:"none"}}/>
-      <div className="hr-glow" style={{opacity:.35}}/>
+      {/* Ambient dark canvas — matches the brand's ink + blue duotone */}
+      <div className="qm-footer-bg" />
 
-      <div className="container" style={{position:"relative",zIndex:1,paddingTop:"clamp(60px,8vw,96px)",paddingBottom:"clamp(40px,5vw,60px)"}}>
+      <div className="container" style={{position:"relative",zIndex:1,paddingTop:"clamp(56px,7vw,88px)",paddingBottom:"clamp(32px,4vw,48px)"}}>
         {/* Top section */}
-        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:"clamp(24px,3vw,48px)",marginBottom:"clamp(48px,6vw,72px)",alignItems:"start"}} className="footer-grid">
+        <div className="footer-grid" style={{display:"grid",gridTemplateColumns:"1.4fr 1fr 1fr",gap:"clamp(32px,4vw,64px)",marginBottom:"clamp(44px,5.5vw,64px)",alignItems:"start"}}>
           {/* Brand column */}
           <div>
-            <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,textDecoration:"none"}}>
-              <img src="/Logo.svg" alt="QMULATE" style={{height:'46px',width:'auto',display:'block',objectFit:'contain'}} />
-              <div>
-                <div style={{fontFamily:"var(--font-display,'Fraunces',serif)",fontWeight:500,fontSize:15,letterSpacing:"0.04em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
-                <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,color:"var(--text-4)",letterSpacing:"0.10em",marginTop:3}}>REAL ESTATE PLATFORM</div>
-              </div>
+            <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:13,marginBottom:20,textDecoration:"none"}}>
+              <img src="/Logo-light.svg" alt="QMULATE" className="qm-footer-logo" style={{height:'46px',width:'auto',display:'block',objectFit:'contain'}} />
+              <div style={{fontFamily:"var(--font-geist,'Inter',sans-serif)",fontWeight:700,fontSize:16,letterSpacing:"0.04em",color:"#F5F6F8",lineHeight:1}}>QMULATE</div>
             </Link>
-            <p style={{fontSize:15,color:"var(--text-3)",lineHeight:1.75,marginBottom:12,maxWidth:320}}>{t.tagline}</p>
-            <p style={{fontSize:12,color:"var(--text-4)",lineHeight:1.7,maxWidth:320,marginBottom:12}}>{t.sub}</p>
-            <a href={`mailto:${t.email}`} style={{fontSize:12,color:"var(--gold)",lineHeight:1.7}}>{t.email}</a>
+            <p style={{fontSize:14.5,color:"#B9BEC8",lineHeight:1.75,marginBottom:12,maxWidth:320}}>{t.tagline}</p>
+            <p style={{fontSize:12,color:"#7A7F8A",lineHeight:1.7,maxWidth:320}}>{t.sub}</p>
           </div>
 
           {/* Navigation column */}
           <div>
-            <div className="t-xs" style={{color:"var(--text-4)",marginBottom:16}}>{isAr?"روابط":"Navigation"}</div>
-            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+            <div className="t-xs" style={{color:"#7A7F8A",marginBottom:18}}>{t.navTitle}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
               {t.navLinks.map(item=>(
-                <Link key={item.l} href={item.h} style={{
-                  fontSize:13,color:"var(--text-3)",transition:"color .2s",lineHeight:1.5,
-                }}
-                onMouseEnter={e=>(e.currentTarget.style.color="var(--text-2)")}
-                onMouseLeave={e=>(e.currentTarget.style.color="var(--text-3)")}
-                >{item.l}</Link>
+                <Link key={item.l} href={item.h} className="qm-footer-link" style={{fontSize:13.5,lineHeight:1.5}}>
+                  {item.l}
+                </Link>
               ))}
+            </div>
+          </div>
+
+          {/* Contact column */}
+          <div>
+            <div className="t-xs" style={{color:"#7A7F8A",marginBottom:18}}>{t.contactTitle}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
+              <a href={`mailto:${t.email}`} className="qm-footer-link" style={{fontSize:13.5}}>{t.email}</a>
+              <a href={`tel:${t.phoneHref}`} className="qm-footer-link" style={{fontSize:13.5, direction:"ltr", textAlign:isAr?"right":"left"}}>{t.phone}</a>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="hr-dim" style={{marginBottom:24}}/>
+        <div className="qm-footer-rule" style={{marginBottom:22}}/>
         <div style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between",alignItems:"center",gap:16}}>
-          <p style={{fontSize:11,color:"var(--text-5)",fontFamily:"var(--font-geist-mono,'Courier New'),monospace"}}>{t.copy}</p>
-          <div style={{display:"flex",gap:8,alignItems:"center"}}>
-            <Link href={isAr?"/":"/ar"} style={{fontSize:11,color:"var(--text-5)",transition:"color .2s"}}
-              onMouseEnter={e=>(e.currentTarget.style.color="var(--text-3)")}
-              onMouseLeave={e=>(e.currentTarget.style.color="var(--text-5)")}
-            >{isAr?"English":"العربية"}</Link>
-            <span style={{color:"var(--text-5)",fontSize:9}}>●</span>
-            <span style={{fontSize:11,color:"var(--text-5)",fontFamily:"var(--font-geist-mono,'Courier New'),monospace"}}>v7.0 · 2026</span>
+          <p style={{fontSize:11,color:"#5B5F69",fontFamily:"var(--font-geist-mono,'Courier New'),monospace"}}>{t.copy}</p>
+          <div style={{display:"flex",gap:14,alignItems:"center"}}>
+            <Link href={isAr?"/":"/ar"} className="qm-footer-lang">
+              {t.langSwitch}
+            </Link>
+            <span style={{fontSize:11,color:"#5B5F69",fontFamily:"var(--font-geist-mono,'Courier New'),monospace"}}>v7.0 · 2026</span>
           </div>
         </div>
       </div>
 
       <style>{`
-        @media(max-width:600px){.footer-grid{grid-template-columns:1fr!important}}
+        @media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr!important}}
+        @media(max-width:520px){.footer-grid{grid-template-columns:1fr!important}}
+
+        /* Deep navy-blue canvas — a more visibly bluish dark theme than the
+           near-black ink used elsewhere, per design direction. */
         .qm-footer{
-          background:
-            radial-gradient(120% 160% at 10% 0%, rgba(255,255,255,0.24) 0%, transparent 55%),
-            linear-gradient(180deg,rgba(255,255,255,0.20) 0%,rgba(255,255,255,0.10) 100%);
-          backdrop-filter:blur(28px) saturate(175%);
-          -webkit-backdrop-filter:blur(28px) saturate(175%);
-          border-top:1px solid rgba(255,255,255,0.42);
-          box-shadow:0 -1px 0 rgba(255,255,255,0.85) inset, 0 -40px 80px -34px rgba(20,40,70,0.14);
+          background: linear-gradient(155deg, #0A0E1F 0%, #141B33 55%, #0A0E1F 100%);
         }
-        @media(max-width:767px){
-          .qm-footer{ backdrop-filter:none; -webkit-backdrop-filter:none; background:rgba(255,255,255,0.90); }
+        .qm-footer-bg{
+          position:absolute; inset:0; pointer-events:none; z-index:0;
+          background:
+            radial-gradient(ellipse 65% 55% at 15% 0%, rgba(91,124,250,0.18) 0%, transparent 62%),
+            radial-gradient(ellipse 60% 50% at 90% 100%, rgba(76,99,210,0.15) 0%, transparent 62%);
+        }
+        .qm-footer-rule{
+          height:1px;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+        }
+        .qm-footer-link{
+          color:#B9BEC8; transition:color .2s ease;
+        }
+        .qm-footer-link:hover{ color:#FFFFFF; }
+        .qm-footer-lang{
+          display:inline-flex; align-items:center;
+          padding:6px 14px; border-radius:100px;
+          font-size:11.5px; font-weight:600;
+          color:#B9BEC8; border:1px solid rgba(255,255,255,0.14);
+          background:rgba(255,255,255,0.04);
+          transition:color .2s ease, border-color .2s ease, background .2s ease;
+        }
+        .qm-footer-lang:hover{
+          color:#FFFFFF; border-color:rgba(91,124,250,0.45); background:rgba(91,124,250,0.10);
         }
       `}</style>
     </footer>

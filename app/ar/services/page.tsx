@@ -30,7 +30,7 @@ const SERVICES = [
   {
     num:"01",
     title:"هيكلة الملكية والحوكمة",
-    color:"#2B6E8F",
+    color:"#4C63D2",
     img: IMG_SVC[0],
     clients:[
       { label:"الشركات",           body:"هيكلة ملكية الشركات والأصول وتنظيم العلاقة بين الشركاء والمستثمرين بما يضمن وضوح الصلاحيات، وفعالية اتخاذ القرار، واستدامة الاستثمار." },
@@ -41,7 +41,7 @@ const SERVICES = [
   {
     num:"02",
     title:"إدارة الأصول العقارية",
-    color:"#B08D57",
+    color:"#5B7CFA",
     img: IMG_SVC[1],
     clients:[
       { label:"الشركات",           body:"إدارة المحافظ والأصول العقارية من خلال التشغيل والتأجير والصيانة والتحصيل، بما يحافظ على قيمة الأصول ويعزز كفاءتها التشغيلية." },
@@ -52,7 +52,7 @@ const SERVICES = [
   {
     num:"03",
     title:"التطوير والاستثمار",
-    color:"#123A57",
+    color:"#0A0B0D",
     img: IMG_SVC[2],
     clients:[
       { label:"الشركات",           body:"دراسة فرص التوسع والتطوير وإعادة توظيف الأصول بما يدعم النمو ويحقق أفضل عائد استثماري." },
@@ -80,13 +80,12 @@ export default function ArServicesPage() {
           <div className="svc-hero-copy" style={{ textAlign:"right", marginLeft:"auto" }}>
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
-                <span className="dot-live"/>&nbsp;الخدمات
+                الخدمات
               </span>
             </Reveal>
 
             <h1 className="t-h1 gt-w" style={{ marginBottom:0 }}>
-              <LineReveal delay={0.15}><span style={{ display:"block" }}>هيكلة مناسبة لكل نوع</span></LineReveal>
-              <LineReveal delay={0.26} style={{ marginTop:2 }}><span style={{ display:"block" }}>من أنواع الملكية.</span></LineReveal>
+              <LineReveal delay={0.15}><span>هيكلة مناسبة لكل نوع من أنواع الملكية.</span></LineReveal>
             </h1>
 
             <motion.p
@@ -203,8 +202,6 @@ export default function ArServicesPage() {
                           fontFamily:"'Madani Arabic',sans-serif",
                           color:"var(--text-1)",
                           lineHeight:1.28,
-                          borderRight:`3px solid ${svc.color}`,
-                          paddingRight:22,
                         }}>
                           {svc.title}
                         </h2>
@@ -254,7 +251,6 @@ export default function ArServicesPage() {
                       <GlassCard style={{
                         padding:"clamp(24px,3vw,42px)",
                         height:"100%",
-                        borderTop:`2px solid color-mix(in srgb, ${svc.color} 42%, transparent)`,
                       }}>
                         <div style={{
                           fontSize:11,
@@ -278,6 +274,20 @@ export default function ArServicesPage() {
           </Fragment>
         );
       })}
+
+      {/* ── SHOWCASE PULL-QUOTE (contained dark band) ── */}
+      <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(28px,4vw,48px)" }} dir="rtl">
+        <Reveal direction="up">
+          <div className="showcase-dark" style={{ textAlign:"center" }}>
+            <div className="showcase-quote" style={{ maxWidth:760, margin:"0 auto" }}>
+              هيكلة مناسبة لكل نوع من أنواع الملكية — الحوكمة والإدارة والنمو ضمن منظومة واحدة متكاملة.
+            </div>
+            <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
+              <span className="line" /><span className="deco-diamond" /><span className="line r" />
+            </div>
+          </div>
+        </Reveal>
+      </div>
 
       {/* ── CTA ── */}
       <section className="section" style={{ textAlign:"center" }} dir="rtl">

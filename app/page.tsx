@@ -153,11 +153,6 @@ export default function Home() {
           ══════════════════════════════════════════ */}
       <div className="stat-strip">
         <div className="container" style={{ padding: "clamp(36px,5vw,58px) 0" }}>
-          <Reveal direction="up">
-            <div className="t-xs" style={{ textAlign: "center", color: "var(--gold)", marginBottom: 28, letterSpacing: "0.18em" }}>
-              BY THE NUMBERS
-            </div>
-          </Reveal>
           <div className="qm-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "clamp(16px,3vw,40px)" }}>
             {([
               { n: 3, suf: "", label: "Core Services", sub: "Structuring · Management · Development" },
@@ -186,10 +181,7 @@ export default function Home() {
             <div>
               <Reveal direction="up">
                 <div style={{ overflow: "hidden", marginBottom: 24 }}>
-                  <span className="pill pill-c">
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--gold)" }} />
-                    &nbsp;Who Are We
-                  </span>
+                  <span className="pill pill-c">Who Are We</span>
                 </div>
               </Reveal>
 
@@ -233,22 +225,6 @@ export default function Home() {
               <div className="split-img split-img-col" style={{ aspectRatio: "3/4", minHeight: 500, borderRadius: 0 }}>
                 <SplitSlideshow slides={WHO_WE_ARE_IMG} interval={12000} />
                 <div className="img-grad qm-scrim-force" style={{ zIndex: 10 }} />
-                <div className="img-corner-accent tl" style={{ zIndex: 11 }} />
-                <div className="img-corner-accent br" style={{ zIndex: 11 }} />
-                <div className="img-overlay" style={{ zIndex: 12 }}>
-                  <div className="qm-stat-plate">
-                    {[
-                      { n: "3", l: "Core Services" },
-                      { n: "5", l: "Licensed Bodies" },
-                      { n: "KSA", l: "Kingdom Based" },
-                    ].map((s, i) => (
-                      <div key={i} className="stat-block">
-                        <div className="stat-num">{s.n}</div>
-                        <div className="stat-label">{s.l}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
             </ImageReveal>
           </div>
@@ -264,9 +240,6 @@ export default function Home() {
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="split-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(48px,7vw,100px)", alignItems: "center" }}>
             <div>
-              <Reveal direction="up">
-                <div className="t-xs" style={{ color: "var(--gold)", marginBottom: 14 }}>HOW WE WORK</div>
-              </Reveal>
               <LineReveal delay={0.08}>
                 <h2 className="t-h2" style={{ color: "var(--text-1)", marginBottom: 40 }}>From mandate to milestone.</h2>
               </LineReveal>
@@ -324,13 +297,10 @@ export default function Home() {
               <div style={{ display: "flex", flexDirection: "column", gap: 0, marginTop: 36 }}>
                 {SERVICE_LAYERS.map((layer, i) => (
                   <motion.div key={layer.label} {...FU(i * 0.1)}>
-                    <div className="layer-item gc" style={{ padding: "clamp(18px,2.2vw,26px) clamp(20px,2.2vw,28px)", borderLeft: `2px solid ${layer.color}` }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <div>
-                          <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{layer.label}</div>
-                          <div className="t-xs" style={{ color: "var(--text-3)", textTransform: "none", letterSpacing: 0, fontSize: 11.5, fontWeight: 500 }}>{layer.sub}</div>
-                        </div>
-                        <div style={{ width: 10, height: 3, borderRadius: 1, background: layer.color, flexShrink: 0, marginLeft: 16 }} />
+                    <div className="layer-item gc" style={{ padding: "clamp(18px,2.2vw,26px) clamp(20px,2.2vw,28px)" }}>
+                      <div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{layer.label}</div>
+                        <div className="t-xs" style={{ color: "var(--text-3)", textTransform: "none", letterSpacing: 0, fontSize: 11.5, fontWeight: 500 }}>{layer.sub}</div>
                       </div>
                     </div>
                     {i < 2 && <div style={{ height: 14 }} />}
@@ -367,25 +337,24 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════
-          7. CTA — BEGIN A CONVERSATION (dramatic dark close)
+          7. CTA — BEGIN A CONVERSATION (contained dark showcase band)
           ══════════════════════════════════════════ */}
-      <section className="section cta-dark" style={{ position: "relative", overflow: "hidden", textAlign: "center" }}>
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          <Reveal direction="up">
-            <p className="t-xs" style={{ color: "#D9C08F", marginBottom: 20, letterSpacing: "0.15em" }}>READY TO GET STARTED</p>
-          </Reveal>
-          <LineReveal delay={0.06}>
-            <h2 className="t-h2" style={{ marginBottom: 18, color: "#fff" }}>Begin a conversation.</h2>
-          </LineReveal>
-          <Reveal direction="up" delay={0.14}>
-            <p className="t-lg" style={{ color: "rgba(255,255,255,0.62)", maxWidth: 460, margin: "0 auto 48px" }}>
-              Every introduction is treated with complete discretion.
-            </p>
-          </Reveal>
-          <motion.div {...FU(0.2)} style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="/contact" className="btn btn-primary" style={{ fontSize: 15, padding: "15px 38px" }}>Get in touch →</a>
-            <a href="/services" className="btn btn-ghost" style={{ fontSize: 15, padding: "15px 38px", color: "#fff", borderColor: "rgba(255,255,255,0.18)" }}>View services</a>
-          </motion.div>
+      <section className="section" style={{ position: "relative", overflow: "hidden" }}>
+        <div className="container">
+          <div className="showcase-dark" style={{ textAlign: "center" }}>
+            <LineReveal delay={0.06}>
+              <h2 className="showcase-quote" style={{ marginBottom: 18 }}>Begin a conversation.</h2>
+            </LineReveal>
+            <Reveal direction="up" delay={0.14}>
+              <p className="showcase-sub" style={{ maxWidth: 460, margin: "0 auto 40px" }}>
+                Every introduction is treated with complete discretion.
+              </p>
+            </Reveal>
+            <motion.div {...FU(0.2)} style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+              <a href="/contact" className="btn btn-primary" style={{ fontSize: 15, padding: "15px 38px" }}>Get in touch →</a>
+              <a href="/services" className="btn btn-ghost" style={{ fontSize: 15, padding: "15px 38px", color: "#F5F6F8", borderColor: "rgba(255,255,255,0.20)" }}>View services</a>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -454,7 +423,7 @@ export default function Home() {
           .trust-bar-row{ justify-content:center; }
           .trust-logo-box{ flex:0 1 auto; height:56px; }
         }
-        @media(max-width:900px){
+        @media(max-width:1180px){
           .hero-split-grid{ grid-template-columns:1fr!important; }
           .hero-image-cluster{ max-width:420px; margin:0 auto; order:-1; }
         }

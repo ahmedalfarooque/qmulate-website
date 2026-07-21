@@ -22,29 +22,34 @@ const config: Config = {
     extend: {
       colors: {
         ink: {
-          DEFAULT: "#14171F",
-          2: "#3A3F4B",
+          DEFAULT: "#0A0B0D",
+          2: "#16181C",
           3: "#6B7080",
         },
         warm: {
-          50: "#FDFCF9",
-          100: "#FAF8F4",
-          200: "#F3EFE7",
-          300: "#EBE4D8",
+          50: "#FAFBFC",
+          100: "#F7F8FA",
+          200: "#F2F4F7",
+          300: "#E7EAEF",
+        },
+        blue: {
+          DEFAULT: "#5B7CFA",
+          dark: "#3B54C4",
+          light: "#A8BBFF",
         },
         gold: {
-          DEFAULT: "#B08D57",
-          dark: "#8C6D3F",
-          light: "#D9C08F",
+          DEFAULT: "#5B7CFA",
+          dark: "#3B54C4",
+          light: "#A8BBFF",
         },
         ocean: {
-          DEFAULT: "#123A57",
-          dark: "#0C2A40",
-          light: "#2B6E8F",
+          DEFAULT: "#0A0B0D",
+          dark: "#000000",
+          light: "#5B7CFA",
         },
       },
       fontFamily: {
-        display: ["Fraunces", "Playfair Display", "serif"],
+        display: ["var(--font-geist)", "Geist", "Inter", "sans-serif"],
       },
     },
   },

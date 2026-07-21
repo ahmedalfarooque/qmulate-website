@@ -11,7 +11,7 @@ export function SceneBg({ cyan=false }:{cyan?:boolean}){
       <div className="bg-mesh" style={{position:"absolute",inset:0}}/>
       <div className="bg-orbs"/>
       <div className="orb-c" style={{width:600,height:600,top:"20%",left:"55%",
-        background:`radial-gradient(circle,${cyan?"rgba(176,141,87,0.10)":"rgba(18,58,87,0.09)"} 0%,transparent 65%)`}}/>
+        background:`radial-gradient(circle,${cyan?"rgba(91,124,250,0.10)":"rgba(10,11,13,0.09)"} 0%,transparent 65%)`}}/>
     </div>
   );
 }
@@ -27,16 +27,16 @@ export function HeroBg({ scrollProgress }:{scrollProgress:MotionValue<number>}){
       <div className="bg-particles"/>
       <div className="bg-orbs"/>
       <div className="orb-c" style={{width:700,height:700,top:"15%",left:"52%",
-        background:"radial-gradient(circle,rgba(176,141,87,0.12) 0%,transparent 65%)"}}/>
+        background:"radial-gradient(circle,rgba(91,124,250,0.12) 0%,transparent 65%)"}}/>
       <div className="orb-c" style={{width:500,height:500,top:"55%",left:"5%",
-        background:"radial-gradient(circle,rgba(140,109,63,0.09) 0%,transparent 65%)",
+        background:"radial-gradient(circle,rgba(59,84,196,0.09) 0%,transparent 65%)",
         animationDelay:"-10s"}}/>
       {/* Rotating geometry rings */}
       <div className="geom-ring" style={{width:520,height:520,top:"8%",right:"-8%",opacity:0.06}}/>
       <div className="geom-ring-b" style={{width:320,height:320,bottom:"15%",left:"3%",opacity:0.05}}/>
       {/* Scan line */}
       <div style={{position:"absolute",left:0,right:0,height:1,
-        background:"linear-gradient(90deg,transparent,rgba(176,141,87,.5),rgba(110,231,255,.3),transparent)",
+        background:"linear-gradient(90deg,transparent,rgba(91,124,250,.5),rgba(110,231,255,.3),transparent)",
         animation:"scanLine 8s linear infinite",zIndex:2}}/>
     </motion.div>
   );
@@ -69,9 +69,9 @@ export function PageHero({children,minH="64vh",particles=true}:{children:React.R
         {particles&&<div className="bg-particles"/>}
         <div className="bg-orbs"/>
         <div className="orb-c" style={{width:600,height:600,top:"10%",left:"55%",
-          background:"radial-gradient(circle,rgba(176,141,87,0.10) 0%,transparent 65%)"}}/>
+          background:"radial-gradient(circle,rgba(91,124,250,0.10) 0%,transparent 65%)"}}/>
         <div className="orb-c" style={{width:400,height:400,top:"60%",left:"5%",
-          background:"radial-gradient(circle,rgba(140,109,63,0.08) 0%,transparent 65%)",
+          background:"radial-gradient(circle,rgba(59,84,196,0.08) 0%,transparent 65%)",
           animationDelay:"-12s"}}/>
         <div className="geom-ring" style={{width:480,height:480,top:"5%",right:"-6%",opacity:0.05}}/>
         <div className="geom-ring-b" style={{width:280,height:280,bottom:"20%",left:"2%",opacity:0.04}}/>
@@ -117,7 +117,7 @@ export function SectionHead({badge,h2,sub,left=false}:{
 /* ───────────────────────
    KpiCard — metric display
    ─────────────────────── */
-export function KpiCard({value,label,sub,accent="#B08D57",icon}:{
+export function KpiCard({value,label,sub,accent="#5B7CFA",icon}:{
   value:string;label:string;sub?:string;accent?:string;icon?:string
 }){
   return(
@@ -136,7 +136,7 @@ export function KpiCard({value,label,sub,accent="#B08D57",icon}:{
 /* ─────────────────────────────────────────
    FloatingOrb — decorative animated orb
    ─────────────────────────────────────────*/
-export function FloatingOrb({size=300,color="rgba(176,141,87,0.08)",top,left,right,bottom,delay=0}:{
+export function FloatingOrb({size=300,color="rgba(91,124,250,0.08)",top,left,right,bottom,delay=0}:{
   size?:number;color?:string;top?:string;left?:string;right?:string;bottom?:string;delay?:number
 }){
   return(
@@ -163,13 +163,13 @@ export function GlassDashboard(){
   ];
   return(
     <div className="gp" style={{borderRadius:28,padding:3,
-      background:"linear-gradient(135deg,rgba(176,141,87,0.18),rgba(18,58,87,0.08),transparent)"}}>
+      background:"linear-gradient(135deg,rgba(91,124,250,0.18),rgba(10,11,13,0.08),transparent)"}}>
       <div style={{background:"rgba(2,4,10,0.88)",backdropFilter:"blur(32px)",
         borderRadius:26,overflow:"hidden"}}>
         {/* Status bar */}
         <div style={{background:"rgba(6,11,20,0.95)",padding:"11px 20px",
           display:"flex",alignItems:"center",justifyContent:"space-between",
-          borderBottom:"1px solid rgba(176,141,87,0.07)"}}>
+          borderBottom:"1px solid rgba(91,124,250,0.07)"}}>
           <span style={{fontSize:11,color:"#1E293B",fontFamily:"var(--font-geist-mono,monospace)"}}>9:41</span>
           <span className="badge" style={{padding:"3px 10px",fontSize:9,gap:5}}>
             <span className="dot-live" style={{width:4,height:4}}/>QMULATE LIVE
@@ -184,7 +184,7 @@ export function GlassDashboard(){
           <div style={{fontSize:34,fontWeight:900,color:"#F1F5F9",letterSpacing:"-0.04em",
             fontVariantNumeric:"tabular-nums",marginBottom:6}}>SAR 48.2m</div>
           <div style={{display:"inline-flex",alignItems:"center",gap:6,
-            background:"rgba(176,141,87,0.09)",border:"1px solid rgba(176,141,87,0.22)",
+            background:"rgba(91,124,250,0.09)",border:"1px solid rgba(91,124,250,0.22)",
             borderRadius:100,padding:"3px 12px",fontSize:12,color:"var(--cyan)",marginBottom:24}}>
             ▲ 2.4% this quarter
           </div>
@@ -218,10 +218,10 @@ export function GlassDashboard(){
    ────────────────────────────────────────────────────────── */
 export function GlassArchDiagram(){
   const layers=[
-    {n:"04",l:"Advisory Layer",c:"rgba(140,109,63,0.14)",bc:"rgba(140,109,63,0.3)",tc:"#B08D57",w:"100%"},
-    {n:"03",l:"Intelligence Layer",c:"rgba(18,58,87,0.14)",bc:"rgba(18,58,87,0.3)",tc:"#123A57",w:"88%"},
-    {n:"02",l:"Operations Layer",c:"rgba(176,141,87,0.10)",bc:"rgba(176,141,87,0.28)",tc:"#B08D57",w:"76%"},
-    {n:"01",l:"Governance Layer",c:"rgba(176,141,87,0.18)",bc:"rgba(176,141,87,0.45)",tc:"#B08D57",w:"64%"},
+    {n:"04",l:"Advisory Layer",c:"rgba(59,84,196,0.14)",bc:"rgba(59,84,196,0.3)",tc:"#5B7CFA",w:"100%"},
+    {n:"03",l:"Intelligence Layer",c:"rgba(10,11,13,0.14)",bc:"rgba(10,11,13,0.3)",tc:"#0A0B0D",w:"88%"},
+    {n:"02",l:"Operations Layer",c:"rgba(91,124,250,0.10)",bc:"rgba(91,124,250,0.28)",tc:"#5B7CFA",w:"76%"},
+    {n:"01",l:"Governance Layer",c:"rgba(91,124,250,0.18)",bc:"rgba(91,124,250,0.45)",tc:"#5B7CFA",w:"64%"},
   ];
   return(
     <div className="gc" style={{padding:32,borderRadius:24}}>
@@ -274,7 +274,7 @@ export function MouseGlow(){
     <div style={{
       position:"fixed",top:0,left:0,pointerEvents:"none",zIndex:0,
       width:320,height:320,borderRadius:"50%",
-      background:"radial-gradient(circle,rgba(176,141,87,0.055) 0%,transparent 70%)",
+      background:"radial-gradient(circle,rgba(91,124,250,0.055) 0%,transparent 70%)",
       transform:`translate(${pos.x-160}px,${pos.y-160}px)`,
       transition:"transform 0.12s ease-out",
       filter:"blur(20px)",
@@ -285,19 +285,19 @@ export function MouseGlow(){
 /* ──────────────────────────────────────────────────────────
    GlassTimeline — animated vertical / horizontal timeline
    ────────────────────────────────────────────────────────── */
-export function GlassTimeline({items,accent="#B08D57"}:{
+export function GlassTimeline({items,accent="#5B7CFA"}:{
   items:{year:string;title:string;desc:string;tag?:string}[];accent?:string
 }){
   return(
     <div style={{position:"relative",paddingLeft:40}}>
       <div style={{position:"absolute",left:11,top:8,bottom:8,width:1,
-        background:`linear-gradient(to bottom,${accent},rgba(176,141,87,0.15),transparent)`}}/>
+        background:`linear-gradient(to bottom,${accent},rgba(91,124,250,0.15),transparent)`}}/>
       {items.map((t,i)=>(
         <motion.div key={t.year} initial={{opacity:0,x:-20}} whileInView={{opacity:1,x:0}}
           viewport={{once:true}} transition={{duration:.7,delay:.08+i*.1}}
           style={{position:"relative",paddingBottom:32,display:"flex",gap:28,alignItems:"flex-start"}}>
           <div style={{position:"absolute",left:-40,top:8,width:10,height:10,borderRadius:"50%",
-            background:i===items.length-1?accent:"rgba(176,141,87,0.35)",
+            background:i===items.length-1?accent:"rgba(91,124,250,0.35)",
             boxShadow:i===items.length-1?`0 0 14px ${accent}bb`:undefined,flexShrink:0}}/>
           <div style={{flexShrink:0,minWidth:48}}>
             <div style={{fontSize:13,fontWeight:800,color:accent,
@@ -319,7 +319,7 @@ export function GlassTimeline({items,accent="#B08D57"}:{
 /* ─────────────────────────────────────────────────────
    ProcessSteps — 4-step process with connecting line
    ───────────────────────────────────────────────────── */
-export function ProcessSteps({steps,accent="#B08D57"}:{
+export function ProcessSteps({steps,accent="#5B7CFA"}:{
   steps:{n:string;l:string;d:string;icon:string}[];accent?:string
 }){
   return(
@@ -357,8 +357,8 @@ export function CapabilityGrid({items}:{items:{icon:string;label:string;sub:stri
         <motion.div key={c.label} initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}}
           viewport={{once:true}} transition={{duration:.7,delay:.05+i*.07}}
           className="gc" style={{padding:"34px 30px",borderRadius:20}}>
-          <div style={{width:50,height:50,borderRadius:13,background:"rgba(176,141,87,0.08)",
-            border:"1px solid rgba(176,141,87,0.2)",display:"flex",alignItems:"center",
+          <div style={{width:50,height:50,borderRadius:13,background:"rgba(91,124,250,0.08)",
+            border:"1px solid rgba(91,124,250,0.2)",display:"flex",alignItems:"center",
             justifyContent:"center",fontSize:22,color:"var(--cyan)",marginBottom:20,
             animation:`floatY ${5+i%3}s ease-in-out ${i*.3}s infinite`}}>{c.icon}</div>
           <div style={{fontSize:16,fontWeight:700,color:"var(--text-1)",marginBottom:8}}>{c.label}</div>
@@ -424,7 +424,7 @@ export function HeroGlassPanel({children}:{children:React.ReactNode;right?:boole
     }}>
       {/* Scan line inside glass */}
       <div style={{position:"absolute",left:0,right:0,height:1,top:"12%",
-        background:"linear-gradient(90deg,transparent,rgba(176,141,87,0.2),rgba(255,255,255,0.1),transparent)",
+        background:"linear-gradient(90deg,transparent,rgba(91,124,250,0.2),rgba(255,255,255,0.1),transparent)",
         pointerEvents:"none"}}/>
       {children}
     </div>
@@ -463,8 +463,8 @@ export function GlobeViz(){
       <div style={{
         position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",
         width:52,height:52,borderRadius:"50%",
-        background:"radial-gradient(circle,rgba(176,141,87,0.45) 0%,rgba(176,141,87,0.12) 60%,transparent 100%)",
-        boxShadow:"0 0 40px rgba(176,141,87,0.6)",
+        background:"radial-gradient(circle,rgba(91,124,250,0.45) 0%,rgba(91,124,250,0.12) 60%,transparent 100%)",
+        boxShadow:"0 0 40px rgba(91,124,250,0.6)",
         animation:"glowPulse 2.5s ease-in-out infinite",
       }}/>
     </div>
@@ -555,8 +555,8 @@ export function RippleSphere({size=180,style={}}:{size?:number;style?:React.CSSP
         <div key={i} className="ripple-ring" style={{
           width:size*(.85+i*.45),
           height:size*(.85+i*.45),
-          borderColor:`rgba(176,141,87,${.4-.1*i})`,
-          boxShadow:`0 0 ${8+i*4}px rgba(176,141,87,${.25-.06*i})`,
+          borderColor:`rgba(91,124,250,${.4-.1*i})`,
+          boxShadow:`0 0 ${8+i*4}px rgba(91,124,250,${.25-.06*i})`,
         }}/>
       ))}
       <div className="ripple-core" style={{width:size,height:size,zIndex:2}}/>
@@ -621,7 +621,7 @@ export function ViewportGlassHero({children}:{children:React.ReactNode}){
     }}>
       {/* Top shimmer line */}
       <div style={{position:"absolute",top:0,left:"5%",right:"5%",height:1,
-        background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.4),rgba(176,141,87,0.5),rgba(255,255,255,0.4),transparent)",
+        background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.4),rgba(91,124,250,0.5),rgba(255,255,255,0.4),transparent)",
         zIndex:10}}/>
       {/* Diagonal light beam (ref 1) */}
       <div className="light-beam" style={{

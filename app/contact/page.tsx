@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FU, FI, GlassCard } from "@/components/DS";
+import { FU, GlassCard } from "@/components/DS";
 import { PageBackground } from "@/components/PageBackground";
 import { ImageReveal } from "@/components/TextReveal";
 import { CheckIcon, PhoneIcon, EmailIcon, LocationIcon, ClockIcon } from "@/components/icons/GlassIcons";
@@ -48,9 +48,9 @@ function GInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
       style={{
         ...inputBase,
         background: focused ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)",
-        border: focused ? "1px solid rgba(176,141,87,0.55)" : "1px solid rgba(20,23,31,0.10)",
+        border: focused ? "1px solid rgba(91,124,250,0.55)" : "1px solid rgba(20,23,31,0.10)",
         boxShadow: focused
-          ? "0 0 0 3px rgba(176,141,87,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
+          ? "0 0 0 3px rgba(91,124,250,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
           : "inset 0 1px 0 rgba(255,255,255,0.6)",
       }}
       onFocus={e => { setFocused(true); props.onFocus?.(e); }}
@@ -72,9 +72,9 @@ function GSelect(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
         backgroundPosition: "right 14px center",
         paddingRight: 36,
         background: focused ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)",
-        border: focused ? "1px solid rgba(176,141,87,0.55)" : "1px solid rgba(20,23,31,0.10)",
+        border: focused ? "1px solid rgba(91,124,250,0.55)" : "1px solid rgba(20,23,31,0.10)",
         boxShadow: focused
-          ? "0 0 0 3px rgba(176,141,87,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
+          ? "0 0 0 3px rgba(91,124,250,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
           : "inset 0 1px 0 rgba(255,255,255,0.6)",
       }}
       onFocus={e => { setFocused(true); props.onFocus?.(e); }}
@@ -93,9 +93,9 @@ function GTextarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
         resize: "vertical",
         minHeight: 120,
         background: focused ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)",
-        border: focused ? "1px solid rgba(176,141,87,0.55)" : "1px solid rgba(20,23,31,0.10)",
+        border: focused ? "1px solid rgba(91,124,250,0.55)" : "1px solid rgba(20,23,31,0.10)",
         boxShadow: focused
-          ? "0 0 0 3px rgba(176,141,87,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
+          ? "0 0 0 3px rgba(91,124,250,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
           : "inset 0 1px 0 rgba(255,255,255,0.6)",
       }}
       onFocus={e => { setFocused(true); props.onFocus?.(e); }}
@@ -151,10 +151,7 @@ export default function ContactPage() {
                 <img src="/Logo.svg" alt="QMULATE" className="contact-logo-img" />
               </ImageReveal>
 
-              <motion.div {...FI()} style={{ marginBottom: 24 }}>
-                <span className="pill pill-c"><span className="dot-live" />Private &amp; Confidential</span>
-              </motion.div>
-              <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{ marginBottom: 20 }}>
+              <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{ marginBottom: 20, marginTop: 24 }}>
                 Get in touch.
               </motion.h1>
               <motion.p {...FU(.16)} className="t-xl" style={{ color: "var(--text-3)", maxWidth: 420, lineHeight: 1.8, marginBottom: 20 }}>
@@ -190,10 +187,6 @@ export default function ContactPage() {
                   </p>
                 </GlassCard>
               </motion.div>
-
-              <motion.p {...FU(.32)} style={{ fontSize: 11, color: "var(--text-5)", marginTop: 28, fontFamily: "var(--font-geist-mono,'Courier New'),monospace" }}>
-                Privileged &amp; Confidential · CR: 7054453274 · VAT: 314819612900003
-              </motion.p>
             </div>
 
             {/* ── Right — form ── */}
@@ -257,9 +250,6 @@ export default function ContactPage() {
                       }}>
                         {status === "sending" ? "Sending…" : "Send introduction →"}
                       </button>
-                      <p style={{ fontSize: 11, color: "var(--text-5)", textAlign: "center", marginTop: 14, fontFamily: "var(--font-geist-mono,'Courier New'),monospace" }}>
-                        All introductions are private and confidential. We do not share your information.
-                      </p>
                     </div>
                   </form>
                 )}
@@ -273,7 +263,7 @@ export default function ContactPage() {
         .contact-warm-badge{
           display:inline-flex; align-items:center; gap:9px;
           padding:9px 16px 9px 12px; border-radius:100px;
-          background:rgba(176,141,87,0.08); border:1px solid rgba(176,141,87,0.22);
+          background:rgba(91,124,250,0.08); border:1px solid rgba(91,124,250,0.22);
           font-size:12.5px; font-weight:600; color:var(--text-2);
         }
         @media(max-width:900px){.grid-contact{grid-template-columns:1fr!important}}
@@ -299,15 +289,14 @@ export default function ContactPage() {
         .contact-logo-frame::before{
           content:""; position:absolute; inset:-30%;
           background:
-            radial-gradient(circle at 30% 22%, rgba(18,58,87,0.16), transparent 55%),
-            radial-gradient(circle at 78% 80%, rgba(176,141,87,0.12), transparent 55%);
+            radial-gradient(circle at 30% 22%, rgba(10,11,13,0.16), transparent 55%),
+            radial-gradient(circle at 78% 80%, rgba(91,124,250,0.12), transparent 55%);
           pointer-events:none;
         }
         .contact-logo-img{
           display:block;
           width:clamp(150px,16vw,220px); height:auto; object-fit:contain;
           background:transparent;
-          filter:drop-shadow(0 10px 26px rgba(18,58,87,0.14));
         }
         @media(max-width:767px){
           .contact-logo-frame{

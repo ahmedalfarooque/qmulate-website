@@ -30,7 +30,6 @@ export function PropertyShowcase({ items, rtl = false }: { items: ShowcaseItem[]
               <img src={BGI(item.image)} alt={item.title} className="qm-prop-img" loading="lazy" />
               <div className="qm-prop-scrim" />
               <div className={rtl ? "qm-prop-ghost qm-prop-ghost-rtl" : "qm-prop-ghost"}>{item.num}</div>
-              <span className={rtl ? "qm-prop-pill qm-prop-pill-rtl" : "qm-prop-pill"}>{item.category}</span>
               <div className="qm-prop-copy" style={rtl ? { textAlign: "right", direction: "rtl" } : undefined}>
                 <h3 className="qm-prop-title">{item.title}</h3>
                 <p className="qm-prop-body">{item.body}</p>
@@ -49,7 +48,7 @@ export function PropertyShowcase({ items, rtl = false }: { items: ShowcaseItem[]
           box-shadow:0 1px 0 rgba(255,255,255,0.5) inset,0 30px 70px -18px rgba(20,40,70,0.20),0 0 0 1px rgba(20,40,70,0.06);
           transition:transform .5s cubic-bezier(.25,.46,.45,.94), box-shadow .5s ease;
         }
-        .qm-prop-img-wrap:hover{ transform:translateY(-6px); box-shadow:0 1px 0 rgba(255,255,255,0.55) inset,0 40px 100px -24px rgba(20,40,70,0.28),0 0 0 1px rgba(176,141,87,0.30); }
+        .qm-prop-img-wrap:hover{ transform:translateY(-6px); box-shadow:0 1px 0 rgba(255,255,255,0.55) inset,0 40px 100px -24px rgba(20,40,70,0.28),0 0 0 1px rgba(91,124,250,0.30); }
         .qm-prop-img-wrap::before{
           content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
           background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.16) 50%,transparent 62%);

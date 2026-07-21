@@ -60,8 +60,8 @@ export function Navbar() {
           transition={{duration:.4}}
           style={{position:"absolute",top:0,left:0,right:0,height:1,
             background:isAr
-              ?"linear-gradient(270deg,transparent 5%,rgba(176,141,87,.55) 40%,rgba(18,58,87,.30) 65%,transparent 95%)"
-              :"linear-gradient(90deg,transparent 5%,rgba(176,141,87,.55) 40%,rgba(18,58,87,.30) 65%,transparent 95%)"}}/>
+              ?"linear-gradient(270deg,transparent 5%,rgba(91,124,250,.55) 40%,rgba(10,11,13,.30) 65%,transparent 95%)"
+              :"linear-gradient(90deg,transparent 5%,rgba(91,124,250,.55) 40%,rgba(10,11,13,.30) 65%,transparent 95%)"}}/>
 
         <div className="cw" style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,direction:isAr?"rtl":"ltr"}}>
 
@@ -77,16 +77,11 @@ export function Navbar() {
                 objectFit: 'contain',
                 display: 'block',
                 background: 'transparent',
-                filter: 'drop-shadow(0 3px 14px rgba(20,23,31,0.22)) drop-shadow(0 1px 2px rgba(20,23,31,0.30))',
               }}
             />
             <div>
               <div style={{fontFamily:"var(--font-geist,'Inter',sans-serif)",fontWeight:800,fontSize:12,
                 letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
-              {isAr
-                ? <div style={{fontFamily:"'Madani Arabic',sans-serif",fontSize:9,color:"var(--text-4)",marginTop:2}}>كيوميليت</div>
-                : <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,
-                    color:"var(--text-4)",letterSpacing:"0.10em",marginTop:2}}>FAMILY OFFICE</div>}
             </div>
           </Link>
 
@@ -97,8 +92,8 @@ export function Navbar() {
                 padding:"7px 14px",borderRadius:100,fontSize:13,fontWeight:500,
                 fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
                 color:isActive(l.h)?"var(--text-1)":"var(--text-3)",
-                background:isActive(l.h)?"rgba(176,141,87,.10)":"transparent",
-                border:`1px solid ${isActive(l.h)?"rgba(176,141,87,.24)":"transparent"}`,
+                background:isActive(l.h)?"rgba(91,124,250,.10)":"transparent",
+                border:`1px solid ${isActive(l.h)?"rgba(91,124,250,.24)":"transparent"}`,
                 transition:"all .3s ease",
               }}>{l.l}</Link>
             ))}

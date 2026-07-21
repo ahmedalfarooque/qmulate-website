@@ -7,6 +7,14 @@
       "runtimeArgs": ["server.js"],
       "port": 3000,
       "cwd": "C:\\Websites\\alfarooque-manufacturing live"
+    },
+    {
+      "name": "qmulate",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000,
+      "autoPort": true,
+      "cwd": "C:\\Websites\\Qmulate\\qmulate-live\\qmulate-ai"
     }
   ]
 }

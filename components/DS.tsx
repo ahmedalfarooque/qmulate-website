@@ -37,7 +37,7 @@ export function SectionHeading({eyebrow,title,subtitle,center=false,wide=false,c
     <div className={className} style={{textAlign:center?"center":"left",maxWidth:wide?"100%":center?680:720}}>
       {eyebrow&&(
         <motion.div {...FI(0)} style={{marginBottom:16}}>
-          <span className="pill pill-c"><span style={{display:"inline-block",width:10,height:3,borderRadius:1,background:"var(--gold)",marginRight:8,verticalAlign:"middle"}}/>{eyebrow}</span>
+          <span className="pill pill-c">{eyebrow}</span>
         </motion.div>
       )}
       <motion.h2 {...FU(0.05)} className="t-h2 gt-w" style={{marginBottom:subtitle?16:0}}>
@@ -98,7 +98,7 @@ export function HeroGlass({children,style={}}:{children:React.ReactNode;style?:R
       style={{position:"relative",overflow:"hidden",...style}}
     >
       <div style={{position:"absolute",top:0,left:0,right:0,height:1,
-        background:"linear-gradient(90deg,transparent 5%,var(--glass-shine) 35%,rgba(176,141,87,.35) 65%,transparent 95%)",zIndex:10}}/>
+        background:"linear-gradient(90deg,transparent 5%,var(--glass-shine) 35%,rgba(91,124,250,.35) 65%,transparent 95%)",zIndex:10}}/>
       <div className="scan-line"/>
       <div style={{position:"absolute",top:"-20%",left:"-10%",width:"40%",height:"180%",
         background:"linear-gradient(135deg,var(--orb-b),transparent 80%)",

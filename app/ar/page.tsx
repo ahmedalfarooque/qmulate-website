@@ -152,11 +152,6 @@ export default function ArHome() {
           ══════════════════════════════════════════ */}
       <div className="stat-strip" dir="rtl">
         <div className="container" style={{ padding: "clamp(36px,5vw,58px) 0" }}>
-          <Reveal direction="up">
-            <div className="t-xs" style={{ textAlign: "center", color: "var(--gold)", marginBottom: 28, letterSpacing: "0.18em" }}>
-              بالأرقام
-            </div>
-          </Reveal>
           <div className="qm-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "clamp(16px,3vw,40px)", direction: "rtl" }}>
             {([
               { n: 3, suf: "", label: "خدمات رئيسية", sub: "هيكلة · إدارة · تطوير" },
@@ -185,10 +180,7 @@ export default function ArHome() {
             <div>
               <Reveal direction="right">
                 <div style={{ overflow: "hidden", marginBottom: 24 }}>
-                  <span className="pill pill-c">
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--gold)" }} />
-                    &nbsp;من نحن
-                  </span>
+                  <span className="pill pill-c">من نحن</span>
                 </div>
               </Reveal>
 
@@ -230,22 +222,6 @@ export default function ArHome() {
               <div className="split-img split-img-col" style={{ aspectRatio: "3/4", minHeight: 500, borderRadius: 0 }}>
                 <SplitSlideshow slides={WHO_WE_ARE_IMG} interval={12000} />
                 <div className="img-grad qm-scrim-force" style={{ zIndex: 10 }} />
-                <div className="img-corner-accent tl" style={{ zIndex: 11 }} />
-                <div className="img-corner-accent br" style={{ zIndex: 11 }} />
-                <div className="img-overlay" style={{ zIndex: 12 }}>
-                  <div className="qm-stat-plate" style={{ direction: "rtl" }}>
-                    {[
-                      { n: "3", l: "خدمات أساسية" },
-                      { n: "5", l: "جهات مرخّصة" },
-                      { n: "KSA", l: "مقرها المملكة" },
-                    ].map((s, i) => (
-                      <div key={i} className="stat-block">
-                        <div className="stat-num">{s.n}</div>
-                        <div className="stat-label">{s.l}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
             </ImageReveal>
           </div>
@@ -271,9 +247,6 @@ export default function ArHome() {
             </ImageReveal>
 
             <div style={{ textAlign: "right" }}>
-              <Reveal direction="up">
-                <div className="t-xs" style={{ color: "var(--gold)", marginBottom: 14 }}>آلية العمل</div>
-              </Reveal>
               <LineReveal delay={0.08}>
                 <h2 className="t-h2" style={{ color: "var(--text-1)", marginBottom: 40 }}>من التكليف إلى الإنجاز.</h2>
               </LineReveal>
@@ -322,13 +295,10 @@ export default function ArHome() {
               <div style={{ display: "flex", flexDirection: "column", gap: 0, marginTop: 36 }}>
                 {SERVICE_LAYERS.map((layer, i) => (
                   <motion.div key={layer.label} {...FU(i * 0.1)}>
-                    <div className="layer-item gc" style={{ padding: "clamp(18px,2.2vw,26px) clamp(20px,2.2vw,28px)", borderRight: `2px solid ${layer.color}`, textAlign: "right" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <div>
-                          <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{layer.label}</div>
-                          <div className="t-xs" style={{ color: "var(--text-3)", textTransform: "none", letterSpacing: 0, fontSize: 11.5, fontWeight: 500 }}>{layer.sub}</div>
-                        </div>
-                        <div style={{ width: 10, height: 3, borderRadius: 1, background: layer.color, flexShrink: 0, marginRight: 16 }} />
+                    <div className="layer-item gc" style={{ padding: "clamp(18px,2.2vw,26px) clamp(20px,2.2vw,28px)", textAlign: "right" }}>
+                      <div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{layer.label}</div>
+                        <div className="t-xs" style={{ color: "var(--text-3)", textTransform: "none", letterSpacing: 0, fontSize: 11.5, fontWeight: 500 }}>{layer.sub}</div>
                       </div>
                     </div>
                     {i < 2 && <div style={{ height: 14 }} />}
@@ -365,25 +335,24 @@ export default function ArHome() {
       </section>
 
       {/* ══════════════════════════════════════════
-          7. CTA — BEGIN A CONVERSATION (dramatic dark close)
+          7. CTA — BEGIN A CONVERSATION (contained dark showcase band)
           ══════════════════════════════════════════ */}
-      <section className="section cta-dark" style={{ position: "relative", overflow: "hidden", textAlign: "center" }} dir="rtl">
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          <Reveal direction="up">
-            <p className="t-xs" style={{ color: "#D9C08F", marginBottom: 20, letterSpacing: "0.15em" }}>ابدأ الآن</p>
-          </Reveal>
-          <LineReveal delay={0.06}>
-            <h2 className="t-h2" style={{ marginBottom: 18, color: "#fff" }}>ابدأ محادثة.</h2>
-          </LineReveal>
-          <Reveal direction="up" delay={0.14}>
-            <p className="t-lg" style={{ color: "rgba(255,255,255,0.62)", maxWidth: 460, margin: "0 auto 48px" }}>
-              كل تواصل يُعامَل بسرية تامة.
-            </p>
-          </Reveal>
-          <motion.div {...FU(0.2)} style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="/ar/contact" className="btn btn-primary" style={{ fontSize: 15, padding: "15px 38px" }}>← تواصل معنا</a>
-            <a href="/ar/services" className="btn btn-ghost" style={{ fontSize: 15, padding: "15px 38px", color: "#fff", borderColor: "rgba(255,255,255,0.18)" }}>خدماتنا</a>
-          </motion.div>
+      <section className="section" style={{ position: "relative", overflow: "hidden" }} dir="rtl">
+        <div className="container">
+          <div className="showcase-dark" style={{ textAlign: "center" }}>
+            <LineReveal delay={0.06}>
+              <h2 className="showcase-quote" style={{ marginBottom: 18 }}>ابدأ محادثة.</h2>
+            </LineReveal>
+            <Reveal direction="up" delay={0.14}>
+              <p className="showcase-sub" style={{ maxWidth: 460, margin: "0 auto 40px" }}>
+                كل تواصل يُعامَل بسرية تامة.
+              </p>
+            </Reveal>
+            <motion.div {...FU(0.2)} style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+              <a href="/ar/contact" className="btn btn-primary" style={{ fontSize: 15, padding: "15px 38px" }}>← تواصل معنا</a>
+              <a href="/ar/services" className="btn btn-ghost" style={{ fontSize: 15, padding: "15px 38px", color: "#F5F6F8", borderColor: "rgba(255,255,255,0.20)" }}>خدماتنا</a>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -452,7 +421,7 @@ export default function ArHome() {
           .trust-bar-row{ justify-content:center; }
           .trust-logo-box{ flex:0 1 auto; height:56px; }
         }
-        @media(max-width:900px){
+        @media(max-width:1180px){
           .hero-split-grid{ grid-template-columns:1fr!important; }
           .hero-image-cluster{ max-width:420px; margin:0 auto; order:-1; }
         }

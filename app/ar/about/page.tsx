@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FU, FS, GlassCard } from "@/components/DS";
+import { FU, GlassCard } from "@/components/DS";
 import { PageBackground } from "@/components/PageBackground";
-import { AboutGlassArt } from "@/components/AboutGlassArt";
 import { Reveal } from "@/components/Reveal";
 import { LineReveal } from "@/components/TextReveal";
 import {
@@ -13,11 +12,11 @@ import {
 
 /* ── Values — real Arabic business copy, ported unchanged ── */
 const VALUES = [
-  { Icon:LockIcon,       title:"النزاهة",             color:"#2B6E8F", desc:"نلتزم بالشفافية والصدق والمساءلة في كل ما نقوم به، بناءً على ثقة راسخة مع عملائنا وشركائنا." },
-  { Icon:UserIcon,       title:"التركيز على العميل",  color:"#B08D57", desc:"نصمم حلولنا وفق الاحتياجات الفريدة لكل عميل، لضمان نهج شخصي يحقق القيمة المطلوبة." },
-  { Icon:StarIcon,       title:"التميّز",              color:"#123A57", desc:"نلتزم بتقديم عمل عالي الجودة يجمع بين الخبرة العقارية العميقة والممارسات المؤسسية الرصينة." },
-  { Icon:WealthIcon,     title:"الاستدامة",            color:"#8C6D3F", desc:"نسعى إلى حماية قيمة الأصول وتعزيزها مع دعم النمو طويل الأمد واستمراريتها عبر الأجيال." },
-  { Icon:GovernanceIcon, title:"المسؤولية",            color:"#2B6E8F", desc:"نتعامل مع كل أصل بجدية وعناية، مدركين الأثر البعيد المدى للقرارات التي نتخذها." },
+  { Icon:LockIcon,       title:"النزاهة",             color:"#4C63D2", desc:"نلتزم بالشفافية والصدق والمساءلة في كل ما نقوم به، بناءً على ثقة راسخة مع عملائنا وشركائنا." },
+  { Icon:UserIcon,       title:"التركيز على العميل",  color:"#5B7CFA", desc:"نصمم حلولنا وفق الاحتياجات الفريدة لكل عميل، لضمان نهج شخصي يحقق القيمة المطلوبة." },
+  { Icon:StarIcon,       title:"التميّز",              color:"#0A0B0D", desc:"نلتزم بتقديم عمل عالي الجودة يجمع بين الخبرة العقارية العميقة والممارسات المؤسسية الرصينة." },
+  { Icon:WealthIcon,     title:"الاستدامة",            color:"#3B54C4", desc:"نسعى إلى حماية قيمة الأصول وتعزيزها مع دعم النمو طويل الأمد واستمراريتها عبر الأجيال." },
+  { Icon:GovernanceIcon, title:"المسؤولية",            color:"#4C63D2", desc:"نتعامل مع كل أصل بجدية وعناية، مدركين الأثر البعيد المدى للقرارات التي نتخذها." },
 ] as const;
 
 /* ── Highlights — same real facts, mirrored into compact rows ── */
@@ -53,13 +52,12 @@ export default function ArAboutPage() {
           <div className="svc-hero-copy" style={{ textAlign:"right", marginLeft:"auto" }}>
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
-                <span className="dot-live"/>&nbsp;عن كيوميليت
+                عن كيوميليت
               </span>
             </Reveal>
 
             <h1 className="t-h1 gt-w" style={{ marginBottom:0 }}>
-              <LineReveal delay={0.15}><span style={{ display:"block" }}>نحوّل الأصول العقارية إلى</span></LineReveal>
-              <LineReveal delay={0.26} style={{ marginTop:2 }}><span style={{ display:"block" }}>فرص نمو مستدامة على المدى البعيد.</span></LineReveal>
+              <LineReveal delay={0.15}><span>نحوّل الأصول العقارية إلى فرص نمو مستدامة على المدى البعيد.</span></LineReveal>
             </h1>
 
             <motion.p
@@ -125,11 +123,6 @@ export default function ArAboutPage() {
               </div>
             </div>
 
-            {/* وسط — تكوين زجاجي تجريدي، بلا صور */}
-            <motion.div {...FS(.22)} className="about-art-col">
-              <AboutGlassArt/>
-            </motion.div>
-
             {/* يسار (العمود الثاني بصريًا) — بطاقات زجاجية مكدّسة */}
             <div className="about-cards-col">
               {STACK_CARDS.map((c,i)=>(
@@ -180,7 +173,6 @@ export default function ArAboutPage() {
                 <GlassCard style={{
                   padding:"clamp(28px,3vw,42px) clamp(22px,2.4vw,32px)",
                   height:"100%",
-                  borderTop:`3px solid color-mix(in srgb, ${value.color} 42%, transparent)`,
                 }}>
                   <div className="value-num-prefix">{String(i+1).padStart(2,"0")}</div>
                   <value.Icon size="md"/>
@@ -196,6 +188,20 @@ export default function ArAboutPage() {
           </div>
         </div>
       </section>
+
+      {/* ── SHOWCASE PULL-QUOTE (contained dark band) ── */}
+      <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(28px,4vw,48px)" }} dir="rtl">
+        <Reveal direction="up">
+          <div className="showcase-dark" style={{ textAlign:"center" }}>
+            <div className="showcase-quote" style={{ maxWidth:760, margin:"0 auto" }}>
+              نطوّر وننظّم الأصول العقارية ضمن أطر حوكمة وإدارة واضحة، بما يحفظ القيمة ويحقق استدامة الاستثمار على المدى الطويل.
+            </div>
+            <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
+              <span className="line" /><span className="deco-diamond" /><span className="line r" />
+            </div>
+          </div>
+        </Reveal>
+      </div>
 
       {/* ── CTA ── */}
       <section className="section" style={{ textAlign:"center" }} dir="rtl">

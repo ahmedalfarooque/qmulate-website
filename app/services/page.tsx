@@ -29,7 +29,7 @@ const SERVICES = [
   {
     num:"01",
     title:"Ownership Structuring & Governance",
-    color:"#2B6E8F",
+    color:"#4C63D2",
     img: IMG_SVC[0],
     clients:[
       { label:"Corporates",           body:"Structuring ownership arrangements and organizing relationships between shareholders, partners, and investors to ensure clear authority, effective decision-making, and long-term business sustainability." },
@@ -40,7 +40,7 @@ const SERVICES = [
   {
     num:"02",
     title:"Real Estate Asset Management",
-    color:"#B08D57",
+    color:"#5B7CFA",
     img: IMG_SVC[1],
     clients:[
       { label:"Corporates",           body:"Managing real estate portfolios through leasing, operations, maintenance, and collections to preserve asset value and enhance operational performance." },
@@ -51,7 +51,7 @@ const SERVICES = [
   {
     num:"03",
     title:"Development & Investment",
-    color:"#123A57",
+    color:"#0A0B0D",
     img: IMG_SVC[2],
     clients:[
       { label:"Corporates",           body:"Identifying opportunities for expansion, development, and asset repositioning to support growth and maximize investment returns." },
@@ -79,13 +79,12 @@ export default function ServicesPage() {
           <div className="svc-hero-copy">
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
-                <span className="dot-live"/>&nbsp;Services
+                Services
               </span>
             </Reveal>
 
             <h1 className="t-h1 gt-w" style={{ marginBottom:0 }}>
-              <LineReveal delay={0.15}><span style={{ display:"block" }}>Structured for every type</span></LineReveal>
-              <LineReveal delay={0.26} style={{ marginTop:2 }}><span style={{ display:"block" }}>of ownership.</span></LineReveal>
+              <LineReveal delay={0.15}><span>Structured for every type of ownership.</span></LineReveal>
             </h1>
 
             <motion.p
@@ -198,13 +197,11 @@ export default function ServicesPage() {
                       <LineReveal delay={0.05}>
                         <h2 style={{
                           fontSize:"clamp(24px,2.9vw,42px)",
-                          fontWeight:500,
-                          fontFamily:"var(--font-display,'Fraunces',serif)",
+                          fontWeight:700,
+                          fontFamily:"var(--font-geist,'Inter',sans-serif)",
                           color:"var(--text-1)",
                           letterSpacing:"-0.012em",
                           lineHeight:1.16,
-                          borderLeft:`3px solid ${svc.color}`,
-                          paddingLeft:22,
                         }}>
                           {svc.title}
                         </h2>
@@ -253,7 +250,6 @@ export default function ServicesPage() {
                       <GlassCard style={{
                         padding:"clamp(24px,3vw,42px)",
                         height:"100%",
-                        borderTop:`2px solid color-mix(in srgb, ${svc.color} 42%, transparent)`,
                       }}>
                         <div style={{
                           fontSize:11,
@@ -277,6 +273,20 @@ export default function ServicesPage() {
           </Fragment>
         );
       })}
+
+      {/* ── SHOWCASE PULL-QUOTE (contained dark band) ── */}
+      <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(28px,4vw,48px)" }}>
+        <Reveal direction="up">
+          <div className="showcase-dark" style={{ textAlign:"center" }}>
+            <div className="showcase-quote" style={{ maxWidth:760, margin:"0 auto" }}>
+              Structured for every type of ownership — governance, management, and growth in one integrated platform.
+            </div>
+            <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
+              <span className="line" /><span className="deco-diamond" /><span className="line r" />
+            </div>
+          </div>
+        </Reveal>
+      </div>
 
       {/* ── CTA ── */}
       <section className="section" style={{ textAlign:"center" }}>

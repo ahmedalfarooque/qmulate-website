@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FU, FS, GlassCard } from "@/components/DS";
+import { FU, GlassCard } from "@/components/DS";
 import { PageBackground } from "@/components/PageBackground";
-import { AboutGlassArt } from "@/components/AboutGlassArt";
 import { Reveal } from "@/components/Reveal";
 import { LineReveal } from "@/components/TextReveal";
 import {
@@ -13,11 +12,11 @@ import {
 
 /* ── Values ── */
 const VALUES = [
-  { Icon:LockIcon,       title:"Integrity",      color:"#2B6E8F", desc:"We uphold transparency, honesty, and accountability in everything we do, building lasting trust with our clients and partners." },
-  { Icon:UserIcon,       title:"Client Focus",   color:"#B08D57", desc:"We tailor our solutions to the unique needs, objectives, and assets of each client, ensuring a personalized and value-driven approach." },
-  { Icon:StarIcon,       title:"Excellence",     color:"#123A57", desc:"We are committed to delivering high-quality work that combines deep real estate expertise with disciplined institutional practices." },
-  { Icon:WealthIcon,     title:"Sustainability", color:"#8C6D3F", desc:"We strive to protect and enhance asset value while supporting long-term growth and continuity for future generations." },
-  { Icon:GovernanceIcon, title:"Responsibility", color:"#2B6E8F", desc:"We approach every asset with diligence and care, recognizing the long-term impact of the decisions we make." },
+  { Icon:LockIcon,       title:"Integrity",      color:"#4C63D2", desc:"We uphold transparency, honesty, and accountability in everything we do, building lasting trust with our clients and partners." },
+  { Icon:UserIcon,       title:"Client Focus",   color:"#5B7CFA", desc:"We tailor our solutions to the unique needs, objectives, and assets of each client, ensuring a personalized and value-driven approach." },
+  { Icon:StarIcon,       title:"Excellence",     color:"#0A0B0D", desc:"We are committed to delivering high-quality work that combines deep real estate expertise with disciplined institutional practices." },
+  { Icon:WealthIcon,     title:"Sustainability", color:"#3B54C4", desc:"We strive to protect and enhance asset value while supporting long-term growth and continuity for future generations." },
+  { Icon:GovernanceIcon, title:"Responsibility", color:"#4C63D2", desc:"We approach every asset with diligence and care, recognizing the long-term impact of the decisions we make." },
 ] as const;
 
 /* ── Highlights — the same real facts previously shown as overlapping
@@ -55,13 +54,12 @@ export default function AboutPage() {
           <div className="svc-hero-copy">
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
-                <span className="dot-live"/>&nbsp;About QMULATE
+                About QMULATE
               </span>
             </Reveal>
 
             <h1 className="t-h1 gt-w" style={{ marginBottom:0 }}>
-              <LineReveal delay={0.15}><span style={{ display:"block" }}>We transform real estate assets into</span></LineReveal>
-              <LineReveal delay={0.26} style={{ marginTop:2 }}><span style={{ display:"block" }}>long-term opportunities for growth.</span></LineReveal>
+              <LineReveal delay={0.15}><span>We transform real estate assets into long-term opportunities for growth.</span></LineReveal>
             </h1>
 
             <motion.p
@@ -130,11 +128,6 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Center — abstract crystal-glass art, no imagery */}
-            <motion.div {...FS(.22)} className="about-art-col">
-              <AboutGlassArt/>
-            </motion.div>
-
             {/* Right — stacked glass cards */}
             <div className="about-cards-col">
               {STACK_CARDS.map((c,i)=>(
@@ -184,7 +177,6 @@ export default function AboutPage() {
                 <GlassCard style={{
                   padding:"clamp(28px,3vw,42px) clamp(22px,2.4vw,32px)",
                   height:"100%",
-                  borderTop:`3px solid color-mix(in srgb, ${value.color} 42%, transparent)`,
                 }}>
                   <div className="value-num-prefix">{String(i+1).padStart(2,"0")}</div>
                   <value.Icon size="md"/>
@@ -200,6 +192,20 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* ── SHOWCASE PULL-QUOTE (contained dark band) ── */}
+      <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(28px,4vw,48px)" }}>
+        <Reveal direction="up">
+          <div className="showcase-dark" style={{ textAlign:"center" }}>
+            <div className="showcase-quote" style={{ maxWidth:760, margin:"0 auto" }}>
+              We develop and manage real estate assets through clear governance, preserving value and supporting long-term investment sustainability.
+            </div>
+            <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
+              <span className="line" /><span className="deco-diamond" /><span className="line r" />
+            </div>
+          </div>
+        </Reveal>
+      </div>
 
       {/* ── CTA ── */}
       <section className="section" style={{ textAlign:"center" }}>

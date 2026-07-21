@@ -123,8 +123,8 @@ export function Gallery({ items, rtl = false, allLabel = "All" }: { items: Galle
           transition:all .3s cubic-bezier(.25,.46,.45,.94);
         }
         .qm-gal-pill[data-active="true"]{
-          background:var(--gold,#B08D57); color:#fff; border-color:var(--gold,#B08D57);
-          box-shadow:0 4px 18px rgba(176,141,87,0.35);
+          background:var(--gold,#5B7CFA); color:#fff; border-color:var(--gold,#5B7CFA);
+          box-shadow:0 4px 18px rgba(91,124,250,0.35);
         }
         .qm-gal-pill:hover{ transform:translateY(-1px); }
 
@@ -140,7 +140,7 @@ export function Gallery({ items, rtl = false, allLabel = "All" }: { items: Galle
           box-shadow:0 2px 0 rgba(20,23,31,0.06),0 16px 40px rgba(20,23,31,0.12),0 0 0 1px rgba(20,23,31,0.05);
           transition:box-shadow .4s ease;
         }
-        .qm-gal-tile:hover{ box-shadow:0 2px 0 rgba(20,23,31,0.08),0 24px 56px rgba(20,23,31,0.20),0 0 0 1px rgba(176,141,87,0.28); }
+        .qm-gal-tile:hover{ box-shadow:0 2px 0 rgba(20,23,31,0.08),0 24px 56px rgba(20,23,31,0.20),0 0 0 1px rgba(91,124,250,0.28); }
         .qm-gal-img{
           display:block; width:100%; height:auto;
           filter:brightness(0.94) saturate(0.96) contrast(1.04);
@@ -158,7 +158,7 @@ export function Gallery({ items, rtl = false, allLabel = "All" }: { items: Galle
         .qm-gal-tile:hover .qm-gal-caption{ opacity:1; transform:translateY(0); }
         .qm-gal-cat{
           font-size:9.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
-          color:rgba(217,192,143,0.92); font-family:var(--font-geist-mono,'Courier New'),monospace;
+          color:rgba(168,187,255,0.92); font-family:var(--font-geist-mono,'Courier New'),monospace;
         }
         .qm-gal-cap-text{ font-size:13px; font-weight:600; color:#fff; }
 

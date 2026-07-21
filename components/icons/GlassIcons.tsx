@@ -43,23 +43,20 @@ const DARK: Record<string,[string,string,string,string]> = {
   rose:    ["#3A0A14","#901830","#FB7185","rgba(251,113,133,.7)"],
 };
 
-/* Light mode — unified, restrained "Ivory & Brass" glass treatment.
-   Every variant resolves to the same muted parchment-glass tuple so icons
-   read as one calm family (matching the background) instead of a rainbow
-   of saturated per-icon colours with glowing halos. Dark mode is untouched. */
-const LIGHT_NEUTRAL: [string,string,string,string] =
-  ["#F9F5EC","#EFE6D2","#8C6D3F","rgba(18,58,87,0.16)"];
-/* Dedicated symbol-stroke color for light theme — the badge background
-   (deep/mid above) is deliberately pale parchment, but the glyph itself
-   needs strong, dark contrast to actually read. Previously the symbol
-   gradient reused those same pale tones, making every glyph nearly
-   invisible (cream-on-cream) — this fixes that without touching any
-   icon's path/shape. */
-const LIGHT_SYMBOL_A = "#123A57"; // deep navy
-const LIGHT_SYMBOL_B = "#0C2A40"; // darker navy
+/* Light mode — vivid two-tone glass badges (ink + brand blue), the same
+   duotone the rest of the site uses. Every variant alternates between the
+   two brand tones instead of a rainbow of saturated per-icon colours —
+   reads as one deliberate family, with real colour instead of a flat
+   parchment badge, matching the icon-circle treatment of premium real
+   estate references (colour used with intent, not saturation for its
+   own sake). Dark mode is untouched. */
+const LIGHT_NAVY: [string,string,string,string] =
+  ["#12151A","#1E2430","#3B54C4","rgba(10,11,13,0.30)"];
+const LIGHT_BLUE: [string,string,string,string] =
+  ["#4A63D6","#5B7CFA","#8FA4FF","rgba(91,124,250,0.35)"];
 const LIGHT: Record<string,[string,string,string,string]> = {
-  cyan: LIGHT_NEUTRAL, violet: LIGHT_NEUTRAL, blue: LIGHT_NEUTRAL, pink: LIGHT_NEUTRAL,
-  gold: LIGHT_NEUTRAL, aurora: LIGHT_NEUTRAL, emerald: LIGHT_NEUTRAL, indigo: LIGHT_NEUTRAL, rose: LIGHT_NEUTRAL,
+  cyan: LIGHT_BLUE, violet: LIGHT_NAVY, blue: LIGHT_BLUE, pink: LIGHT_NAVY,
+  gold: LIGHT_BLUE, aurora: LIGHT_NAVY, emerald: LIGHT_BLUE, indigo: LIGHT_NAVY, rose: LIGHT_BLUE,
 };
 
 // ── useThemeColors hook ───────────────────────────────────────────
@@ -88,14 +85,16 @@ function GlassSVG({
   const [deep, mid, accent, glow] = colors;
   const isDark = IS_DARK_THEME;
 
-  // Overlay opacity — stronger in dark, softer in light
-  const overlayOpacity = isDark ? 0.13 : 0.46;
+  // Overlay opacity — light theme badges are now vivid ink/blue solids
+  // (not pale parchment), so the white wash stays light — just enough
+  // for a frosted-glass sheen without bleaching the colour out.
+  const overlayOpacity = isDark ? 0.13 : 0.10;
   // Border opacity — stronger in light too, so the badge reads as a
   // distinct premium chip instead of blending into the page background.
   const borderOpacity = isDark ? 0.32 : 0.34;
   const symbolOpacity = isDark ? 0.95 : 0.98;
   // Shine brightness
-  const shineOpacity = isDark ? 0.55 : 0.88;
+  const shineOpacity = isDark ? 0.55 : 0.5;
 
   return (
     <svg
@@ -124,13 +123,12 @@ function GlassSVG({
           <stop offset="40%"  stopColor="white" stopOpacity={borderOpacity}/>
           <stop offset="100%" stopColor="white" stopOpacity={isDark?.04:.08}/>
         </linearGradient>
-        {/* Symbol gradient — strong dark navy in light mode so the glyph
-            itself has real contrast against the pale parchment badge
-            (previously this reused the badge's own pale tones and the
-            glyph nearly disappeared). */}
+        {/* Symbol gradient — white in both themes. Light-mode badges are
+            now solid ink/blue tones (not pale parchment), so a white glyph
+            reads with strong contrast in either case. */}
         <linearGradient id={`sym-${uid}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={isDark?"#FFFFFF":LIGHT_SYMBOL_A}/>
-          <stop offset="100%" stopColor={isDark?"rgba(255,255,255,.85)":LIGHT_SYMBOL_B}/>
+          <stop offset="0%" stopColor="#FFFFFF"/>
+          <stop offset="100%" stopColor="rgba(255,255,255,.85)"/>
         </linearGradient>
       </defs>
 
