@@ -1,288 +1,173 @@
 "use client";
-import { useState, useRef } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { FU, SectionHeading } from "@/components/DS";
-import { ArchitecturalBg } from "@/components/Strata";
+import { AnimatedNumber } from "@/components/Motion";
 import { Reveal } from "@/components/Reveal";
 import { LineReveal, ImageReveal } from "@/components/TextReveal";
-import { PageBackground } from "@/components/PageBackground";
-import ScanLine from "@/components/ScanLine";
 import { HomeIcon, SuccessionIcon, GovernanceIcon, DocumentIcon } from "@/components/icons/GlassIcons";
-import { HeroSlideshow, SplitSlideshow } from "@/components/HeroSlideshow";
+import { SplitSlideshow } from "@/components/HeroSlideshow";
+import { HeroCardStack } from "@/components/HeroCardStack";
+import { PropertyShowcase, type ShowcaseItem } from "@/components/PropertyShowcase";
 
-/* ─── SLIDESHOW IMAGES ───────────────────────────────────────────── */
-const HERO_SLIDES = [
-  { src:"/Background%20Images/bg2.PNG",                                                                                                                                                                                                                                                               position:"center 52%" },
-  { src:"/Background%20Images/AqAtJNNbvEz9B_X-LrvudRWxvbGO0TcEOO5SOIbPjUWLqGfIMCKZFPPK0e7NrLFWV7OmSEzLhtJmL3K_7GwubvHYNeRbz28PhCctZMEQHwtw1-O1ES9RZPJOy-84skQbgX_ywVavjAsRlX-xptvQOCoqVeg18wEu_VYl9Lw1WW.jpg",                                                                             position:"center 38%" },
-  { src:"/Background%20Images/9BU3riDGJy90oeygMk7L_wLneiq0OMtE4F97u28pVmjDojIC4nM9v1PvGk_3pFLtaiTIDCadEEGyNbbw9bVlIaXmhXGosO72ueeauGQ-bSgj07SyLuNVZzzJlx-JfoAUBGepMRPseOxhIZz1QR5kLZDMPfGUm6QQzWuep58DiU.jpg",                                                                               position:"center 40%" },
-  { src:"/Background%20Images/hZBubFn_zlWV4ixbYjDKwKprrycSsZiDh2KZSZIPMoMGMKCelLdIwscS23sRYb2PjNNTIxJn3TPyTPI9wiSFFUph06IoIT06t4BdwPXr-dgtG7p5djBTdVtfxZaGn9TQRYpOVijM2jX3aonOEdk9GK4czwffUqZFIjxG12U4ff.jpg",                                                                               position:"center 45%" },
-];
-const ADVISOR_SLIDES = [
-  { src:"/Background%20Images/kYKY9tiUSP1u1r4HWrv3sdoL1ErJ6RUI2B8R0RO5R8xcO4iSioZY1gsBAECuldsCKNrV-EkLHedsepUzfdQs6hqcuPOqRFcQmX7IkVt-2i6vRzBP-J7QvVBE4RWfPmeNSdmPiqux4ZDX56egqMXcn5koUsJtQclcTB6Ku0V7t_.jpg", position:"center 42%" },
-  { src:"/Background%20Images/u9JiAQUrtJJCg7HZjw3-0FQaK0eGZybkkYsulG-DtLkjo9KaxCRGrYTcTZcGXUtm-dzOLw5uk-dlPs1djl_903jNy2P6DWbUIT-1tHJpVCd0VQRvWS3giXaYPrlAvqNhTB_yCqoMVmygub6NfOg8cs_9EV_-RkNvrCwOyR-Kb1.jpg", position:"center 50%" },
-];
+const BGI = (file: string) => `/Background%20Images/${file}`;
 
-/* ─── GLASS SYSTEM ─────────────────────────────────────────── */
-const GLASS_BASE: React.CSSProperties = {
-  backdropFilter:"blur(24px) saturate(160%)",
-  WebkitBackdropFilter:"blur(24px) saturate(160%)",
-  borderRadius:"20px",
-  position:"relative",
-  overflow:"hidden",
-  transition:"all 0.38s cubic-bezier(0.4,0,0.2,1)",
-};
-const glass: React.CSSProperties = {
-  ...GLASS_BASE,
-  background:"rgba(8,14,44,0.62)",
-  border:"1px solid rgba(255,255,255,0.13)",
-  boxShadow:`
-    inset 0 1.5px 0 rgba(255,255,255,0.42),
-    0 20px 56px rgba(0,0,0,0.60)
-  `,
-};
-
-function GlassHighlight({ color = "rgba(255,255,255,0.24)" }: { color?: string }) {
-  return (
-    <div style={{
-      position:"absolute",top:0,left:0,right:0,height:"1px",
-      background:`linear-gradient(90deg,transparent,${color} 30%,rgba(255,255,255,0.32) 50%,${color} 70%,transparent)`,
-      pointerEvents:"none",zIndex:3,
-    }}/>
-  );
-}
-function GlassInnerGlow({ color = "rgba(255,255,255,0.05)" }: { color?: string }) {
-  return (
-    <div style={{
-      position:"absolute",top:0,left:0,right:0,height:"55%",
-      background:`linear-gradient(180deg,${color} 0%,transparent 100%)`,
-      pointerEvents:"none",zIndex:0,borderRadius:"inherit",
-    }}/>
-  );
-}
-function GlassSheen() {
-  return (
-    <div style={{
-      position:"absolute",inset:0,
-      background:"linear-gradient(135deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.02) 30%,transparent 60%)",
-      pointerEvents:"none",zIndex:0,borderRadius:"inherit",
-    }}/>
-  );
-}
-
-/* ─── DATA ──────────────────────────────────────────────────── */
-const SERVICE_ICONS = [
-  (color: string) => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="9" y="1" width="6" height="5" rx="1.5"/>
-      <line x1="12" y1="6" x2="12" y2="10"/>
-      <line x1="4.5" y1="10" x2="19.5" y2="10"/>
-      <line x1="4.5" y1="10" x2="4.5" y2="13"/>
-      <line x1="19.5" y1="10" x2="19.5" y2="13"/>
-      <rect x="1.5" y="13" width="6" height="5" rx="1.5"/>
-      <rect x="16.5" y="13" width="6" height="5" rx="1.5"/>
-    </svg>
-  ),
-  (color: string) => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 21h18"/>
-      <path d="M5 21V7.5L12 3l7 4.5V21"/>
-      <rect x="9" y="13" width="2.5" height="8"/>
-      <rect x="12.5" y="13" width="2.5" height="8"/>
-      <rect x="8.5" y="8.5" width="2" height="2" rx="0.4"/>
-      <rect x="13.5" y="8.5" width="2" height="2" rx="0.4"/>
-    </svg>
-  ),
-  (color: string) => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="3 17 8.5 11 13 15.5 21 7"/>
-      <polyline points="16 7 21 7 21 12"/>
-      <line x1="3" y1="21" x2="21" y2="21"/>
-    </svg>
-  ),
+/* ─── HERO — same rotating luxury card stack as the EN homepage ── */
+const HERO_STACK_IMAGES = [
+  { src: BGI("Home_hero1.jpg"), position: "center 40%" },
+  { src: BGI("Home_hero2.jpg"), position: "center 45%" },
+  { src: BGI("Home_hero3.png"), position: "center 50%" },
 ];
 
-const SERVICES_AR = [
-  { id:"structuring", num:"01", label:"هيكلة الملكية والحوكمة",  color:"var(--cyan)",
-    body:"تنظيم أطر الملكية وهياكل صنع القرار لضمان الوضوح والسيطرة على المدى البعيد." },
-  { id:"asset",       num:"02", label:"إدارة الأصول العقارية",   color:"#8A5CFF",
-    body:"إدارة المحافظ من خلال التأجير والتشغيل والصيانة للحفاظ على القيمة وتعزيزها." },
-  { id:"development", num:"03", label:"التطوير والاستثمار",       color:"#4D8DFF",
-    body:"تحديد وتنفيذ الفرص للتوسع وإعادة التوظيف والنمو المستدام." },
+/* Editorial split imagery — same photography choices as the EN homepage */
+const WHO_WE_ARE_IMG = [{ src: BGI("JdWb9CkELQIJ23C0ooXh7S4uIO6GpX8UyeDtx2-7GPOa-5CUB-G1uKjJOy2YwOfQb86I6Sp1S-o8CQgEc7W9e8Y7AzAD-FPrrhSZDd0qbxU42vX5z2n5AzTdnsSt5_HjsXP_7vkxOimwuIjCIwxwnbU_E2vkHEJ6y_Oz5j2PzC.jpg"), position: "center 40%" }];
+const STRUCTURE_IMG   = [{ src: BGI("sheraton-jeddah-hotel-general-142cf1f7.jpg"), position: "center 45%" }];
+
+/* ─── DATA (real, unchanged Arabic business content, ported from the prior
+   Arabic homepage — only the surrounding scaffolding has been restructured) ── */
+const HOME_SERVICES: ShowcaseItem[] = [
+  { num: "01", category: "هيكلة الملكية", title: "هيكلة الملكية والحوكمة",
+    image: "depositphotos_822615612-stock-photo-tayibat-city-museum-jeddah-sunset.jpg",
+    body: "تنظيم أطر الملكية وهياكل صنع القرار لضمان الوضوح والسيطرة على المدى البعيد." },
+  { num: "02", category: "إدارة الأصول", title: "إدارة الأصول العقارية",
+    image: "nnCjPbRJpT5EQytfClgoeerh9ssrgENktsHfIcS_5DZM2dH8pKpsFp7YQM3dRi0NyZp5eGc3jS-0bRgEAaFY_ERGZ4TZHiu3FRg3mXbZMwaQLjDbK4uMDGGQ0HHsGbfS_mt3pCelpO5T189RKW_hBc3vT_hwTB6wouHJ1b.jpg",
+    body: "إدارة المحافظ من خلال التأجير والتشغيل والصيانة للحفاظ على القيمة وتعزيزها." },
+  { num: "03", category: "التطوير والاستثمار", title: "التطوير والاستثمار",
+    image: "bg13.jpg",
+    body: "تحديد وتنفيذ الفرص للتوسع وإعادة التوظيف والنمو المستدام." },
 ];
 
-const REGULATORS_AR = [
-  { name:"أوقاف",              img:"/Regulatory%20Authorities/AWQAF%20LOGO.png",                          idx:0 },
-  { name:"إحكام",              img:"/Regulatory%20Authorities/EHKAAM%20LOGO.png",                         idx:1 },
-  { name:"وزارة الإسكان",     img:"/Regulatory%20Authorities/Ministry%20of%20Housing%20Logo.png",         idx:2 },
-  { name:"هيئة العقار",        img:"/Regulatory%20Authorities/REAL%20ESTATE%20GENERAL%20AUTHORITY%20LOGO.png", idx:3 },
-  { name:"هيئة أملاك الدولة",  img:"/Regulatory%20Authorities/STATE%20PROPERTY%20OF%20GENERAL%20AUTHORITY%20LOGO.png", idx:4 },
+const REGULATORS = [
+  { name: "أوقاف",             img: "/Regulatory%20Authorities/AWQAF%20LOGO.png" },
+  { name: "إحكام",             img: "/Regulatory%20Authorities/EHKAAM%20LOGO.png" },
+  { name: "وزارة الإسكان",     img: "/Regulatory%20Authorities/Ministry%20of%20Housing%20Logo.png" },
+  { name: "هيئة العقار",        img: "/Regulatory%20Authorities/REAL%20ESTATE%20GENERAL%20AUTHORITY%20LOGO.png" },
+  { name: "هيئة أملاك الدولة",  img: "/Regulatory%20Authorities/STATE%20PROPERTY%20OF%20GENERAL%20AUTHORITY%20LOGO.png" },
 ];
 
-const SERVICE_LAYERS_AR = [
-  { label:"هيكلة الملكية",     sub:"أطر واضحة · حوكمة القرار · وضوح المدى البعيد",       color:"var(--cyan)" },
-  { label:"إدارة الأصول",      sub:"التأجير · التشغيل · الصيانة · الحفاظ على القيمة",   color:"#8A5CFF" },
-  { label:"التطوير والاستثمار",sub:"التوسع · إعادة التوظيف · النمو المستدام",             color:"#4D8DFF" },
+const PROCESS_IMG = [{ src: BGI("istockphoto-1096064256-612x612.jpg"), position: "center 45%" }];
+
+const PROCESS_STEPS = [
+  { num: "01", title: "الاكتشاف", body: "فهم هيكل الملكية والأهداف وتركيبة الأصول القائمة." },
+  { num: "02", title: "الهيكلة", body: "إرساء أطر حوكمة واضحة وآليات لصنع القرار حول تلك الأصول." },
+  { num: "03", title: "الإدارة", body: "إدارة الأصول والتقارير والحفاظ على القيمة عبر المحفظة بشكل مستمر." },
+  { num: "04", title: "النمو", body: "تحديد فرص التطوير وإعادة التوظيف والنمو على المدى الطويل." },
 ];
 
-/* ═══════════════════════════════════════════════════════
-   PAGE
-   ═══════════════════════════════════════════════════════ */
+const SERVICE_LAYERS = [
+  { label: "هيكلة الملكية",      sub: "أطر واضحة · حوكمة القرار · وضوح المدى البعيد",     color: "var(--gold)" },
+  { label: "إدارة الأصول",        sub: "التأجير · التشغيل · الصيانة · الحفاظ على القيمة",   color: "var(--cyan)" },
+  { label: "التطوير والاستثمار",  sub: "التوسع · إعادة التوظيف · النمو المستدام",           color: "var(--blue)" },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE — Arabic mirror of app/page.tsx (Ivory & Brass redesign)
+   ═══════════════════════════════════════════════════════════ */
 export default function ArHome() {
-  const [hoveredService, setHoveredService] = useState<number|null>(null);
-
   const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target:heroRef, offset:["start start","end start"] });
-  const heroImgY    = useTransform(scrollYProgress, [0,1], ["0%","22%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0,0.7], [1,0]);
-
-  const wwaRef = useRef<HTMLDivElement>(null);
-  const wwaVisible = useInView(wwaRef, { once:true, margin:"-20px" });
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <main className="hero-page" style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
-      <PageBackground variant="home"/>
+    <main className="hero-page" style={{ position: "relative", fontFamily: "'Madani Arabic',sans-serif" }}>
 
       {/* ══════════════════════════════════════════
-          1. HERO — CINEMATIC FULLBLEED
+          1. HERO — LIGHT EDITORIAL SPLIT (mirrored: text right, image left)
           ══════════════════════════════════════════ */}
-      <section ref={heroRef} className="hero-fullbleed" style={{ minHeight:"100svh" }}>
-        {/* Parallax wrapper */}
-        <motion.div
-          style={{ position:"absolute", inset:"-8% 0", y:heroImgY, willChange:"transform" }}
-        >
-          <HeroSlideshow slides={HERO_SLIDES} interval={9000}/>
-        </motion.div>
+      <section ref={heroRef} className="hero-fullbleed" style={{
+        minHeight: "100svh", alignItems: "center", background: "var(--bg-0)",
+        paddingTop: "clamp(104px,15vh,148px)", paddingBottom: "clamp(56px,7vh,84px)",
+      }}>
+        <div className="bg-mesh" />
 
-        {/* Color grade: deep navy → shifts warm golden tones to cool blue */}
-        <div className="hero-grade"/>
-        <div className="hero-cyan-grade"/>
+        <motion.div className="hero-content" style={{ opacity: heroOpacity, position: "relative", width: "100%", padding: 0 }} dir="rtl">
+          <div className="container">
+            <div className="hero-split-grid" style={{ display: "grid", gridTemplateColumns: "1.05fr 0.95fr", gap: "clamp(40px,6vw,96px)", alignItems: "center", direction: "rtl" }}>
 
-        {/* Directional gradient — darkens bottom for text */}
-        <div style={{
-          position:"absolute",inset:0,zIndex:4,
-          background:"linear-gradient(162deg,rgba(0,5,24,0.48) 0%,transparent 42%,rgba(2,4,10,0.04) 56%,rgba(2,4,10,0.97) 100%)",
-        }}/>
+              {/* ── Right (first in RTL): headline, subhead, trust bar ── */}
+              <div style={{ textAlign: "right" }}>
+                <div style={{ overflow: "hidden" }}>
+                  <motion.h1
+                    initial={{ y: "108%" }} animate={{ y: 0 }} transition={{ delay: 0.15, duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
+                    className="t-d"
+                    style={{ color: "var(--text-1)", marginBottom: 0 }}
+                  >
+                    نحوّل الملكية
+                  </motion.h1>
+                </div>
+                <div style={{ overflow: "hidden", marginBottom: 32 }}>
+                  <motion.h1
+                    initial={{ y: "108%" }} animate={{ y: 0 }} transition={{ delay: 0.3, duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
+                    className="t-d gt-warm"
+                    style={{ marginBottom: 0 }}
+                  >
+                    إلى قيمة مستدامة.
+                  </motion.h1>
+                </div>
 
-        {/* Vignette + edge feathers — no hard boundaries */}
-        <div className="hero-vignette"/>
-        <div className="hero-top-feather"/>
-        <div className="hero-side-feathers"/>
-        <div className="hero-cyan-glow"/>
+                <motion.p
+                  initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.85 }}
+                  style={{ fontSize: "clamp(16px,1.5vw,20px)", lineHeight: 1.95, color: "var(--text-3)", maxWidth: 520, marginBottom: 44, marginRight: 0, marginLeft: "auto" }}
+                >
+                  منظومة عقارية متكاملة للعائلات والشركات والأفراد، تتخصص في إدارة الأصول
+                  والحفاظ على قيمتها وتحقيق النمو المستدام على المدى البعيد.
+                </motion.p>
 
-        <ScanLine/>
+              </div>
 
-        <div style={{
-          position:"absolute",inset:0,zIndex:1,pointerEvents:"none",
-          backgroundImage:"linear-gradient(rgba(0,212,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.022) 1px,transparent 1px)",
-          backgroundSize:"100px 100px",
-        }}/>
-
-        <motion.div className="hero-content" style={{ opacity:heroOpacity }} dir="rtl">
-          <div className="container" style={{ textAlign:"right" }}>
-            <div style={{ overflow:"hidden", marginBottom:32 }}>
+              {/* ── Left (second in RTL): rotating luxury card stack ── */}
               <motion.div
-                initial={{ y:"110%" }}
-                animate={{ y:0 }}
-                transition={{ delay:.35, duration:.7, ease:[.16,1,.3,1] }}
+                initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.35, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                className="hero-image-cluster hero-image-cluster-rtl"
               >
-                <span className="pill pill-c">
-                  <span className="dot-live"/>
-                  &nbsp;منظومة عقارية متكاملة
-                </span>
+                <div className="hic-accent hic-accent-rtl" />
+                <HeroCardStack images={HERO_STACK_IMAGES} />
               </motion.div>
             </div>
 
-            <div style={{ overflow:"hidden" }}>
-              <motion.h1
-                initial={{ y:"108%" }}
-                animate={{ y:0 }}
-                transition={{ delay:.52, duration:.92, ease:[.16,1,.3,1] }}
-                className="gt-w"
-                style={{
-                  fontSize:"clamp(38px,5.2vw,82px)",
-                  fontWeight:900,
-                  lineHeight:1.12,
-                  letterSpacing:"0",
-                  marginBottom:0,
-                }}
-              >
-                نحوّل الملكية
-              </motion.h1>
-            </div>
-            <div style={{ overflow:"hidden", marginBottom:40 }}>
-              <motion.h1
-                initial={{ y:"108%" }}
-                animate={{ y:0 }}
-                transition={{ delay:.68, duration:.92, ease:[.16,1,.3,1] }}
-                className="gt-w"
-                style={{
-                  fontSize:"clamp(38px,5.2vw,82px)",
-                  fontWeight:900,
-                  lineHeight:1.12,
-                  letterSpacing:"0",
-                }}
-              >
-                إلى قيمة مستدامة.
-              </motion.h1>
-            </div>
-
-            <motion.p
-              initial={{ opacity:0, y:22 }}
-              animate={{ opacity:1, y:0 }}
-              transition={{ delay:.96, duration:.80 }}
-              style={{
-                fontSize:"clamp(15px,1.5vw,19px)",
-                lineHeight:1.95,
-                color:"rgba(255,255,255,0.62)",
-                maxWidth:560,
-                marginBottom:48,
-                marginRight:0,
-                marginLeft:"auto",
-              }}
-            >
-              منظومة عقارية متكاملة للعائلات والشركات والأفراد، تتخصص في إدارة الأصول
-              والحفاظ على قيمتها وتحقيق النمو المستدام على المدى البعيد.
-            </motion.p>
-
+            {/* Trust bar — no container, logos sit directly on the page */}
             <motion.div
-              initial={{ opacity:0, y:16 }}
-              animate={{ opacity:1, y:0 }}
-              transition={{ delay:1.14, duration:.70 }}
-              style={{ display:"flex", gap:16, flexWrap:"wrap", justifyContent:"flex-end" }}
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.75 }}
+              className="trust-bar"
             >
-              <a href="/ar/contact" className="btn btn-primary" style={{ fontSize:15, padding:"15px 36px" }}>
-                ← طلب تواصل خاص
-              </a>
-              <a href="/ar/about" className="btn btn-ghost" style={{ fontSize:15, padding:"15px 32px" }}>
-                من نحن
-              </a>
+              <div className="t-xs" style={{ color: "var(--text-4)", marginBottom: 20, letterSpacing: "0.14em", textAlign: "right" }}>
+                مرخّص ومنظَّم من قبل
+              </div>
+              <div className="trust-bar-row">
+                {REGULATORS.map(r => (
+                  <div key={r.name} className="trust-logo-box">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={r.img} alt={r.name} title={r.name} className="trust-logo" />
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </div>
         </motion.div>
-
-        <motion.div
-          className="scroll-indicator"
-          initial={{ opacity:0 }}
-          animate={{ opacity:1 }}
-          transition={{ delay:1.8, duration:.9 }}
-        >
-          <div className="si-line"/>
-          <span className="si-label">scroll</span>
-        </motion.div>
       </section>
 
-      {/* ── PREMIUM STAT STRIP ─────────────────────── */}
+      {/* ══════════════════════════════════════════
+          2. BY THE NUMBERS
+          ══════════════════════════════════════════ */}
       <div className="stat-strip" dir="rtl">
-        <div className="container" style={{ padding:"clamp(32px,4.5vw,52px) 0" }}>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:"clamp(16px,3vw,40px)" }}>
+        <div className="container" style={{ padding: "clamp(36px,5vw,58px) 0" }}>
+          <Reveal direction="up">
+            <div className="t-xs" style={{ textAlign: "center", color: "var(--gold)", marginBottom: 28, letterSpacing: "0.18em" }}>
+              بالأرقام
+            </div>
+          </Reveal>
+          <div className="qm-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "clamp(16px,3vw,40px)", direction: "rtl" }}>
             {([
-              { n:"3",   label:"خدمات رئيسية",    sub:"هيكلة · إدارة · تطوير" },
-              { n:"5",   label:"جهات تنظيمية",    sub:"الأوقاف · إحكام · هيئة العقار · الإسكان · أملاك" },
-              { n:"KSA", label:"نطاق المملكة",    sub:"التركيز الحصري على المملكة العربية السعودية" },
+              { n: 3, suf: "", label: "خدمات رئيسية", sub: "هيكلة · إدارة · تطوير" },
+              { n: 5, suf: "", label: "جهات تنظيمية", sub: "الأوقاف · إحكام · هيئة العقار · الإسكان · أملاك" },
+              { n: null, label: "نطاق المملكة", sub: "التركيز الحصري على المملكة العربية السعودية" },
             ] as const).map((s, i) => (
-              <div key={i} style={{ display:"flex", flexDirection:"column", alignItems:"center", textAlign:"center", gap:6, position:"relative" }}>
-                {i > 0 && <div className="stat-vsep"/>}
-                <div className="prem-stat-num blur-reveal" style={{ animationDelay:`${i*0.14}s` }}>{s.n}</div>
+              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 6, position: "relative" }}>
+                {i > 0 && <div className="stat-vsep" />}
+                <div className="prem-stat-num">
+                  {s.n !== null ? <AnimatedNumber value={s.n} suffix={s.suf} /> : "KSA"}
+                </div>
                 <div className="prem-stat-label">{s.label}</div>
                 <div className="prem-stat-sub">{s.sub}</div>
               </div>
@@ -292,53 +177,31 @@ export default function ArHome() {
       </div>
 
       {/* ══════════════════════════════════════════
-          2. من نحن — SPLIT LAYOUT + IMAGE
+          3. WHO WE ARE — EDITORIAL SPLIT (mirrored: text right, image left)
           ══════════════════════════════════════════ */}
-      <section className="section-lux" style={{ position:"relative", overflow:"hidden" }} dir="rtl">
-        <ArchitecturalBg variant="fins"/>
-        <div className="container" style={{ position:"relative", zIndex:1 }}>
-          <div
-            className="split-grid"
-            style={{
-              display:"grid",
-              gridTemplateColumns:"1fr 1fr",
-              gap:"clamp(56px,8vw,120px)",
-              alignItems:"center",
-            }}
-          >
-            {/* Right (RTL first col) — text */}
+      <section className="section-lux" style={{ position: "relative", overflow: "hidden" }} dir="rtl">
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="split-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(56px,8vw,120px)", alignItems: "center" }}>
             <div>
               <Reveal direction="right">
-                <div style={{ overflow:"hidden", marginBottom:24 }}>
+                <div style={{ overflow: "hidden", marginBottom: 24 }}>
                   <span className="pill pill-c">
-                    <span style={{ width:6,height:6,borderRadius:"50%",background:"var(--cyan)",boxShadow:"0 0 8px rgba(0,212,255,0.8)" }}/>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--gold)" }} />
                     &nbsp;من نحن
                   </span>
                 </div>
               </Reveal>
 
               <LineReveal delay={0.1}>
-                <h2 style={{
-                  fontSize:"clamp(26px,3.2vw,46px)",
-                  fontWeight:800,
-                  color:"var(--text-1)",
-                  lineHeight:1.28,
-                  marginBottom:0,
-                }}>
+                <h2 className="t-h2" style={{ color: "var(--text-1)", marginBottom: 0 }}>
                   منظومة عقارية متكاملة
                 </h2>
               </LineReveal>
 
-              <div className="accent-bar" style={{ marginTop:"clamp(18px,2.2vw,26px)" }}/>
+              <div className="accent-bar" style={{ marginTop: "clamp(20px,2.2vw,28px)" }} />
 
               <Reveal direction="right" delay={0.2}>
-                <p style={{
-                  fontSize:"clamp(15px,1.3vw,17px)",
-                  lineHeight:1.95,
-                  color:"var(--text-3)",
-                  marginBottom:40,
-                  textAlign:"right",
-                }}>
+                <p style={{ fontSize: "clamp(15px,1.3vw,18px)", lineHeight: 1.95, color: "var(--text-3)", marginBottom: 40, textAlign: "right" }}>
                   نساعد الملاك والعائلات والشركات والأوقاف على إدارة أصولهم العقارية
                   ضمن إطار واضح ومنظم يسهّل اتخاذ القرار ويحافظ على استدامة الأصول.
                   من خلال الجمع بين الخبرة العقارية والممارسات المؤسسية، نعمل على
@@ -347,57 +210,40 @@ export default function ArHome() {
               </Reveal>
 
               <Reveal direction="right" delay={0.32}>
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0.85rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.85rem" }}>
                   {[
-                    { Icon:HomeIcon,       label:"ملاك العقارات" },
-                    { Icon:SuccessionIcon, label:"العائلات" },
-                    { Icon:GovernanceIcon, label:"الشركات" },
-                    { Icon:DocumentIcon,   label:"الأوقاف" },
+                    { Icon: HomeIcon, label: "ملاك العقارات" },
+                    { Icon: SuccessionIcon, label: "العائلات" },
+                    { Icon: GovernanceIcon, label: "الشركات" },
+                    { Icon: DocumentIcon, label: "الأوقاف" },
                   ].map((item, i) => (
-                    <div key={i} style={{
-                      ...glass,
-                      padding:"20px 16px",
-                      textAlign:"center",
-                      display:"flex",
-                      flexDirection:"column",
-                      alignItems:"center",
-                      gap:"0.6rem",
-                    }}>
-                      <GlassHighlight/>
-                      <GlassInnerGlow/>
-                      <div style={{ position:"relative",zIndex:2,display:"flex",flexDirection:"column",alignItems:"center",gap:"0.6rem" }}>
-                        <item.Icon size="md"/>
-                        <span style={{ fontSize:12.5,color:"var(--text-2)",fontWeight:500 }}>{item.label}</span>
-                      </div>
+                    <div key={i} className="gc" style={{ padding: "20px 16px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem" }}>
+                      <item.Icon size="md" />
+                      <span style={{ fontSize: 12.5, color: "var(--text-2)", fontWeight: 500 }}>{item.label}</span>
                     </div>
                   ))}
                 </div>
               </Reveal>
             </div>
 
-            {/* Left (RTL second col) — image with luxury reveal */}
-            <ImageReveal delay={0.12} style={{ aspectRatio:"3/4", minHeight:500, borderRadius:"clamp(16px,2vw,28px)" }}>
-              <div className="split-img split-img-col" style={{ aspectRatio:"3/4", minHeight:500, borderRadius:0 }}>
-                <SplitSlideshow slides={ADVISOR_SLIDES} interval={7000}/>
-                <div className="img-grad" style={{ zIndex:10 }}/>
-                <div className="img-corner-accent tl" style={{ zIndex:11 }}/>
-                <div className="img-corner-accent br" style={{ zIndex:11 }}/>
-                <div className="img-overlay" style={{ zIndex:12 }}>
-                  <div style={{ ...glass, padding:"16px 20px" }}>
-                    <GlassHighlight/>
-                    <GlassInnerGlow/>
-                    <div style={{ position:"relative",zIndex:2,display:"flex",gap:24,justifyContent:"flex-end",flexDirection:"row-reverse" }}>
-                      {[
-                        { n:"3",   l:"خدمات أساسية" },
-                        { n:"5",   l:"جهات مرخّصة" },
-                        { n:"KSA", l:"مقرها المملكة" },
-                      ].map((s, i) => (
-                        <div key={i} className="stat-block" style={{ textAlign:"right" }}>
-                          <div className="stat-num">{s.n}</div>
-                          <div className="stat-label">{s.l}</div>
-                        </div>
-                      ))}
-                    </div>
+            <ImageReveal delay={0.12} style={{ aspectRatio: "3/4", minHeight: 500, borderRadius: "clamp(16px,2vw,28px)" }}>
+              <div className="split-img split-img-col" style={{ aspectRatio: "3/4", minHeight: 500, borderRadius: 0 }}>
+                <SplitSlideshow slides={WHO_WE_ARE_IMG} interval={12000} />
+                <div className="img-grad qm-scrim-force" style={{ zIndex: 10 }} />
+                <div className="img-corner-accent tl" style={{ zIndex: 11 }} />
+                <div className="img-corner-accent br" style={{ zIndex: 11 }} />
+                <div className="img-overlay" style={{ zIndex: 12 }}>
+                  <div className="qm-stat-plate" style={{ direction: "rtl" }}>
+                    {[
+                      { n: "3", l: "خدمات أساسية" },
+                      { n: "5", l: "جهات مرخّصة" },
+                      { n: "KSA", l: "مقرها المملكة" },
+                    ].map((s, i) => (
+                      <div key={i} className="stat-block">
+                        <div className="stat-num">{s.n}</div>
+                        <div className="stat-label">{s.l}</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -406,278 +252,211 @@ export default function ArHome() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          3. الجهات التنظيمية
-          ══════════════════════════════════════════ */}
-      <section style={{
-        position:"relative",
-        overflow:"hidden",
-        background:"var(--bg-alt)",
-        backdropFilter:"blur(40px)",
-        borderTop:"1px solid var(--glass-border)",
-        borderBottom:"1px solid var(--glass-border)",
-      }} dir="rtl">
-        <ScanLine/>
-        <div className="container" style={{ padding:"clamp(60px,7vw,96px) 0", position:"relative", zIndex:1, direction:"rtl" }}>
-          <div style={{ textAlign:"center", marginBottom:"clamp(40px,4.5vw,56px)" }}>
-            <Reveal direction="up">
-              <div className="t-xs" style={{ color:"var(--cyan)", marginBottom:14 }}>الجهات التنظيمية</div>
-            </Reveal>
-            <LineReveal delay={0.08}>
-              <h2 className="t-h2" style={{ color:"var(--text-1)" }}>مرخّصون ومنظَّمون.</h2>
-            </LineReveal>
-          </div>
+      <div className="container"><div className="editorial-rule" /></div>
 
-          <div style={{
-            display:"grid",
-            gridTemplateColumns:"repeat(auto-fit,minmax(min(200px,100%),1fr))",
-            gap:"clamp(14px,2vw,22px)",
-          }}>
-            {REGULATORS_AR.map((r, i) => (
-              <motion.div key={r.name} {...FU(i * 0.06)} style={{ position:"relative", paddingBottom:20 }}>
-                <div style={{
-                  position:"absolute",left:"5%",right:"5%",bottom:4,height:"75%",
-                  borderRadius:20,background:"rgba(0,0,0,0.38)",
-                  filter:"blur(14px)",zIndex:0,pointerEvents:"none",
-                }}/>
-                <div style={{
-                  backdropFilter:"blur(48px) saturate(200%) brightness(1.08)",
-                  WebkitBackdropFilter:"blur(48px) saturate(200%) brightness(1.08)",
-                  background:"rgba(255,255,255,0.04)",
-                  border:"1px solid rgba(255,255,255,0.28)",
-                  borderRadius:"20px",
-                  position:"relative",zIndex:1,overflow:"hidden",
-                  boxShadow:`
-                    inset 0 1.5px 0 rgba(255,255,255,0.52),
-                    0 4px 0 rgba(0,0,0,0.20),
-                    0 32px 80px rgba(0,0,0,0.62)
-                  `,
-                  padding:"clamp(26px,3vw,40px) clamp(14px,2vw,24px)",
-                  textAlign:"center",
-                  display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
-                  minHeight:160,
-                  transition:"all 0.42s cubic-bezier(0.34,1.56,0.64,1)",
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; }}
-                >
-                  <div style={{ position:"absolute",top:0,left:0,right:0,height:"1.5px",
-                    background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.52) 30%,rgba(255,255,255,0.72) 50%,rgba(255,255,255,0.52) 70%,transparent)",
-                    zIndex:3,pointerEvents:"none" }}/>
-                  <div style={{ position:"relative",zIndex:2,width:"100%" }}>
-                    <div style={{ height:140,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:16 }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={r.img}
-                        alt={r.name}
-                        style={{
-                          maxHeight:(r.idx===0||r.idx===4)?140:115,
-                          maxWidth:(r.idx===0||r.idx===4)?"100%":"88%",
-                          width:(r.idx===0||r.idx===4)?"100%":undefined,
-                          objectFit:"contain",
-                          transform:(r.idx===0||r.idx===4)?"scale(1.3)":"none",
-                          transformOrigin:"center center",
-                          filter:"brightness(1.1) drop-shadow(0 2px 14px rgba(0,160,255,0.32))",
-                        }}
-                      />
+      {/* ══════════════════════════════════════════
+          4. HOW WE WORK — NUMBERED PROCESS (mirrored: image left, text right)
+          ══════════════════════════════════════════ */}
+      <section className="section-lux" style={{ position: "relative", overflow: "hidden" }} dir="rtl">
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="split-grid split-grid-rev" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(48px,7vw,100px)", alignItems: "center" }}>
+
+            <ImageReveal delay={0.1} className="split-order-first" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: "clamp(16px,2vw,28px)" }}>
+              <div className="split-img split-img-col" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: 0 }}>
+                <SplitSlideshow slides={PROCESS_IMG} interval={12000} />
+                <div className="img-grad qm-scrim-force" style={{ zIndex: 10 }} />
+                <div className="img-corner-accent tl" style={{ zIndex: 11 }} />
+                <div className="img-corner-accent br" style={{ zIndex: 11 }} />
+              </div>
+            </ImageReveal>
+
+            <div style={{ textAlign: "right" }}>
+              <Reveal direction="up">
+                <div className="t-xs" style={{ color: "var(--gold)", marginBottom: 14 }}>آلية العمل</div>
+              </Reveal>
+              <LineReveal delay={0.08}>
+                <h2 className="t-h2" style={{ color: "var(--text-1)", marginBottom: 40 }}>من التكليف إلى الإنجاز.</h2>
+              </LineReveal>
+
+              <div className="process-steps">
+                {PROCESS_STEPS.map((step, i) => (
+                  <motion.div key={step.num} {...FU(i * 0.08)} className="process-step process-step-rtl">
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{step.title}</div>
+                      <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "var(--text-3)" }}>{step.body}</p>
                     </div>
-                    <div style={{
-                      fontSize:10,fontWeight:700,letterSpacing:"0.06em",
-                      textTransform:"none",color:"rgba(255,255,255,0.82)",lineHeight:1.4,
-                    }}>{r.name}</div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                    <div className="process-num t-xs" style={{ color: "var(--gold)" }}>{step.num}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Editorial separator */}
-      <div style={{ padding:"0 clamp(24px,5vw,80px)" }}><div className="editorial-rule"/></div>
-
       {/* ══════════════════════════════════════════
-          4. من نحن — SERVICE LAYERS
+          5. SERVICE LAYERS — EDITORIAL SPLIT (mirrored: image right, text left)
           ══════════════════════════════════════════ */}
-      <section className="section-lux" style={{ position:"relative", overflow:"hidden" }} dir="rtl">
-        <ScanLine/>
-        <ArchitecturalBg variant="strata-left"/>
-        <div className="container" style={{ position:"relative", zIndex:1, direction:"rtl" }}>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"clamp(48px,6vw,96px)", alignItems:"center" }} className="grid-2">
+      <section className="section-lux" style={{ position: "relative", overflow: "hidden" }} dir="rtl">
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="split-grid split-grid-rev" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(48px,6vw,96px)", alignItems: "center" }}>
+
+            <ImageReveal delay={0.1} className="split-order-first" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: "clamp(16px,2vw,28px)" }}>
+              <div className="split-img split-img-col" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: 0 }}>
+                <SplitSlideshow slides={STRUCTURE_IMG} interval={12000} />
+                <div className="img-grad qm-scrim-force" style={{ zIndex: 10 }} />
+                <div className="img-corner-accent tl" style={{ zIndex: 11 }} />
+                <div className="img-corner-accent br" style={{ zIndex: 11 }} />
+              </div>
+            </ImageReveal>
+
             <div>
               <SectionHeading
                 eyebrow="من نحن"
                 title={<>منظومة عقارية متكاملة.</>}
                 subtitle="نقدم نهجًا متكاملًا لإدارة الأصول العقارية وهيكلة الملكية، نساعد من خلاله عملاءنا على إدارة أصولهم وفق أطر حوكمة واضحة وإدارة فعّالة ونظرة بعيدة المدى."
               />
-            </div>
 
-            <motion.div
-              ref={wwaRef}
-              initial="hidden"
-              animate={wwaVisible ? "visible" : "hidden"}
-              variants={{ visible:{ transition:{ staggerChildren:0.32 } } }}
-              style={{ display:"flex",flexDirection:"column",gap:0 }}
-            >
-              {SERVICE_LAYERS_AR.map((layer, i) => (
-                <motion.div
-                  key={layer.label}
-                  variants={{
-                    hidden:  { opacity:0, y:28 },
-                    visible: { opacity:1, y:0, transition:{ duration:0.70, ease:[.25,.46,.45,.94] } },
-                  }}
-                >
-                  <div className="layer-item" style={{
-                    ...glass,
-                    padding:"clamp(18px,2.2vw,26px) clamp(20px,2.2vw,28px)",
-                    borderRight:`2px solid ${layer.color}55`,
-                    direction:"rtl",
-                    textAlign:"right",
-                  }}>
-                    <GlassHighlight/>
-                    <GlassInnerGlow/>
-                    <GlassSheen/>
-                    <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",position:"relative",zIndex:2 }}>
-                      <div style={{ width:10,height:3,borderRadius:1,background:layer.color,boxShadow:`0 0 8px ${layer.color}`,flexShrink:0,marginLeft:16 }}/>
-                      <div>
-                        <div style={{ fontSize:14,fontWeight:700,color:"#ffffff",marginBottom:6,textAlign:"right" }}>{layer.label}</div>
-                        <div className="t-xs" style={{ color:"rgba(255,255,255,0.78)",textTransform:"none",letterSpacing:0,fontSize:11.5,textAlign:"right" }}>
-                          {layer.sub}
+              <div style={{ display: "flex", flexDirection: "column", gap: 0, marginTop: 36 }}>
+                {SERVICE_LAYERS.map((layer, i) => (
+                  <motion.div key={layer.label} {...FU(i * 0.1)}>
+                    <div className="layer-item gc" style={{ padding: "clamp(18px,2.2vw,26px) clamp(20px,2.2vw,28px)", borderRight: `2px solid ${layer.color}`, textAlign: "right" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{layer.label}</div>
+                          <div className="t-xs" style={{ color: "var(--text-3)", textTransform: "none", letterSpacing: 0, fontSize: 11.5, fontWeight: 500 }}>{layer.sub}</div>
                         </div>
+                        <div style={{ width: 10, height: 3, borderRadius: 1, background: layer.color, flexShrink: 0, marginRight: 16 }} />
                       </div>
                     </div>
-                  </div>
-                  {i < 2 && (
-                    <motion.div
-                      variants={{
-                        hidden:  { scaleY:0, opacity:0 },
-                        visible: { scaleY:1, opacity:1, transition:{ duration:0.38, ease:"easeOut", delay:0.44 } },
-                      }}
-                      style={{ display:"flex",flexDirection:"column",alignItems:"center",transformOrigin:"top" }}
-                    >
-                      <div style={{ width:1,height:28,background:"linear-gradient(180deg,rgba(0,220,255,0.75) 0%,rgba(0,180,255,0.25) 100%)",borderRadius:2 }}/>
-                      <div style={{ width:5,height:5,borderRadius:"50%",background:"rgba(0,220,255,0.65)",boxShadow:"0 0 8px rgba(0,220,255,0.55)" }}/>
-                    </motion.div>
-                  )}
-                </motion.div>
-              ))}
-            </motion.div>
+                    {i < 2 && <div style={{ height: 14 }} />}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════
-          5. SERVICES PREVIEW
+          6. FEATURED SERVICES / INVESTMENT COLLECTIONS
           ══════════════════════════════════════════ */}
-      <section className="section-lux" style={{ background:"var(--bg-alt)",position:"relative",overflow:"hidden" }} dir="rtl">
-        <ScanLine/>
-        <ArchitecturalBg variant="lattice"/>
-        <div className="container" style={{ position:"relative",zIndex:1,direction:"rtl" }}>
-          <div style={{ marginBottom:"clamp(48px,6vw,72px)" }}>
+      <section className="section-lux" style={{ position: "relative", overflow: "hidden" }} dir="rtl">
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ marginBottom: "clamp(48px,6vw,72px)" }}>
             <SectionHeading
               wide
-              eyebrow="خدماتنا"
+              eyebrow="الخدمات المميزة"
               title="هيكلة مناسبة لكل نوع من أنواع الملكية."
               subtitle="صُممت خدماتنا لتغطية مختلف احتياجات الملكية العقارية، بدءًا من هيكلة الملكية والحوكمة، مرورًا بإدارة الأصول، وصولًا إلى التطوير والاستثمار، مع مراعاة الاحتياجات الخاصة لكل نوع من العملاء."
             />
           </div>
 
-          <div className="grid-3" style={{ gap:"clamp(16px,2vw,24px)", marginBottom:"clamp(40px,4.5vw,56px)" }}>
-            {SERVICES_AR.map((s, i) => (
-              <motion.div key={s.id} {...FU(i * 0.06)}>
-                <div
-                  style={{
-                    ...glass,
-                    padding:"clamp(28px,3vw,44px)",
-                    height:"100%",
-                    position:"relative",
-                    borderTop:`1.5px solid ${s.color}44`,
-                    direction:"rtl",
-                    textAlign:"right",
-                    ...(hoveredService === i ? {
-                      background:"rgba(0,36,96,0.68)",
-                      border:`1px solid ${s.color}50`,
-                      transform:"translateY(-8px)",
-                      boxShadow:`inset 0 1.5px 0 ${s.color}66,0 32px 80px rgba(0,0,0,0.70),0 0 56px ${s.color}18`,
-                    } : {}),
-                  }}
-                  onMouseEnter={() => setHoveredService(i)}
-                  onMouseLeave={() => setHoveredService(null)}
-                >
-                  <GlassHighlight color={hoveredService === i ? `${s.color}66` : undefined}/>
-                  <GlassInnerGlow color={hoveredService === i ? `${s.color}14` : undefined}/>
-                  <GlassSheen/>
-                  <div className="svc-ghost-num">{s.num}</div>
+          <PropertyShowcase items={HOME_SERVICES} rtl />
 
-                  <div style={{ position:"relative",zIndex:2 }}>
-                    <div style={{
-                      width:48,height:48,borderRadius:14,marginBottom:24,
-                      background:"rgba(255,255,255,0.07)",
-                      backdropFilter:"blur(20px) saturate(160%)",
-                      WebkitBackdropFilter:"blur(20px) saturate(160%)",
-                      border:`1px solid ${s.color}44`,
-                      boxShadow:`inset 0 1px 0 rgba(255,255,255,0.32),0 4px 14px rgba(0,0,0,0.38),0 0 14px ${s.color}18`,
-                      display:"flex",alignItems:"center",justifyContent:"center",
-                      position:"relative",overflow:"hidden",
-                    }}>
-                      <div style={{ position:"absolute",top:0,left:0,right:0,height:"1px",
-                        background:`linear-gradient(90deg,transparent,${s.color}88,rgba(255,255,255,0.4),transparent)`,zIndex:2 }}/>
-                      <div style={{ position:"absolute",inset:0,
-                        background:`radial-gradient(circle at 50% 0%,${s.color}22 0%,transparent 70%)`,zIndex:0 }}/>
-                      <span style={{ position:"relative",zIndex:1,
-                        filter:`drop-shadow(0 0 7px ${s.color}) drop-shadow(0 0 16px ${s.color}55)` }}>
-                        {SERVICE_ICONS[i](s.color)}
-                      </span>
-                    </div>
-                    <h3 style={{ fontSize:16,fontWeight:700,color:"#ffffff",marginBottom:12,lineHeight:1.48 }}>{s.label}</h3>
-                    <p className="t-sm" style={{ color:"rgba(255,255,255,0.78)",lineHeight:1.88 }}>{s.body}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div style={{ textAlign:"center" }}>
-            <a href="/ar/services" className="btn btn-ghost" style={{ fontSize:15,padding:"15px 36px" }}>
-              ← عرض جميع الخدمات
-            </a>
+          <div style={{ textAlign: "center", marginTop: "clamp(40px,4.5vw,56px)" }}>
+            <a href="/ar/services" className="btn btn-ghost" style={{ fontSize: 15, padding: "15px 36px" }}>← عرض جميع الخدمات</a>
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════
-          6. CTA — ابدأ محادثة
+          7. CTA — BEGIN A CONVERSATION (dramatic dark close)
           ══════════════════════════════════════════ */}
-      <section className="section" style={{
-        position:"relative", overflow:"hidden", textAlign:"center",
-        background:"linear-gradient(160deg,var(--bg-1),var(--bg-0))",
-      }} dir="rtl">
-        <ArchitecturalBg variant="mixed"/>
-        <div className="container" style={{ position:"relative", zIndex:1 }}>
+      <section className="section cta-dark" style={{ position: "relative", overflow: "hidden", textAlign: "center" }} dir="rtl">
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <Reveal direction="up">
-            <p className="t-xs" style={{ color:"var(--cyan)", marginBottom:20, letterSpacing:"0.10em" }}>ابدأ الآن</p>
+            <p className="t-xs" style={{ color: "#D9C08F", marginBottom: 20, letterSpacing: "0.15em" }}>ابدأ الآن</p>
           </Reveal>
           <LineReveal delay={0.06}>
-            <h2 className="t-h2 gt-w" style={{ marginBottom:18 }}>ابدأ محادثة.</h2>
+            <h2 className="t-h2" style={{ marginBottom: 18, color: "#fff" }}>ابدأ محادثة.</h2>
           </LineReveal>
           <Reveal direction="up" delay={0.14}>
-            <p className="t-lg" style={{ color:"var(--text-3)", maxWidth:460, margin:"0 auto 48px" }}>
+            <p className="t-lg" style={{ color: "rgba(255,255,255,0.62)", maxWidth: 460, margin: "0 auto 48px" }}>
               كل تواصل يُعامَل بسرية تامة.
             </p>
           </Reveal>
-          <motion.div {...FU(.20)} style={{ display:"flex", gap:16, justifyContent:"center", flexWrap:"wrap" }}>
-            <a href="/ar/contact" className="btn btn-primary" style={{ fontSize:15, padding:"15px 38px" }}>← تواصل معنا</a>
-            <a href="/ar/services" className="btn btn-ghost" style={{ fontSize:15, padding:"15px 38px" }}>خدماتنا</a>
+          <motion.div {...FU(0.2)} style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="/ar/contact" className="btn btn-primary" style={{ fontSize: 15, padding: "15px 38px" }}>← تواصل معنا</a>
+            <a href="/ar/services" className="btn btn-ghost" style={{ fontSize: 15, padding: "15px 38px", color: "#fff", borderColor: "rgba(255,255,255,0.18)" }}>خدماتنا</a>
           </motion.div>
         </div>
       </section>
 
       <style>{`
-        @media(max-width:900px){.grid-2{grid-template-columns:1fr!important}}
+        .qm-stat-plate{
+          display:flex; gap:28px;
+          background:rgba(6,10,18,0.42);
+          backdrop-filter:blur(20px) saturate(160%); -webkit-backdrop-filter:blur(20px) saturate(160%);
+          border:1px solid rgba(255,255,255,0.16);
+          border-radius:16px; padding:16px 20px;
+        }
+        .qm-scrim-force{
+          background:linear-gradient(180deg,transparent 45%,rgba(4,8,16,0.82) 100%) !important;
+        }
+        @media(max-width:900px){.split-grid{grid-template-columns:1fr!important}}
+        @media(max-width:900px){.split-grid-rev .split-order-first{order:-1}}
         @media(max-width:640px){.grid-3{grid-template-columns:1fr!important}}
-        @media(max-width:960px){.split-grid{grid-template-columns:1fr!important}}
         @media(max-width:960px){.split-grid .split-img-col{aspect-ratio:16/9!important;min-height:320px!important}}
-        @media(max-width:640px){.stat-strip .container>div{grid-template-columns:1fr!important;gap:24px!important}}
+        @media(max-width:640px){.qm-stat-grid{grid-template-columns:1fr!important;gap:24px!important}}
+
+        /* ── Hero image cluster — mirrored for RTL (image on the left) ── */
+        .hero-image-cluster{
+          position:relative; width:100%; max-width:520px; margin-right:auto; margin-left:0;
+          aspect-ratio:4/5;
+        }
+        .hic-accent-rtl{
+          position:absolute; top:6%; left:-7%; right:auto; width:72%; height:72%;
+          border-radius:24px; background:var(--blue); opacity:.9; z-index:0;
+        }
+
+        /* ── Rotating luxury card stack (front/middle/back) — mirrored for RTL ── */
+        .hero-stack{
+          position:absolute; inset:0; z-index:1;
+        }
+        .hero-stack-card{
+          position:absolute; right:8%; top:2%; width:84%; height:84%;
+          border-radius:20px; overflow:hidden;
+          border:1px solid var(--glass-border);
+          transform-origin:center center;
+        }
+        .hero-stack-card img{
+          width:100%; height:100%; object-fit:cover; display:block;
+        }
+        .trust-bar{
+          width:100%;
+          margin-top:clamp(20px,3vw,32px);
+          padding-top:clamp(18px,2.2vw,26px);
+          border-top:1px solid var(--glass-border);
+        }
+        .trust-bar-row{
+          display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:clamp(20px,3vw,40px);
+        }
+        .trust-logo-box{
+          display:flex; align-items:center; justify-content:center; height:clamp(72px,8.4vw,100px); flex:1 1 0;
+        }
+        .trust-logo{
+          height:100%; width:auto; max-width:210px; object-fit:contain;
+          opacity:.82; filter:grayscale(.2); transition:opacity .3s ease, filter .3s ease, transform .3s ease;
+        }
+        .trust-logo:hover{ opacity:1; filter:grayscale(0); transform:scale(1.05); }
+        @media(max-width:640px){
+          .trust-bar-row{ justify-content:center; }
+          .trust-logo-box{ flex:0 1 auto; height:56px; }
+        }
+        @media(max-width:900px){
+          .hero-split-grid{ grid-template-columns:1fr!important; }
+          .hero-image-cluster{ max-width:420px; margin:0 auto; order:-1; }
+        }
+
+        /* ── How We Work — numbered process list (mirrored) ── */
+        .process-steps{ display:flex; flex-direction:column; gap:0; }
+        .process-step-rtl{
+          display:grid; grid-template-columns:1fr 44px; gap:18px;
+          padding:18px 0; border-bottom:1px solid var(--glass-border);
+        }
+        .process-step-rtl:last-child{ border-bottom:none; }
+        .process-num{ letter-spacing:0; text-align:left; }
       `}</style>
     </main>
   );

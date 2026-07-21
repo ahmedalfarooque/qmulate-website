@@ -3,14 +3,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FU, FI, GlassCard } from "@/components/DS";
 import { GovernanceIcon, PortfolioIcon, DigitalIcon } from "@/components/icons/GlassIcons";
-import { ArchitecturalBg } from "@/components/Strata";
 import { PageBackground } from "@/components/PageBackground";
 import { LineReveal, ImageReveal } from "@/components/TextReveal";
 import { Reveal } from "@/components/Reveal";
-import ScanLine from "@/components/ScanLine";
-import { HeroSlideshow } from "@/components/HeroSlideshow";
 
-/* ─── SLIDESHOW IMAGES ───────────────────────────────────────────── */
+/* ─── SLIDESHOW IMAGES — same photography as the EN Services page ──────── */
 const HERO_SLIDES = [
   { src:"/Background%20Images/EDa2yEV826m1m8qajQ_68snVQ4wUUK5-AnhRrlvluoZ9u-8wBSsZVwXSaiI9F1Nl2UOulJ6lRUc5QuHWieEnlsi0O1iIp4MR1cu76APuTICU7qS46yHxy6yvlxMn4j7nXo3AcBkm8RUFQr0Bgwm4ZSrn_KJCWYwdD-BBY6AKpN.jpg",       position:"center 40%" },
   { src:"/Background%20Images/GQMWKvE46ykWN8n7tSxfSnRA8CPWCrMSl0WFglOmCZE2XuArXsivBPtUAoftn-0etMg-pXQiuIQaTAVNJ-z3h6RkV8WPJuFHbVZikezv219E3J6CQJ35BJ-IyzHdN9vnVp594bKK14r8wtZsbmLMOH5A91jUb7hWrKHL7FzuO0.jpg",         position:"center 45%" },
@@ -18,17 +15,21 @@ const HERO_SLIDES = [
 ];
 const IMG_SVC  = [
   "/Background%20Images/_K7bLmnmYeenh0AczYa4VqBSnewL9A47WxeeERWevDPDqyjlTFc9rxqHIPzQaTcnshhbn290miCBrLILvFBGJHWtP4SKinyEDsb_ijCOdx1McrJVNu9hvym7ofLNC0opQbil-dANXL34euw6Ml9t5uV8Hlk4hVWcIxTZfQY9CY.jpg",
-  "/Background%20Images/u9JiAQUrtJJCg7HZjw3-0FQaK0eGZybkkYsulG-DtLkjo9KaxCRGrYTcTZcGXUtm-dzOLw5uk-dlPs1djl_903jNy2P6DWbUIT-1tHJpVCd0VQRvWS3giXaYPrlAvqNhTB_yCqoMVmygub6NfOg8cs_9EV_-RkNvrCwOyR-Kb1.jpg",
+  "/Background%20Images/kYKY9tiUSP1u1r4HWrv3sdoL1ErJ6RUI2B8R0RO5R8xcO4iSioZY1gsBAECuldsCKNrV-EkLHedsepUzfdQs6hqcuPOqRFcQmX7IkVt-2i6vRzBP-J7QvVBE4RWfPmeNSdmPiqux4ZDX56egqMXcn5koUsJtQclcTB6Ku0V7t_.jpg",
   "/Background%20Images/9BU3riDGJy90oeygMk7L_wLneiq0OMtE4F97u28pVmjDojIC4nM9v1PvGk_3pFLtaiTIDCadEEGyNbbw9bVlIaXmhXGosO72ueeauGQ-bSgj07SyLuNVZzzJlx-JfoAUBGepMRPseOxhIZz1QR5kLZDMPfGUm6QQzWuep58DiU.jpg",
 ];
 
-const SERVICE_ICONS_AR = [GovernanceIcon, PortfolioIcon, DigitalIcon];
+const SERVICE_ICONS = [GovernanceIcon, PortfolioIcon, DigitalIcon];
 
-const SERVICES_AR = [
+/* Layout rhythm per service: editorial variety, matches the EN Services page */
+const LAYOUTS = ["split", "feature", "split-rev"] as const;
+
+/* Real Arabic business copy — ported unchanged from the prior Arabic Services page */
+const SERVICES = [
   {
     num:"01",
     title:"هيكلة الملكية والحوكمة",
-    color:"var(--cyan)",
+    color:"#2B6E8F",
     img: IMG_SVC[0],
     clients:[
       { label:"الشركات",           body:"هيكلة ملكية الشركات والأصول وتنظيم العلاقة بين الشركاء والمستثمرين بما يضمن وضوح الصلاحيات، وفعالية اتخاذ القرار، واستدامة الاستثمار." },
@@ -39,7 +40,7 @@ const SERVICES_AR = [
   {
     num:"02",
     title:"إدارة الأصول العقارية",
-    color:"#8A5CFF",
+    color:"#B08D57",
     img: IMG_SVC[1],
     clients:[
       { label:"الشركات",           body:"إدارة المحافظ والأصول العقارية من خلال التشغيل والتأجير والصيانة والتحصيل، بما يحافظ على قيمة الأصول ويعزز كفاءتها التشغيلية." },
@@ -50,7 +51,7 @@ const SERVICES_AR = [
   {
     num:"03",
     title:"التطوير والاستثمار",
-    color:"#4D8DFF",
+    color:"#123A57",
     img: IMG_SVC[2],
     clients:[
       { label:"الشركات",           body:"دراسة فرص التوسع والتطوير وإعادة توظيف الأصول بما يدعم النمو ويحقق أفضل عائد استثماري." },
@@ -60,195 +61,208 @@ const SERVICES_AR = [
   },
 ];
 
-/* ═══════════════════════════════════════════
-   PAGE
-   ═══════════════════════════════════════════ */
+/* ═════════════════════════════════════════════
+   PAGE — Arabic mirror of app/services/page.tsx
+   ═════════════════════════════════════════════ */
 export default function ArServicesPage() {
   return (
     <main style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
       <PageBackground variant="services"/>
 
-      {/* ── HERO: Cinematic fullbleed ── */}
-      <section className="hero-fullbleed" style={{ minHeight:"72vh" }}>
-        <HeroSlideshow slides={HERO_SLIDES} interval={9000}/>
-        {/* Color grade + vignette */}
-        <div className="hero-grade"/>
-        <div className="hero-cyan-grade"/>
-        <div style={{
-          position:"absolute",inset:0,zIndex:4,
-          background:"linear-gradient(160deg,rgba(0,5,24,0.46) 0%,transparent 44%,rgba(2,4,10,0.05) 56%,rgba(2,4,10,0.97) 100%)",
-        }}/>
-        <div className="hero-vignette"/>
-        <div className="hero-top-feather"/>
-        <div className="hero-side-feathers"/>
-        <div className="hero-cyan-glow"/>
-        <ScanLine/>
+      {/* ── HERO: Editorial — bold heading, photo, real quick-facts ── */}
+      <section className="ed-hero" dir="rtl">
+        <div className="container">
+          <div className="ed-hero-top" style={{ textAlign:"right", marginLeft:"auto" }}>
+            <Reveal direction="up" delay={0.05}>
+              <span className="pill pill-c" style={{ marginBottom:22 }}>
+                <span className="dot-live"/>&nbsp;الخدمات
+              </span>
+            </Reveal>
 
-        <div className="hero-content" style={{ paddingBottom:"clamp(56px,8vw,96px)" }} dir="rtl">
-          <div className="container" style={{ textAlign:"right" }}>
-            <div style={{ overflow:"hidden", marginBottom:24 }}>
-              <motion.div
-                initial={{ y:"110%" }}
-                animate={{ y:0 }}
-                transition={{ delay:.3, duration:.7, ease:[.16,1,.3,1] }}
-              >
-                <span className="pill pill-c">
-                  <span className="dot-live"/>
-                  &nbsp;الخدمات
-                </span>
-              </motion.div>
-            </div>
-
-            <div style={{ overflow:"hidden" }}>
-              <motion.h1
-                initial={{ y:"108%" }}
-                animate={{ y:0 }}
-                transition={{ delay:.48, duration:.90, ease:[.16,1,.3,1] }}
-                style={{
-                  fontSize:"clamp(30px,4.4vw,66px)",
-                  fontWeight:800,
-                  color:"rgba(255,255,255,0.96)",
-                  lineHeight:1.22,
-                  maxWidth:740,
-                }}
-              >
-                هيكلة مناسبة لكل نوع
-              </motion.h1>
-            </div>
-            <div style={{ overflow:"hidden", marginBottom:32 }}>
-              <motion.h1
-                initial={{ y:"108%" }}
-                animate={{ y:0 }}
-                transition={{ delay:.62, duration:.90, ease:[.16,1,.3,1] }}
-                style={{
-                  fontSize:"clamp(30px,4.4vw,66px)",
-                  fontWeight:800,
-                  color:"rgba(255,255,255,0.96)",
-                  lineHeight:1.22,
-                  maxWidth:740,
-                }}
-              >
-                من أنواع الملكية.
-              </motion.h1>
-            </div>
+            <h1 className="t-h1 gt-w" style={{ marginBottom:0 }}>
+              <LineReveal delay={0.15}><span style={{ display:"block" }}>هيكلة مناسبة لكل نوع</span></LineReveal>
+              <LineReveal delay={0.26} style={{ marginTop:2 }}><span style={{ display:"block" }}>من أنواع الملكية.</span></LineReveal>
+            </h1>
 
             <motion.p
-              initial={{ opacity:0, y:18 }}
-              animate={{ opacity:1, y:0 }}
-              transition={{ delay:.88, duration:.75 }}
-              style={{
-                fontSize:"clamp(15px,1.3vw,18px)",
-                lineHeight:1.92,
-                color:"rgba(255,255,255,0.58)",
-                maxWidth:560,
-              }}
+              {...FU(.4)}
+              className="t-lg"
+              style={{ color:"var(--text-3)", maxWidth:560, marginTop:26, marginRight:0, marginLeft:"auto" }}
             >
-              صُممت خدماتنا لتغطية مختلف احتياجات الملكية العقارية، بدءًا من هيكلة الملكية والحوكمة،
-              مرورًا بإدارة الأصول، وصولًا إلى التطوير والاستثمار.
+              صُممت خدماتنا لتغطية مختلف احتياجات الملكية العقارية، بدءًا من هيكلة الملكية والحوكمة، مرورًا بإدارة الأصول،
+              وصولًا إلى التطوير والاستثمار.
             </motion.p>
+
+            <motion.div {...FU(.48)} className="ed-hero-cta-row" style={{ justifyContent:"flex-end" }}>
+              <Link href="/ar/contact" className="btn btn-primary" style={{ fontSize:14, padding:"14px 30px" }}>ابدأ محادثة ←</Link>
+              <Link href="/ar/about" className="btn btn-ghost" style={{ fontSize:14, padding:"14px 26px" }}>عن كيوميليت</Link>
+            </motion.div>
+          </div>
+
+          <div className="ed-hero-image-wrap">
+            <ImageReveal delay={0.1} className="ed-hero-image">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={HERO_SLIDES[0].src} alt="خدمات كيوميليت" loading="lazy" style={{ objectPosition:HERO_SLIDES[0].position }}/>
+            </ImageReveal>
+
+            <div className="ed-hero-cards">
+              {[
+                { Icon:GovernanceIcon, title:"الهيكلة والحوكمة",       body:"تنظيم ترتيبات الملكية وأطر الحوكمة لضمان سيطرة واضحة وطويلة الأمد." },
+                { Icon:PortfolioIcon,  title:"إدارة الأصول",            body:"التأجير والتشغيل والصيانة بما يحافظ على قيمة المحفظة ويعزّزها." },
+                { Icon:DigitalIcon,    title:"التطوير والاستثمار",      body:"تحديد فرص التوسع وإعادة التوظيف والنمو المستدام." },
+              ].map((c,i)=>(
+                <Reveal key={c.title} direction="up" delay={i*0.08}>
+                  <div className="ed-hero-card" style={{ textAlign:"right" }}>
+                    <c.Icon size="md"/>
+                    <h4 className="t-h4" style={{ color:"var(--text-1)", marginTop:14, marginBottom:8 }}>{c.title}</h4>
+                    <p className="t-sm" style={{ color:"var(--text-3)", lineHeight:1.7 }}>{c.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── SERVICES ── */}
-      {SERVICES_AR.map((svc, si) => {
-        const SvcIcon = SERVICE_ICONS_AR[si];
-        const isEven = si % 2 === 0;
+      {SERVICES.map((svc, si) => {
+        const SvcIcon = SERVICE_ICONS[si];
+        const layout = LAYOUTS[si % LAYOUTS.length];
+        const isFeature = layout === "feature";
+        const isRev = layout === "split-rev";
+
         return (
           <section key={svc.num} className="section-lux" style={{
             position:"relative",
             overflow:"hidden",
-            background: isEven ? undefined : "var(--bg-alt)",
+            borderTop: si > 0 ? "1px solid var(--glass-border)" : undefined,
           }} dir="rtl">
-            {/* Ghost service number — editorial anchor */}
-            <div className="ghost-bg-num" style={{ top:"-4%", left:"2%", fontSize:"clamp(140px,20vw,240px)" }}>{svc.num}</div>
-            <ArchitecturalBg variant={isEven ? "strata-left" : "lattice"}/>
-            <ScanLine/>
+            {/* Ghost service number — editorial anchor, mirrored to the left */}
+            <div className="svc-ghost-num" style={{ top:"clamp(20px,3vw,32px)", right:"auto", left:"clamp(20px,3vw,32px)" }}>{svc.num}</div>
 
             <div className="container" style={{ position:"relative", zIndex:1 }}>
-              {/* Section header */}
-              <div style={{
-                display:"grid",
-                gridTemplateColumns:"1fr 1fr",
-                gap:"clamp(48px,6vw,96px)",
-                alignItems:"flex-start",
-                marginBottom:"clamp(44px,5vw,68px)",
-              }} className="grid-2">
-                <div>
-                  <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:22, justifyContent:"flex-end" }}>
-                    <SvcIcon size="md"/>
-                    <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
-                  </motion.div>
+              {isFeature ? (
+                <>
+                  {/* ── FULL-WIDTH FEATURE LAYOUT ── */}
+                  <ImageReveal delay={0.06} style={{ marginBottom:"clamp(36px,4.5vw,56px)" }}>
+                    <div className="svc-img-wrap" style={{ aspectRatio:"21/9" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={svc.img} alt={svc.title} loading="lazy" style={{ objectPosition:"center 45%" }}/>
+                      <div style={{ position:"absolute",bottom:0,left:0,right:0,height:"3px",background:`linear-gradient(90deg,transparent,${svc.color}99,transparent)`,zIndex:4 }}/>
+                    </div>
+                  </ImageReveal>
 
-                  <LineReveal delay={0.05}>
-                    <h2 style={{
-                      fontSize:"clamp(22px,2.7vw,40px)",
-                      fontWeight:800,
-                      color:"var(--text-1)",
-                      lineHeight:1.28,
-                      borderRight:`3px solid ${svc.color}`,
-                      paddingRight:22,
-                      textAlign:"right",
-                    }}>
-                      {svc.title}
-                    </h2>
-                  </LineReveal>
-                </div>
-
-                {/* Service image with luxury reveal */}
-                <ImageReveal delay={0.1} style={{ aspectRatio:"16/9", borderRadius:"clamp(14px,1.8vw,24px)" }}>
-                  <div className="svc-img-wrap" style={{ aspectRatio:"16/9", borderRadius:0 }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={svc.img} alt={svc.title} loading="lazy" style={{ objectPosition: si===0 ? "center 60%" : si===1 ? "center 50%" : "center 38%" }}/>
-                    <div style={{ position:"absolute",inset:0,background:"linear-gradient(180deg,transparent 50%,rgba(2,4,10,0.70) 100%)" }}/>
-                    <div style={{
-                      position:"absolute",bottom:0,left:0,right:0,height:"3px",
-                      background:`linear-gradient(90deg,transparent,${svc.color}88,transparent)`,
-                      zIndex:4,
-                    }}/>
+                  <div style={{ maxWidth:760, marginBottom:"clamp(40px,4.5vw,60px)", marginRight:0, marginLeft:"auto", textAlign:"right" }}>
+                    <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20, justifyContent:"flex-end" }}>
+                      <SvcIcon size="md"/>
+                      <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
+                    </motion.div>
+                    <LineReveal delay={0.05}>
+                      <h2 className="t-h2" style={{ color:"var(--text-1)" }}>{svc.title}</h2>
+                    </LineReveal>
+                    <div className="accent-bar" style={{ background:`linear-gradient(90deg,${svc.color},color-mix(in srgb,${svc.color} 40%,transparent))`, marginRight:0, marginLeft:"auto" }}/>
                   </div>
-                </ImageReveal>
-              </div>
+                </>
+              ) : (
+                <>
+                  {/* ── SPLIT LAYOUT (mirrored alternating direction for RTL) ── */}
+                  <div className="grid-2 svc-split" style={{
+                    gap:"clamp(48px,6vw,96px)",
+                    alignItems:"flex-start",
+                    marginBottom:"clamp(44px,5vw,68px)",
+                    direction: isRev ? "ltr" : "rtl",
+                  }}>
+                    <div style={{ direction:"rtl", textAlign:"right" }}>
+                      <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:22, justifyContent:"flex-end" }}>
+                        <SvcIcon size="md"/>
+                        <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
+                      </motion.div>
 
-              {/* Client cards */}
-              <div className="grid-3" style={{ gap:"clamp(16px,2.5vw,28px)" }}>
-                {svc.clients.map((c, ci) => (
-                  <motion.div key={c.label} {...FU(.05 + ci * .09)}>
-                    <GlassCard style={{
-                      padding:"clamp(24px,3vw,42px)",
-                      height:"100%",
-                      borderTop:`2px solid ${svc.color}38`,
-                    }}>
-                      <div style={{
-                        fontSize:11,
-                        color:svc.color,
-                        fontWeight:700,
-                        letterSpacing:"0.06em",
-                        marginBottom:18,
-                        direction:"rtl",
-                        textAlign:"right",
-                      }}>
-                        {c.label}
+                      <LineReveal delay={0.05}>
+                        <h2 style={{
+                          fontSize:"clamp(24px,2.9vw,42px)",
+                          fontWeight:700,
+                          fontFamily:"'Madani Arabic',sans-serif",
+                          color:"var(--text-1)",
+                          lineHeight:1.28,
+                          borderRight:`3px solid ${svc.color}`,
+                          paddingRight:22,
+                        }}>
+                          {svc.title}
+                        </h2>
+                      </LineReveal>
+                    </div>
+
+                    {/* Service image with luxury reveal */}
+                    <ImageReveal delay={0.1} style={{ aspectRatio:"16/9", direction:"ltr" }}>
+                      <div className="svc-img-wrap" style={{ aspectRatio:"16/9", borderRadius:0 }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={svc.img} alt={svc.title} loading="lazy" style={{ objectPosition: si===0 ? "center 60%" : "center 38%" }}/>
+                        <div style={{ position:"absolute",bottom:0,left:0,right:0,height:"3px",background:`linear-gradient(90deg,transparent,${svc.color}99,transparent)`,zIndex:4 }}/>
                       </div>
-                      <p className="t-sm" style={{ color:"var(--text-3)", lineHeight:1.92, direction:"rtl", textAlign:"right" }}>{c.body}</p>
-                    </GlassCard>
-                  </motion.div>
-                ))}
-              </div>
+                    </ImageReveal>
+                  </div>
+                </>
+              )}
+
+              {/* Client cards — full-width feature service gets a layered list treatment for rhythm variety */}
+              {isFeature ? (
+                <div style={{ display:"flex", flexDirection:"column", gap:1 }}>
+                  {svc.clients.map((c, ci) => (
+                    <motion.div key={c.label} {...FU(.05 + ci * .09)}>
+                      <div className="layer-item svc-layer-row" style={{
+                        padding:"clamp(22px,2.6vw,32px) clamp(20px,2.4vw,30px)",
+                        borderBottom: ci < svc.clients.length - 1 ? "1px solid var(--glass-border)" : "none",
+                        display:"grid",
+                        gridTemplateColumns:"200px 1fr",
+                        gap:"clamp(16px,2.5vw,32px)",
+                        direction:"rtl",
+                      }}>
+                        <div style={{
+                          fontSize:11, color:svc.color, fontWeight:700, letterSpacing:"0.06em",
+                          fontFamily:"'Madani Arabic',sans-serif", textAlign:"right",
+                        }}>
+                          {c.label}
+                        </div>
+                        <p className="t-sm" style={{ color:"var(--text-3)", lineHeight:1.92, textAlign:"right" }}>{c.body}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid-3" style={{ gap:"clamp(16px,2.5vw,28px)" }}>
+                  {svc.clients.map((c, ci) => (
+                    <motion.div key={c.label} {...FU(.05 + ci * .09)}>
+                      <GlassCard style={{
+                        padding:"clamp(24px,3vw,42px)",
+                        height:"100%",
+                        borderTop:`2px solid color-mix(in srgb, ${svc.color} 42%, transparent)`,
+                      }}>
+                        <div style={{
+                          fontSize:11,
+                          color:svc.color,
+                          fontWeight:700,
+                          letterSpacing:"0.06em",
+                          marginBottom:18,
+                          fontFamily:"'Madani Arabic',sans-serif",
+                          textAlign:"right",
+                        }}>
+                          {c.label}
+                        </div>
+                        <p className="t-sm" style={{ color:"var(--text-3)", lineHeight:1.92 }}>{c.body}</p>
+                      </GlassCard>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
             </div>
           </section>
         );
       })}
 
       {/* ── CTA ── */}
-      <section className="section" style={{
-        position:"relative",
-        overflow:"hidden",
-        textAlign:"center",
-        background:"linear-gradient(160deg,var(--bg-1),var(--bg-0))",
-      }}>
-        <ArchitecturalBg variant="mixed"/>
-        <div className="container" style={{ position:"relative", zIndex:1 }}>
+      <section className="section" style={{ textAlign:"center" }} dir="rtl">
+        <div className="container">
           <LineReveal delay={0}>
             <h2 className="t-h2 gt-w" style={{ marginBottom:18 }}>ابدأ محادثة.</h2>
           </LineReveal>
@@ -262,8 +276,9 @@ export default function ArServicesPage() {
       </section>
 
       <style>{`
-        @media(max-width:900px){.grid-2{grid-template-columns:1fr!important}}
+        @media(max-width:900px){.svc-split{grid-template-columns:1fr!important;direction:rtl!important}}
         @media(max-width:640px){.grid-3{grid-template-columns:1fr!important}}
+        @media(max-width:560px){.svc-layer-row{grid-template-columns:1fr!important;gap:8px!important}}
       `}</style>
     </main>
   );

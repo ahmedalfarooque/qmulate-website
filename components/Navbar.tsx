@@ -44,23 +44,24 @@ export function Navbar() {
       <motion.header
         animate={{
           height: compact ? 52 : 64,
-          background: scrolled ? "rgba(var(--nav-bg-rgb,2,4,10),.88)" : "rgba(2,4,10,0)",
-          backdropFilter: scrolled ? "blur(48px) saturate(220%)" : "blur(0px)",
-          borderBottomColor: scrolled ? "rgba(255,255,255,.055)" : "rgba(255,255,255,0)",
+          background: scrolled ? "rgba(250,248,244,.86)" : "rgba(250,248,244,0)",
+          backdropFilter: scrolled ? "blur(18px) saturate(150%)" : "blur(0px)",
+          borderBottomColor: scrolled ? "rgba(20,23,31,.07)" : "rgba(20,23,31,0)",
         }}
-        transition={{duration:.28}}
+        transition={{duration:.4,ease:[.16,1,.3,1]}}
         style={{
           position:"fixed",top:0,left:0,right:0,zIndex:9999,
-          WebkitBackdropFilter:scrolled?"blur(48px) saturate(220%)":"blur(0px)",
+          WebkitBackdropFilter:scrolled?"blur(18px) saturate(150%)":"blur(0px)",
           borderBottom:"1px solid transparent",
         }}
       >
-        {/* Cyan shimmer line on scroll */}
+        {/* Gold shimmer line on scroll */}
         <motion.div animate={{opacity:scrolled?1:0}}
+          transition={{duration:.4}}
           style={{position:"absolute",top:0,left:0,right:0,height:1,
             background:isAr
-              ?"linear-gradient(270deg,transparent 5%,rgba(0,212,255,.5) 40%,rgba(138,92,255,.35) 65%,transparent 95%)"
-              :"linear-gradient(90deg,transparent 5%,rgba(0,212,255,.5) 40%,rgba(138,92,255,.35) 65%,transparent 95%)"}}/>
+              ?"linear-gradient(270deg,transparent 5%,rgba(176,141,87,.55) 40%,rgba(18,58,87,.30) 65%,transparent 95%)"
+              :"linear-gradient(90deg,transparent 5%,rgba(176,141,87,.55) 40%,rgba(18,58,87,.30) 65%,transparent 95%)"}}/>
 
         <div className="cw" style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,direction:isAr?"rtl":"ltr"}}>
 
@@ -69,14 +70,14 @@ export function Navbar() {
             <img
               src="/Logo.png"
               alt="QMULATE logo"
-              width={28}
-              height={36}
+              width={42}
+              height={49}
               className="qlogo-img"
               style={{
                 objectFit: 'contain',
                 display: 'block',
                 background: 'transparent',
-                mixBlendMode: 'screen',
+                filter: 'drop-shadow(0 3px 14px rgba(20,23,31,0.22)) drop-shadow(0 1px 2px rgba(20,23,31,0.30))',
               }}
             />
             <div>
@@ -96,9 +97,9 @@ export function Navbar() {
                 padding:"7px 14px",borderRadius:100,fontSize:13,fontWeight:500,
                 fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
                 color:isActive(l.h)?"var(--text-1)":"var(--text-3)",
-                background:isActive(l.h)?"rgba(0,212,255,.09)":"transparent",
-                border:`1px solid ${isActive(l.h)?"rgba(0,212,255,.22)":"transparent"}`,
-                transition:"all .2s",
+                background:isActive(l.h)?"rgba(176,141,87,.10)":"transparent",
+                border:`1px solid ${isActive(l.h)?"rgba(176,141,87,.24)":"transparent"}`,
+                transition:"all .3s ease",
               }}>{l.l}</Link>
             ))}
           </nav>
@@ -143,11 +144,11 @@ export function Navbar() {
         {open && (
           <motion.div
             initial={{opacity:0,x:"100%"}} animate={{opacity:1,x:0}} exit={{opacity:0,x:"100%"}}
-            transition={{duration:.32,ease:[.4,0,.2,1]}}
+            transition={{duration:.4,ease:[.16,1,.3,1]}}
             style={{
               position:"fixed",inset:0,zIndex:9998,
-              background:"rgba(var(--mob-bg-rgb,2,4,10),.97)",
-              backdropFilter:"blur(48px)",
+              background:"rgba(250,248,244,.97)",
+              backdropFilter:"blur(20px) saturate(150%)",
               paddingTop:64,direction:isAr?"rtl":"ltr",
               display:"flex",flexDirection:"column",
             }}>
@@ -158,7 +159,7 @@ export function Navbar() {
                   fontSize:"clamp(22px,6vw,34px)",fontWeight:800,
                   letterSpacing:isAr?0:"-0.03em",
                   fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
-                  color:isActive(l.h)?"var(--cyan)":"var(--text-1)",
+                  color:isActive(l.h)?"var(--gold)":"var(--text-1)",
                   textAlign:isAr?"right":"left",
                   animation:`fade-up .42s ${i*55}ms both`,
                 }}>

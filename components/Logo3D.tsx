@@ -27,7 +27,7 @@ export function Logo3D({ size = 200 }: { size?: number }) {
           alt="QMULATE"
           width={s}
           height={s}
-          style={{ objectFit: 'contain', display: 'block', filter: 'none' }}
+          style={{ objectFit: 'contain', display: 'block', filter: 'drop-shadow(0 6px 22px rgba(20,23,31,0.22))' }}
         />
       </motion.div>
     )
@@ -53,7 +53,7 @@ export function Logo3D({ size = 200 }: { size?: number }) {
         }}
       >
         <img src="/Logo.png" alt="QMULATE" width={s} height={s}
-          style={{ objectFit: 'contain', display: 'block', background: 'transparent', mixBlendMode: 'screen' }}
+          style={{ objectFit: 'contain', display: 'block', background: 'transparent', filter: 'drop-shadow(0 8px 26px rgba(20,23,31,0.24))' }}
         />
       </motion.div>
     </div>

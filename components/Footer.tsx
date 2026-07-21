@@ -13,7 +13,7 @@ export function Footer() {
     tagline:"Transforming Ownership into Enduring Value.",
     sub:"QMULATE is a specialist real estate platform. All communications are private and confidential.",
     copy:"© 2026 QMULATE. All rights reserved. Private & Confidential.",
-    email:"enquiries@qmulate.com",
+    email:"ceo@qmulate.com",
   };
   const ar = {
     navLinks:[
@@ -22,21 +22,19 @@ export function Footer() {
     tagline:"نحوّل الملكية إلى قيمة مستدامة.",
     sub:"كيوميليت منظومة عقارية متكاملة. جميع المراسلات سرية وخاصة.",
     copy:"© 2026 كيوميليت. جميع الحقوق محفوظة. خاص وسري.",
-    email:"enquiries@qmulate.com",
+    email:"ceo@qmulate.com",
   };
   const t = isAr ? ar : en;
 
   return (
-    <footer style={{
-      background:"var(--bg-0)",backdropFilter:"blur(40px)",
-      borderTop:"1px solid var(--hr-color)",
+    <footer className="qm-footer" style={{
       position:"relative",overflow:"hidden",
       direction:isAr?"rtl":"ltr",
       fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
     }}>
       {/* Background gradient */}
-      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 80% 50% at 50% 100%,color-mix(in srgb,var(--cyan) 5%,transparent),transparent 70%)",pointerEvents:"none"}}/>
-      <div className="hr-glow" style={{opacity:.4}}/>
+      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 80% 50% at 50% 100%,color-mix(in srgb,var(--gold) 8%,transparent),transparent 70%)",pointerEvents:"none"}}/>
+      <div className="hr-glow" style={{opacity:.35}}/>
 
       <div className="container" style={{position:"relative",zIndex:1,paddingTop:"clamp(60px,8vw,96px)",paddingBottom:"clamp(40px,5vw,60px)"}}>
         {/* Top section */}
@@ -44,15 +42,15 @@ export function Footer() {
           {/* Brand column */}
           <div>
             <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,textDecoration:"none"}}>
-              <img src="/Logo.png" alt="QMULATE" style={{height:'36px',width:'auto',display:'block',objectFit:'contain',mixBlendMode:'screen',filter:'drop-shadow(0 0 4px rgba(91,124,250,0.45))'}} />
+              <img src="/Logo.png" alt="QMULATE" style={{height:'46px',width:'auto',display:'block',objectFit:'contain',filter:'drop-shadow(0 3px 14px rgba(20,23,31,0.22)) drop-shadow(0 1px 2px rgba(20,23,31,0.30))'}} />
               <div>
-                <div style={{fontFamily:"var(--font-geist,'Inter',sans-serif)",fontWeight:800,fontSize:13,letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
-                <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,color:"rgba(148,163,184,.45)",letterSpacing:"0.10em",marginTop:2}}>REAL ESTATE PLATFORM</div>
+                <div style={{fontFamily:"var(--font-display,'Fraunces',serif)",fontWeight:500,fontSize:15,letterSpacing:"0.04em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
+                <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,color:"var(--text-4)",letterSpacing:"0.10em",marginTop:3}}>REAL ESTATE PLATFORM</div>
               </div>
             </Link>
             <p style={{fontSize:15,color:"var(--text-3)",lineHeight:1.75,marginBottom:12,maxWidth:320}}>{t.tagline}</p>
             <p style={{fontSize:12,color:"var(--text-4)",lineHeight:1.7,maxWidth:320,marginBottom:12}}>{t.sub}</p>
-            <a href={`mailto:${t.email}`} style={{fontSize:12,color:"var(--cyan)",lineHeight:1.7}}>{t.email}</a>
+            <a href={`mailto:${t.email}`} style={{fontSize:12,color:"var(--gold)",lineHeight:1.7}}>{t.email}</a>
           </div>
 
           {/* Navigation column */}
@@ -88,6 +86,18 @@ export function Footer() {
 
       <style>{`
         @media(max-width:600px){.footer-grid{grid-template-columns:1fr!important}}
+        .qm-footer{
+          background:
+            linear-gradient(120deg,transparent 35%,rgba(255,255,255,0.30) 50%,transparent 65%),
+            linear-gradient(180deg,rgba(255,255,255,0.44) 0%,rgba(255,255,255,0.22) 100%);
+          backdrop-filter:blur(30px) saturate(180%);
+          -webkit-backdrop-filter:blur(30px) saturate(180%);
+          border-top:1px solid rgba(255,255,255,0.55);
+          box-shadow:0 -1px 0 rgba(255,255,255,0.9) inset, 0 -30px 60px -30px rgba(20,40,70,0.10);
+        }
+        @media(max-width:767px){
+          .qm-footer{ backdrop-filter:none; -webkit-backdrop-filter:none; background:rgba(255,255,255,0.90); }
+        }
       `}</style>
     </footer>
   );

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="light" data-theme="light" suppressHydrationWarning>
       <head>
         <link rel="preload" href="/Logo.png" as="image"/>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
