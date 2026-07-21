@@ -418,9 +418,13 @@ export default function Home() {
         }
         .hero-stack-card{
           position:absolute; left:8%; top:2%; width:84%; height:84%;
-          border-radius:20px; overflow:hidden;
-          border:1px solid var(--glass-border);
+          border-radius:26px; overflow:hidden;
+          border:1px solid rgba(255,255,255,0.55);
           transform-origin:center center;
+        }
+        .hero-stack-card::before{
+          content:"";position:absolute;top:0;left:0;right:0;height:34%;z-index:2;pointer-events:none;
+          background:linear-gradient(180deg,rgba(255,255,255,0.22) 0%,transparent 100%);
         }
         .hero-stack-card img{
           width:100%; height:100%; object-fit:cover; display:block;

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FU, FI, GlassCard } from "@/components/DS";
 import { PageBackground } from "@/components/PageBackground";
 import { ImageReveal } from "@/components/TextReveal";
-import { CheckIcon } from "@/components/icons/GlassIcons";
+import { CheckIcon, PhoneIcon, EmailIcon, LocationIcon, ClockIcon } from "@/components/icons/GlassIcons";
 
 /* ── Input / Textarea — premium light glass style ────────────────────────── */
 const inputBase: React.CSSProperties = {
@@ -158,21 +158,32 @@ export default function ContactPage() {
               <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{ marginBottom: 20 }}>
                 Get in touch.
               </motion.h1>
-              <motion.p {...FU(.16)} className="t-xl" style={{ color: "var(--text-3)", maxWidth: 420, lineHeight: 1.8, marginBottom: 40 }}>
+              <motion.p {...FU(.16)} className="t-xl" style={{ color: "var(--text-3)", maxWidth: 420, lineHeight: 1.8, marginBottom: 20 }}>
+                We&apos;d welcome the chance to hear from you.
                 Every introduction is treated with complete discretion.
-                We typically respond within one business day.
               </motion.p>
+
+              <motion.div {...FU(.19)} className="contact-warm-badge" style={{ marginBottom: 32 }}>
+                <ClockIcon size="sm" />
+                <span>Typically responds within one business day</span>
+              </motion.div>
 
               <motion.div {...FU(.22)} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <GlassCard style={{ padding: "22px 26px" }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--text-4)", fontFamily: "var(--font-geist-mono,'Courier New'),monospace", marginBottom: 10 }}>Contact</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                    <PhoneIcon size="sm" />
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--text-4)", fontFamily: "var(--font-geist-mono,'Courier New'),monospace" }}>Contact</div>
+                  </div>
                   <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text-1)", marginBottom: 6 }}>Dr. Ahmed Ismail Alfarooque</div>
                   <a href="tel:+966533339052" style={{ display: "block", fontSize: 13, color: "var(--cyan)", marginBottom: 3 }}>+966 53 333 9052</a>
-                  <a href="mailto:ceo@qmulate.com" style={{ display: "block", fontSize: 13, color: "var(--cyan)" }}>ceo@qmulate.com</a>
+                  <a href="mailto:ceo@qmulate.com" style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--cyan)" }}><EmailIcon size="sm" />ceo@qmulate.com</a>
                 </GlassCard>
 
                 <GlassCard style={{ padding: "22px 26px" }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--text-4)", fontFamily: "var(--font-geist-mono,'Courier New'),monospace", marginBottom: 10 }}>Address</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                    <LocationIcon size="sm" />
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--text-4)", fontFamily: "var(--font-geist-mono,'Courier New'),monospace" }}>Address</div>
+                  </div>
                   <p style={{ fontSize: 13, color: "var(--text-2)", lineHeight: 1.75, margin: 0 }}>
                     King Abdulaziz Rd, Albasatin Dist.<br />
                     P.O. Box 23718, Jeddah 9351<br />
@@ -260,6 +271,12 @@ export default function ContactPage() {
       </section>
 
       <style>{`
+        .contact-warm-badge{
+          display:inline-flex; align-items:center; gap:9px;
+          padding:9px 16px 9px 12px; border-radius:100px;
+          background:rgba(176,141,87,0.08); border:1px solid rgba(176,141,87,0.22);
+          font-size:12.5px; font-weight:600; color:var(--text-2);
+        }
         @media(max-width:900px){.grid-contact{grid-template-columns:1fr!important}}
         @media(max-width:560px){.form-row{grid-template-columns:1fr!important}}
         select option { background: #FFFFFF; color: var(--text-1); }

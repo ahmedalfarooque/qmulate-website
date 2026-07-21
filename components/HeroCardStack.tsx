@@ -13,7 +13,7 @@
  * currently is, regardless of which transition played before it).
  */
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type TargetAndTransition, type Transition } from "framer-motion";
 
 export interface StackImage {
   src: string;
@@ -33,12 +33,20 @@ const SHADOW = {
 };
 const BLUR = { front: 0, middle: 0.4, back: 1.1 };
 
-function slotFor(scaleK: number, xyK: number, rotK: number) {
+interface SlotTarget {
+  x: string;
+  y: string;
+  scale: number;
+  rotate: number;
+  zIndex: number;
+}
+
+function slotFor(scaleK: number, xyK: number, rotK: number): Record<Role, SlotTarget> {
   return {
     front:  { x: "0%",   y: "6%",   scale: 1.00,            rotate: 0,          zIndex: 30 },
     middle: { x: `${-14*xyK}%`, y: `${-10*xyK}%`, scale: 1 - (1-0.95)*scaleK, rotate: -2*rotK, zIndex: 20 },
     back:   { x: `${14*xyK}%`,  y: `${-18*xyK}%`, scale: 1 - (1-0.90)*scaleK, rotate: 2*rotK,  zIndex: 10 },
-  } as Record<Role, { x: string; y: string; scale: number; rotate: number; zIndex: number }>;
+  };
 }
 
 export function HeroCardStack({
@@ -86,8 +94,8 @@ export function HeroCardStack({
         // Build the animate target. On first paint (phase 0) every card
         // just settles into its resting slot with a soft fade-in — no
         // keyframe path needed yet.
-        let animate: Record<string, unknown>;
-        let transition: Record<string, unknown>;
+        let animate: TargetAndTransition;
+        let transition: Transition;
 
         if (phase === 0) {
           animate = { ...target, opacity: 1, filter: `blur(${BLUR[currentRole]}px)`, boxShadow: SHADOW[currentRole] };

@@ -21,6 +21,43 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
   const accentA = isBlue ? skyBlue : champagne
   const accentB = isBlue ? champagne : skyBlue
 
+  /* Per-page lighting composition — each page keeps the same soft
+     palette, opacity ceiling and blur discipline, but the glow shapes
+     sit in different positions so each page reads with its own
+     atmosphere while staying visually consistent with the rest of the
+     site (no saturated colour, no layout ever repeats pixel-for-pixel). */
+  type Glow = { top?:string; bottom?:string; left?:string; right?:string; w:number; h:number; color:string; opacity:number; blur:number; dur:number; delay?:number }
+  const LAYOUTS: Record<string, Glow[]> = {
+    home: [
+      { top:'2%',  left:'18%', w:1000, h:820, color:pearl,   opacity:0.55, blur:70, dur:8 },
+      { top:'5%',  left:'10%', w:1100, h:900, color:accentA, opacity:0.12, blur:60, dur:7 },
+      { bottom:'5%', right:'5%', w:800, h:700, color:accentB, opacity:0.10, blur:60, dur:10, delay:3 },
+      { top:'40%', right:'20%', w:600, h:600, color:accentA, opacity:0.08, blur:80, dur:12, delay:6 },
+    ],
+    about: [
+      /* Centred, symmetric — mirrors the About page's centred 3-col composition */
+      { top:'6%',  left:'50%',  w:1200, h:640, color:pearl,   opacity:0.45, blur:75, dur:9 },
+      { top:'22%', left:'6%',   w:760,  h:760, color:accentA, opacity:0.10, blur:65, dur:8 },
+      { top:'22%', right:'6%',  w:760,  h:760, color:accentB, opacity:0.10, blur:65, dur:11, delay:2 },
+      { bottom:'4%', left:'50%', w:900, h:520, color:accentA, opacity:0.07, blur:70, dur:13, delay:5 },
+    ],
+    services: [
+      /* Wide, horizontal spread — echoes the alternating left/right service rows */
+      { top:'8%',   left:'4%',  w:820, h:700, color:accentA, opacity:0.11, blur:65, dur:8 },
+      { top:'30%',  right:'6%', w:900, h:760, color:accentB, opacity:0.11, blur:70, dur:10, delay:2 },
+      { bottom:'8%', left:'12%', w:760, h:640, color:accentA, opacity:0.08, blur:60, dur:9, delay:4 },
+      { bottom:'-2%', right:'18%', w:640, h:600, color:pearl, opacity:0.30, blur:70, dur:12, delay:1 },
+    ],
+    contact: [
+      /* Warm, lower-anchored — settles gently behind the form and logo panel */
+      { top:'10%',  left:'8%',  w:820, h:680, color:pearl,   opacity:0.42, blur:72, dur:9 },
+      { top:'18%',  right:'8%', w:900, h:760, color:accentA, opacity:0.10, blur:64, dur:8, delay:1 },
+      { bottom:'6%', left:'22%', w:820, h:680, color:accentB, opacity:0.10, blur:66, dur:11, delay:3 },
+      { bottom:'-4%', right:'10%', w:700, h:620, color:accentA, opacity:0.07, blur:70, dur:13, delay:5 },
+    ],
+  }
+  const glows = LAYOUTS[variant] ?? LAYOUTS.home
+
   return (
     <>
       <style>{`
@@ -34,41 +71,18 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
       `}</style>
 
       <div className="qbg-root" aria-hidden="true">
-
-        {/* ── Pearl ambient glow — soft white core, luxury sheen ── */}
-        <div style={{
-          position:'absolute', top:'2%', left:'18%',
-          width:1000, height:820, borderRadius:'50%',
-          background:`radial-gradient(ellipse, rgba(${pearl},0.55) 0%, rgba(${accentA},0.10) 45%, transparent 72%)`,
-          filter:'blur(70px)',
-          animation:'qbg-glow 8s ease-in-out infinite',
-        }}/>
-
-        {/* ── AMBIENT RADIAL GLOW — sky blue / champagne, kept subtle ── */}
-        <div style={{
-          position:'absolute', top:'5%', left:'10%',
-          width:1100, height:900, borderRadius:'50%',
-          background:`radial-gradient(ellipse, rgba(${accentA},0.12) 0%, rgba(${accentB},0.07) 40%, transparent 70%)`,
-          filter:'blur(60px)',
-          animation:'qbg-glow 7s ease-in-out infinite',
-        }}/>
-        <div style={{
-          position:'absolute', bottom:'5%', right:'5%',
-          width:800, height:700, borderRadius:'50%',
-          background:`radial-gradient(ellipse, rgba(${accentB},0.10) 0%, transparent 70%)`,
-          filter:'blur(60px)',
-          animation:'qbg-glow 10s ease-in-out infinite',
-          animationDelay:'3s',
-        }}/>
-        <div style={{
-          position:'absolute', top:'40%', right:'20%',
-          width:600, height:600, borderRadius:'50%',
-          background:`radial-gradient(ellipse, rgba(${accentA},0.08) 0%, transparent 70%)`,
-          filter:'blur(80px)',
-          animation:'qbg-glow 12s ease-in-out infinite',
-          animationDelay:'6s',
-        }}/>
-
+        {glows.map((g,i)=>(
+          <div key={i} style={{
+            position:'absolute',
+            top:g.top, bottom:g.bottom, left:g.left, right:g.right,
+            width:g.w, height:g.h, borderRadius:'50%',
+            transform: (g.left==='50%'||g.right==='50%') ? 'translateX(-50%)' : undefined,
+            background:`radial-gradient(ellipse, rgba(${g.color},${g.opacity}) 0%, transparent 70%)`,
+            filter:`blur(${g.blur}px)`,
+            animation:`qbg-glow ${g.dur}s ease-in-out infinite`,
+            animationDelay: g.delay ? `${g.delay}s` : undefined,
+          }}/>
+        ))}
       </div>
     </>
   )

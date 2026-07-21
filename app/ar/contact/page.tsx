@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FU, FI, GlassCard } from "@/components/DS";
 import { PageBackground } from "@/components/PageBackground";
 import { ImageReveal } from "@/components/TextReveal";
-import { CheckIcon } from "@/components/icons/GlassIcons";
+import { CheckIcon, PhoneIcon, EmailIcon, LocationIcon, ClockIcon } from "@/components/icons/GlassIcons";
 
 /* ── Input / Textarea — premium light glass style, mirrored for RTL ─────── */
 const inputBase: React.CSSProperties = {
@@ -162,20 +162,31 @@ export default function ArContactPage() {
               <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{ marginBottom: 20 }}>
                 تواصل معنا.
               </motion.h1>
-              <motion.p {...FU(.16)} className="t-xl" style={{ color: "var(--text-3)", maxWidth: 420, lineHeight: 1.9, marginBottom: 40 }}>
-                كل تواصل يُعامَل بسرية تامة. نردّ عادةً في غضون يوم عمل واحد.
+              <motion.p {...FU(.16)} className="t-xl" style={{ color: "var(--text-3)", maxWidth: 420, lineHeight: 1.9, marginBottom: 20 }}>
+                يسعدنا التواصل معكم. كل تواصل يُعامَل بسرية تامة.
               </motion.p>
+
+              <motion.div {...FU(.19)} className="contact-warm-badge" style={{ marginBottom: 32 }}>
+                <span>نردّ عادةً في غضون يوم عمل واحد</span>
+                <ClockIcon size="sm" />
+              </motion.div>
 
               <motion.div {...FU(.22)} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <GlassCard style={{ padding: "22px 26px" }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "'Madani Arabic',sans-serif", marginBottom: 10, textAlign: "right" }}>التواصل</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexDirection: "row-reverse", justifyContent: "flex-end" }}>
+                    <PhoneIcon size="sm" />
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "'Madani Arabic',sans-serif" }}>التواصل</div>
+                  </div>
                   <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text-1)", marginBottom: 6, textAlign: "right" }}>د. أحمد إسماعيل الفاروق</div>
                   <a href="tel:+966533339052" style={{ display: "block", fontSize: 13, color: "var(--cyan)", marginBottom: 3, direction: "ltr", textAlign: "right" }}>+966 53 333 9052</a>
-                  <a href="mailto:ceo@qmulate.com" style={{ display: "block", fontSize: 13, color: "var(--cyan)", direction: "ltr", textAlign: "right" }}>ceo@qmulate.com</a>
+                  <a href="mailto:ceo@qmulate.com" style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--cyan)", direction: "ltr", justifyContent: "flex-end" }}>ceo@qmulate.com<EmailIcon size="sm" /></a>
                 </GlassCard>
 
                 <GlassCard style={{ padding: "22px 26px" }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "'Madani Arabic',sans-serif", marginBottom: 10, textAlign: "right" }}>العنوان</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexDirection: "row-reverse", justifyContent: "flex-end" }}>
+                    <LocationIcon size="sm" />
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "'Madani Arabic',sans-serif" }}>العنوان</div>
+                  </div>
                   <p style={{ fontSize: 13, color: "var(--text-2)", lineHeight: 1.85, margin: 0, textAlign: "right" }}>
                     طريق الملك عبدالعزيز، حي البساتين<br />
                     ص.ب 23718، جدة 9351<br />
@@ -263,6 +274,13 @@ export default function ArContactPage() {
       </section>
 
       <style>{`
+        .contact-warm-badge{
+          display:inline-flex; align-items:center; gap:9px;
+          padding:9px 12px 9px 16px; border-radius:100px;
+          background:rgba(176,141,87,0.08); border:1px solid rgba(176,141,87,0.22);
+          font-size:12.5px; font-weight:600; color:var(--text-2);
+          font-family:'Madani Arabic',sans-serif;
+        }
         @media(max-width:900px){.grid-contact{grid-template-columns:1fr!important}}
         @media(max-width:560px){.form-row{grid-template-columns:1fr!important}}
         select option { background: #FFFFFF; color: var(--text-1); }

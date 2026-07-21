@@ -124,6 +124,21 @@ export default function ArServicesPage() {
         </div>
       </section>
 
+      {/* ── STRUCTURED INDEX — anchor rail tying the three services together ── */}
+      <div className="svc-index-rail" dir="rtl">
+        <div className="container">
+          <div className="svc-index-row">
+            {SERVICES.map((svc) => (
+              <a key={svc.num} href={`#svc-${svc.num}`} className="svc-index-item">
+                <span className="svc-index-dot" style={{ background:svc.color }} />
+                <span className="svc-index-num">{svc.num}</span>
+                <span className="svc-index-label">{svc.title}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ── SERVICES ── */}
       {SERVICES.map((svc, si) => {
         const SvcIcon = SERVICE_ICONS[si];
@@ -132,9 +147,10 @@ export default function ArServicesPage() {
         const isRev = layout === "split-rev";
 
         return (
-          <section key={svc.num} className="section-lux" style={{
+          <section key={svc.num} id={`svc-${svc.num}`} className="section-lux" style={{
             position:"relative",
             overflow:"hidden",
+            scrollMarginTop:"96px",
             borderTop: si > 0 ? "1px solid var(--glass-border)" : undefined,
           }} dir="rtl">
             {/* Ghost service number — editorial anchor, mirrored to the left */}
@@ -279,6 +295,31 @@ export default function ArServicesPage() {
         @media(max-width:900px){.svc-split{grid-template-columns:1fr!important;direction:rtl!important}}
         @media(max-width:640px){.grid-3{grid-template-columns:1fr!important}}
         @media(max-width:560px){.svc-layer-row{grid-template-columns:1fr!important;gap:8px!important}}
+
+        /* ── Structured index rail — wayfinding across the three services (RTL mirror) ── */
+        .svc-index-rail{
+          position:sticky; top:0; z-index:20;
+          padding:14px 0;
+          background:
+            linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.20) 50%,transparent 60%),
+            linear-gradient(180deg,rgba(255,255,255,0.42) 0%,rgba(255,255,255,0.20) 100%);
+          backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+          border-top:1px solid rgba(255,255,255,0.5); border-bottom:1px solid rgba(255,255,255,0.5);
+        }
+        @media(max-width:767px){ .svc-index-rail{ backdrop-filter:none; -webkit-backdrop-filter:none; background:rgba(255,255,255,0.92); position:relative; } }
+        .svc-index-row{ display:flex; gap:clamp(18px,3vw,40px); overflow-x:auto; scrollbar-width:none; direction:rtl; }
+        .svc-index-row::-webkit-scrollbar{ display:none; }
+        .svc-index-item{
+          display:flex; align-items:center; gap:9px; white-space:nowrap; flex-shrink:0;
+          font-size:12.5px; font-weight:600; color:var(--text-3); text-decoration:none;
+          padding:6px 2px; transition:color .2s ease; font-family:'Madani Arabic',sans-serif;
+        }
+        .svc-index-item:hover{ color:var(--text-1); }
+        .svc-index-dot{ width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+        .svc-index-num{
+          font-family:var(--font-geist-mono,'Courier New'),monospace; font-size:10.5px;
+          color:var(--text-4); letter-spacing:.06em;
+        }
       `}</style>
     </main>
   );
