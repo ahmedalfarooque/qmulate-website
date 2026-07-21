@@ -12,8 +12,8 @@
 
 import {
   motion, useScroll, useTransform, useSpring,
-  useInView, useMotionValue, AnimatePresence,
-  useReducedMotion, animate, stagger, type Variants,
+  useInView, useMotionValue,
+  useReducedMotion, type Variants,
 } from "framer-motion";
 import { useRef, useState, useEffect, useCallback, ReactNode } from "react";
 
@@ -217,11 +217,11 @@ export function CardTilt3D({
 // ══════════════════════════════════════════════════════════════
 
 export function MagneticButton({
-  children, strength=0.35, className="", style={}, onClick, href,
+  children, strength=0.35, className="", style={}, onClick,
 }: {
   children: ReactNode; strength?:number;
   className?:string; style?:React.CSSProperties;
-  onClick?:()=>void; href?:string;
+  onClick?:()=>void;
 }) {
   const should = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -274,6 +274,8 @@ export function TextReveal({
   const [dur, setDur] = useState(0.2);
   const words = text.split(" ");
 
+  // sampleVelocity reads refs internally — stable identity, no lint issue
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (inView) setDur(sampleVelocity()); }, [inView]);
 
   if (should) {
@@ -484,10 +486,10 @@ export function RevealSection({
 // ══════════════════════════════════════════════════════════════
 
 export function ShimmerButton({
-  children, className="", style={}, onClick, as="button",
+  children, className="", style={}, onClick,
 }: {
   children: ReactNode; className?:string; style?:React.CSSProperties;
-  onClick?:()=>void; as?:"button"|"a";
+  onClick?:()=>void;
 }) {
   const should = useReducedMotion();
   return (

@@ -15,8 +15,15 @@
 
 import { useId } from "react";
 import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
+
+/* NOTE: this app has no <ThemeProvider> mounted (see app/layout.tsx — the
+   site is permanently light-themed, no runtime toggle is exposed anywhere
+   in the UI). Calling next-themes' useTheme() outside a provider always
+   resolves resolvedTheme to undefined, which previously made every icon's
+   `isDark` check evaluate to true — silently rendering the saturated DARK
+   palette everywhere despite the LIGHT palette being correctly unified.
+   Hardcoding light here matches the site's actual, permanent theme state. */
+const IS_DARK_THEME = false;
 
 // ── Size system ──────────────────────────────────────────────────
 export type GlassSize = "xs"|"sm"|"md"|"lg"|"xl";
@@ -36,25 +43,28 @@ const DARK: Record<string,[string,string,string,string]> = {
   rose:    ["#3A0A14","#901830","#FB7185","rgba(251,113,133,.7)"],
 };
 
+/* Light mode — unified, restrained "Ivory & Brass" glass treatment.
+   Every variant resolves to the same muted parchment-glass tuple so icons
+   read as one calm family (matching the background) instead of a rainbow
+   of saturated per-icon colours with glowing halos. Dark mode is untouched. */
+const LIGHT_NEUTRAL: [string,string,string,string] =
+  ["#F9F5EC","#EFE6D2","#8C6D3F","rgba(18,58,87,0.16)"];
+/* Dedicated symbol-stroke color for light theme — the badge background
+   (deep/mid above) is deliberately pale parchment, but the glyph itself
+   needs strong, dark contrast to actually read. Previously the symbol
+   gradient reused those same pale tones, making every glyph nearly
+   invisible (cream-on-cream) — this fixes that without touching any
+   icon's path/shape. */
+const LIGHT_SYMBOL_A = "#123A57"; // deep navy
+const LIGHT_SYMBOL_B = "#0C2A40"; // darker navy
 const LIGHT: Record<string,[string,string,string,string]> = {
-  cyan:    ["#BAE6FD","#7DD3FC","#0284C7","rgba(2,132,199,.35)"],
-  violet:  ["#EDE9FE","#C4B5FD","#6D28D9","rgba(109,40,217,.35)"],
-  blue:    ["#DBEAFE","#BFDBFE","#1D4ED8","rgba(29,78,216,.35)"],
-  pink:    ["#FCE7F3","#FBCFE8","#BE185D","rgba(190,24,93,.35)"],
-  gold:    ["#FEF3C7","#FDE68A","#B45309","rgba(180,83,9,.35)"],
-  aurora:  ["#EDE9FE","#DBEAFE","#4F46E5","rgba(79,70,229,.35)"],
-  emerald: ["#D1FAF4","#99F6E4","#0F766E","rgba(15,118,110,.35)"],
-  indigo:  ["#E0E7FF","#C7D2FE","#4338CA","rgba(67,56,202,.35)"],
-  rose:    ["#FFE4E6","#FECDD3","#BE123C","rgba(190,18,60,.35)"],
+  cyan: LIGHT_NEUTRAL, violet: LIGHT_NEUTRAL, blue: LIGHT_NEUTRAL, pink: LIGHT_NEUTRAL,
+  gold: LIGHT_NEUTRAL, aurora: LIGHT_NEUTRAL, emerald: LIGHT_NEUTRAL, indigo: LIGHT_NEUTRAL, rose: LIGHT_NEUTRAL,
 };
 
 // ── useThemeColors hook ───────────────────────────────────────────
 function useVariantColors(variant: string) {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(()=>setMounted(true),[]);
-  const isDark = !mounted || resolvedTheme !== "light";
-  const palette = isDark ? DARK : LIGHT;
+  const palette = IS_DARK_THEME ? DARK : LIGHT;
   return palette[variant] ?? palette.cyan;
 }
 
@@ -76,21 +86,16 @@ function GlassSVG({
   accentDots?:{cx:number;cy:number;r:number;fill:string}[];
 }) {
   const [deep, mid, accent, glow] = colors;
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(()=>setMounted(true),[]);
-  const isDark = !mounted || resolvedTheme !== "light";
+  const isDark = IS_DARK_THEME;
 
-  const scale = size / 48;
   // Overlay opacity — stronger in dark, softer in light
-  const overlayOpacity = isDark ? 0.13 : 0.55;
-  // Border opacity
-  const borderOpacity = isDark ? 0.32 : 0.22;
-  // Symbol stroke colour
-  const symbolColor = isDark ? "#FFFFFF" : (colors[2]);
-  const symbolOpacity = isDark ? 0.95 : 0.9;
+  const overlayOpacity = isDark ? 0.13 : 0.46;
+  // Border opacity — stronger in light too, so the badge reads as a
+  // distinct premium chip instead of blending into the page background.
+  const borderOpacity = isDark ? 0.32 : 0.34;
+  const symbolOpacity = isDark ? 0.95 : 0.98;
   // Shine brightness
-  const shineOpacity = isDark ? 0.55 : 0.80;
+  const shineOpacity = isDark ? 0.55 : 0.88;
 
   return (
     <svg
@@ -119,16 +124,19 @@ function GlassSVG({
           <stop offset="40%"  stopColor="white" stopOpacity={borderOpacity}/>
           <stop offset="100%" stopColor="white" stopOpacity={isDark?.04:.08}/>
         </linearGradient>
-        {/* Symbol gradient (for colorful symbols in light mode) */}
+        {/* Symbol gradient — strong dark navy in light mode so the glyph
+            itself has real contrast against the pale parchment badge
+            (previously this reused the badge's own pale tones and the
+            glyph nearly disappeared). */}
         <linearGradient id={`sym-${uid}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={isDark?"#FFFFFF":mid}/>
-          <stop offset="100%" stopColor={isDark?"rgba(255,255,255,.85)":deep}/>
+          <stop offset="0%" stopColor={isDark?"#FFFFFF":LIGHT_SYMBOL_A}/>
+          <stop offset="100%" stopColor={isDark?"rgba(255,255,255,.85)":LIGHT_SYMBOL_B}/>
         </linearGradient>
       </defs>
 
       {/* ── Layer 1: Ambient glow behind glass ── */}
       <rect x="4" y="6" width="40" height="40" rx={rx}
-        fill={glow} opacity={isDark?.55:.30}
+        fill={glow} opacity={isDark?.55:.24}
         style={{filter:"blur(10px)"}}/>
 
       {/* ── Layer 2: Glass background (the colored gradient) ── */}
@@ -150,8 +158,9 @@ function GlassSVG({
       {/* ── Layer 6: Extra decorative paths (optional) ── */}
       {extraPaths}
 
-      {/* ── Layer 7: Accent spheres (optional) ── */}
-      {accentDots?.map((d,i)=>(
+      {/* ── Layer 7: Accent spheres (dark theme only — light theme keeps
+           icons calm/unified, no extra saturated colour dots) ── */}
+      {isDark && accentDots?.map((d,i)=>(
         <circle key={i} cx={d.cx} cy={d.cy} r={d.r}
           fill={d.fill}
           style={{filter:`drop-shadow(0 0 ${d.r*1.5}px ${d.fill})`}}/>
@@ -161,7 +170,7 @@ function GlassSVG({
       <g transform="translate(12,12)"
         style={{
           stroke: isDark?"white":`url(#sym-${uid})`,
-          strokeWidth:1.75,
+          strokeWidth: isDark?1.75:2.05,
           strokeLinecap:"round",
           strokeLinejoin:"round",
           fill:"none",
@@ -192,6 +201,14 @@ export function GlassIcon({
   const sz = typeof size === "number" ? size : SZ[size];
   const colors = useVariantColors(variant);
   const [,,,glow] = colors;
+  const isDark = IS_DARK_THEME;
+
+  // Light theme: a soft navy-tinted "premium" shadow that grounds the
+  // glass and lifts it off the page, without the saturated colour
+  // "bloom" the dark theme uses.
+  const dropShadow = isDark
+    ? `drop-shadow(0 ${sz*.06}px ${sz*.25}px ${glow})`
+    : `drop-shadow(0 ${sz*.05}px ${sz*.15}px ${glow}) drop-shadow(0 ${sz*.01}px ${sz*.03}px rgba(20,23,31,0.12))`;
 
   const content = (
     <div
@@ -202,7 +219,7 @@ export function GlassIcon({
       style={{
         width:sz, height:sz, display:"inline-flex",
         alignItems:"center", justifyContent:"center",
-        filter:`drop-shadow(0 ${sz*.06}px ${sz*.25}px ${glow})`,
+        filter:dropShadow,
         willChange:"transform, filter",
         ...style,
       }}
@@ -570,6 +587,7 @@ export function ProcessIcon({ step, size="md" as GlassSize }: { step:number; siz
   const Icon = Icons[Math.min(step, Icons.length-1)];
   return <Icon size={size}/>;
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ChallengeIcon = ({ size = "sm" }: { size?: string }) => (
   <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
     <path
@@ -582,6 +600,7 @@ export const ChallengeIcon = ({ size = "sm" }: { size?: string }) => (
   </svg>
 );
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const SolutionCheckIcon = ({ size = "sm" }: { size?: string }) => (
   <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8" />

@@ -1,6 +1,6 @@
 "use client";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion, useTransform, type MotionValue } from "framer-motion";
+import { useEffect, useState } from "react";
 
 /* ────────────────────────────────────────────────
    SceneBg — section background (3 layers + aurora)
@@ -11,7 +11,7 @@ export function SceneBg({ cyan=false }:{cyan?:boolean}){
       <div className="bg-mesh" style={{position:"absolute",inset:0}}/>
       <div className="bg-orbs"/>
       <div className="orb-c" style={{width:600,height:600,top:"20%",left:"55%",
-        background:`radial-gradient(circle,${cyan?"rgba(0,212,255,0.10)":"rgba(91,124,250,0.09)"} 0%,transparent 65%)`}}/>
+        background:`radial-gradient(circle,${cyan?"rgba(176,141,87,0.10)":"rgba(18,58,87,0.09)"} 0%,transparent 65%)`}}/>
     </div>
   );
 }
@@ -27,16 +27,16 @@ export function HeroBg({ scrollProgress }:{scrollProgress:MotionValue<number>}){
       <div className="bg-particles"/>
       <div className="bg-orbs"/>
       <div className="orb-c" style={{width:700,height:700,top:"15%",left:"52%",
-        background:"radial-gradient(circle,rgba(0,212,255,0.12) 0%,transparent 65%)"}}/>
+        background:"radial-gradient(circle,rgba(176,141,87,0.12) 0%,transparent 65%)"}}/>
       <div className="orb-c" style={{width:500,height:500,top:"55%",left:"5%",
-        background:"radial-gradient(circle,rgba(124,58,237,0.09) 0%,transparent 65%)",
+        background:"radial-gradient(circle,rgba(140,109,63,0.09) 0%,transparent 65%)",
         animationDelay:"-10s"}}/>
       {/* Rotating geometry rings */}
       <div className="geom-ring" style={{width:520,height:520,top:"8%",right:"-8%",opacity:0.06}}/>
       <div className="geom-ring-b" style={{width:320,height:320,bottom:"15%",left:"3%",opacity:0.05}}/>
       {/* Scan line */}
       <div style={{position:"absolute",left:0,right:0,height:1,
-        background:"linear-gradient(90deg,transparent,rgba(0,212,255,.5),rgba(110,231,255,.3),transparent)",
+        background:"linear-gradient(90deg,transparent,rgba(176,141,87,.5),rgba(110,231,255,.3),transparent)",
         animation:"scanLine 8s linear infinite",zIndex:2}}/>
     </motion.div>
   );
@@ -69,9 +69,9 @@ export function PageHero({children,minH="64vh",particles=true}:{children:React.R
         {particles&&<div className="bg-particles"/>}
         <div className="bg-orbs"/>
         <div className="orb-c" style={{width:600,height:600,top:"10%",left:"55%",
-          background:"radial-gradient(circle,rgba(0,212,255,0.10) 0%,transparent 65%)"}}/>
+          background:"radial-gradient(circle,rgba(176,141,87,0.10) 0%,transparent 65%)"}}/>
         <div className="orb-c" style={{width:400,height:400,top:"60%",left:"5%",
-          background:"radial-gradient(circle,rgba(124,58,237,0.08) 0%,transparent 65%)",
+          background:"radial-gradient(circle,rgba(140,109,63,0.08) 0%,transparent 65%)",
           animationDelay:"-12s"}}/>
         <div className="geom-ring" style={{width:480,height:480,top:"5%",right:"-6%",opacity:0.05}}/>
         <div className="geom-ring-b" style={{width:280,height:280,bottom:"20%",left:"2%",opacity:0.04}}/>
@@ -89,7 +89,7 @@ export function PageHero({children,minH="64vh",particles=true}:{children:React.R
 /* ─────────────────────────────────
    SectionHead — centred / left header
    ───────────────────────────────── */
-export function SectionHead({badge,h2,sub,left=false,cyan=false}:{
+export function SectionHead({badge,h2,sub,left=false}:{
   badge:string;h2:React.ReactNode;sub?:string;left?:boolean;cyan?:boolean
 }){
   const FU={initial:{opacity:0,y:28},whileInView:{opacity:1,y:0},viewport:{once:true},transition:{duration:.8}};
@@ -103,12 +103,12 @@ export function SectionHead({badge,h2,sub,left=false,cyan=false}:{
       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <motion.h2 {...FU as any} className="t-h2" style={{
         maxWidth:640,margin:left?"0 0 16px":"0 auto 16px",
-        background:"linear-gradient(160deg,#fff 25%,#94A3B8 100%)",
+        background:"var(--gt-primary)",
         WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"
       }}>{h2}</motion.h2>
       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       {sub&&<motion.p {...FU as any} className="t-lg" style={{
-        color:"#64748B",maxWidth:500,margin:left?"0":"0 auto"
+        color:"var(--text-3)",maxWidth:500,margin:left?"0":"0 auto"
       }}>{sub}</motion.p>}
     </div>
   );
@@ -117,7 +117,7 @@ export function SectionHead({badge,h2,sub,left=false,cyan=false}:{
 /* ───────────────────────
    KpiCard — metric display
    ─────────────────────── */
-export function KpiCard({value,label,sub,accent="#00D4FF",icon}:{
+export function KpiCard({value,label,sub,accent="#B08D57",icon}:{
   value:string;label:string;sub?:string;accent?:string;icon?:string
 }){
   return(
@@ -127,8 +127,8 @@ export function KpiCard({value,label,sub,accent="#00D4FF",icon}:{
       <div style={{fontSize:"clamp(32px,3.5vw,50px)",fontWeight:900,color:accent,
         fontVariantNumeric:"tabular-nums",letterSpacing:"-0.04em",lineHeight:1,
         filter:`drop-shadow(0 0 20px ${accent}55)`}}>{value}</div>
-      <div style={{fontSize:14,fontWeight:600,color:"#F1F5F9",marginTop:10}}>{label}</div>
-      {sub&&<div style={{fontSize:12,color:"#64748B",marginTop:4,fontFamily:"var(--font-geist-mono,monospace)"}}>{sub}</div>}
+      <div style={{fontSize:14,fontWeight:600,color:"var(--text-1)",marginTop:10}}>{label}</div>
+      {sub&&<div style={{fontSize:12,color:"var(--text-3)",marginTop:4,fontFamily:"var(--font-geist-mono,monospace)"}}>{sub}</div>}
     </div>
   );
 }
@@ -136,7 +136,7 @@ export function KpiCard({value,label,sub,accent="#00D4FF",icon}:{
 /* ─────────────────────────────────────────
    FloatingOrb — decorative animated orb
    ─────────────────────────────────────────*/
-export function FloatingOrb({size=300,color="rgba(0,212,255,0.08)",top,left,right,bottom,delay=0}:{
+export function FloatingOrb({size=300,color="rgba(176,141,87,0.08)",top,left,right,bottom,delay=0}:{
   size?:number;color?:string;top?:string;left?:string;right?:string;bottom?:string;delay?:number
 }){
   return(
@@ -163,13 +163,13 @@ export function GlassDashboard(){
   ];
   return(
     <div className="gp" style={{borderRadius:28,padding:3,
-      background:"linear-gradient(135deg,rgba(0,212,255,0.18),rgba(91,124,250,0.08),transparent)"}}>
+      background:"linear-gradient(135deg,rgba(176,141,87,0.18),rgba(18,58,87,0.08),transparent)"}}>
       <div style={{background:"rgba(2,4,10,0.88)",backdropFilter:"blur(32px)",
         borderRadius:26,overflow:"hidden"}}>
         {/* Status bar */}
         <div style={{background:"rgba(6,11,20,0.95)",padding:"11px 20px",
           display:"flex",alignItems:"center",justifyContent:"space-between",
-          borderBottom:"1px solid rgba(0,212,255,0.07)"}}>
+          borderBottom:"1px solid rgba(176,141,87,0.07)"}}>
           <span style={{fontSize:11,color:"#1E293B",fontFamily:"var(--font-geist-mono,monospace)"}}>9:41</span>
           <span className="badge" style={{padding:"3px 10px",fontSize:9,gap:5}}>
             <span className="dot-live" style={{width:4,height:4}}/>QMULATE LIVE
@@ -184,7 +184,7 @@ export function GlassDashboard(){
           <div style={{fontSize:34,fontWeight:900,color:"#F1F5F9",letterSpacing:"-0.04em",
             fontVariantNumeric:"tabular-nums",marginBottom:6}}>SAR 48.2m</div>
           <div style={{display:"inline-flex",alignItems:"center",gap:6,
-            background:"rgba(0,212,255,0.09)",border:"1px solid rgba(0,212,255,0.22)",
+            background:"rgba(176,141,87,0.09)",border:"1px solid rgba(176,141,87,0.22)",
             borderRadius:100,padding:"3px 12px",fontSize:12,color:"var(--cyan)",marginBottom:24}}>
             ▲ 2.4% this quarter
           </div>
@@ -218,10 +218,10 @@ export function GlassDashboard(){
    ────────────────────────────────────────────────────────── */
 export function GlassArchDiagram(){
   const layers=[
-    {n:"04",l:"Advisory Layer",c:"rgba(168,85,247,0.14)",bc:"rgba(168,85,247,0.3)",tc:"#A855F7",w:"100%"},
-    {n:"03",l:"Intelligence Layer",c:"rgba(91,124,250,0.14)",bc:"rgba(91,124,250,0.3)",tc:"#5B7CFA",w:"88%"},
-    {n:"02",l:"Operations Layer",c:"rgba(0,212,255,0.10)",bc:"rgba(0,212,255,0.28)",tc:"#00D4FF",w:"76%"},
-    {n:"01",l:"Governance Layer",c:"rgba(0,212,255,0.18)",bc:"rgba(0,212,255,0.45)",tc:"#00D4FF",w:"64%"},
+    {n:"04",l:"Advisory Layer",c:"rgba(140,109,63,0.14)",bc:"rgba(140,109,63,0.3)",tc:"#B08D57",w:"100%"},
+    {n:"03",l:"Intelligence Layer",c:"rgba(18,58,87,0.14)",bc:"rgba(18,58,87,0.3)",tc:"#123A57",w:"88%"},
+    {n:"02",l:"Operations Layer",c:"rgba(176,141,87,0.10)",bc:"rgba(176,141,87,0.28)",tc:"#B08D57",w:"76%"},
+    {n:"01",l:"Governance Layer",c:"rgba(176,141,87,0.18)",bc:"rgba(176,141,87,0.45)",tc:"#B08D57",w:"64%"},
   ];
   return(
     <div className="gc" style={{padding:32,borderRadius:24}}>
@@ -238,7 +238,7 @@ export function GlassArchDiagram(){
             }}>
             <span style={{fontSize:10,fontWeight:700,color:l.tc,
               fontFamily:"var(--font-geist-mono,monospace)",opacity:.8}}>{l.n}</span>
-            <span style={{fontSize:13,fontWeight:600,color:"#F1F5F9"}}>{l.l}</span>
+            <span style={{fontSize:13,fontWeight:600,color:"var(--text-1)"}}>{l.l}</span>
             <div style={{marginLeft:"auto",display:"flex",gap:4}}>
               {[...Array(3)].map((_,j)=>(
                 <div key={j} style={{width:4,height:4,borderRadius:1,background:l.tc,opacity:.4+j*.2}}/>
@@ -249,7 +249,7 @@ export function GlassArchDiagram(){
       </div>
       <div style={{marginTop:18,paddingTop:14,borderTop:"1px solid rgba(255,255,255,0.06)",
         display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <span className="t-xs" style={{color:"#1E293B"}}>Single governed framework</span>
+        <span className="t-xs" style={{color:"var(--text-4)"}}>Single governed framework</span>
         <div style={{width:6,height:6,borderRadius:"50%",background:"var(--cyan)",
           animation:"glowPulse 2s ease-in-out infinite"}}/>
       </div>
@@ -274,7 +274,7 @@ export function MouseGlow(){
     <div style={{
       position:"fixed",top:0,left:0,pointerEvents:"none",zIndex:0,
       width:320,height:320,borderRadius:"50%",
-      background:"radial-gradient(circle,rgba(0,212,255,0.055) 0%,transparent 70%)",
+      background:"radial-gradient(circle,rgba(176,141,87,0.055) 0%,transparent 70%)",
       transform:`translate(${pos.x-160}px,${pos.y-160}px)`,
       transition:"transform 0.12s ease-out",
       filter:"blur(20px)",
@@ -285,19 +285,19 @@ export function MouseGlow(){
 /* ──────────────────────────────────────────────────────────
    GlassTimeline — animated vertical / horizontal timeline
    ────────────────────────────────────────────────────────── */
-export function GlassTimeline({items,accent="#00D4FF"}:{
+export function GlassTimeline({items,accent="#B08D57"}:{
   items:{year:string;title:string;desc:string;tag?:string}[];accent?:string
 }){
   return(
     <div style={{position:"relative",paddingLeft:40}}>
       <div style={{position:"absolute",left:11,top:8,bottom:8,width:1,
-        background:`linear-gradient(to bottom,${accent},rgba(0,212,255,0.15),transparent)`}}/>
+        background:`linear-gradient(to bottom,${accent},rgba(176,141,87,0.15),transparent)`}}/>
       {items.map((t,i)=>(
         <motion.div key={t.year} initial={{opacity:0,x:-20}} whileInView={{opacity:1,x:0}}
           viewport={{once:true}} transition={{duration:.7,delay:.08+i*.1}}
           style={{position:"relative",paddingBottom:32,display:"flex",gap:28,alignItems:"flex-start"}}>
           <div style={{position:"absolute",left:-40,top:8,width:10,height:10,borderRadius:"50%",
-            background:i===items.length-1?accent:"rgba(0,212,255,0.35)",
+            background:i===items.length-1?accent:"rgba(176,141,87,0.35)",
             boxShadow:i===items.length-1?`0 0 14px ${accent}bb`:undefined,flexShrink:0}}/>
           <div style={{flexShrink:0,minWidth:48}}>
             <div style={{fontSize:13,fontWeight:800,color:accent,
@@ -305,10 +305,10 @@ export function GlassTimeline({items,accent="#00D4FF"}:{
           </div>
           <div className="gc" style={{flex:1,padding:"20px 26px",borderRadius:14}}>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
-              <div style={{fontSize:15,fontWeight:700,color:"#F1F5F9"}}>{t.title}</div>
+              <div style={{fontSize:15,fontWeight:700,color:"var(--text-1)"}}>{t.title}</div>
               {t.tag&&<span className="badge" style={{fontSize:9,padding:"2px 9px"}}>{t.tag}</span>}
             </div>
-            <p className="t-sm" style={{color:"#475569",lineHeight:1.72}}>{t.desc}</p>
+            <p className="t-sm" style={{color:"var(--text-3)",lineHeight:1.72}}>{t.desc}</p>
           </div>
         </motion.div>
       ))}
@@ -319,7 +319,7 @@ export function GlassTimeline({items,accent="#00D4FF"}:{
 /* ─────────────────────────────────────────────────────
    ProcessSteps — 4-step process with connecting line
    ───────────────────────────────────────────────────── */
-export function ProcessSteps({steps,accent="#00D4FF"}:{
+export function ProcessSteps({steps,accent="#B08D57"}:{
   steps:{n:string;l:string;d:string;icon:string}[];accent?:string
 }){
   return(
@@ -338,8 +338,8 @@ export function ProcessSteps({steps,accent="#00D4FF"}:{
               animation:`floatY ${5+i}s ease-in-out infinite`,animationDelay:`${i*.4}s`,
             }}>{s.icon}</div>
             <div className="t-xs" style={{color:accent,display:"block",marginBottom:8}}>{s.n}</div>
-            <div style={{fontSize:16,fontWeight:700,color:"#F1F5F9",marginBottom:9}}>{s.l}</div>
-            <p className="t-sm" style={{color:"#475569",lineHeight:1.72}}>{s.d}</p>
+            <div style={{fontSize:16,fontWeight:700,color:"var(--text-1)",marginBottom:9}}>{s.l}</div>
+            <p className="t-sm" style={{color:"var(--text-3)",lineHeight:1.72}}>{s.d}</p>
           </motion.div>
         ))}
       </div>
@@ -357,12 +357,12 @@ export function CapabilityGrid({items}:{items:{icon:string;label:string;sub:stri
         <motion.div key={c.label} initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}}
           viewport={{once:true}} transition={{duration:.7,delay:.05+i*.07}}
           className="gc" style={{padding:"34px 30px",borderRadius:20}}>
-          <div style={{width:50,height:50,borderRadius:13,background:"rgba(0,212,255,0.08)",
-            border:"1px solid rgba(0,212,255,0.2)",display:"flex",alignItems:"center",
+          <div style={{width:50,height:50,borderRadius:13,background:"rgba(176,141,87,0.08)",
+            border:"1px solid rgba(176,141,87,0.2)",display:"flex",alignItems:"center",
             justifyContent:"center",fontSize:22,color:"var(--cyan)",marginBottom:20,
             animation:`floatY ${5+i%3}s ease-in-out ${i*.3}s infinite`}}>{c.icon}</div>
-          <div style={{fontSize:16,fontWeight:700,color:"#F1F5F9",marginBottom:8}}>{c.label}</div>
-          <p className="t-sm" style={{color:"#475569",lineHeight:1.7}}>{c.sub}</p>
+          <div style={{fontSize:16,fontWeight:700,color:"var(--text-1)",marginBottom:8}}>{c.label}</div>
+          <p className="t-sm" style={{color:"var(--text-3)",lineHeight:1.7}}>{c.sub}</p>
         </motion.div>
       ))}
     </div>
@@ -416,7 +416,7 @@ export function FloatingBubbles(){
    HeroGlassPanel — large central frosted glass hero container
    (ref: images 1, 2, 3 — the big glass rectangle that zooms in)
    ───────────────────────────────────────────────────────────── */
-export function HeroGlassPanel({children,right=false}:{children:React.ReactNode;right?:boolean}){
+export function HeroGlassPanel({children}:{children:React.ReactNode;right?:boolean}){
   return(
     <div className="hero-glass glass-zoom" style={{
       padding:"44px 48px",height:"100%",
@@ -424,7 +424,7 @@ export function HeroGlassPanel({children,right=false}:{children:React.ReactNode;
     }}>
       {/* Scan line inside glass */}
       <div style={{position:"absolute",left:0,right:0,height:1,top:"12%",
-        background:"linear-gradient(90deg,transparent,rgba(0,212,255,0.2),rgba(255,255,255,0.1),transparent)",
+        background:"linear-gradient(90deg,transparent,rgba(176,141,87,0.2),rgba(255,255,255,0.1),transparent)",
         pointerEvents:"none"}}/>
       {children}
     </div>
@@ -439,7 +439,7 @@ export function GlobeViz(){
     {r:40,delay:0,c:"var(--cyan)"},
     {r:70,delay:.8,c:"var(--violet)"},
     {r:100,delay:1.6,c:"var(--blue)"},
-    {r:130,delay:2.4,c:"rgba(255,110,199,0.6)"},
+    {r:130,delay:2.4,c:"rgba(156,107,84,0.6)"},
   ];
   return(
     <div style={{position:"relative",width:280,height:280,margin:"0 auto"}}>
@@ -463,8 +463,8 @@ export function GlobeViz(){
       <div style={{
         position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",
         width:52,height:52,borderRadius:"50%",
-        background:"radial-gradient(circle,rgba(0,212,255,0.45) 0%,rgba(0,212,255,0.12) 60%,transparent 100%)",
-        boxShadow:"0 0 40px rgba(0,212,255,0.6)",
+        background:"radial-gradient(circle,rgba(176,141,87,0.45) 0%,rgba(176,141,87,0.12) 60%,transparent 100%)",
+        boxShadow:"0 0 40px rgba(176,141,87,0.6)",
         animation:"glowPulse 2.5s ease-in-out infinite",
       }}/>
     </div>
@@ -487,18 +487,18 @@ export function StackedGlassCards({items}:{items:{label:string;value:string;icon
             position:"absolute",
             top:i*28,right:i*20,
             width:220,
-            background:`rgba(255,255,255,${0.06+i*.02})`,
-            backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",
-            border:"1px solid rgba(255,255,255,0.13)",
+            background:`rgba(255,255,255,${0.62+i*.08})`,
+            backdropFilter:"blur(16px) saturate(150%)",WebkitBackdropFilter:"blur(16px) saturate(150%)",
+            border:"1px solid rgba(20,23,31,0.08)",
             borderRadius:20,padding:"18px 22px",
-            boxShadow:`0 ${12+i*8}px ${32+i*12}px rgba(0,0,0,${0.4+i*.08})`,
+            boxShadow:`0 ${8+i*6}px ${24+i*10}px rgba(20,23,31,${0.08+i*.02})`,
             transform:`rotate(${i%2===0?3:-3}deg)`,
           }}>
           <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
             <span style={{fontSize:18,color:item.c,filter:`drop-shadow(0 0 8px ${item.c})`}}>{item.icon}</span>
-            <span style={{fontSize:11,color:"#64748B",fontFamily:"var(--font-geist-mono,monospace)",textTransform:"uppercase",letterSpacing:"0.08em"}}>{item.label}</span>
+            <span style={{fontSize:11,color:"var(--text-3)",fontFamily:"var(--font-geist-mono,monospace)",textTransform:"uppercase",letterSpacing:"0.08em"}}>{item.label}</span>
           </div>
-          <div style={{fontSize:22,fontWeight:800,color:"#F1F5F9",fontVariantNumeric:"tabular-nums"}}>{item.value}</div>
+          <div style={{fontSize:22,fontWeight:800,color:"var(--text-1)",fontVariantNumeric:"tabular-nums"}}>{item.value}</div>
         </motion.div>
       ))}
     </div>
@@ -555,8 +555,8 @@ export function RippleSphere({size=180,style={}}:{size?:number;style?:React.CSSP
         <div key={i} className="ripple-ring" style={{
           width:size*(.85+i*.45),
           height:size*(.85+i*.45),
-          borderColor:`rgba(0,212,255,${.4-.1*i})`,
-          boxShadow:`0 0 ${8+i*4}px rgba(0,212,255,${.25-.06*i})`,
+          borderColor:`rgba(176,141,87,${.4-.1*i})`,
+          boxShadow:`0 0 ${8+i*4}px rgba(176,141,87,${.25-.06*i})`,
         }}/>
       ))}
       <div className="ripple-core" style={{width:size,height:size,zIndex:2}}/>
@@ -621,7 +621,7 @@ export function ViewportGlassHero({children}:{children:React.ReactNode}){
     }}>
       {/* Top shimmer line */}
       <div style={{position:"absolute",top:0,left:"5%",right:"5%",height:1,
-        background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.4),rgba(0,212,255,0.5),rgba(255,255,255,0.4),transparent)",
+        background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.4),rgba(176,141,87,0.5),rgba(255,255,255,0.4),transparent)",
         zIndex:10}}/>
       {/* Diagonal light beam (ref 1) */}
       <div className="light-beam" style={{
@@ -636,7 +636,7 @@ export function ViewportGlassHero({children}:{children:React.ReactNode}){
 /* ─────────────────────────────────────────────────────────────────
    TubeOrnament — the orange tube/ribbon shape from Image 1
    ───────────────────────────────────────────────────────────────── */
-export function TubeOrnament({color="#FF9A3C",x=0,y=0,scale=1,rotate=0,opacity=0.8}:{
+export function TubeOrnament({color="#C9A468",x=0,y=0,scale=1,rotate=0,opacity=0.8}:{
   color?:string;x?:number;y?:number;scale?:number;rotate?:number;opacity?:number
 }){
   return(

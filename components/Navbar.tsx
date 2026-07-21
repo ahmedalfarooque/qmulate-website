@@ -4,25 +4,19 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { MagneticButton } from "@/components/Motion";
-import { ThemeSwitcher } from "./ThemeSwitcher";
 import { MenuIcon, CloseIcon } from "./icons/GlassIcons";
 
 const EN_LINKS = [
-  {h:"/",l:"Home"},{h:"/#about",l:"About"},{h:"/#services",l:"Services"},
-  {h:"/#solutions",l:"Solutions"},{h:"/#projects",l:"Projects"},{h:"/#contact",l:"Contact"},
+  {h:"/",l:"Home"},{h:"/about",l:"About"},{h:"/services",l:"Services"},{h:"/contact",l:"Contact"},
 ];
 const AR_LINKS = [
-  {h:"/ar",l:"الرئيسية"},{h:"/ar#about",l:"من نحن"},{h:"/ar#services",l:"خدماتنا"},
-  {h:"/ar#solutions",l:"الحلول"},{h:"/ar#projects",l:"المشاريع"},{h:"/ar#contact",l:"تواصل"},
+  {h:"/ar",l:"الرئيسية"},{h:"/ar/about",l:"من نحن"},{h:"/ar/services",l:"خدماتنا"},{h:"/ar/contact",l:"تواصل"},
 ];
-
-const SECTION_IDS = ["home","about","services","solutions","projects","contact"];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [compact, setCompact] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
   const path = usePathname();
   const router = useRouter();
   const isAr = path.startsWith("/ar");
@@ -40,28 +34,9 @@ export function Navbar() {
   });
   useEffect(()=>setOpen(false),[path]);
 
-  useEffect(()=>{
-    const onScroll = () => {
-      const sy = window.scrollY + 80;
-      let current = "home";
-      for (const id of SECTION_IDS) {
-        const el = document.getElementById(id);
-        if (el) {
-          const top = el.getBoundingClientRect().top + window.scrollY;
-          if (sy >= top) current = id;
-        }
-      }
-      setActiveSection(current);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  },[path]);
-
   const isActive = (h:string) => {
-    if (h==="/"||h==="/ar") return (activeSection==="home") && path===h;
-    const hash = h.split("#")[1];
-    return hash ? activeSection===hash : false;
+    if (h==="/"||h==="/ar") return path==="/"||path==="/ar";
+    return path===h || path.startsWith(h+"/");
   };
 
   return (
@@ -69,23 +44,24 @@ export function Navbar() {
       <motion.header
         animate={{
           height: compact ? 52 : 64,
-          background: scrolled ? "rgba(var(--nav-bg-rgb,2,4,10),.88)" : "rgba(2,4,10,0)",
-          backdropFilter: scrolled ? "blur(48px) saturate(220%)" : "blur(0px)",
-          borderBottomColor: scrolled ? "rgba(255,255,255,.055)" : "rgba(255,255,255,0)",
+          background: scrolled ? "rgba(250,248,244,.86)" : "rgba(250,248,244,0)",
+          backdropFilter: scrolled ? "blur(18px) saturate(150%)" : "blur(0px)",
+          borderBottomColor: scrolled ? "rgba(20,23,31,.07)" : "rgba(20,23,31,0)",
         }}
-        transition={{duration:.28}}
+        transition={{duration:.4,ease:[.16,1,.3,1]}}
         style={{
           position:"fixed",top:0,left:0,right:0,zIndex:9999,
-          WebkitBackdropFilter:scrolled?"blur(48px) saturate(220%)":"blur(0px)",
+          WebkitBackdropFilter:scrolled?"blur(18px) saturate(150%)":"blur(0px)",
           borderBottom:"1px solid transparent",
         }}
       >
-        {/* Cyan shimmer line on scroll */}
+        {/* Gold shimmer line on scroll */}
         <motion.div animate={{opacity:scrolled?1:0}}
+          transition={{duration:.4}}
           style={{position:"absolute",top:0,left:0,right:0,height:1,
             background:isAr
-              ?"linear-gradient(270deg,transparent 5%,rgba(0,212,255,.5) 40%,rgba(138,92,255,.35) 65%,transparent 95%)"
-              :"linear-gradient(90deg,transparent 5%,rgba(0,212,255,.5) 40%,rgba(138,92,255,.35) 65%,transparent 95%)"}}/>
+              ?"linear-gradient(270deg,transparent 5%,rgba(176,141,87,.55) 40%,rgba(18,58,87,.30) 65%,transparent 95%)"
+              :"linear-gradient(90deg,transparent 5%,rgba(176,141,87,.55) 40%,rgba(18,58,87,.30) 65%,transparent 95%)"}}/>
 
         <div className="cw" style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,direction:isAr?"rtl":"ltr"}}>
 
@@ -94,22 +70,21 @@ export function Navbar() {
             <img
               src="/Logo.png"
               alt="QMULATE logo"
-              width={28}
-              height={36}
+              width={42}
+              height={49}
               className="qlogo-img"
               style={{
                 objectFit: 'contain',
                 display: 'block',
                 background: 'transparent',
-                mixBlendMode: 'screen',
-                filter: 'drop-shadow(0 0 6px rgba(91,124,250,0.55))',
+                filter: 'drop-shadow(0 3px 14px rgba(20,23,31,0.22)) drop-shadow(0 1px 2px rgba(20,23,31,0.30))',
               }}
             />
             <div>
-              <div style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:12,
+              <div style={{fontFamily:"var(--font-geist,'Inter',sans-serif)",fontWeight:800,fontSize:12,
                 letterSpacing:"0.17em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
               {isAr
-                ? <div style={{fontFamily:"'IBM Plex Sans Arabic',sans-serif",fontSize:9,color:"var(--text-4)",marginTop:2}}>كيوميليت</div>
+                ? <div style={{fontFamily:"'Madani Arabic',sans-serif",fontSize:9,color:"var(--text-4)",marginTop:2}}>كيوميليت</div>
                 : <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,
                     color:"var(--text-4)",letterSpacing:"0.10em",marginTop:2}}>FAMILY OFFICE</div>}
             </div>
@@ -120,19 +95,17 @@ export function Navbar() {
             {links.map(l=>(
               <Link key={l.h} href={l.h} style={{
                 padding:"7px 14px",borderRadius:100,fontSize:13,fontWeight:500,
-                fontFamily:isAr?"'IBM Plex Sans Arabic',sans-serif":"'Inter',sans-serif",
+                fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
                 color:isActive(l.h)?"var(--text-1)":"var(--text-3)",
-                background:isActive(l.h)?"rgba(0,212,255,.09)":"transparent",
-                border:`1px solid ${isActive(l.h)?"rgba(0,212,255,.22)":"transparent"}`,
-                transition:"all .2s",
+                background:isActive(l.h)?"rgba(176,141,87,.10)":"transparent",
+                border:`1px solid ${isActive(l.h)?"rgba(176,141,87,.24)":"transparent"}`,
+                transition:"all .3s ease",
               }}>{l.l}</Link>
             ))}
           </nav>
 
           {/* ── Right actions ── */}
           <div style={{display:"flex",alignItems:"center",gap:10}}>
-            <ThemeSwitcher/>
-
             <button
               onClick={() => startTransition(() => {
                 router.push(isAr ? (path.replace(/^\/ar/, "") || "/") : ("/ar" + (path === "/" ? "" : path)));
@@ -148,7 +121,7 @@ export function Navbar() {
             </button>
 
             <MagneticButton strength={0.25}>
-              <Link href={isAr?"/ar#contact":"/#contact"} className="btn btn-primary d-cta"
+              <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary d-cta"
                 style={{padding:"8px 18px",fontSize:12,borderRadius:100}}>
                 {isAr?"تواصل":"Get in touch"}
               </Link>
@@ -171,11 +144,11 @@ export function Navbar() {
         {open && (
           <motion.div
             initial={{opacity:0,x:"100%"}} animate={{opacity:1,x:0}} exit={{opacity:0,x:"100%"}}
-            transition={{duration:.32,ease:[.4,0,.2,1]}}
+            transition={{duration:.4,ease:[.16,1,.3,1]}}
             style={{
               position:"fixed",inset:0,zIndex:9998,
-              background:"rgba(var(--mob-bg-rgb,2,4,10),.97)",
-              backdropFilter:"blur(48px)",
+              background:"rgba(250,248,244,.97)",
+              backdropFilter:"blur(20px) saturate(150%)",
               paddingTop:64,direction:isAr?"rtl":"ltr",
               display:"flex",flexDirection:"column",
             }}>
@@ -185,18 +158,19 @@ export function Navbar() {
                   padding:"20px 0",borderBottom:"1px solid var(--glass-border)",
                   fontSize:"clamp(22px,6vw,34px)",fontWeight:800,
                   letterSpacing:isAr?0:"-0.03em",
-                  fontFamily:isAr?"'IBM Plex Sans Arabic',sans-serif":"'Inter',sans-serif",
-                  color:isActive(l.h)?"var(--cyan)":"var(--text-1)",
+                  fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
+                  color:isActive(l.h)?"var(--gold)":"var(--text-1)",
                   textAlign:isAr?"right":"left",
                   animation:`fade-up .42s ${i*55}ms both`,
                 }}>
                   {l.l}
                 </Link>
               ))}
-              <Link href={isAr?"/ar#contact":"/#contact"} className="btn btn-primary"
+              <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary"
                 style={{marginTop:28,justifyContent:"center",fontSize:15,padding:16}}>
                 {isAr?"طلب تواصل ←":"Request an introduction →"}
               </Link>
+
             </nav>
           </motion.div>
         )}
@@ -206,9 +180,6 @@ export function Navbar() {
         @keyframes fade-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
         @media(max-width:900px){.d-nav,.d-cta{display:none!important}.m-btn{display:flex!important;align-items:center}}
         @media(min-width:901px){.m-btn{display:none!important}}
-        [data-theme="light"] header{--nav-bg-rgb:255,255,255;background:rgba(255,255,255,.0)!important}
-        [data-theme="light"] header[style*="rgba(var(--nav-bg-rgb,2,4,10),.88)"]{background:rgba(255,255,255,.88)!important}
-        [data-theme="light"] .mob-overlay{--mob-bg-rgb:248,247,244}
       `}</style>
     </>
   );

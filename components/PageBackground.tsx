@@ -11,158 +11,78 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
   // 10+ blurred elements simultaneously on a phone kills performance.
   if (typeof window !== 'undefined' && window.innerWidth < 768) return null
 
+  // Soft luxury palette only — no saturated color "blobs". Gentle sky-blue,
+  // champagne and pearl tones at low opacity so the ivory page background
+  // stays bright while glass cards read clearly on top of it.
   const isBlue = ['home', 'about', 'solutions', 'contact'].includes(variant)
-  const accentA = isBlue ? '91,124,250' : '0,196,204'
-  const accentB = isBlue ? '0,196,204' : '91,124,250'
+  const skyBlue   = '186,210,232'   // soft sky blue
+  const champagne = '224,201,157'   // soft champagne / brass-gold
+  const pearl     = '255,255,255'   // pearl white
+  const accentA = isBlue ? skyBlue : champagne
+  const accentB = isBlue ? champagne : skyBlue
+
+  /* Per-page lighting composition — each page keeps the same soft
+     palette, opacity ceiling and blur discipline, but the glow shapes
+     sit in different positions so each page reads with its own
+     atmosphere while staying visually consistent with the rest of the
+     site (no saturated colour, no layout ever repeats pixel-for-pixel). */
+  type Glow = { top?:string; bottom?:string; left?:string; right?:string; w:number; h:number; color:string; opacity:number; blur:number; dur:number; delay?:number }
+  const LAYOUTS: Record<string, Glow[]> = {
+    home: [
+      { top:'2%',  left:'18%', w:1000, h:820, color:pearl,   opacity:0.55, blur:70, dur:8 },
+      { top:'5%',  left:'10%', w:1100, h:900, color:accentA, opacity:0.12, blur:60, dur:7 },
+      { bottom:'5%', right:'5%', w:800, h:700, color:accentB, opacity:0.10, blur:60, dur:10, delay:3 },
+      { top:'40%', right:'20%', w:600, h:600, color:accentA, opacity:0.08, blur:80, dur:12, delay:6 },
+    ],
+    about: [
+      /* Centred, symmetric — mirrors the About page's centred 3-col composition */
+      { top:'6%',  left:'50%',  w:1200, h:640, color:pearl,   opacity:0.45, blur:75, dur:9 },
+      { top:'22%', left:'6%',   w:760,  h:760, color:accentA, opacity:0.10, blur:65, dur:8 },
+      { top:'22%', right:'6%',  w:760,  h:760, color:accentB, opacity:0.10, blur:65, dur:11, delay:2 },
+      { bottom:'4%', left:'50%', w:900, h:520, color:accentA, opacity:0.07, blur:70, dur:13, delay:5 },
+    ],
+    services: [
+      /* Wide, horizontal spread — echoes the alternating left/right service rows */
+      { top:'8%',   left:'4%',  w:820, h:700, color:accentA, opacity:0.11, blur:65, dur:8 },
+      { top:'30%',  right:'6%', w:900, h:760, color:accentB, opacity:0.11, blur:70, dur:10, delay:2 },
+      { bottom:'8%', left:'12%', w:760, h:640, color:accentA, opacity:0.08, blur:60, dur:9, delay:4 },
+      { bottom:'-2%', right:'18%', w:640, h:600, color:pearl, opacity:0.30, blur:70, dur:12, delay:1 },
+    ],
+    contact: [
+      /* Warm, lower-anchored — settles gently behind the form and logo panel */
+      { top:'10%',  left:'8%',  w:820, h:680, color:pearl,   opacity:0.42, blur:72, dur:9 },
+      { top:'18%',  right:'8%', w:900, h:760, color:accentA, opacity:0.10, blur:64, dur:8, delay:1 },
+      { bottom:'6%', left:'22%', w:820, h:680, color:accentB, opacity:0.10, blur:66, dur:11, delay:3 },
+      { bottom:'-4%', right:'10%', w:700, h:620, color:accentA, opacity:0.07, blur:70, dur:13, delay:5 },
+    ],
+  }
+  const glows = LAYOUTS[variant] ?? LAYOUTS.home
 
   return (
     <>
       <style>{`
         @keyframes qbg-glow {
-          0%,100%{opacity:0.08} 50%{opacity:0.22}
-        }
-        @keyframes qbg-cube-bob {
-          0%,100%{transform:translateY(0px) rotate(0deg)}
-          33%{transform:translateY(-16px) rotate(10deg)}
-          66%{transform:translateY(-8px) rotate(-6deg)}
-        }
-        @keyframes qbg-cube-spin {
-          0%,100%{transform:translateY(0px) rotateY(0deg) rotateZ(0deg)}
-          50%{transform:translateY(-20px) rotateY(180deg) rotateZ(15deg)}
-        }
-        @keyframes qbg-cube-drift {
-          0%,100%{transform:translate(0,0) rotateZ(0deg)}
-          25%{transform:translate(10px,-14px) rotateZ(8deg)}
-          75%{transform:translate(-8px,-10px) rotateZ(-6deg)}
-        }
-        @keyframes qbg-diamond-spin {
-          0%,100%{transform:rotate(45deg) translateY(0px) scale(1)}
-          50%{transform:rotate(225deg) translateY(-12px) scale(1.08)}
-        }
-        @keyframes qbg-diamond-pulse {
-          0%,100%{transform:rotate(45deg) scale(1);opacity:0.5}
-          50%{transform:rotate(45deg) scale(1.15);opacity:0.9}
+          0%,100%{opacity:0.6} 50%{opacity:0.9}
         }
         .qbg-root {
-          position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;perspective:1400px;
-        }
-        .qbg-shape {
-          position:absolute;transform-style:preserve-3d;will-change:transform,opacity;
+          position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
         }
         @media(prefers-reduced-motion:reduce){.qbg-root *{animation:none!important}}
-        @media(max-width:768px){.qbg-root{opacity:0.55}}
       `}</style>
 
       <div className="qbg-root" aria-hidden="true">
-
-        {/* ── AMBIENT RADIAL GLOW ── */}
-        <div style={{
-          position:'absolute', top:'5%', left:'15%',
-          width:900, height:700, borderRadius:'50%',
-          background:`radial-gradient(ellipse, rgba(${accentA},0.13) 0%, rgba(${accentB},0.05) 40%, transparent 70%)`,
-          filter:'blur(40px)',
-          animation:'qbg-glow 7s ease-in-out infinite',
-        }}/>
-        <div style={{
-          position:'absolute', bottom:'10%', right:'10%',
-          width:500, height:400, borderRadius:'50%',
-          background:`radial-gradient(ellipse, rgba(${accentB},0.09) 0%, transparent 70%)`,
-          filter:'blur(50px)',
-          animation:'qbg-glow 10s ease-in-out infinite',
-          animationDelay:'3s',
-        }}/>
-
-        {/* ── FLOATING 3D GLASS CUBES ── */}
-        <div className="qbg-shape" style={{
-          top:'8%', left:'4%', width:72, height:72, borderRadius:16,
-          background:`linear-gradient(135deg, rgba(${accentA},0.16) 0%, rgba(${accentA},0.05) 100%)`,
-          border:`1px solid rgba(${accentA},0.28)`,
-          backdropFilter:'blur(10px)', WebkitBackdropFilter:'blur(10px)',
-          boxShadow:`0 0 24px rgba(${accentA},0.18), inset 0 1px 0 rgba(255,255,255,0.12)`,
-          animation:'qbg-cube-bob 7s ease-in-out infinite',
-        }}/>
-        <div className="qbg-shape" style={{
-          top:'12%', right:'6%', width:52, height:52, borderRadius:11,
-          background:`linear-gradient(135deg, rgba(${accentB},0.14) 0%, rgba(${accentB},0.04) 100%)`,
-          border:`1px solid rgba(${accentB},0.25)`,
-          backdropFilter:'blur(8px)', WebkitBackdropFilter:'blur(8px)',
-          boxShadow:`0 0 18px rgba(${accentB},0.16)`,
-          animation:'qbg-cube-spin 9s ease-in-out infinite',
-          animationDelay:'1s',
-        }}/>
-        <div className="qbg-shape" style={{
-          top:'45%', left:'2%', width:36, height:36, borderRadius:8,
-          background:`linear-gradient(135deg, rgba(${accentA},0.12) 0%, transparent 100%)`,
-          border:`1px solid rgba(${accentA},0.20)`,
-          backdropFilter:'blur(6px)',
-          animation:'qbg-cube-drift 11s ease-in-out infinite',
-          animationDelay:'2s',
-        }}/>
-        <div className="qbg-shape" style={{
-          top:'52%', right:'3%', width:28, height:28, borderRadius:6,
-          background:`linear-gradient(135deg, rgba(${accentB},0.12) 0%, transparent 100%)`,
-          border:`1px solid rgba(${accentB},0.20)`,
-          backdropFilter:'blur(6px)',
-          animation:'qbg-cube-bob 6s ease-in-out infinite',
-          animationDelay:'0.5s',
-        }}/>
-        <div className="qbg-shape" style={{
-          bottom:'15%', left:'8%', width:22, height:22, borderRadius:5,
-          background:`linear-gradient(135deg, rgba(${accentA},0.10) 0%, transparent 100%)`,
-          border:`1px solid rgba(${accentA},0.18)`,
-          backdropFilter:'blur(4px)',
-          animation:'qbg-cube-drift 13s ease-in-out infinite',
-          animationDelay:'4s',
-        }}/>
-        <div className="qbg-shape" style={{
-          bottom:'8%', right:'7%', width:44, height:44, borderRadius:10,
-          background:`linear-gradient(135deg, rgba(${accentB},0.13) 0%, rgba(${accentA},0.04) 100%)`,
-          border:`1px solid rgba(${accentB},0.22)`,
-          backdropFilter:'blur(8px)',
-          boxShadow:`0 0 16px rgba(${accentB},0.14)`,
-          animation:'qbg-cube-spin 10s ease-in-out infinite',
-          animationDelay:'3s',
-        }}/>
-
-        {/* ── FLOATING 3D DIAMOND SHAPES ── */}
-        <div className="qbg-shape" style={{
-          top:'35%', left:'10%', width:40, height:40,
-          background:`linear-gradient(135deg, rgba(${accentA},0.18) 0%, rgba(${accentB},0.08) 100%)`,
-          border:`1px solid rgba(${accentA},0.32)`,
-          backdropFilter:'blur(8px)',
-          boxShadow:`0 0 20px rgba(${accentA},0.20), inset 0 1px 0 rgba(255,255,255,0.14)`,
-          animation:'qbg-diamond-spin 8s ease-in-out infinite',
-          transform:'rotate(45deg)',
-        }}/>
-        <div className="qbg-shape" style={{
-          top:'18%', left:'50%', width:28, height:28,
-          background:`linear-gradient(135deg, rgba(${accentB},0.16) 0%, rgba(${accentA},0.06) 100%)`,
-          border:`1px solid rgba(${accentB},0.28)`,
-          backdropFilter:'blur(6px)',
-          boxShadow:`0 0 14px rgba(${accentB},0.18)`,
-          animation:'qbg-diamond-pulse 6s ease-in-out infinite',
-          transform:'rotate(45deg)',
-          animationDelay:'1.5s',
-        }}/>
-        <div className="qbg-shape" style={{
-          top:'60%', right:'12%', width:22, height:22,
-          background:`linear-gradient(135deg, rgba(${accentA},0.14) 0%, transparent 100%)`,
-          border:`1px solid rgba(${accentA},0.24)`,
-          backdropFilter:'blur(4px)',
-          animation:'qbg-diamond-spin 10s ease-in-out infinite',
-          transform:'rotate(45deg)',
-          animationDelay:'3s',
-        }}/>
-        <div className="qbg-shape" style={{
-          bottom:'20%', left:'55%', width:32, height:32,
-          background:`linear-gradient(135deg, rgba(${accentB},0.12) 0%, transparent 100%)`,
-          border:`1px solid rgba(${accentB},0.22)`,
-          backdropFilter:'blur(6px)',
-          animation:'qbg-diamond-pulse 9s ease-in-out infinite',
-          transform:'rotate(45deg)',
-          animationDelay:'2s',
-        }}/>
-
+        {glows.map((g,i)=>(
+          <div key={i} style={{
+            position:'absolute',
+            top:g.top, bottom:g.bottom, left:g.left, right:g.right,
+            width:g.w, height:g.h, borderRadius:'50%',
+            transform: (g.left==='50%'||g.right==='50%') ? 'translateX(-50%)' : undefined,
+            background:`radial-gradient(ellipse, rgba(${g.color},${g.opacity}) 0%, transparent 70%)`,
+            filter:`blur(${g.blur}px)`,
+            animation:`qbg-glow ${g.dur}s ease-in-out infinite`,
+            animationDelay: g.delay ? `${g.delay}s` : undefined,
+          }}/>
+        ))}
       </div>
     </>
   )

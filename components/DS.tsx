@@ -1,14 +1,7 @@
 "use client";
 import { CapabilityIcon } from "@/components/icons/GlassIcons";
-import { CardTilt3D, HoverLift, SPRING, EASE, DUR } from "@/components/Motion";
-import { BRAND_BLUE } from "@/components/Strata";
-/**
- * QMULATE Design System — Shared Components
- * Full dual-theme (dark + light) support via CSS variables
- */
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import Link from "next/link";
+import { CardTilt3D, HoverLift } from "@/components/Motion";
+import { motion } from "framer-motion";
 
 /* ─── Animation Presets ─── */
 export const FU = (delay=0,distance=16) => ({
@@ -37,14 +30,14 @@ export const FL = (delay=0) => ({
 });
 
 /* ─── Section Heading ─── */
-export function SectionHeading({eyebrow,title,subtitle,center=false,className=""}:{
-  eyebrow?:string;title:React.ReactNode;subtitle?:string;center?:boolean;className?:string
+export function SectionHeading({eyebrow,title,subtitle,center=false,wide=false,className=""}:{
+  eyebrow?:string;title:React.ReactNode;subtitle?:string;center?:boolean;wide?:boolean;className?:string
 }) {
   return(
-    <div className={className} style={{textAlign:center?"center":"left",maxWidth:center?680:720}}>
+    <div className={className} style={{textAlign:center?"center":"left",maxWidth:wide?"100%":center?680:720}}>
       {eyebrow&&(
         <motion.div {...FI(0)} style={{marginBottom:16}}>
-          <span className="pill pill-c"><span style={{display:"inline-block",width:10,height:3,borderRadius:1,background:BRAND_BLUE,marginRight:8,verticalAlign:"middle"}}/>{eyebrow}</span>
+          <span className="pill pill-c"><span style={{display:"inline-block",width:10,height:3,borderRadius:1,background:"var(--gold)",marginRight:8,verticalAlign:"middle"}}/>{eyebrow}</span>
         </motion.div>
       )}
       <motion.h2 {...FU(0.05)} className="t-h2 gt-w" style={{marginBottom:subtitle?16:0}}>
@@ -78,8 +71,8 @@ export function GlassCard({children,className="",style={},hover=true,onClick,til
 }
 
 /* ─── Feature Card ─── */
-export function FeatureCard({icon,title,desc,accent,index=0}:{
-  icon:string;title:string;desc:string;accent?:string;index?:number
+export function FeatureCard({title,desc,index=0}:{
+  icon?:string;title:string;desc:string;accent?:string;index?:number
 }) {
   return(
     <motion.div {...FU(index*0.04)}>
@@ -105,7 +98,7 @@ export function HeroGlass({children,style={}}:{children:React.ReactNode;style?:R
       style={{position:"relative",overflow:"hidden",...style}}
     >
       <div style={{position:"absolute",top:0,left:0,right:0,height:1,
-        background:"linear-gradient(90deg,transparent 5%,var(--glass-shine) 35%,rgba(0,212,255,.3) 65%,transparent 95%)",zIndex:10}}/>
+        background:"linear-gradient(90deg,transparent 5%,var(--glass-shine) 35%,rgba(176,141,87,.35) 65%,transparent 95%)",zIndex:10}}/>
       <div className="scan-line"/>
       <div style={{position:"absolute",top:"-20%",left:"-10%",width:"40%",height:"180%",
         background:"linear-gradient(135deg,var(--orb-b),transparent 80%)",
@@ -155,8 +148,8 @@ export function TabSwitch({tabs,active,onChange,accent}:{
         <button key={t} onClick={()=>onChange(i)} style={{
           padding:"7px 20px",borderRadius:100,fontSize:13,fontWeight:500,
           background:active===i?a:"transparent",
-          color:active===i?"#020408":"var(--text-3)",
-          transition:"all .25s",border:"none",cursor:"pointer",
+          color:active===i?"#FAF8F4":"var(--text-3)",
+          transition:"all .3s ease",border:"none",cursor:"pointer",
         }}>{t}</button>
       ))}
     </div>

@@ -40,6 +40,68 @@ export function TextReveal({
   )
 }
 
+/* Line reveal — overflow:hidden parent + translateY child.
+   This is the signature luxury animation: text rises from beneath the clip. */
+export function LineReveal({
+  children,
+  delay = 0,
+  className,
+  style,
+}: {
+  children: ReactNode
+  delay?: number
+  className?: string
+  style?: CSSProperties
+}) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-20px' })
+  return (
+    <div ref={ref} className={className} style={{ overflow: 'hidden', ...style }}>
+      <motion.div
+        initial={{ y: '105%' }}
+        animate={inView ? { y: '0%' } : {}}
+        transition={{ duration: 0.78, delay, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  )
+}
+
+/* SplitRevealLines — reveals each string line independently with stagger */
+export function SplitRevealLines({
+  lines,
+  className,
+  lineClassName,
+  baseDelay = 0,
+  stagger = 0.1,
+}: {
+  lines: string[]
+  className?: string
+  lineClassName?: string
+  baseDelay?: number
+  stagger?: number
+}) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-20px' })
+  return (
+    <div ref={ref} className={className}>
+      {lines.map((line, i) => (
+        <div key={i} style={{ overflow: 'hidden' }}>
+          <motion.div
+            initial={{ y: '105%' }}
+            animate={inView ? { y: '0%' } : {}}
+            transition={{ duration: 0.8, delay: baseDelay + i * stagger, ease: [0.16, 1, 0.3, 1] }}
+            className={lineClassName}
+          >
+            {line}
+          </motion.div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export function StaggerHeadline({ text, className }: { text: string; className?: string }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-30px' })
@@ -78,5 +140,47 @@ export function ShimmerText({ children, className }: { children: ReactNode; clas
     >
       {children}
     </span>
+  )
+}
+
+/* ImageReveal — luxury wipe reveal: coloured panel slides up to expose the image */
+export function ImageReveal({
+  children,
+  delay = 0,
+  className,
+  style,
+  color = 'var(--bg-1)',
+}: {
+  children: ReactNode
+  delay?: number
+  className?: string
+  style?: CSSProperties
+  color?: string
+}) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+  return (
+    <div ref={ref} className={className} style={{ position: 'relative', overflow: 'hidden', ...style }}>
+      <motion.div
+        initial={{ scale: 1.07 }}
+        animate={inView ? { scale: 1.0 } : {}}
+        transition={{ duration: 1.4, delay: delay + 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{ width: '100%', height: '100%' }}
+      >
+        {children}
+      </motion.div>
+      <motion.div
+        initial={{ y: '0%' }}
+        animate={inView ? { y: '-101%' } : {}}
+        transition={{ duration: 0.9, delay, ease: [0.76, 0, 0.24, 1] }}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: color,
+          zIndex: 10,
+          pointerEvents: 'none',
+        }}
+      />
+    </div>
   )
 }

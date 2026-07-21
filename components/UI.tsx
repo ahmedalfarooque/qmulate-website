@@ -84,7 +84,7 @@ export function PageHero({
         </motion.p>
         {arSub && (
           <motion.p {...fi(.45)} style={{
-            fontFamily:"'IBM Plex Sans Arabic',sans-serif",
+            fontFamily:"'Madani Arabic',sans-serif",
             fontSize:14, color:"var(--t-3)", direction:"rtl", maxWidth:380,
           }}>{arSub}</motion.p>
         )}

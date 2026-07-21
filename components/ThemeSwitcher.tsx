@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function ThemeSwitcher({ compact=false }:{ compact?:boolean }) {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(()=>setMounted(true),[]);
   if (!mounted) return <div style={{width:compact?36:72,height:36,borderRadius:compact?'50%':100,background:"rgba(255,255,255,.05)"}} />;

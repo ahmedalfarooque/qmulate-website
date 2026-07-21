@@ -1,9 +1,11 @@
 'use client'
 import type { ReactNode, CSSProperties } from 'react'
 
+const SIZE_MAP: Record<string, number> = { sm: 36, md: 48, lg: 56 }
+
 interface GlassIconProps {
   children: ReactNode
-  size?: number
+  size?: number | 'sm' | 'md' | 'lg'
   color?: 'blue' | 'cyan' | 'white'
   glow?: boolean
   style?: CSSProperties
@@ -11,6 +13,7 @@ interface GlassIconProps {
 }
 
 export function GlassIcon({ children, size = 48, color = 'blue', glow = true, style, className }: GlassIconProps) {
+  if (typeof size === 'string') size = SIZE_MAP[size] ?? 48
   const colorMap = {
     blue:  { rgb: '91,124,250',  border: 'rgba(91,124,250,0.30)' },
     cyan:  { rgb: '0,196,204',   border: 'rgba(0,196,204,0.28)'  },
