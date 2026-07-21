@@ -68,7 +68,7 @@ export function Navbar() {
           {/* ── Logo ── */}
           <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:11,flexShrink:0}}>
             <img
-              src="/Logo.png"
+              src="/Logo.svg"
               alt="QMULATE logo"
               width={42}
               height={49}

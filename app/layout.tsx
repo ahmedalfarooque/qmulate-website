@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="light" data-theme="light" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/Logo.png" as="image"/>
+        <link rel="preload" href="/Logo.svg" as="image"/>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
         <link

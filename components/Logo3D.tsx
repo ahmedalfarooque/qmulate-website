@@ -23,7 +23,7 @@ export function Logo3D({ size = 200 }: { size?: number }) {
         style={{ position: 'relative', width: s, height: s, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
         <img
-          src="/Logo.png"
+          src="/Logo.svg"
           alt="QMULATE"
           width={s}
           height={s}
@@ -52,7 +52,7 @@ export function Logo3D({ size = 200 }: { size?: number }) {
           filter: 'none',
         }}
       >
-        <img src="/Logo.png" alt="QMULATE" width={s} height={s}
+        <img src="/Logo.svg" alt="QMULATE" width={s} height={s}
           style={{ objectFit: 'contain', display: 'block', background: 'transparent', filter: 'drop-shadow(0 8px 26px rgba(20,23,31,0.24))' }}
         />
       </motion.div>

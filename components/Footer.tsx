@@ -42,7 +42,7 @@ export function Footer() {
           {/* Brand column */}
           <div>
             <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,textDecoration:"none"}}>
-              <img src="/Logo.png" alt="QMULATE" style={{height:'46px',width:'auto',display:'block',objectFit:'contain',filter:'drop-shadow(0 3px 14px rgba(20,23,31,0.22)) drop-shadow(0 1px 2px rgba(20,23,31,0.30))'}} />
+              <img src="/Logo.svg" alt="QMULATE" style={{height:'46px',width:'auto',display:'block',objectFit:'contain'}} />
               <div>
                 <div style={{fontFamily:"var(--font-display,'Fraunces',serif)",fontWeight:500,fontSize:15,letterSpacing:"0.04em",color:"var(--text-1)",lineHeight:1}}>QMULATE</div>
                 <div style={{fontFamily:"var(--font-geist-mono,'Courier New'),monospace",fontSize:8,color:"var(--text-4)",letterSpacing:"0.10em",marginTop:3}}>REAL ESTATE PLATFORM</div>

@@ -37,14 +37,16 @@ html { scroll-behavior: smooth; }
   --nav-h: 64px;
   color-scheme: light;
 
-  /* Backgrounds — warm ivory paper, intentionally not cold/pure white */
-  --bg-0:   #FAF8F4;   /* warm white */
+  /* Backgrounds — near-white paper. Kept just a hair off pure white so it
+     doesn't glare, but no visible colour wash: the page should read as clean
+     white, letting photography and glass carry the design. */
+  --bg-0:   #FCFCFB;   /* near-white */
   --bg-1:   #FFFFFF;   /* pure white — cards / surfaces */
-  --bg-2:   #F3EFE7;   /* soft parchment */
-  --bg-3:   #EBE4D8;   /* deeper warm beige */
-  --bg-alt: rgba(250,248,244,0.6);
+  --bg-2:   #F6F5F3;   /* faint off-white */
+  --bg-3:   #EDECE8;   /* soft grey-white */
+  --bg-alt: rgba(252,252,251,0.6);
   --bg-section-a: #FFFFFF;
-  --bg-section-b: #F6F3EC;
+  --bg-section-b: #F9F9F7;
 
   /* Text — ink hierarchy (near-black heading, warm slate body, muted) */
   --text-1: #111827;   /* heading ink — near black */
@@ -108,15 +110,17 @@ html { scroll-behavior: smooth; }
   --gt-accent:  linear-gradient(135deg,#1F4D66,#2B6E8F,#5A93AE);
   --gt-aurora:  linear-gradient(135deg,#123A57 0%,#2B6E8F 45%,#8C6D3F 75%,#B08D57 100%);
 
-  /* Component tokens */
-  --pill-c-bg:     rgba(43,110,143,0.08);
-  --pill-c-border: rgba(43,110,143,0.24);
-  --pill-c-color:  #1F4D66;
-  --grid-color:    rgba(176,141,87,0.05);
-  --orb-c: rgba(43,110,143,0.08);
-  --orb-v: rgba(140,109,63,0.07);
-  --orb-b: rgba(18,58,87,0.06);
-  --orb-g: rgba(176,141,87,0.06);
+  /* Component tokens. Pills keep enough accent to read as a badge, but the
+     ambient background orbs are pulled almost to zero — the page background
+     should be clean white with no coloured blobs or washes. */
+  --pill-c-bg:     rgba(43,110,143,0.10);
+  --pill-c-border: rgba(43,110,143,0.30);
+  --pill-c-color:  #175070;
+  --grid-color:    rgba(20,23,31,0.02);
+  --orb-c: rgba(255,255,255,0);
+  --orb-v: rgba(255,255,255,0);
+  --orb-b: rgba(255,255,255,0);
+  --orb-g: rgba(255,255,255,0);
   --hr-color: rgba(20,23,31,0.08);
   --hr-glow:  rgba(176,141,87,0.35);
   --scroll-track: #FAF8F4;
@@ -1116,7 +1120,7 @@ a, button, [role="button"] {
 }
 .ed-hero-image::after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(20,23,31,0.02) 0%,rgba(20,23,31,0.22) 100%);
+  background:linear-gradient(180deg,rgba(20,23,31,0.02) 0%,rgba(12,42,64,0.20) 68%,rgba(12,42,64,0.42) 100%);
   pointer-events:none;
 }
 .ed-hero-cards{
@@ -1125,38 +1129,168 @@ a, button, [role="button"] {
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:clamp(14px,1.8vw,22px);
-  margin-top:clamp(-64px,-6vw,-42px);
+  margin-top:clamp(-46px,-4.2vw,-30px);
   padding:0 clamp(4px,1vw,8px);
 }
 .ed-hero-card{
   position:relative;
-  /* Crystal glass, not a colored/opaque card — a corner-anchored specular
-     highlight (matching .gc/.gp/.gf) plus a much lighter base lets the
-     photo behind keep showing through, rather than washing it out. */
+  /* Anchored frosted-glass "shelf" — sits directly on the photo's darkened
+     bottom edge, so it needs a stronger, clearly-legible glass base than
+     surfaces that rest on plain ivory. Still glass, not an opaque card:
+     the corner specular highlight and blur keep it feeling premium rather
+     than like a flat colored tile. */
   background:
-    radial-gradient(125% 95% at 16% 10%, rgba(255,255,255,0.30) 0%, transparent 50%),
-    linear-gradient(155deg,rgba(255,255,255,0.20) 0%,rgba(255,255,255,0.09) 55%,rgba(255,255,255,0.06) 100%);
-  backdrop-filter:blur(28px) saturate(175%) brightness(1.02);
-  -webkit-backdrop-filter:blur(28px) saturate(175%) brightness(1.02);
-  border:1px solid rgba(255,255,255,0.40);
+    radial-gradient(125% 95% at 16% 10%, rgba(255,255,255,0.62) 0%, transparent 52%),
+    linear-gradient(155deg,rgba(255,255,255,0.52) 0%,rgba(255,255,255,0.34) 55%,rgba(255,255,255,0.26) 100%);
+  backdrop-filter:blur(28px) saturate(175%) brightness(1.04);
+  -webkit-backdrop-filter:blur(28px) saturate(175%) brightness(1.04);
+  border:1px solid rgba(255,255,255,0.60);
   border-radius:clamp(22px,2.4vw,30px);
   padding:clamp(20px,2.2vw,28px) clamp(18px,2vw,24px);
-  box-shadow:0 40px 84px -26px rgba(20,40,70,0.24), 0 1px 0 rgba(255,255,255,0.85) inset, 0 -1px 0 rgba(20,40,70,0.05) inset;
+  box-shadow:0 40px 84px -26px rgba(20,40,70,0.30), 0 1px 0 rgba(255,255,255,0.9) inset, 0 -1px 0 rgba(20,40,70,0.06) inset;
   overflow:hidden;
   transition:transform .3s cubic-bezier(.25,.46,.45,.94), box-shadow .3s ease;
 }
 .ed-hero-card::after{
   content:"";position:absolute;top:0;left:0;right:0;height:1px;pointer-events:none;
-  background:linear-gradient(90deg,transparent 5%,rgba(255,255,255,.95) 35%,rgba(176,141,87,.22) 65%,transparent 95%);
+  background:linear-gradient(90deg,transparent 5%,rgba(255,255,255,.95) 35%,rgba(176,141,87,.28) 65%,transparent 95%);
 }
 .ed-hero-card:hover{
   transform:translateY(-4px);
-  box-shadow:0 48px 100px -26px rgba(20,40,70,0.30), 0 1px 0 rgba(255,255,255,0.9) inset;
-  border-color:rgba(255,255,255,0.54);
+  box-shadow:0 48px 100px -26px rgba(20,40,70,0.36), 0 1px 0 rgba(255,255,255,0.95) inset;
+  border-color:rgba(255,255,255,0.72);
 }
 @media(max-width:820px){
-  .ed-hero-cards{grid-template-columns:1fr;margin-top:clamp(-28px,-4vw,-18px)}
+  .ed-hero-cards{grid-template-columns:1fr;margin-top:clamp(-24px,-3.4vw,-16px)}
   .ed-hero-image{aspect-ratio:4/3}
+}
+
+/* ══════════════════════════════════════════════════════════
+   DECORATIVE CRYSTAL MOTIF — a glass diamond flanked by gold
+   hairlines. Used to fill/soften transitions between sections
+   and to accent headings. Pure design detail — no colour wash,
+   no photography. Reusable via .deco-divider (with .line
+   children + .deco-diamond) and standalone .deco-diamond.
+   ══════════════════════════════════════════════════════════ */
+.deco-divider{
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(14px,2vw,22px);
+  margin:clamp(10px,2.4vw,30px) 0;
+}
+.deco-divider .line{
+  height:1px; flex:1 1 0; max-width:200px;
+  background:linear-gradient(90deg,transparent 0%,rgba(176,141,87,0.45) 100%);
+}
+.deco-divider .line.r{
+  background:linear-gradient(90deg,rgba(176,141,87,0.45) 0%,transparent 100%);
+}
+.deco-diamond{
+  width:15px; height:15px; flex-shrink:0; transform:rotate(45deg);
+  background:linear-gradient(135deg,rgba(255,255,255,0.85) 0%,rgba(255,255,255,0.28) 100%);
+  border:1px solid rgba(176,141,87,0.55);
+  border-radius:3px;
+  box-shadow:
+    0 4px 14px rgba(18,58,87,0.14),
+    0 0 0 5px rgba(176,141,87,0.06),
+    0 1px 0 rgba(255,255,255,0.9) inset;
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  position:relative;
+}
+.deco-diamond::after{
+  content:""; position:absolute; inset:0; margin:auto;
+  width:4px; height:4px; border-radius:1px;
+  background:var(--gold);
+  box-shadow:0 0 6px rgba(176,141,87,0.6);
+}
+@media(max-width:640px){ .deco-divider .line{ max-width:80px; } }
+
+/* Soft floating crystal accent — a faint glass shard to fill open
+   space beside a heading/column. Absolutely positioned by its parent
+   (parent needs position:relative). No colour, just glass + a gold edge. */
+.deco-shard{
+  position:absolute; pointer-events:none; z-index:0;
+  width:clamp(90px,10vw,150px); height:clamp(90px,10vw,150px);
+  transform:rotate(22deg); border-radius:22px;
+  background:linear-gradient(150deg,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.08) 60%,transparent 100%);
+  border:1px solid rgba(255,255,255,0.55);
+  box-shadow:0 20px 60px -28px rgba(18,58,87,0.20), 0 1px 0 rgba(255,255,255,0.8) inset;
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+}
+.deco-shard::before{
+  content:""; position:absolute; top:12%; left:12%; width:32%; height:2px;
+  background:linear-gradient(90deg,rgba(176,141,87,0.55),transparent);
+  border-radius:2px;
+}
+@media(max-width:900px){ .deco-shard{ display:none; } }
+
+/* ══════════════════════════════════════════════════════════
+   SERVICES HERO — one unified section, headline OVER the image
+   Full-bleed photograph as the stage, a soft near-white scrim
+   on the text side for legibility (keeps the light theme, dark
+   editorial ink), and the quick-fact glass cards overlapping
+   the bottom edge. No separate text-block-then-image split.
+   ══════════════════════════════════════════════════════════ */
+.svc-hero{
+  position:relative;
+  display:flex;
+  align-items:center;
+  min-height:clamp(600px,86vh,860px);
+  padding-top:clamp(120px,14vw,168px);
+  padding-bottom:clamp(96px,11vw,150px);
+  overflow:hidden;
+  background:var(--bg-0);
+}
+.svc-hero-img{
+  position:absolute; inset:0; z-index:0;
+  width:100%; height:100%; object-fit:cover; object-position:center 42%;
+}
+.svc-hero-scrim{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    linear-gradient(96deg,
+      rgba(252,252,251,0.95) 0%,
+      rgba(252,252,251,0.86) 30%,
+      rgba(252,252,251,0.55) 50%,
+      rgba(252,252,251,0.14) 70%,
+      transparent 100%),
+    linear-gradient(180deg,
+      rgba(252,252,251,0.60) 0%,
+      transparent 24%,
+      transparent 66%,
+      rgba(252,252,251,0.88) 100%);
+}
+.svc-hero-inner{ position:relative; z-index:2; width:100%; }
+.svc-hero-copy{ max-width:600px; }
+/* quick-fact cards straddle the hero's lower edge */
+.svc-hero-cards{
+  position:relative; z-index:3;
+  margin-top:clamp(-92px,-8vw,-60px);
+}
+/* RTL — text side moves to the right, scrim flips */
+html[dir="rtl"] .svc-hero-scrim{
+  background:
+    linear-gradient(264deg,
+      rgba(252,252,251,0.95) 0%,
+      rgba(252,252,251,0.86) 30%,
+      rgba(252,252,251,0.55) 50%,
+      rgba(252,252,251,0.14) 70%,
+      transparent 100%),
+    linear-gradient(180deg,
+      rgba(252,252,251,0.60) 0%,
+      transparent 24%,
+      transparent 66%,
+      rgba(252,252,251,0.88) 100%);
+}
+html[dir="rtl"] .svc-hero-copy{ margin-inline-start:auto; text-align:right; }
+@media(max-width:600px){
+  .svc-hero-scrim{
+    background:
+      linear-gradient(180deg,
+        rgba(252,252,251,0.90) 0%,
+        rgba(252,252,251,0.72) 40%,
+        rgba(252,252,251,0.55) 66%,
+        rgba(252,252,251,0.90) 100%);
+  }
 }
 
 /* ══════════════════════════════════════════════════════════

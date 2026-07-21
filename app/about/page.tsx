@@ -45,10 +45,14 @@ export default function AboutPage() {
     <main style={{ position:"relative" }}>
       <PageBackground variant="about"/>
 
-      {/* ── HERO — heading, subhead, CTA. No photography. ── */}
-      <section className="ed-hero" style={{ paddingBottom:"clamp(40px,5vw,64px)" }}>
-        <div className="container">
-          <div className="ed-hero-top">
+      {/* ── HERO — one unified section, headline OVER a premium architecture image ── */}
+      <section className="svc-hero">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="svc-hero-img" src="/Background%20Images/Hero_About%20Page1.jpg" alt="QMULATE" style={{ objectPosition:"center 42%" }}/>
+        <div className="svc-hero-scrim" />
+
+        <div className="container svc-hero-inner">
+          <div className="svc-hero-copy">
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
                 <span className="dot-live"/>&nbsp;About QMULATE
@@ -63,7 +67,7 @@ export default function AboutPage() {
             <motion.p
               {...FU(.4)}
               className="t-lg"
-              style={{ color:"var(--text-3)", maxWidth:600, marginTop:26 }}
+              style={{ color:"var(--text-3)", maxWidth:540, marginTop:26 }}
             >
               By helping property owners, families, businesses, and endowments
               establish clear ownership and management frameworks, we enhance
@@ -80,8 +84,10 @@ export default function AboutPage() {
       </section>
 
       {/* ── WHO WE ARE — narrative · abstract glass art · stacked cards ── */}
-      <section className="section-lux">
-        <div className="container">
+      <section className="section-lux" style={{ position:"relative", overflow:"hidden" }}>
+        <div className="deco-shard" style={{ top:"8%", right:"-2%" }} />
+        <div className="deco-shard" style={{ bottom:"10%", left:"-3%", transform:"rotate(-16deg)" }} />
+        <div className="container" style={{ position:"relative", zIndex:1 }}>
           <div className="about-split">
 
             {/* Left — narrative */}
@@ -160,6 +166,11 @@ export default function AboutPage() {
               <p className="t-md" style={{ color:"var(--text-3)", marginTop:16 }}>
                 The principles that guide every decision we make
               </p>
+            </Reveal>
+            <Reveal direction="up" delay={0.3}>
+              <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
+                <span className="line" /><span className="deco-diamond" /><span className="line r" />
+              </div>
             </Reveal>
           </div>
 

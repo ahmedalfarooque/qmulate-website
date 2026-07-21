@@ -146,10 +146,9 @@ export default function ContactPage() {
 
             {/* ── Left — imagery + info ── */}
             <div>
-              <ImageReveal delay={0.04} style={{ borderRadius: "clamp(16px,2vw,22px)", marginBottom: 28 }}>
-                <div className="contact-logo-frame">
-                  <img src="/Logo.png" alt="QMULATE" className="contact-logo-img" />
-                </div>
+              <ImageReveal delay={0.04} style={{ marginBottom: 28 }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/Logo.svg" alt="QMULATE" className="contact-logo-img" />
               </ImageReveal>
 
               <motion.div {...FI()} style={{ marginBottom: 24 }}>
@@ -305,9 +304,10 @@ export default function ContactPage() {
           pointer-events:none;
         }
         .contact-logo-img{
-          position:relative; z-index:1;
-          width:clamp(120px,12vw,175px); height:auto; object-fit:contain;
-          filter:drop-shadow(0 14px 38px rgba(18,58,87,0.24)) saturate(1.12) contrast(1.05);
+          display:block;
+          width:clamp(150px,16vw,220px); height:auto; object-fit:contain;
+          background:transparent;
+          filter:drop-shadow(0 10px 26px rgba(18,58,87,0.14));
         }
         @media(max-width:767px){
           .contact-logo-frame{

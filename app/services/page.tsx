@@ -69,10 +69,14 @@ export default function ServicesPage() {
     <main style={{ position:"relative" }}>
       <PageBackground variant="services"/>
 
-      {/* ── HERO: Editorial — bold heading, photo, real quick-facts ── */}
-      <section className="ed-hero">
-        <div className="container">
-          <div className="ed-hero-top">
+      {/* ── HERO: one unified section — headline sits OVER the image ── */}
+      <section className="svc-hero">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="svc-hero-img" src={HERO_SLIDES[0].src} alt="QMULATE services" style={{ objectPosition:HERO_SLIDES[0].position }}/>
+        <div className="svc-hero-scrim" />
+
+        <div className="container svc-hero-inner">
+          <div className="svc-hero-copy">
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
                 <span className="dot-live"/>&nbsp;Services
@@ -87,7 +91,7 @@ export default function ServicesPage() {
             <motion.p
               {...FU(.4)}
               className="t-lg"
-              style={{ color:"var(--text-3)", maxWidth:560, marginTop:26 }}
+              style={{ color:"var(--text-3)", maxWidth:520, marginTop:26 }}
             >
               Our services cover the key aspects of real estate ownership, from structuring and governance to asset management,
               development, and investment.
@@ -98,31 +102,27 @@ export default function ServicesPage() {
               <Link href="/about" className="btn btn-ghost" style={{ fontSize:14, padding:"14px 26px" }}>About QMULATE</Link>
             </motion.div>
           </div>
-
-          <div className="ed-hero-image-wrap">
-            <ImageReveal delay={0.1} className="ed-hero-image">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={HERO_SLIDES[0].src} alt="QMULATE services" loading="lazy" style={{ objectPosition:HERO_SLIDES[0].position }}/>
-            </ImageReveal>
-
-            <div className="ed-hero-cards">
-              {[
-                { Icon:GovernanceIcon, title:"Structuring & Governance", body:"Organizing ownership arrangements and governance frameworks for clear, long-term control." },
-                { Icon:PortfolioIcon,  title:"Asset Management",         body:"Leasing, operations, and maintenance that preserve and enhance portfolio value." },
-                { Icon:DigitalIcon,    title:"Development & Investment", body:"Identifying opportunities for expansion, repositioning, and sustainable growth." },
-              ].map((c,i)=>(
-                <Reveal key={c.title} direction="up" delay={i*0.08}>
-                  <div className="ed-hero-card">
-                    <c.Icon size="md"/>
-                    <h4 className="t-h4" style={{ color:"var(--text-1)", marginTop:14, marginBottom:8 }}>{c.title}</h4>
-                    <p className="t-sm" style={{ color:"var(--text-3)", lineHeight:1.7 }}>{c.body}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
+
+      {/* quick-fact cards straddling the hero's lower edge */}
+      <div className="container">
+        <div className="ed-hero-cards svc-hero-cards">
+          {[
+            { Icon:GovernanceIcon, title:"Structuring & Governance", body:"Organizing ownership arrangements and governance frameworks for clear, long-term control." },
+            { Icon:PortfolioIcon,  title:"Asset Management",         body:"Leasing, operations, and maintenance that preserve and enhance portfolio value." },
+            { Icon:DigitalIcon,    title:"Development & Investment", body:"Identifying opportunities for expansion, repositioning, and sustainable growth." },
+          ].map((c,i)=>(
+            <Reveal key={c.title} direction="up" delay={i*0.08}>
+              <div className="ed-hero-card">
+                <c.Icon size="md"/>
+                <h4 className="t-h4" style={{ color:"var(--text-1)", marginTop:14, marginBottom:8 }}>{c.title}</h4>
+                <p className="t-sm" style={{ color:"var(--text-3)", lineHeight:1.7 }}>{c.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
 
       {/* ── STRUCTURED INDEX — anchor rail tying the three services together ── */}
       <div className="svc-index-rail">
@@ -148,7 +148,7 @@ export default function ServicesPage() {
 
         return (
           <Fragment key={svc.num}>
-          {si > 0 && <div className="container"><div className="editorial-rule" /></div>}
+          {si > 0 && <div className="container"><div className="deco-divider"><span className="line" /><span className="deco-diamond" /><span className="line r" /></div></div>}
           <section id={`svc-${svc.num}`} className="section-lux" style={{
             position:"relative",
             overflow:"hidden",

@@ -70,10 +70,14 @@ export default function ArServicesPage() {
     <main style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
       <PageBackground variant="services"/>
 
-      {/* ── HERO: Editorial — bold heading, photo, real quick-facts ── */}
-      <section className="ed-hero" dir="rtl">
-        <div className="container">
-          <div className="ed-hero-top" style={{ textAlign:"right", marginLeft:"auto" }}>
+      {/* ── HERO: قسم واحد موحّد — النص فوق الصورة ── */}
+      <section className="svc-hero" dir="rtl">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="svc-hero-img" src={HERO_SLIDES[0].src} alt="خدمات كيوميليت" style={{ objectPosition:HERO_SLIDES[0].position }}/>
+        <div className="svc-hero-scrim" />
+
+        <div className="container svc-hero-inner">
+          <div className="svc-hero-copy" style={{ textAlign:"right", marginLeft:"auto" }}>
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
                 <span className="dot-live"/>&nbsp;الخدمات
@@ -88,7 +92,7 @@ export default function ArServicesPage() {
             <motion.p
               {...FU(.4)}
               className="t-lg"
-              style={{ color:"var(--text-3)", maxWidth:560, marginTop:26, marginRight:0, marginLeft:"auto" }}
+              style={{ color:"var(--text-3)", maxWidth:520, marginTop:26, marginRight:0, marginLeft:"auto" }}
             >
               صُممت خدماتنا لتغطية مختلف احتياجات الملكية العقارية، بدءًا من هيكلة الملكية والحوكمة، مرورًا بإدارة الأصول،
               وصولًا إلى التطوير والاستثمار.
@@ -99,31 +103,27 @@ export default function ArServicesPage() {
               <Link href="/ar/about" className="btn btn-ghost" style={{ fontSize:14, padding:"14px 26px" }}>عن كيوميليت</Link>
             </motion.div>
           </div>
-
-          <div className="ed-hero-image-wrap">
-            <ImageReveal delay={0.1} className="ed-hero-image">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={HERO_SLIDES[0].src} alt="خدمات كيوميليت" loading="lazy" style={{ objectPosition:HERO_SLIDES[0].position }}/>
-            </ImageReveal>
-
-            <div className="ed-hero-cards">
-              {[
-                { Icon:GovernanceIcon, title:"الهيكلة والحوكمة",       body:"تنظيم ترتيبات الملكية وأطر الحوكمة لضمان سيطرة واضحة وطويلة الأمد." },
-                { Icon:PortfolioIcon,  title:"إدارة الأصول",            body:"التأجير والتشغيل والصيانة بما يحافظ على قيمة المحفظة ويعزّزها." },
-                { Icon:DigitalIcon,    title:"التطوير والاستثمار",      body:"تحديد فرص التوسع وإعادة التوظيف والنمو المستدام." },
-              ].map((c,i)=>(
-                <Reveal key={c.title} direction="up" delay={i*0.08}>
-                  <div className="ed-hero-card" style={{ textAlign:"right" }}>
-                    <c.Icon size="md"/>
-                    <h4 className="t-h4" style={{ color:"var(--text-1)", marginTop:14, marginBottom:8 }}>{c.title}</h4>
-                    <p className="t-sm" style={{ color:"var(--text-3)", lineHeight:1.7 }}>{c.body}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
+
+      {/* بطاقات الحقائق السريعة تتداخل مع الحافة السفلية للـ hero */}
+      <div className="container" dir="rtl">
+        <div className="ed-hero-cards svc-hero-cards">
+          {[
+            { Icon:GovernanceIcon, title:"الهيكلة والحوكمة",       body:"تنظيم ترتيبات الملكية وأطر الحوكمة لضمان سيطرة واضحة وطويلة الأمد." },
+            { Icon:PortfolioIcon,  title:"إدارة الأصول",            body:"التأجير والتشغيل والصيانة بما يحافظ على قيمة المحفظة ويعزّزها." },
+            { Icon:DigitalIcon,    title:"التطوير والاستثمار",      body:"تحديد فرص التوسع وإعادة التوظيف والنمو المستدام." },
+          ].map((c,i)=>(
+            <Reveal key={c.title} direction="up" delay={i*0.08}>
+              <div className="ed-hero-card" style={{ textAlign:"right" }}>
+                <c.Icon size="md"/>
+                <h4 className="t-h4" style={{ color:"var(--text-1)", marginTop:14, marginBottom:8 }}>{c.title}</h4>
+                <p className="t-sm" style={{ color:"var(--text-3)", lineHeight:1.7 }}>{c.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
 
       {/* ── STRUCTURED INDEX — anchor rail tying the three services together ── */}
       <div className="svc-index-rail" dir="rtl">
@@ -149,7 +149,7 @@ export default function ArServicesPage() {
 
         return (
           <Fragment key={svc.num}>
-          {si > 0 && <div className="container"><div className="editorial-rule" /></div>}
+          {si > 0 && <div className="container"><div className="deco-divider"><span className="line" /><span className="deco-diamond" /><span className="line r" /></div></div>}
           <section id={`svc-${svc.num}`} className="section-lux" style={{
             position:"relative",
             overflow:"hidden",

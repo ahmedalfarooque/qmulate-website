@@ -43,10 +43,14 @@ export default function ArAboutPage() {
     <main style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
       <PageBackground variant="about"/>
 
-      {/* ── HERO — heading, subhead, CTA. No photography. ── */}
-      <section className="ed-hero" dir="rtl" style={{ paddingBottom:"clamp(40px,5vw,64px)" }}>
-        <div className="container">
-          <div className="ed-hero-top" style={{ textAlign:"right", marginLeft:"auto" }}>
+      {/* ── HERO — قسم واحد موحّد، النص فوق صورة معمارية راقية ── */}
+      <section className="svc-hero" dir="rtl">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="svc-hero-img" src="/Background%20Images/Hero_About%20Page1.jpg" alt="كيوميليت" style={{ objectPosition:"center 42%" }}/>
+        <div className="svc-hero-scrim" />
+
+        <div className="container svc-hero-inner">
+          <div className="svc-hero-copy" style={{ textAlign:"right", marginLeft:"auto" }}>
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
                 <span className="dot-live"/>&nbsp;عن كيوميليت
@@ -61,7 +65,7 @@ export default function ArAboutPage() {
             <motion.p
               {...FU(.4)}
               className="t-lg"
-              style={{ color:"var(--text-3)", maxWidth:600, marginTop:26, marginRight:0, marginLeft:"auto" }}
+              style={{ color:"var(--text-3)", maxWidth:540, marginTop:26, marginRight:0, marginLeft:"auto" }}
             >
               من خلال مساعدة الملاك والعائلات والشركات والأوقاف على إرساء
               أطر ملكية وإدارة واضحة، نعمل على تعزيز أداء الأصول وإطلاق
@@ -77,8 +81,10 @@ export default function ArAboutPage() {
       </section>
 
       {/* ── من نحن — سرد · تكوين زجاجي تجريدي · بطاقات مكدّسة ── */}
-      <section className="section-lux" dir="rtl">
-        <div className="container">
+      <section className="section-lux" dir="rtl" style={{ position:"relative", overflow:"hidden" }}>
+        <div className="deco-shard" style={{ top:"8%", left:"-2%" }} />
+        <div className="deco-shard" style={{ bottom:"10%", right:"-3%", transform:"rotate(-16deg)" }} />
+        <div className="container" style={{ position:"relative", zIndex:1 }}>
           <div className="about-split">
 
             {/* يمين (أول عمود بصريًا في RTL) — السرد */}
@@ -155,6 +161,11 @@ export default function ArAboutPage() {
               <p className="t-md" style={{ color:"var(--text-3)", marginTop:16 }}>
                 المبادئ التي توجّه كل قرار نتخذه
               </p>
+            </Reveal>
+            <Reveal direction="up" delay={0.3}>
+              <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
+                <span className="line" /><span className="deco-diamond" /><span className="line r" />
+              </div>
             </Reveal>
           </div>
 
