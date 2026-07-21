@@ -1,4 +1,5 @@
 "use client";
+import { Fragment } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FU, FI, GlassCard } from "@/components/DS";
@@ -11,7 +12,7 @@ import { Reveal } from "@/components/Reveal";
 const HERO_SLIDES = [
   { src:"/Background%20Images/EDa2yEV826m1m8qajQ_68snVQ4wUUK5-AnhRrlvluoZ9u-8wBSsZVwXSaiI9F1Nl2UOulJ6lRUc5QuHWieEnlsi0O1iIp4MR1cu76APuTICU7qS46yHxy6yvlxMn4j7nXo3AcBkm8RUFQr0Bgwm4ZSrn_KJCWYwdD-BBY6AKpN.jpg",       position:"center 40%" },
   { src:"/Background%20Images/GQMWKvE46ykWN8n7tSxfSnRA8CPWCrMSl0WFglOmCZE2XuArXsivBPtUAoftn-0etMg-pXQiuIQaTAVNJ-z3h6RkV8WPJuFHbVZikezv219E3J6CQJ35BJ-IyzHdN9vnVp594bKK14r8wtZsbmLMOH5A91jUb7hWrKHL7FzuO0.jpg",         position:"center 45%" },
-  { src:"/Background%20Images/3x4rIeq93oh_yLNRNVQhVumYRTge5YoxtsdCw8l2bfUpWfWVfqfGo-23YoVDpQF9LQ85ZrTx1Zuczi_ujSQa7XKeExiK8ZMLqdXu58R9CnrTBoxzVzfSP_GX0aTEVR1RlblEVhufsSHJKEZWa5OgfH8TZXVtR8ubAJS_JiTPi3.jpg",       position:"center 50%" },
+  { src:"/Background%20Images/old-jeddah-historic-city-saudi-arabia-ksa-187866209.webp",       position:"center 50%" },
 ];
 const IMG_SVC  = [
   "/Background%20Images/_K7bLmnmYeenh0AczYa4VqBSnewL9A47WxeeERWevDPDqyjlTFc9rxqHIPzQaTcnshhbn290miCBrLILvFBGJHWtP4SKinyEDsb_ijCOdx1McrJVNu9hvym7ofLNC0opQbil-dANXL34euw6Ml9t5uV8Hlk4hVWcIxTZfQY9CY.jpg",
@@ -147,11 +148,12 @@ export default function ArServicesPage() {
         const isRev = layout === "split-rev";
 
         return (
-          <section key={svc.num} id={`svc-${svc.num}`} className="section-lux" style={{
+          <Fragment key={svc.num}>
+          {si > 0 && <div className="container"><div className="editorial-rule" /></div>}
+          <section id={`svc-${svc.num}`} className="section-lux" style={{
             position:"relative",
             overflow:"hidden",
             scrollMarginTop:"96px",
-            borderTop: si > 0 ? "1px solid var(--glass-border)" : undefined,
           }} dir="rtl">
             {/* Ghost service number — editorial anchor, mirrored to the left */}
             <div className="svc-ghost-num" style={{ top:"clamp(20px,3vw,32px)", right:"auto", left:"clamp(20px,3vw,32px)" }}>{svc.num}</div>
@@ -273,6 +275,7 @@ export default function ArServicesPage() {
               )}
             </div>
           </section>
+          </Fragment>
         );
       })}
 
@@ -301,10 +304,10 @@ export default function ArServicesPage() {
           position:sticky; top:0; z-index:20;
           padding:14px 0;
           background:
-            linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.20) 50%,transparent 60%),
-            linear-gradient(180deg,rgba(255,255,255,0.42) 0%,rgba(255,255,255,0.20) 100%);
+            radial-gradient(100% 220% at 92% 0%, rgba(255,255,255,0.20) 0%, transparent 60%),
+            linear-gradient(180deg,rgba(255,255,255,0.20) 0%,rgba(255,255,255,0.10) 100%);
           backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
-          border-top:1px solid rgba(255,255,255,0.5); border-bottom:1px solid rgba(255,255,255,0.5);
+          border-top:1px solid rgba(255,255,255,0.38); border-bottom:1px solid rgba(255,255,255,0.38);
         }
         @media(max-width:767px){ .svc-index-rail{ backdrop-filter:none; -webkit-backdrop-filter:none; background:rgba(255,255,255,0.92); position:relative; } }
         .svc-index-row{ display:flex; gap:clamp(18px,3vw,40px); overflow-x:auto; scrollbar-width:none; direction:rtl; }

@@ -56,11 +56,23 @@ html { scroll-behavior: smooth; }
   /* Accents — restrained brass-gold (primary) + deep ocean blue (secondary) */
   --cyan:    #2B6E8F;  /* ocean-blue accent (replaces neon cyan) */
   --cyan-d:  #1F4D66;  /* deeper ocean blue */
-  --blue:    #123A57;  /* deep elegant navy */
+  --blue:    #123A57;  /* deep elegant navy — "QMULATE Blue", used more assertively as a structural accent (dividers, ghost numerals, rails) not just CTAs */
   --violet:  #8C6D3F;  /* brass-gold, deep — repurposed "violet" slot */
   --violet2: #B08D57;  /* brass-gold */
   --pink:    #9C6B54;  /* muted rosewood, rarely used */
   --gold:    #B08D57;  /* primary luxury accent */
+
+  /* Extended architectural palette — gives pages atmospheric variety
+     beyond warm-ivory-everywhere, per the "illuminated, not colored"
+     brief. Used for background layering, glass tints, and section
+     dividers; never as a saturated wash. */
+  --mist:      #EFF1F0;  /* pale architectural mist — cool, barely-there grey-green */
+  --mist-deep: #DDE1DF;
+  --ice-blue:  #DCE7EF;  /* cool glass-blue, cooler than sky-blue */
+  --ice-blue-deep: #BFD3E0;
+  --slate:     #64748B;  /* soft slate — secondary ink for structural labels */
+  --slate-2:   #94A3B8;
+  --navy-deep: #0C2A40;  /* premium navy, darker than --blue, for high-contrast dark accents */
 
   /* Glass surfaces — frosted glass over warm paper: transparent, crisp hairlines */
   --g1: rgba(255,255,255,0.42);
@@ -1118,17 +1130,18 @@ a, button, [role="button"] {
 }
 .ed-hero-card{
   position:relative;
-  /* Crystal glass, not a colored/opaque card — a diagonal streak plus a
-     lighter base lets the photo behind keep showing through. */
+  /* Crystal glass, not a colored/opaque card — a corner-anchored specular
+     highlight (matching .gc/.gp/.gf) plus a much lighter base lets the
+     photo behind keep showing through, rather than washing it out. */
   background:
-    linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.34) 48%,transparent 66%),
-    linear-gradient(155deg,rgba(255,255,255,0.46) 0%,rgba(255,255,255,0.20) 55%,rgba(255,255,255,0.14) 100%);
-  backdrop-filter:blur(30px) saturate(180%) brightness(1.03);
-  -webkit-backdrop-filter:blur(30px) saturate(180%) brightness(1.03);
-  border:1px solid rgba(255,255,255,0.55);
+    radial-gradient(125% 95% at 16% 10%, rgba(255,255,255,0.30) 0%, transparent 50%),
+    linear-gradient(155deg,rgba(255,255,255,0.20) 0%,rgba(255,255,255,0.09) 55%,rgba(255,255,255,0.06) 100%);
+  backdrop-filter:blur(28px) saturate(175%) brightness(1.02);
+  -webkit-backdrop-filter:blur(28px) saturate(175%) brightness(1.02);
+  border:1px solid rgba(255,255,255,0.40);
   border-radius:clamp(22px,2.4vw,30px);
   padding:clamp(20px,2.2vw,28px) clamp(18px,2vw,24px);
-  box-shadow:0 26px 60px -18px rgba(20,40,70,0.20), 0 8px 20px rgba(255,255,255,0.26) inset, 0 1px 0 rgba(255,255,255,0.85) inset;
+  box-shadow:0 40px 84px -26px rgba(20,40,70,0.24), 0 1px 0 rgba(255,255,255,0.85) inset, 0 -1px 0 rgba(20,40,70,0.05) inset;
   overflow:hidden;
   transition:transform .3s cubic-bezier(.25,.46,.45,.94), box-shadow .3s ease;
 }
@@ -1138,7 +1151,8 @@ a, button, [role="button"] {
 }
 .ed-hero-card:hover{
   transform:translateY(-4px);
-  box-shadow:0 34px 76px -18px rgba(20,40,70,0.24), 0 8px 20px rgba(255,255,255,0.3) inset;
+  box-shadow:0 48px 100px -26px rgba(20,40,70,0.30), 0 1px 0 rgba(255,255,255,0.9) inset;
+  border-color:rgba(255,255,255,0.54);
 }
 @media(max-width:820px){
   .ed-hero-cards{grid-template-columns:1fr;margin-top:clamp(-28px,-4vw,-18px)}
@@ -1372,68 +1386,73 @@ input:focus, select:focus, textarea:focus {
    GLASS SURFACES
    ══════════════════════════════ */
 
-/* Glass card — crystal-clear frosted panel (Apple VisionOS style).
-   No colored tint — pure white/transparent glass, with a soft diagonal
-   light streak for a glossy, "real glass" reflection, plus a deeper,
-   softer ambient shadow so the card visibly floats above the page. */
+/* Glass card v2 — genuine architectural crystal glass, not a white block.
+   Two changes from the previous recipe drive this: (1) the base fill is
+   dropped by roughly half so the page's own ambient light actually shows
+   through the card instead of being smothered by it; (2) the wide
+   diagonal streak is replaced by a small corner-anchored specular
+   highlight — the way a real pane of glass catches light from a single
+   source, rather than a uniform sheen across the whole surface. Shadows
+   are given more throw and a soft directional bias so cards read as
+   floating above the page rather than sitting on a tinted rectangle. */
 :is([data-theme="light"],.light) .gc {
   background:
-    linear-gradient(120deg,transparent 28%,rgba(255,255,255,0.40) 46%,transparent 64%),
-    linear-gradient(155deg,rgba(255,255,255,0.58) 0%,rgba(255,255,255,0.30) 100%);
-  backdrop-filter: blur(34px) saturate(180%) brightness(1.04);
-  -webkit-backdrop-filter: blur(34px) saturate(180%) brightness(1.04);
-  border: 1px solid rgba(255,255,255,0.55);
+    radial-gradient(120% 90% at 14% 10%, rgba(255,255,255,0.40) 0%, transparent 48%),
+    linear-gradient(155deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 100%);
+  backdrop-filter: blur(26px) saturate(170%) brightness(1.02);
+  -webkit-backdrop-filter: blur(26px) saturate(170%) brightness(1.02);
+  border: 1px solid rgba(255,255,255,0.40);
   box-shadow:
-    0 30px 70px -20px rgba(20,40,70,0.14),
-    0 8px 24px rgba(255,255,255,0.30) inset,
-    0 1px 0 rgba(255,255,255,0.9) inset;
+    0 46px 96px -32px rgba(20,40,70,0.22),
+    0 1px 0 rgba(255,255,255,0.85) inset,
+    0 -1px 0 rgba(20,40,70,0.05) inset;
 }
 :is([data-theme="light"],.light) .gc::after {
-  background: linear-gradient(90deg,transparent 5%,rgba(255,255,255,0.95) 35%,
-    rgba(255,255,255,0.98) 65%,transparent 95%);
+  background: linear-gradient(90deg,transparent 8%,rgba(255,255,255,0.85) 34%,
+    rgba(255,255,255,0.55) 60%,transparent 92%);
 }
 :is([data-theme="light"],.light) .gc::before {
-  background: linear-gradient(135deg,rgba(255,255,255,0.65),rgba(255,255,255,0.10));
+  background: linear-gradient(135deg,rgba(255,255,255,0.55),rgba(255,255,255,0.06));
 }
 :is([data-theme="light"],.light) .gc:hover {
   background:
-    linear-gradient(120deg,transparent 25%,rgba(255,255,255,0.48) 46%,transparent 68%),
-    linear-gradient(155deg,rgba(255,255,255,0.66) 0%,rgba(255,255,255,0.38) 100%);
+    radial-gradient(120% 90% at 14% 10%, rgba(255,255,255,0.48) 0%, transparent 52%),
+    linear-gradient(155deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.12) 100%);
   box-shadow:
-    0 40px 90px -20px rgba(20,40,70,0.18),
-    0 8px 24px rgba(255,255,255,0.34) inset;
-  border-color: rgba(255,255,255,0.7);
+    0 58px 120px -32px rgba(20,40,70,0.28),
+    0 1px 0 rgba(255,255,255,0.92) inset;
+  border-color: rgba(255,255,255,0.56);
 }
 
-/* Elevated panel — same crystal treatment, slightly deeper */
+/* Elevated panel — same crystal treatment, slightly deeper glass */
 :is([data-theme="light"],.light) .gp {
   background:
-    linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.36) 48%,transparent 66%),
-    linear-gradient(150deg,rgba(255,255,255,0.60) 0%,rgba(255,255,255,0.28) 100%);
-  backdrop-filter: blur(38px) saturate(180%);
-  -webkit-backdrop-filter: blur(38px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.55);
+    radial-gradient(130% 95% at 16% 8%, rgba(255,255,255,0.36) 0%, transparent 50%),
+    linear-gradient(150deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.07) 100%);
+  backdrop-filter: blur(30px) saturate(175%);
+  -webkit-backdrop-filter: blur(30px) saturate(175%);
+  border: 1px solid rgba(255,255,255,0.40);
   box-shadow:
-    0 35px 90px -22px rgba(20,40,70,0.15),
-    0 8px 24px rgba(255,255,255,0.28) inset,
-    0 1px 0 rgba(255,255,255,1) inset;
+    0 52px 116px -32px rgba(20,40,70,0.22),
+    0 1px 0 rgba(255,255,255,0.9) inset,
+    0 -1px 0 rgba(20,40,70,0.05) inset;
 }
 
-/* Heavy frosted — hero panels, most transparent / most crystal */
+/* Heavy frosted — hero panels, most transparent / most crystal of all */
 :is([data-theme="light"],.light) .gf {
   background:
-    linear-gradient(120deg,transparent 32%,rgba(255,255,255,0.30) 50%,transparent 68%),
-    rgba(255,255,255,0.62);
-  backdrop-filter: blur(58px) saturate(180%) brightness(1.02);
-  -webkit-backdrop-filter: blur(58px) saturate(180%) brightness(1.02);
-  border: 1px solid rgba(255,255,255,0.60);
+    radial-gradient(140% 100% at 18% 6%, rgba(255,255,255,0.30) 0%, transparent 52%),
+    rgba(255,255,255,0.34);
+  backdrop-filter: blur(52px) saturate(185%) brightness(1.02);
+  -webkit-backdrop-filter: blur(52px) saturate(185%) brightness(1.02);
+  border: 1px solid rgba(255,255,255,0.44);
   box-shadow:
-    0 40px 100px -24px rgba(20,40,70,0.16),
-    0 8px 24px rgba(255,255,255,0.30) inset,
-    0 1px 0 rgba(255,255,255,1) inset;
+    0 58px 136px -34px rgba(20,40,70,0.22),
+    0 1px 0 rgba(255,255,255,0.92) inset,
+    0 -1px 0 rgba(20,40,70,0.05) inset;
 }
 :is([data-theme="light"],.light) .gf::before {
-  background: linear-gradient(90deg,transparent,rgba(255,255,255,1),transparent);
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent);
   opacity: 1;
 }
 
@@ -1533,12 +1552,14 @@ input:focus, select:focus, textarea:focus {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* Body text colors */
+/* Body text colors — aligned to the canonical ink hierarchy tokens
+   (--text-3/4/5) instead of stray hardcoded hex values that quietly
+   drifted out of sync with the rest of the palette. */
 :is([data-theme="light"],.light) .t-xl,
-:is([data-theme="light"],.light) .t-lg  { color: #4A5568 }
+:is([data-theme="light"],.light) .t-lg  { color: var(--text-3) }
 :is([data-theme="light"],.light) .t-md,
-:is([data-theme="light"],.light) .t-sm  { color: #5A6475 }
-:is([data-theme="light"],.light) .t-xs  { color: #718096 }
+:is([data-theme="light"],.light) .t-sm  { color: var(--text-3) }
+:is([data-theme="light"],.light) .t-xs  { color: var(--text-4) }
 
 /* ══════════════════════════════
    BUTTONS
@@ -1563,18 +1584,18 @@ input:focus, select:focus, textarea:focus {
 }
 
 :is([data-theme="light"],.light) .btn-ghost {
-  background: rgba(255,255,255,0.50);
+  background: rgba(255,255,255,0.34);
   color: #2A3140;
-  border: 1px solid rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.42);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.90), 0 10px 26px -10px rgba(20,40,70,0.14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 14px 32px -12px rgba(20,40,70,0.16);
 }
 :is([data-theme="light"],.light) .btn-ghost:hover {
-  background: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.58);
   color: #0D1117;
-  border-color: rgba(43,110,143,0.24);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.98), 0 14px 34px -10px rgba(20,40,70,0.18), var(--sh-glow-c);
+  border-color: rgba(43,110,143,0.28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 18px 40px -12px rgba(20,40,70,0.20), var(--sh-glow-c);
   transform: scale(1.02);
 }
 @media(max-width:767px){
@@ -3047,16 +3068,16 @@ nav { padding-top: max(0px, env(safe-area-inset-top)); }
   border-color: rgba(0,0,0,0.07);
 }
 :is([data-theme="light"],.light) .prem-stat-num {
-  background: linear-gradient(135deg, rgba(2,20,60,0.96) 30%, rgba(2,100,180,0.85));
+  background: linear-gradient(135deg, var(--blue) 30%, var(--cyan) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 :is([data-theme="light"],.light) .prem-stat-label {
-  color: rgba(2,20,60,0.55);
+  color: var(--text-3);
 }
 :is([data-theme="light"],.light) .prem-stat-sub {
-  color: rgba(2,20,60,0.32);
+  color: var(--text-4);
 }
 
 /* ── Hover lift utility ── */

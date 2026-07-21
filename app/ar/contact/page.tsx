@@ -289,12 +289,12 @@ export default function ArContactPage() {
           padding:clamp(52px,7vw,80px) clamp(24px,4vw,40px);
           border-radius:clamp(24px,2.8vw,32px);
           background:
-            linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.40) 48%,transparent 66%),
-            linear-gradient(155deg,rgba(255,255,255,0.42) 0%,rgba(255,255,255,0.16) 100%);
-          backdrop-filter:blur(36px) saturate(180%) brightness(1.03);
-          -webkit-backdrop-filter:blur(36px) saturate(180%) brightness(1.03);
-          border:1px solid rgba(255,255,255,0.55);
-          box-shadow:0 30px 70px -18px rgba(20,40,70,0.16), 0 8px 22px rgba(255,255,255,0.28) inset, 0 1px 0 rgba(255,255,255,0.85) inset;
+            radial-gradient(130% 100% at 80% 12%, rgba(255,255,255,0.32) 0%, transparent 52%),
+            linear-gradient(155deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.09) 100%);
+          backdrop-filter:blur(34px) saturate(180%) brightness(1.02);
+          -webkit-backdrop-filter:blur(34px) saturate(180%) brightness(1.02);
+          border:1px solid rgba(255,255,255,0.42);
+          box-shadow:0 44px 92px -26px rgba(20,40,70,0.20), 0 1px 0 rgba(255,255,255,0.85) inset, 0 -1px 0 rgba(20,40,70,0.05) inset;
           position:relative; overflow:hidden;
         }
         .contact-logo-frame::before{

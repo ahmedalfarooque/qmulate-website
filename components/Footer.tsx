@@ -88,12 +88,12 @@ export function Footer() {
         @media(max-width:600px){.footer-grid{grid-template-columns:1fr!important}}
         .qm-footer{
           background:
-            linear-gradient(120deg,transparent 35%,rgba(255,255,255,0.30) 50%,transparent 65%),
-            linear-gradient(180deg,rgba(255,255,255,0.44) 0%,rgba(255,255,255,0.22) 100%);
-          backdrop-filter:blur(30px) saturate(180%);
-          -webkit-backdrop-filter:blur(30px) saturate(180%);
-          border-top:1px solid rgba(255,255,255,0.55);
-          box-shadow:0 -1px 0 rgba(255,255,255,0.9) inset, 0 -30px 60px -30px rgba(20,40,70,0.10);
+            radial-gradient(120% 160% at 10% 0%, rgba(255,255,255,0.24) 0%, transparent 55%),
+            linear-gradient(180deg,rgba(255,255,255,0.20) 0%,rgba(255,255,255,0.10) 100%);
+          backdrop-filter:blur(28px) saturate(175%);
+          -webkit-backdrop-filter:blur(28px) saturate(175%);
+          border-top:1px solid rgba(255,255,255,0.42);
+          box-shadow:0 -1px 0 rgba(255,255,255,0.85) inset, 0 -40px 80px -34px rgba(20,40,70,0.14);
         }
         @media(max-width:767px){
           .qm-footer{ backdrop-filter:none; -webkit-backdrop-filter:none; background:rgba(255,255,255,0.90); }

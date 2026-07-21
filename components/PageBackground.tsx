@@ -11,13 +11,19 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
   // 10+ blurred elements simultaneously on a phone kills performance.
   if (typeof window !== 'undefined' && window.innerWidth < 768) return null
 
-  // Soft luxury palette only — no saturated color "blobs". Gentle sky-blue,
-  // champagne and pearl tones at low opacity so the ivory page background
-  // stays bright while glass cards read clearly on top of it.
+  // Soft luxury palette only — no saturated color "blobs". Sky-blue,
+  // champagne, ice-blue, mist and pearl tones at low opacity so the ivory
+  // page background stays bright while glass cards read clearly on top
+  // of it. Each page draws from a slightly different slice of this
+  // extended palette so the site feels illuminated with real atmospheric
+  // variety, not the same two-color swap repeated on every page.
   const isBlue = ['home', 'about', 'solutions', 'contact'].includes(variant)
   const skyBlue   = '186,210,232'   // soft sky blue
   const champagne = '224,201,157'   // soft champagne / brass-gold
   const pearl     = '255,255,255'   // pearl white
+  const iceBlue   = '220,231,239'   // cool architectural glass-blue
+  const mist      = '239,241,240'   // pale grey-green mist
+  const slate     = '148,163,184'   // soft slate, used sparingly
   const accentA = isBlue ? skyBlue : champagne
   const accentB = isBlue ? champagne : skyBlue
 
@@ -35,25 +41,29 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
       { top:'40%', right:'20%', w:600, h:600, color:accentA, opacity:0.08, blur:80, dur:12, delay:6 },
     ],
     about: [
-      /* Centred, symmetric — mirrors the About page's centred 3-col composition */
+      /* Centred, symmetric, cool and architectural — ice-blue + mist rather
+         than the warmer palette used elsewhere, echoing the institutional
+         framing of the About page. */
       { top:'6%',  left:'50%',  w:1200, h:640, color:pearl,   opacity:0.45, blur:75, dur:9 },
-      { top:'22%', left:'6%',   w:760,  h:760, color:accentA, opacity:0.10, blur:65, dur:8 },
-      { top:'22%', right:'6%',  w:760,  h:760, color:accentB, opacity:0.10, blur:65, dur:11, delay:2 },
-      { bottom:'4%', left:'50%', w:900, h:520, color:accentA, opacity:0.07, blur:70, dur:13, delay:5 },
+      { top:'22%', left:'6%',   w:760,  h:760, color:iceBlue, opacity:0.11, blur:65, dur:8 },
+      { top:'22%', right:'6%',  w:760,  h:760, color:mist,    opacity:0.14, blur:65, dur:11, delay:2 },
+      { bottom:'4%', left:'50%', w:900, h:520, color:champagne, opacity:0.06, blur:70, dur:13, delay:5 },
     ],
     services: [
-      /* Wide, horizontal spread — echoes the alternating left/right service rows */
+      /* Wide, horizontal spread — echoes the alternating left/right service
+         rows, with one cool slate accent for a structured, less-warm feel. */
       { top:'8%',   left:'4%',  w:820, h:700, color:accentA, opacity:0.11, blur:65, dur:8 },
-      { top:'30%',  right:'6%', w:900, h:760, color:accentB, opacity:0.11, blur:70, dur:10, delay:2 },
-      { bottom:'8%', left:'12%', w:760, h:640, color:accentA, opacity:0.08, blur:60, dur:9, delay:4 },
+      { top:'30%',  right:'6%', w:900, h:760, color:iceBlue, opacity:0.11, blur:70, dur:10, delay:2 },
+      { bottom:'8%', left:'12%', w:760, h:640, color:slate,  opacity:0.06, blur:60, dur:9, delay:4 },
       { bottom:'-2%', right:'18%', w:640, h:600, color:pearl, opacity:0.30, blur:70, dur:12, delay:1 },
     ],
     contact: [
-      /* Warm, lower-anchored — settles gently behind the form and logo panel */
+      /* Warm, lower-anchored, with one ice-blue note for freshness — settles
+         gently behind the form and logo panel. */
       { top:'10%',  left:'8%',  w:820, h:680, color:pearl,   opacity:0.42, blur:72, dur:9 },
-      { top:'18%',  right:'8%', w:900, h:760, color:accentA, opacity:0.10, blur:64, dur:8, delay:1 },
-      { bottom:'6%', left:'22%', w:820, h:680, color:accentB, opacity:0.10, blur:66, dur:11, delay:3 },
-      { bottom:'-4%', right:'10%', w:700, h:620, color:accentA, opacity:0.07, blur:70, dur:13, delay:5 },
+      { top:'18%',  right:'8%', w:900, h:760, color:champagne, opacity:0.10, blur:64, dur:8, delay:1 },
+      { bottom:'6%', left:'22%', w:820, h:680, color:iceBlue, opacity:0.09, blur:66, dur:11, delay:3 },
+      { bottom:'-4%', right:'10%', w:700, h:620, color:mist, opacity:0.10, blur:70, dur:13, delay:5 },
     ],
   }
   const glows = LAYOUTS[variant] ?? LAYOUTS.home

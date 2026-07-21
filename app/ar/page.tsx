@@ -21,13 +21,13 @@ const HERO_STACK_IMAGES = [
 
 /* Editorial split imagery — same photography choices as the EN homepage */
 const WHO_WE_ARE_IMG = [{ src: BGI("JdWb9CkELQIJ23C0ooXh7S4uIO6GpX8UyeDtx2-7GPOa-5CUB-G1uKjJOy2YwOfQb86I6Sp1S-o8CQgEc7W9e8Y7AzAD-FPrrhSZDd0qbxU42vX5z2n5AzTdnsSt5_HjsXP_7vkxOimwuIjCIwxwnbU_E2vkHEJ6y_Oz5j2PzC.jpg"), position: "center 40%" }];
-const STRUCTURE_IMG   = [{ src: BGI("sheraton-jeddah-hotel-general-142cf1f7.jpg"), position: "center 45%" }];
+const STRUCTURE_IMG   = [{ src: BGI("lStHlz6rGvVTNrn-gxBsxbYPxHasr-dH2337InzXsYChXw7hYLdTKUMBalUuIWZzkzfcOHukp7yPCct_vkj6ZF3eTFewlWNhJZJfhKixOjIqPjxuGCHMzuEJszZ_Z3ZfV9UIdoqBzjt7Iq-VexYqNvlDmiXgce0bhLafh2RBy2.jpg"), position: "center 45%" }];
 
 /* ─── DATA (real, unchanged Arabic business content, ported from the prior
    Arabic homepage — only the surrounding scaffolding has been restructured) ── */
 const HOME_SERVICES: ShowcaseItem[] = [
   { num: "01", category: "هيكلة الملكية", title: "هيكلة الملكية والحوكمة",
-    image: "depositphotos_822615612-stock-photo-tayibat-city-museum-jeddah-sunset.jpg",
+    image: "AqAtJNNbvEz9B_X-LrvudRWxvbGO0TcEOO5SOIbPjUWLqGfIMCKZFPPK0e7NrLFWV7OmSEzLhtJmL3K_7GwubvHYNeRbz28PhCctZMEQHwtw1-O1ES9RZPJOy-84skQbgX_ywVavjAsRlX-xptvQOCoqVeg18wEu_VYl9Lw1WW.jpg",
     body: "تنظيم أطر الملكية وهياكل صنع القرار لضمان الوضوح والسيطرة على المدى البعيد." },
   { num: "02", category: "إدارة الأصول", title: "إدارة الأصول العقارية",
     image: "nnCjPbRJpT5EQytfClgoeerh9ssrgENktsHfIcS_5DZM2dH8pKpsFp7YQM3dRi0NyZp5eGc3jS-0bRgEAaFY_ERGZ4TZHiu3FRg3mXbZMwaQLjDbK4uMDGGQ0HHsGbfS_mt3pCelpO5T189RKW_hBc3vT_hwTB6wouHJ1b.jpg",
@@ -45,7 +45,7 @@ const REGULATORS = [
   { name: "هيئة أملاك الدولة",  img: "/Regulatory%20Authorities/STATE%20PROPERTY%20OF%20GENERAL%20AUTHORITY%20LOGO.png" },
 ];
 
-const PROCESS_IMG = [{ src: BGI("istockphoto-1096064256-612x612.jpg"), position: "center 45%" }];
+const PROCESS_IMG = [{ src: BGI("1000_F_332524339_NGSV5Nsf4ZQHUIB7xjBeP5IQBQdDGFaU.jpg"), position: "center 45%" }];
 
 const PROCESS_STEPS = [
   { num: "01", title: "الاكتشاف", body: "فهم هيكل الملكية والأهداف وتركيبة الأصول القائمة." },
@@ -294,6 +294,8 @@ export default function ArHome() {
         </div>
       </section>
 
+      <div className="container"><div className="editorial-rule" /></div>
+
       {/* ══════════════════════════════════════════
           5. SERVICE LAYERS — EDITORIAL SPLIT (mirrored: image right, text left)
           ══════════════════════════════════════════ */}
@@ -337,6 +339,8 @@ export default function ArHome() {
           </div>
         </div>
       </section>
+
+      <div className="container"><div className="editorial-rule" /></div>
 
       {/* ══════════════════════════════════════════
           6. FEATURED SERVICES / INVESTMENT COLLECTIONS
