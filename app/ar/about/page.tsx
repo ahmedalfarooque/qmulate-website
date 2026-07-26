@@ -39,7 +39,7 @@ const STACK_CARDS = [
    ═══════════════════════════════════════════════════ */
 export default function ArAboutPage() {
   return (
-    <main className="hero-page" style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
+    <main className="hero-page" style={{ position:"relative", fontFamily:"var(--font-madani),sans-serif" }}>
       <PageBackground variant="about"/>
 
       {/* ── HERO — قسم واحد موحّد، النص فوق صورة معمارية راقية ── */}

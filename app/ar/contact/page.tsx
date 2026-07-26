@@ -20,7 +20,7 @@ const inputBase: React.CSSProperties = {
   WebkitBackdropFilter: "blur(12px) saturate(160%)",
   transition: "border-color 0.2s, box-shadow 0.2s, background 0.2s",
   boxSizing: "border-box",
-  fontFamily: "'Madani Arabic',sans-serif",
+  fontFamily: "var(--font-madani),sans-serif",
   direction: "rtl",
   textAlign: "right",
 };
@@ -33,7 +33,7 @@ function Field({
       <label style={{
         fontSize: 11, fontWeight: 700, letterSpacing: "0.06em",
         color: "var(--text-4)",
-        fontFamily: "'Madani Arabic',sans-serif",
+        fontFamily: "var(--font-madani),sans-serif",
         textAlign: "right",
       }}>
         {label}{required && <span style={{ color: "var(--gold)", marginRight: 3 }}>*</span>}
@@ -137,7 +137,7 @@ export default function ArContactPage() {
   };
 
   return (
-    <main style={{ position: "relative", fontFamily: "'Madani Arabic',sans-serif" }}>
+    <main style={{ position: "relative", fontFamily: "var(--font-madani),sans-serif" }}>
       <PageBackground variant="contact" />
 
       <section style={{
@@ -171,7 +171,7 @@ export default function ArContactPage() {
                 <GlassCard style={{ padding: "22px 26px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexDirection: "row-reverse", justifyContent: "flex-end" }}>
                     <PhoneIcon size="sm" />
-                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "'Madani Arabic',sans-serif" }}>التواصل</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "var(--font-madani),sans-serif" }}>التواصل</div>
                   </div>
                   <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text-1)", marginBottom: 6, textAlign: "right" }}>د. أحمد إسماعيل الفاروق</div>
                   <a href="tel:+966533339052" style={{ display: "block", fontSize: 13, color: "var(--cyan)", marginBottom: 3, direction: "ltr", textAlign: "right" }}>+966 53 333 9052</a>
@@ -181,7 +181,7 @@ export default function ArContactPage() {
                 <GlassCard style={{ padding: "22px 26px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexDirection: "row-reverse", justifyContent: "flex-end" }}>
                     <LocationIcon size="sm" />
-                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "'Madani Arabic',sans-serif" }}>العنوان</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "var(--font-madani),sans-serif" }}>العنوان</div>
                   </div>
                   <p style={{ fontSize: 13, color: "var(--text-2)", lineHeight: 1.85, margin: 0, textAlign: "right" }}>
                     طريق الملك عبدالعزيز، حي البساتين<br />
@@ -210,7 +210,7 @@ export default function ArContactPage() {
                 ) : (
                   <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 22, position: "relative", zIndex: 1 }}>
                     <div>
-                      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--gold)", fontFamily: "'Madani Arabic',sans-serif", marginBottom: 20, textAlign: "right" }}>
+                      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--gold)", fontFamily: "var(--font-madani),sans-serif", marginBottom: 20, textAlign: "right" }}>
                         طلب تقديم
                       </div>
                       <h2 className="t-h3" style={{ color: "var(--text-1)" }}>
@@ -268,7 +268,7 @@ export default function ArContactPage() {
           padding:9px 12px 9px 16px; border-radius:100px;
           background:rgba(91,124,250,0.08); border:1px solid rgba(91,124,250,0.22);
           font-size:12.5px; font-weight:600; color:var(--text-2);
-          font-family:'Madani Arabic',sans-serif;
+          font-family:var(--font-madani),sans-serif;
         }
         @media(max-width:900px){.grid-contact{grid-template-columns:1fr!important}}
         @media(max-width:560px){.form-row{grid-template-columns:1fr!important}}

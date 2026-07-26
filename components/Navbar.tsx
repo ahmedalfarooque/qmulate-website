@@ -90,7 +90,7 @@ export function Navbar() {
             {links.map(l=>(
               <Link key={l.h} href={l.h} style={{
                 padding:"7px 14px",borderRadius:100,fontSize:13,fontWeight:500,
-                fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
+                fontFamily:isAr?"var(--font-madani),sans-serif":"var(--font-geist,'Inter',sans-serif)",
                 color:isActive(l.h)?"var(--text-1)":"var(--text-3)",
                 background:isActive(l.h)?"rgba(91,124,250,.10)":"transparent",
                 border:`1px solid ${isActive(l.h)?"rgba(91,124,250,.24)":"transparent"}`,
@@ -153,7 +153,7 @@ export function Navbar() {
                   padding:"20px 0",borderBottom:"1px solid var(--glass-border)",
                   fontSize:"clamp(22px,6vw,34px)",fontWeight:800,
                   letterSpacing:isAr?0:"-0.03em",
-                  fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
+                  fontFamily:isAr?"var(--font-madani),sans-serif":"var(--font-geist,'Inter',sans-serif)",
                   color:isActive(l.h)?"var(--gold)":"var(--text-1)",
                   textAlign:isAr?"right":"left",
                   animation:`fade-up .42s ${i*55}ms both`,

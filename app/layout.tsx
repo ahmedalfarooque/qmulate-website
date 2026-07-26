@@ -15,6 +15,17 @@ const geistMono = localFont({
   src:"../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2",
   variable:"--font-geist-mono",display:"swap",
 });
+const madaniArabic = localFont({
+  src:[
+    { path:"./fonts/madani/Madani-Arabic-Light.ttf", weight:"300", style:"normal" },
+    { path:"./fonts/madani/Madani-Arabic-Regular.ttf", weight:"400", style:"normal" },
+    { path:"./fonts/madani/Madani-Arabic-Medium.ttf", weight:"500", style:"normal" },
+    { path:"./fonts/madani/Madani-Arabic-SemiBold.ttf", weight:"600", style:"normal" },
+    { path:"./fonts/madani/Madani-Arabic-Bold.ttf", weight:"700", style:"normal" },
+    { path:"./fonts/madani/Madani-Arabic-ExtraBold.ttf", weight:"800", style:"normal" },
+  ],
+  variable:"--font-madani",display:"swap",
+});
 
 export const metadata: Metadata = {
   title:{default:"QMULATE — Real Estate Wealth Platform",template:"%s | QMULATE"},
@@ -34,14 +45,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="light" data-theme="light" suppressHydrationWarning>
       <head>
         <link rel="preload" href="/Logo.svg" as="image"/>
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Madani+Arabic:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
       </head>
-      <body className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <body className={`${geist.variable} ${geistMono.variable} ${madaniArabic.variable}`} suppressHydrationWarning>
           <CrystalScene />
           {/* Global scroll progress bar */}
           <ScrollProgress />

@@ -68,7 +68,7 @@ export default function ArHome() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <main className="hero-page" style={{ position: "relative", fontFamily: "'Madani Arabic',sans-serif" }}>
+    <main className="hero-page" style={{ position: "relative", fontFamily: "var(--font-madani),sans-serif" }}>
 
       {/* ══════════════════════════════════════════
           1. HERO — LIGHT EDITORIAL SPLIT (mirrored: text right, image left)

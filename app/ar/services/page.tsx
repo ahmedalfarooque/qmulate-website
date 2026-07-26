@@ -67,7 +67,7 @@ const SERVICES = [
    ═════════════════════════════════════════════ */
 export default function ArServicesPage() {
   return (
-    <main className="hero-page" style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
+    <main className="hero-page" style={{ position:"relative", fontFamily:"var(--font-madani),sans-serif" }}>
       <PageBackground variant="services"/>
 
       {/* ── HERO: قسم واحد موحّد — النص فوق الصورة ── */}
@@ -202,7 +202,7 @@ export default function ArServicesPage() {
                         <h2 style={{
                           fontSize:"clamp(24px,2.9vw,42px)",
                           fontWeight:700,
-                          fontFamily:"'Madani Arabic',sans-serif",
+                          fontFamily:"var(--font-madani),sans-serif",
                           color:"var(--text-1)",
                           lineHeight:1.28,
                         }}>
@@ -238,7 +238,7 @@ export default function ArServicesPage() {
                       }}>
                         <div style={{
                           fontSize:11, color:"var(--text-1)", fontWeight:700, letterSpacing:"0.06em",
-                          fontFamily:"'Madani Arabic',sans-serif", textAlign:"right",
+                          fontFamily:"var(--font-madani),sans-serif", textAlign:"right",
                         }}>
                           {c.label}
                         </div>
@@ -261,7 +261,7 @@ export default function ArServicesPage() {
                           fontWeight:700,
                           letterSpacing:"0.06em",
                           marginBottom:18,
-                          fontFamily:"'Madani Arabic',sans-serif",
+                          fontFamily:"var(--font-madani),sans-serif",
                           textAlign:"right",
                         }}>
                           {c.label}
@@ -317,7 +317,7 @@ export default function ArServicesPage() {
         .svc-index-item{
           display:flex; align-items:center; gap:9px; white-space:nowrap; flex-shrink:0;
           font-size:12.5px; font-weight:600; color:var(--text-3); text-decoration:none;
-          padding:6px 2px; transition:color .2s ease; font-family:'Madani Arabic',sans-serif;
+          padding:6px 2px; transition:color .2s ease; font-family:var(--font-madani),sans-serif;
         }
         .svc-index-item:hover{ color:var(--text-1); }
         .svc-index-dot{ width:6px; height:6px; border-radius:50%; flex-shrink:0; }

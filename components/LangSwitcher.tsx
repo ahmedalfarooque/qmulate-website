@@ -27,7 +27,7 @@ export function LangSwitcher() {
       {isAr ? (
         <><span>EN</span><span style={{ color: "var(--accent)" }}></span></>
       ) : (
-        <><span style={{ fontFamily: "'Madani Arabic', sans-serif" }}>ع</span><span style={{ color: "var(--accent)" }}></span></>
+        <><span style={{ fontFamily: "var(--font-madani), sans-serif" }}>ع</span><span style={{ color: "var(--accent)" }}></span></>
       )}
     </button>
   );

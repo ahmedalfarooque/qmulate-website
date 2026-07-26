@@ -40,7 +40,7 @@ export function Footer() {
     <footer className="qm-footer" style={{
       position:"relative",overflow:"hidden",
       direction:isAr?"rtl":"ltr",
-      fontFamily:isAr?"'Madani Arabic',sans-serif":"var(--font-geist,'Inter',sans-serif)",
+      fontFamily:isAr?"var(--font-madani),sans-serif":"var(--font-geist,'Inter',sans-serif)",
     }}>
       {/* Ambient dark canvas — matches the brand's ink + blue duotone */}
       <div className="qm-footer-bg" />
