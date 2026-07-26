@@ -990,6 +990,34 @@ a, button, [role="button"] {
 .section-lux.section-lux-tight-top{padding-top:clamp(24px,3vw,40px)}
 .section-lux.section-lux-tight-bottom{padding-bottom:clamp(24px,3vw,40px)}
 
+/* ── Values grid — all 5 cards on one row at desktop instead of wrapping
+   a lone 5th card onto its own line ── */
+.values-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:clamp(14px,1.8vw,20px);
+}
+@media(max-width:1180px){ .values-grid{ grid-template-columns:repeat(3,1fr); } }
+@media(max-width:760px){ .values-grid{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .values-grid{ grid-template-columns:1fr; } }
+
+/* ── Thin line-with-dot section separator (used between stacked service
+   blocks, where a bare section-to-section boundary reads as an oversized
+   empty gap) ── */
+.svc-sep{
+  position:relative;
+  width:100%;
+  height:1px;
+  background:linear-gradient(90deg,transparent 0%,var(--glass-border-strong) 20%,var(--glass-border-strong) 80%,transparent 100%);
+}
+.svc-sep::after{
+  content:"";
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:7px; height:7px; border-radius:50%;
+  background:var(--blue);
+  box-shadow:0 0 14px rgba(91,124,250,0.55);
+}
+
 /* ── Thin luxury separator ── */
 .lux-sep{
   width:100%;

@@ -412,11 +412,11 @@ export default function Home() {
         /* ── How We Work — numbered process list ── */
         .process-steps{ display:flex; flex-direction:column; gap:0; }
         .process-step{
-          display:grid; grid-template-columns:44px 1fr; gap:18px;
+          display:grid; grid-template-columns:52px 1fr; gap:18px;
           padding:18px 0; border-bottom:1px solid var(--glass-border);
         }
         .process-step:last-child{ border-bottom:none; }
-        .process-num{ letter-spacing:0; }
+        .process-num{ letter-spacing:0; font-size:clamp(18px,1.8vw,24px); }
       `}</style>
     </main>
   );

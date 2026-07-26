@@ -131,7 +131,6 @@ export default function ServicesPage() {
               <a key={svc.num} href={`#svc-${svc.num}`} className="svc-index-item">
                 <span className="svc-index-dot" style={{ background:svc.color }} />
                 <span className="svc-index-num">{svc.num}</span>
-                <span className="svc-index-label">{svc.title}</span>
               </a>
             ))}
           </div>
@@ -147,7 +146,12 @@ export default function ServicesPage() {
 
         return (
           <Fragment key={svc.num}>
-          <section id={`svc-${svc.num}`} className="section-lux" style={{
+          {si > 0 && (
+            <div className="container">
+              <div className="svc-sep" />
+            </div>
+          )}
+          <section id={`svc-${svc.num}`} className={`section-lux${si > 0 ? " section-lux-tight-top" : ""}${si < SERVICES.length - 1 ? " section-lux-tight-bottom" : ""}`} style={{
             position:"relative",
             overflow:"hidden",
             scrollMarginTop:"96px",
@@ -232,7 +236,7 @@ export default function ServicesPage() {
                         gap:"clamp(16px,2.5vw,32px)",
                       }}>
                         <div style={{
-                          fontSize:11, color:svc.color, fontWeight:700, letterSpacing:"0.13em",
+                          fontSize:11, color:"var(--text-1)", fontWeight:700, letterSpacing:"0.13em",
                           textTransform:"uppercase", fontFamily:"var(--font-geist-mono,'Courier New'),monospace",
                         }}>
                           {c.label}
@@ -252,7 +256,7 @@ export default function ServicesPage() {
                       }}>
                         <div style={{
                           fontSize:11,
-                          color:svc.color,
+                          color:"var(--text-1)",
                           fontWeight:700,
                           letterSpacing:"0.13em",
                           textTransform:"uppercase",

@@ -157,12 +157,7 @@ export default function ArAboutPage() {
             </Reveal>
           </div>
 
-          <div style={{
-            display:"grid",
-            gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",
-            gap:"clamp(14px,1.8vw,20px)",
-            direction:"rtl",
-          }}>
+          <div className="values-grid" style={{ direction:"rtl" }}>
             {VALUES.map((value, i) => (
               <Reveal key={value.title} direction="up" delay={i * 0.07}>
                 <GlassCard style={{

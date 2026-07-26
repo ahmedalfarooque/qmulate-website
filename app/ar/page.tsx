@@ -410,11 +410,11 @@ export default function ArHome() {
         /* ── How We Work — numbered process list (mirrored) ── */
         .process-steps{ display:flex; flex-direction:column; gap:0; }
         .process-step-rtl{
-          display:grid; grid-template-columns:1fr 44px; gap:18px;
+          display:grid; grid-template-columns:1fr 52px; gap:18px;
           padding:18px 0; border-bottom:1px solid var(--glass-border);
         }
         .process-step-rtl:last-child{ border-bottom:none; }
-        .process-num{ letter-spacing:0; text-align:left; }
+        .process-num{ letter-spacing:0; text-align:left; font-size:clamp(18px,1.8vw,24px); }
       `}</style>
     </main>
   );

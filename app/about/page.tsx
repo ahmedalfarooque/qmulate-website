@@ -162,11 +162,7 @@ export default function AboutPage() {
             </Reveal>
           </div>
 
-          <div style={{
-            display:"grid",
-            gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",
-            gap:"clamp(14px,1.8vw,20px)",
-          }}>
+          <div className="values-grid">
             {VALUES.map((value, i) => (
               <Reveal key={value.title} direction="up" delay={i * 0.07}>
                 <GlassCard style={{
