@@ -280,7 +280,6 @@ export default function ArServicesPage() {
 
       {/* ── SHOWCASE + CTA (single contained dark band) ── */}
       <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(80px,10vw,140px)" }} dir="rtl">
-        <Reveal direction="up">
           <div className="showcase-dark" style={{ textAlign:"center" }}>
             <div className="showcase-quote showcase-quote-sm" style={{ maxWidth:680, margin:"0 auto" }}>
               هيكلة مناسبة لكل نوع من أنواع الملكية — الحوكمة والإدارة والنمو ضمن منظومة واحدة متكاملة.
@@ -293,7 +292,6 @@ export default function ArServicesPage() {
               <Link href="/ar/contact" className="btn btn-primary" style={{ fontSize:14, padding:"13px 32px" }}>← تواصل معنا</Link>
             </div>
           </div>
-        </Reveal>
       </div>
 
       <style>{`

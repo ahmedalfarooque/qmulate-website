@@ -279,7 +279,6 @@ export default function ServicesPage() {
 
       {/* ── SHOWCASE + CTA (single contained dark band) ── */}
       <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(80px,10vw,140px)" }}>
-        <Reveal direction="up">
           <div className="showcase-dark" style={{ textAlign:"center" }}>
             <div className="showcase-quote showcase-quote-sm" style={{ maxWidth:680, margin:"0 auto" }}>
               Structured for every type of ownership — governance, management, and growth in one integrated platform.
@@ -292,7 +291,6 @@ export default function ServicesPage() {
               <Link href="/contact" className="btn btn-primary" style={{ fontSize:14, padding:"13px 32px" }}>Get in touch →</Link>
             </div>
           </div>
-        </Reveal>
       </div>
 
       <style>{`

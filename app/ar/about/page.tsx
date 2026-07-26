@@ -181,7 +181,6 @@ export default function ArAboutPage() {
 
       {/* ── SHOWCASE + CTA (single contained dark band) ── */}
       <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(80px,10vw,140px)" }} dir="rtl">
-        <Reveal direction="up">
           <div className="showcase-dark" style={{ textAlign:"center" }}>
             <div className="showcase-quote showcase-quote-sm" style={{ maxWidth:680, margin:"0 auto" }}>
               نطوّر وننظّم الأصول العقارية ضمن أطر حوكمة وإدارة واضحة، بما يحفظ القيمة ويحقق استدامة الاستثمار على المدى الطويل.
@@ -195,7 +194,6 @@ export default function ArAboutPage() {
               <Link href="/ar/services" className="btn btn-ghost" style={{ fontSize:14, padding:"13px 28px", color:"#F5F6F8", borderColor:"rgba(255,255,255,0.20)" }}>خدماتنا</Link>
             </div>
           </div>
-        </Reveal>
       </div>
     </main>
   );
