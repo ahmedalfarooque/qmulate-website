@@ -94,8 +94,8 @@ export function Footer() {
         @media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr!important}}
         @media(max-width:520px){.footer-grid{grid-template-columns:1fr!important}}
 
-        /* Deep navy-blue canvas — a more visibly bluish dark theme than the
-           near-black ink used elsewhere, per design direction. */
+        /* Deep navy-blue canvas — the confirmed brand footer colour, used
+           identically on every page (single shared component). */
         .qm-footer{
           background: linear-gradient(155deg, #0A0E1F 0%, #141B33 55%, #0A0E1F 100%);
         }
