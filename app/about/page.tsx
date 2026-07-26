@@ -82,7 +82,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── WHO WE ARE — narrative · abstract glass art · stacked cards ── */}
-      <section className="section-lux" style={{ position:"relative", overflow:"hidden" }}>
+      <section className="section-lux section-lux-tight-bottom" style={{ position:"relative", overflow:"hidden" }}>
         <div className="deco-shard" style={{ top:"8%", right:"-2%" }} />
         <div className="deco-shard" style={{ bottom:"10%", left:"-3%", transform:"rotate(-16deg)" }} />
         <div className="container" style={{ position:"relative", zIndex:1 }}>
@@ -146,7 +146,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── VALUES ── */}
-      <section className="section-lux">
+      <section className="section-lux section-lux-tight-top">
         <div className="container">
           <div style={{ textAlign:"center", marginBottom:"clamp(48px,6vw,72px)" }}>
             <Reveal direction="up">

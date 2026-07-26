@@ -79,7 +79,7 @@ export default function ArAboutPage() {
       </section>
 
       {/* ── من نحن — سرد · تكوين زجاجي تجريدي · بطاقات مكدّسة ── */}
-      <section className="section-lux" dir="rtl" style={{ position:"relative", overflow:"hidden" }}>
+      <section className="section-lux section-lux-tight-bottom" dir="rtl" style={{ position:"relative", overflow:"hidden" }}>
         <div className="deco-shard" style={{ top:"8%", left:"-2%" }} />
         <div className="deco-shard" style={{ bottom:"10%", right:"-3%", transform:"rotate(-16deg)" }} />
         <div className="container" style={{ position:"relative", zIndex:1 }}>
@@ -141,7 +141,7 @@ export default function ArAboutPage() {
       </section>
 
       {/* ── VALUES ── */}
-      <section className="section-lux" dir="rtl">
+      <section className="section-lux section-lux-tight-top" dir="rtl">
         <div className="container">
           <div style={{ textAlign:"center", marginBottom:"clamp(48px,6vw,72px)" }}>
             <Reveal direction="up">

@@ -198,7 +198,7 @@ export default function ArHome() {
               </Reveal>
             </div>
 
-            <ImageReveal delay={0.12} style={{ aspectRatio: "3/4", minHeight: 500, borderRadius: "clamp(16px,2vw,28px)" }}>
+            <ImageReveal delay={0.12} className="split-img-col" style={{ aspectRatio: "3/4", minHeight: 500, borderRadius: "clamp(16px,2vw,28px)" }}>
               <div className="split-img split-img-col" style={{ aspectRatio: "3/4", minHeight: 500, borderRadius: 0 }}>
                 <SplitSlideshow slides={WHO_WE_ARE_IMG} interval={12000} />
                 <div className="img-grad qm-scrim-force" style={{ zIndex: 10 }} />
@@ -217,7 +217,7 @@ export default function ArHome() {
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="split-grid split-grid-rev" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(48px,7vw,100px)", alignItems: "center" }}>
 
-            <ImageReveal delay={0.1} className="split-order-first" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: "clamp(16px,2vw,28px)" }}>
+            <ImageReveal delay={0.1} className="split-order-first split-img-col" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: "clamp(16px,2vw,28px)" }}>
               <div className="split-img split-img-col" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: 0 }}>
                 <SplitSlideshow slides={PROCESS_IMG} interval={12000} />
                 <div className="img-grad qm-scrim-force" style={{ zIndex: 10 }} />
@@ -256,7 +256,7 @@ export default function ArHome() {
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="split-grid split-grid-rev" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(48px,6vw,96px)", alignItems: "center" }}>
 
-            <ImageReveal delay={0.1} className="split-order-first" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: "clamp(16px,2vw,28px)" }}>
+            <ImageReveal delay={0.1} className="split-order-first split-img-col" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: "clamp(16px,2vw,28px)" }}>
               <div className="split-img split-img-col" style={{ aspectRatio: "4/5", minHeight: 460, borderRadius: 0 }}>
                 <SplitSlideshow slides={STRUCTURE_IMG} interval={12000} />
                 <div className="img-grad qm-scrim-force" style={{ zIndex: 10 }} />
@@ -350,7 +350,7 @@ export default function ArHome() {
         @media(max-width:900px){.split-grid{grid-template-columns:1fr!important}}
         @media(max-width:900px){.split-grid-rev .split-order-first{order:-1}}
         @media(max-width:640px){.grid-3{grid-template-columns:1fr!important}}
-        @media(max-width:960px){.split-grid .split-img-col{aspect-ratio:16/9!important;min-height:320px!important}}
+        @media(max-width:960px){.split-grid .split-img-col{aspect-ratio:16/9!important;min-height:320px!important;width:100%!important;height:auto!important}}
 
         /* ── Hero image cluster — mirrored for RTL (image on the left) ── */
         .hero-image-cluster{

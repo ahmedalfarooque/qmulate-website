@@ -984,6 +984,11 @@ a, button, [role="button"] {
 
 /* ── Luxury section spacing ── */
 .section-lux{padding:clamp(100px,12vw,160px) 0}
+/* When a section-lux directly follows another section-lux, their bottom+top
+   paddings stack into one oversized gap. Use on the second section to
+   collapse it back to a single normal gap. */
+.section-lux.section-lux-tight-top{padding-top:clamp(24px,3vw,40px)}
+.section-lux.section-lux-tight-bottom{padding-bottom:clamp(24px,3vw,40px)}
 
 /* ── Thin luxury separator ── */
 .lux-sep{
@@ -1363,7 +1368,7 @@ html[dir="rtl"] .svc-hero-copy{ text-align:right; }
 /* ── Responsive split grid ── */
 @media(max-width:960px){
   .split-grid{grid-template-columns:1fr!important}
-  .split-grid .split-img-col{aspect-ratio:16/9!important;min-height:320px}
+  .split-grid .split-img-col{aspect-ratio:16/9!important;min-height:320px!important;width:100%!important;height:auto!important}
 }
 @media(max-width:900px){
   .hero-fullbleed .hero-content{padding:0 0 clamp(40px,8vw,72px)}
@@ -3163,6 +3168,17 @@ nav { padding-top: max(0px, env(safe-area-inset-top)); }
   color: #B9BEC8;
   font-size: clamp(14px, 1.3vw, 17px);
   line-height: 1.75;
+}
+/* .btn-primary's default text colour (theme-dependent blue/gold) reads with
+   very low contrast against this band's dark navy background — force a
+   light, clearly legible colour here regardless of theme. */
+.showcase-dark .btn-primary {
+  color: #F5F6F8;
+  border-color: rgba(255,255,255,0.30);
+}
+.showcase-dark .btn-primary:hover {
+  color: #ffffff;
+  border-color: rgba(255,255,255,0.48);
 }
 /* Compact quote variant — used when a quote and a CTA share one band,
    so neither block reads oversized next to the other. */
