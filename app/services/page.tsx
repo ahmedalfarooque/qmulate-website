@@ -123,20 +123,6 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      {/* ── STRUCTURED INDEX — anchor rail tying the three services together ── */}
-      <div className="svc-index-rail">
-        <div className="container">
-          <div className="svc-index-row">
-            {SERVICES.map((svc) => (
-              <a key={svc.num} href={`#svc-${svc.num}`} className="svc-index-item">
-                <span className="svc-index-dot" style={{ background:svc.color }} />
-                <span className="svc-index-num">{svc.num}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* ── SERVICES ── */}
       {SERVICES.map((svc, si) => {
         const SvcIcon = SERVICE_ICONS[si];
@@ -173,7 +159,7 @@ export default function ServicesPage() {
 
                   <div style={{ maxWidth:760, marginBottom:"clamp(40px,4.5vw,60px)" }}>
                     <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20 }}>
-                      <SvcIcon size="md"/>
+                      <span className="svc-icon-badge"><SvcIcon size="md"/></span>
                       <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
                     </motion.div>
                     <LineReveal delay={0.05}>
@@ -225,16 +211,10 @@ export default function ServicesPage() {
 
               {/* Client cards — full-width feature service gets a layered list treatment for rhythm variety */}
               {isFeature ? (
-                <div style={{ display:"flex", flexDirection:"column", gap:1 }}>
+                <div className="svc-glass-panel">
                   {svc.clients.map((c, ci) => (
                     <motion.div key={c.label} {...FU(.05 + ci * .09)}>
-                      <div className="layer-item svc-layer-row" style={{
-                        padding:"clamp(22px,2.6vw,32px) clamp(20px,2.4vw,30px)",
-                        borderBottom: ci < svc.clients.length - 1 ? "1px solid var(--glass-border)" : "none",
-                        display:"grid",
-                        gridTemplateColumns:"200px 1fr",
-                        gap:"clamp(16px,2.5vw,32px)",
-                      }}>
+                      <div className="svc-glass-row">
                         <div style={{
                           fontSize:11, color:"var(--text-1)", fontWeight:700, letterSpacing:"0.13em",
                           textTransform:"uppercase", fontFamily:"var(--font-geist-mono,'Courier New'),monospace",
@@ -296,31 +276,50 @@ export default function ServicesPage() {
       <style>{`
         @media(max-width:900px){.svc-split{grid-template-columns:1fr!important;direction:ltr!important}}
         @media(max-width:640px){.grid-3{grid-template-columns:1fr!important}}
-        @media(max-width:560px){.svc-layer-row{grid-template-columns:1fr!important;gap:8px!important}}
 
-        /* ── Structured index rail — wayfinding across the three services ── */
-        .svc-index-rail{
-          position:sticky; top:0; z-index:20;
-          padding:14px 0;
-          background:
-            radial-gradient(100% 220% at 8% 0%, rgba(255,255,255,0.20) 0%, transparent 60%),
-            linear-gradient(180deg,rgba(255,255,255,0.20) 0%,rgba(255,255,255,0.10) 100%);
-          backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
-          border-top:1px solid rgba(255,255,255,0.38); border-bottom:1px solid rgba(255,255,255,0.38);
+        /* ── Frosted glass badge around the section icon (number stays bare) ── */
+        .svc-icon-badge{
+          width:64px; height:64px; border-radius:18px; flex-shrink:0;
+          display:flex; align-items:center; justify-content:center;
+          background:rgba(255,255,255,0.22);
+          backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+          border:1px solid rgba(255,255,255,0.4);
         }
-        @media(max-width:767px){ .svc-index-rail{ backdrop-filter:none; -webkit-backdrop-filter:none; background:rgba(255,255,255,0.92); position:relative; } }
-        .svc-index-row{ display:flex; gap:clamp(18px,3vw,40px); overflow-x:auto; scrollbar-width:none; }
-        .svc-index-row::-webkit-scrollbar{ display:none; }
-        .svc-index-item{
-          display:flex; align-items:center; gap:9px; white-space:nowrap; flex-shrink:0;
-          font-size:12.5px; font-weight:600; color:var(--text-3); text-decoration:none;
-          padding:6px 2px; transition:color .2s ease;
+
+        /* ── Premium glass panel wrapping the client-type rows ── */
+        .svc-glass-panel{
+          display:flex; flex-direction:column; gap:20px;
+          padding:clamp(16px,2vw,24px);
+          border-radius:32px;
+          background:rgba(255,255,255,0.28);
+          backdrop-filter:blur(28px) saturate(170%); -webkit-backdrop-filter:blur(28px) saturate(170%);
+          border:1px solid rgba(255,255,255,0.55);
+          box-shadow:0 20px 60px rgba(0,0,0,.05);
+          overflow:hidden;
         }
-        .svc-index-item:hover{ color:var(--text-1); }
-        .svc-index-dot{ width:6px; height:6px; border-radius:50%; flex-shrink:0; }
-        .svc-index-num{
-          font-family:var(--font-geist-mono,'Courier New'),monospace; font-size:10.5px;
-          color:var(--text-4); letter-spacing:.06em;
+        .svc-glass-row{
+          padding:clamp(24px,3vw,32px);
+          border-radius:20px;
+          background:rgba(255,255,255,.18);
+          backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+          border:1px solid rgba(255,255,255,.35);
+          display:grid;
+          grid-template-columns:200px 1fr;
+          gap:clamp(16px,2.5vw,32px);
+          transition:background .4s cubic-bezier(.22,.61,.36,1), transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .4s cubic-bezier(.22,.61,.36,1);
+          will-change:transform;
+        }
+        .svc-glass-row:hover{
+          background:rgba(255,255,255,.26);
+          transform:translateY(-3px);
+          box-shadow:0 18px 40px rgba(0,0,0,.08);
+        }
+        @media(max-width:900px){
+          .svc-glass-panel{ padding:16px; gap:16px; }
+          .svc-glass-row{ padding:20px; }
+        }
+        @media(max-width:560px){
+          .svc-glass-row{grid-template-columns:1fr!important;gap:8px!important}
         }
       `}</style>
     </main>

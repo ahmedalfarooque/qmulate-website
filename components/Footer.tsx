@@ -38,14 +38,17 @@ export function Footer() {
 
   return (
     <footer className="qm-footer" style={{
-      position:"relative",overflow:"hidden",
+      position:"relative",overflow:"hidden",isolation:"isolate",zIndex:100,
       direction:isAr?"rtl":"ltr",
       fontFamily:isAr?"var(--font-madani),sans-serif":"var(--font-geist,'Inter',sans-serif)",
     }}>
-      {/* Ambient dark canvas — matches the brand's ink + blue duotone */}
-      <div className="qm-footer-bg" />
+      {/* Solid, fully-opaque background layer — the ONLY thing painted at
+         z-index 0 inside this stacking context. Nothing from any page
+         (PageBackground glows, showcase-dark, body background) can ever
+         show through this, regardless of what page renders the footer. */}
+      <div className="footer-background" />
 
-      <div className="container" style={{position:"relative",zIndex:1,paddingTop:"clamp(56px,7vw,88px)",paddingBottom:"clamp(32px,4vw,48px)"}}>
+      <div className="footer-content container" style={{position:"relative",zIndex:1,paddingTop:"clamp(56px,7vw,88px)",paddingBottom:"clamp(32px,4vw,48px)"}}>
         {/* Top section */}
         <div className="footer-grid" style={{display:"grid",gridTemplateColumns:"1.4fr 1fr 1fr",gap:"clamp(32px,4vw,64px)",marginBottom:"clamp(44px,5.5vw,64px)",alignItems:"start"}}>
           {/* Brand column */}
@@ -94,16 +97,16 @@ export function Footer() {
         @media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr!important}}
         @media(max-width:520px){.footer-grid{grid-template-columns:1fr!important}}
 
-        /* Deep navy-blue canvas — the confirmed brand footer colour, used
-           identically on every page (single shared component). */
-        .qm-footer{
-          background: linear-gradient(155deg, #0A0E1F 0%, #141B33 55%, #0A0E1F 100%);
-        }
-        .qm-footer-bg{
-          position:absolute; inset:0; pointer-events:none; z-index:0;
+        /* Single opaque background layer — exact Home footer canvas,
+           identical on every page (one shared component, no per-page
+           variant possible). Covers 100% of the footer box at z-index 0,
+           beneath footer-content at z-index 1. */
+        .footer-background{
+          position:absolute; inset:0; z-index:0; pointer-events:none;
           background:
             radial-gradient(ellipse 65% 55% at 15% 0%, rgba(91,124,250,0.18) 0%, transparent 62%),
-            radial-gradient(ellipse 60% 50% at 90% 100%, rgba(76,99,210,0.15) 0%, transparent 62%);
+            radial-gradient(ellipse 60% 50% at 90% 100%, rgba(76,99,210,0.15) 0%, transparent 62%),
+            linear-gradient(155deg, #0A0E1F 0%, #141B33 55%, #0A0E1F 100%);
         }
         .qm-footer-rule{
           height:1px;

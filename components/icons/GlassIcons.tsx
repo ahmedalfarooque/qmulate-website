@@ -23,6 +23,7 @@ import {
   CheckCircle2, FileText, User, Star, Info, BarChart3, TrendingUp,
   Handshake, AlignJustify, Infinity as InfinityGlyph,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 // ── Size system — responsive via clamp() so glyphs scale continuously
 // across mobile → tablet → desktop (per spec: ~24–32 / 28–36 / 32–42px),
@@ -208,10 +209,7 @@ export const WhatsAppFAB = ({ size=52 }: { size?: number }) => (
       background:"linear-gradient(to bottom,rgba(255,255,255,.3),transparent)",
       borderRadius:"50% 50% 0 0",pointerEvents:"none",
     }}/>
-    <svg width={size*.52} height={size*.52} viewBox="0 0 24 24" fill="none">
-      <path d={WhatsAppGlyphPath} fill="white"/>
-      <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z" fill="white" opacity=".3"/>
-    </svg>
+    <FaWhatsapp size={size*.58} color="white" aria-hidden="true" style={{ position:"relative", display:"block" }}/>
   </motion.div>
 );
 
