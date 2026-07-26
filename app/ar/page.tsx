@@ -2,7 +2,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FU, SectionHeading } from "@/components/DS";
-import { AnimatedNumber } from "@/components/Motion";
 import { Reveal } from "@/components/Reveal";
 import { LineReveal, ImageReveal } from "@/components/TextReveal";
 import { HomeIcon, SuccessionIcon, GovernanceIcon, DocumentIcon } from "@/components/icons/GlassIcons";
@@ -138,7 +137,12 @@ export default function ArHome() {
                 {REGULATORS.map(r => (
                   <div key={r.name} className="trust-logo-box">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={r.img} alt={r.name} title={r.name} className="trust-logo" />
+                    <img
+                      src={r.img}
+                      alt={r.name}
+                      title={r.name}
+                      className={`trust-logo${r.img.includes("STATE%20PROPERTY") ? " trust-logo-lg" : ""}`}
+                    />
                   </div>
                 ))}
               </div>
@@ -146,30 +150,6 @@ export default function ArHome() {
           </div>
         </motion.div>
       </section>
-
-      {/* ══════════════════════════════════════════
-          2. BY THE NUMBERS
-          ══════════════════════════════════════════ */}
-      <div className="stat-strip" dir="rtl">
-        <div className="container" style={{ padding: "clamp(36px,5vw,58px) 0" }}>
-          <div className="qm-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "clamp(16px,3vw,40px)", direction: "rtl" }}>
-            {([
-              { n: 3, suf: "", label: "خدمات رئيسية", sub: "هيكلة · إدارة · تطوير" },
-              { n: 5, suf: "", label: "جهات تنظيمية", sub: "الأوقاف · إحكام · هيئة العقار · الإسكان · أملاك" },
-              { n: null, label: "نطاق المملكة", sub: "التركيز الحصري على المملكة العربية السعودية" },
-            ] as const).map((s, i) => (
-              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 6, position: "relative" }}>
-                {i > 0 && <div className="stat-vsep" />}
-                <div className="prem-stat-num">
-                  {s.n !== null ? <AnimatedNumber value={s.n} suffix={s.suf} /> : "KSA"}
-                </div>
-                <div className="prem-stat-label">{s.label}</div>
-                <div className="prem-stat-sub">{s.sub}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* ══════════════════════════════════════════
           3. WHO WE ARE — EDITORIAL SPLIT (mirrored: text right, image left)
@@ -371,7 +351,6 @@ export default function ArHome() {
         @media(max-width:900px){.split-grid-rev .split-order-first{order:-1}}
         @media(max-width:640px){.grid-3{grid-template-columns:1fr!important}}
         @media(max-width:960px){.split-grid .split-img-col{aspect-ratio:16/9!important;min-height:320px!important}}
-        @media(max-width:640px){.qm-stat-grid{grid-template-columns:1fr!important;gap:24px!important}}
 
         /* ── Hero image cluster — mirrored for RTL (image on the left) ── */
         .hero-image-cluster{
@@ -410,16 +389,18 @@ export default function ArHome() {
           display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:clamp(20px,3vw,40px);
         }
         .trust-logo-box{
-          display:flex; align-items:center; justify-content:center; height:clamp(72px,8.4vw,100px); flex:1 1 0;
+          display:flex; align-items:center; justify-content:center; height:clamp(88px,10.2vw,124px); flex:1 1 0;
         }
         .trust-logo{
-          height:100%; width:auto; max-width:210px; object-fit:contain;
+          height:100%; width:auto; max-width:250px; object-fit:contain;
           opacity:.82; filter:grayscale(.2); transition:opacity .3s ease, filter .3s ease, transform .3s ease;
         }
         .trust-logo:hover{ opacity:1; filter:grayscale(0); transform:scale(1.05); }
+        .trust-logo-lg{ transform:scale(1.55); }
+        .trust-logo-lg:hover{ transform:scale(1.63); }
         @media(max-width:640px){
           .trust-bar-row{ justify-content:center; }
-          .trust-logo-box{ flex:0 1 auto; height:56px; }
+          .trust-logo-box{ flex:0 1 auto; height:68px; }
         }
         @media(max-width:1180px){
           .hero-split-grid{ grid-template-columns:1fr!important; }

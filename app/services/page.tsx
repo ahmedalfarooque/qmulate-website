@@ -66,7 +66,7 @@ const SERVICES = [
    ═════════════════════════════════════════════ */
 export default function ServicesPage() {
   return (
-    <main style={{ position:"relative" }}>
+    <main className="hero-page" style={{ position:"relative" }}>
       <PageBackground variant="services"/>
 
       {/* ── HERO: one unified section — headline sits OVER the image ── */}
@@ -127,7 +127,7 @@ export default function ServicesPage() {
       <div className="svc-index-rail">
         <div className="container">
           <div className="svc-index-row">
-            {SERVICES.map((svc, i) => (
+            {SERVICES.map((svc) => (
               <a key={svc.num} href={`#svc-${svc.num}`} className="svc-index-item">
                 <span className="svc-index-dot" style={{ background:svc.color }} />
                 <span className="svc-index-num">{svc.num}</span>
@@ -147,7 +147,6 @@ export default function ServicesPage() {
 
         return (
           <Fragment key={svc.num}>
-          {si > 0 && <div className="container"><div className="deco-divider"><span className="line" /><span className="deco-diamond" /><span className="line r" /></div></div>}
           <section id={`svc-${svc.num}`} className="section-lux" style={{
             position:"relative",
             overflow:"hidden",
@@ -274,34 +273,23 @@ export default function ServicesPage() {
         );
       })}
 
-      {/* ── SHOWCASE PULL-QUOTE (contained dark band) ── */}
+      {/* ── SHOWCASE + CTA (single contained dark band) ── */}
       <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(28px,4vw,48px)" }}>
         <Reveal direction="up">
           <div className="showcase-dark" style={{ textAlign:"center" }}>
-            <div className="showcase-quote" style={{ maxWidth:760, margin:"0 auto" }}>
+            <div className="showcase-quote showcase-quote-sm" style={{ maxWidth:680, margin:"0 auto" }}>
               Structured for every type of ownership — governance, management, and growth in one integrated platform.
             </div>
-            <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
-              <span className="line" /><span className="deco-diamond" /><span className="line r" />
+            <h2 className="showcase-cta-h" style={{ marginTop:"clamp(22px,2.8vw,32px)", marginBottom:10 }}>Begin a conversation.</h2>
+            <p className="showcase-sub" style={{ maxWidth:440, margin:"0 auto 26px" }}>
+              Every introduction is treated with complete discretion.
+            </p>
+            <div style={{ display:"flex", gap:14, justifyContent:"center", flexWrap:"wrap" }}>
+              <Link href="/contact" className="btn btn-primary" style={{ fontSize:14, padding:"13px 32px" }}>Get in touch →</Link>
             </div>
           </div>
         </Reveal>
       </div>
-
-      {/* ── CTA ── */}
-      <section className="section" style={{ textAlign:"center" }}>
-        <div className="container">
-          <LineReveal delay={0}>
-            <h2 className="t-h2 gt-w" style={{ marginBottom:18 }}>Begin a conversation.</h2>
-          </LineReveal>
-          <motion.p {...FU(.08)} className="t-lg" style={{ color:"var(--text-3)", marginBottom:42 }}>
-            Every introduction is treated with complete discretion.
-          </motion.p>
-          <motion.div {...FU(.14)} style={{ display:"flex", gap:16, justifyContent:"center", flexWrap:"wrap" }}>
-            <Link href="/contact" className="btn btn-primary" style={{ fontSize:15, padding:"15px 38px" }}>Get in touch →</Link>
-          </motion.div>
-        </div>
-      </section>
 
       <style>{`
         @media(max-width:900px){.svc-split{grid-template-columns:1fr!important;direction:ltr!important}}

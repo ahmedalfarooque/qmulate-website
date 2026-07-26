@@ -23,7 +23,7 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
   // colour" direction). Colour constants kept as pearl so all references
   // resolve to white.
   const pearl     = '255,255,255'   // pearl white
-  const skyBlue = pearl, champagne = pearl, iceBlue = pearl, mist = pearl, slate = pearl
+  const champagne = pearl, iceBlue = pearl, mist = pearl, slate = pearl
   const accentA = pearl
   const accentB = pearl
 

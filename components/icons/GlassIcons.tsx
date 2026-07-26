@@ -1,535 +1,196 @@
 "use client";
 /**
- * QMULATE — Premium Glassmorphism Icon System v1.0
+ * QMULATE — Premium Real Estate Icon System v3.0
  *
- * Visual inspiration: Apple Vision Pro, VisionOS, Stripe, Linear
- * Brand-matched: QMULATE Dark "Midnight Deep" + Light "Pearl Ink"
+ * Bare, transparent, professional icons — no container, no box, no glow,
+ * no glass on the glyph itself. Glassmorphism belongs to cards/sections/
+ * buttons only. Glyphs come from Lucide (lucide-react), a single
+ * consistent icon family, rendered flat in one ink/charcoal colour, with
+ * blue reserved strictly for the hover/active state.
  *
- * Architecture:
- *  - Pure SVG with layered gradient glass effect
- *  - CSS drop-shadow glow (GPU-accelerated, no filter elements)
- *  - Theme-aware via next-themes + mounted guard
- *  - Framer Motion hover animations
- *  - useId() for stable, unique gradient IDs per instance
+ * Every exported name below is unchanged from the previous system, so no
+ * page or component that consumes these icons needs to change.
  */
 
-import { useId } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import type { FC } from "react";
 import { motion } from "framer-motion";
+import type { LucideIcon } from "lucide-react";
+import {
+  Menu, X, Search, Home, Landmark, Building2, Users, BrainCircuit,
+  Globe2, AlertTriangle, Zap, Building,
+  Construction, Cog, Mail, Phone, MessageCircle, MapPin, Lock, Clock,
+  CheckCircle2, FileText, User, Star, Info, BarChart3, TrendingUp,
+  Handshake, AlignJustify, Infinity as InfinityGlyph,
+} from "lucide-react";
 
-/* NOTE: this app has no <ThemeProvider> mounted (see app/layout.tsx — the
-   site is permanently light-themed, no runtime toggle is exposed anywhere
-   in the UI). Calling next-themes' useTheme() outside a provider always
-   resolves resolvedTheme to undefined, which previously made every icon's
-   `isDark` check evaluate to true — silently rendering the saturated DARK
-   palette everywhere despite the LIGHT palette being correctly unified.
-   Hardcoding light here matches the site's actual, permanent theme state. */
-const IS_DARK_THEME = false;
-
-// ── Size system ──────────────────────────────────────────────────
+// ── Size system — responsive via clamp() so glyphs scale continuously
+// across mobile → tablet → desktop (per spec: ~24–32 / 28–36 / 32–42px),
+// no per-breakpoint jumps, no blurring at any width. ─────────────────
 export type GlassSize = "xs"|"sm"|"md"|"lg"|"xl";
-const SZ: Record<GlassSize,number> = { xs:28, sm:36, md:48, lg:64, xl:80 };
-
-// ── Brand colour palettes ────────────────────────────────────────
-// Each variant: [deep bg, mid, accent, glow]
-const DARK: Record<string,[string,string,string,string]> = {
-  cyan:    ["#003D5C","#006A96","#00D4FF","rgba(0,212,255,.7)"],
-  violet:  ["#1A0A4A","#4B1EA0","#8A5CFF","rgba(138,92,255,.7)"],
-  blue:    ["#050E3A","#1D3A8C","#4D8DFF","rgba(77,141,255,.7)"],
-  pink:    ["#3A0830","#901860","#FF6EC7","rgba(255,110,199,.7)"],
-  gold:    ["#3A1800","#905010","#FFB56B","rgba(255,181,107,.7)"],
-  aurora:  ["#050E3A","#4B1EA0","#00D4FF","rgba(100,150,255,.7)"],
-  emerald: ["#003330","#006860","#00D4B8","rgba(0,212,184,.7)"],
-  indigo:  ["#0E0B2E","#2A2490","#818CF8","rgba(129,140,248,.7)"],
-  rose:    ["#3A0A14","#901830","#FB7185","rgba(251,113,133,.7)"],
+const SIZE_CLAMP: Record<GlassSize,string> = {
+  xs: "clamp(16px, 0.9vw + 13px, 22px)",
+  sm: "clamp(20px, 1.1vw + 14px, 28px)",
+  md: "clamp(24px, 1.4vw + 16px, 40px)",
+  lg: "clamp(28px, 1.7vw + 18px, 46px)",
+  xl: "clamp(32px, 2vw + 20px, 52px)",
 };
 
-/* Light mode — vivid two-tone glass badges (ink + brand blue), the same
-   duotone the rest of the site uses. Every variant alternates between the
-   two brand tones instead of a rainbow of saturated per-icon colours —
-   reads as one deliberate family, with real colour instead of a flat
-   parchment badge, matching the icon-circle treatment of premium real
-   estate references (colour used with intent, not saturation for its
-   own sake). Dark mode is untouched. */
-const LIGHT_NAVY: [string,string,string,string] =
-  ["#12151A","#1E2430","#3B54C4","rgba(10,11,13,0.30)"];
-const LIGHT_BLUE: [string,string,string,string] =
-  ["#4A63D6","#5B7CFA","#8FA4FF","rgba(91,124,250,0.35)"];
-const LIGHT: Record<string,[string,string,string,string]> = {
-  cyan: LIGHT_BLUE, violet: LIGHT_NAVY, blue: LIGHT_BLUE, pink: LIGHT_NAVY,
-  gold: LIGHT_BLUE, aurora: LIGHT_NAVY, emerald: LIGHT_BLUE, indigo: LIGHT_NAVY, rose: LIGHT_BLUE,
-};
+// One consistent ink/charcoal colour everywhere; blue only on hover
+// (the hover colour itself lives in the .qi-icon:hover CSS rule).
+const INK = "#232833";
 
-// ── useThemeColors hook ───────────────────────────────────────────
-function useVariantColors(variant: string) {
-  const palette = IS_DARK_THEME ? DARK : LIGHT;
-  return palette[variant] ?? palette.cyan;
-}
-
-// ── Hover animation preset ────────────────────────────────────────
+// ── Hover interaction — colour + slight scale only, nothing flashy,
+// no background/glow/shadow ever appears on the glyph. ───────────────
 const iconHover = {
-  whileHover:{ scale:1.08, y:-3 },
-  whileTap:{ scale:.96 },
-  transition:{ type:"spring" as const, stiffness:400, damping:20 },
+  whileHover:{ scale:1.05 },
+  whileTap:{ scale:.97 },
+  transition:{ type:"spring" as const, stiffness:420, damping:26 },
 };
 
-// ── Core glass SVG renderer ───────────────────────────────────────
-function GlassSVG({
-  uid, size, colors, path, rx=13,
-  extraPaths, accentDots,
-}:{
-  uid:string; size:number; colors:[string,string,string,string];
-  path:string; rx?:number;
-  extraPaths?:React.ReactNode;
-  accentDots?:{cx:number;cy:number;r:number;fill:string}[];
-}) {
-  const [deep, mid, accent, glow] = colors;
-  const isDark = IS_DARK_THEME;
-
-  // Overlay opacity — light theme badges are now vivid ink/blue solids
-  // (not pale parchment), so the white wash stays light — just enough
-  // for a frosted-glass sheen without bleaching the colour out.
-  const overlayOpacity = isDark ? 0.13 : 0.10;
-  // Border opacity — stronger in light too, so the badge reads as a
-  // distinct premium chip instead of blending into the page background.
-  const borderOpacity = isDark ? 0.32 : 0.34;
-  const symbolOpacity = isDark ? 0.95 : 0.98;
-  // Shine brightness
-  const shineOpacity = isDark ? 0.55 : 0.5;
-
-  return (
-    <svg
-      width={size} height={size}
-      viewBox="0 0 48 48"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      style={{display:"block",overflow:"visible"}}
-    >
-      <defs>
-        {/* Gradient background */}
-        <linearGradient id={`bg-${uid}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={deep} stopOpacity={isDark?1:.95}/>
-          <stop offset="55%" stopColor={mid}  stopOpacity={isDark?.97:.90}/>
-          <stop offset="100%" stopColor={accent} stopOpacity={isDark?.85:.75}/>
-        </linearGradient>
-        {/* Top shine */}
-        <linearGradient id={`sh-${uid}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="white" stopOpacity={shineOpacity}/>
-          <stop offset="100%" stopColor="white" stopOpacity="0"/>
-        </linearGradient>
-        {/* Border gradient — bright top-left */}
-        <linearGradient id={`br-${uid}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%"   stopColor="white" stopOpacity={borderOpacity+.18}/>
-          <stop offset="40%"  stopColor="white" stopOpacity={borderOpacity}/>
-          <stop offset="100%" stopColor="white" stopOpacity={isDark?.04:.08}/>
-        </linearGradient>
-        {/* Symbol gradient — white in both themes. Light-mode badges are
-            now solid ink/blue tones (not pale parchment), so a white glyph
-            reads with strong contrast in either case. */}
-        <linearGradient id={`sym-${uid}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#FFFFFF"/>
-          <stop offset="100%" stopColor="rgba(255,255,255,.85)"/>
-        </linearGradient>
-      </defs>
-
-      {/* ── Layer 1: Ambient glow behind glass ── */}
-      <rect x="4" y="6" width="40" height="40" rx={rx}
-        fill={glow} opacity={isDark?.55:.24}
-        style={{filter:"blur(10px)"}}/>
-
-      {/* ── Layer 2: Glass background (the colored gradient) ── */}
-      <rect x="1" y="1" width="46" height="46" rx={rx+1}
-        fill={`url(#bg-${uid})`}/>
-
-      {/* ── Layer 3: Frosted glass overlay ── */}
-      <rect x="1" y="1" width="46" height="46" rx={rx+1}
-        fill="white" opacity={overlayOpacity}/>
-
-      {/* ── Layer 4: Top shine / reflection ── */}
-      <rect x="5" y="2" width="38" height="19" rx={rx-1}
-        fill={`url(#sh-${uid})`}/>
-
-      {/* ── Layer 5: Border with gradient ── */}
-      <rect x="1.5" y="1.5" width="45" height="45" rx={rx+.5}
-        fill="none" stroke={`url(#br-${uid})`} strokeWidth="1"/>
-
-      {/* ── Layer 6: Extra decorative paths (optional) ── */}
-      {extraPaths}
-
-      {/* ── Layer 7: Accent spheres (dark theme only — light theme keeps
-           icons calm/unified, no extra saturated colour dots) ── */}
-      {isDark && accentDots?.map((d,i)=>(
-        <circle key={i} cx={d.cx} cy={d.cy} r={d.r}
-          fill={d.fill}
-          style={{filter:`drop-shadow(0 0 ${d.r*1.5}px ${d.fill})`}}/>
-      ))}
-
-      {/* ── Layer 8: Icon symbol ── */}
-      <g transform="translate(12,12)"
-        style={{
-          stroke: isDark?"white":`url(#sym-${uid})`,
-          strokeWidth: isDark?1.75:2.05,
-          strokeLinecap:"round",
-          strokeLinejoin:"round",
-          fill:"none",
-          opacity:symbolOpacity,
-        }}>
-        <path d={path}/>
-        {extraPaths}
-      </g>
-    </svg>
-  );
-}
-
-// ── Master GlassIcon wrapper ──────────────────────────────────────
+// ── Master GlassIcon wrapper (public surface unchanged) ───────────
+// "variant" is accepted for backward compatibility but no longer
+// changes anything visual — every icon is the same flat ink colour.
 interface GlassIconProps {
   size?: GlassSize | number;
   variant?: string;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   title?: string;
   animated?: boolean;
-  children: (uid:string, size:number, colors:[string,string,string,string]) => React.ReactNode;
+  icon?: LucideIcon;
+  strokeWidth?: number;
+  customGlyph?: ReactNode;
 }
 
 export function GlassIcon({
-  size="md", variant="cyan", className="", style={}, title, animated=true, children
+  size="md", className="", style={}, title, animated=true,
+  icon:Icon, strokeWidth=2, customGlyph,
 }: GlassIconProps) {
-  const uid = useId().replace(/[^a-zA-Z0-9]/g,"");
-  const sz = typeof size === "number" ? size : SZ[size];
-  const colors = useVariantColors(variant);
-  const [,,,glow] = colors;
-  const isDark = IS_DARK_THEME;
-
-  // Light theme: a soft navy-tinted "premium" shadow that grounds the
-  // glass and lifts it off the page, without the saturated colour
-  // "bloom" the dark theme uses.
-  const dropShadow = isDark
-    ? `drop-shadow(0 ${sz*.06}px ${sz*.25}px ${glow})`
-    : `drop-shadow(0 ${sz*.05}px ${sz*.15}px ${glow}) drop-shadow(0 ${sz*.01}px ${sz*.03}px rgba(20,23,31,0.12))`;
+  const dim = typeof size === "number" ? `${size}px` : SIZE_CLAMP[size];
 
   const content = (
-    <div
+    <span
       role={title?"img":undefined}
       aria-label={title}
       title={title}
-      className={className}
+      className={`qi-icon ${className}`}
       style={{
-        width:sz, height:sz, display:"inline-flex",
-        alignItems:"center", justifyContent:"center",
-        filter:dropShadow,
-        willChange:"transform, filter",
+        display:"inline-flex", alignItems:"center", justifyContent:"center",
+        width:dim, height:dim,
+        color:INK,
+        flexShrink:0,
         ...style,
       }}
     >
-      {children(uid, sz, colors)}
-    </div>
+      {customGlyph ?? (Icon && <Icon width="100%" height="100%" strokeWidth={strokeWidth} absoluteStrokeWidth />)}
+    </span>
   );
 
   if (!animated) return content;
   return (
-    <motion.div
-      {...iconHover}
-      style={{display:"inline-flex", cursor:"default"}}
-    >
+    <motion.span {...iconHover} style={{display:"inline-flex", cursor:"default"}}>
       {content}
-    </motion.div>
+    </motion.span>
   );
 }
 
-// ════════════════════════════════════════════════════
-// ICON DEFINITIONS
-// Each returns a <GlassIcon> with its specific SVG path
-// ════════════════════════════════════════════════════
+type IconProps = { size?: GlassSize; className?: string; style?: CSSProperties; title?: string; animated?: boolean };
 
-// ── Navigation Icons ─────────────────────────────────
+/* ══════════════════════════════════════════════════
+   ICON DEFINITIONS — real-estate-mapped Lucide glyphs
+   Every icon is a bare, transparent, single-colour glyph.
+   ══════════════════════════════════════════════════ */
 
-export const MenuIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="violet" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors} rx={14}
-      path="M4 6h16M4 12h16M4 18h16"/>}
-  </GlassIcon>
+// ── Navigation ─────────────────────────────────────
+export const MenuIcon    = (p: IconProps) => <GlassIcon icon={Menu} {...p}/>;
+export const CloseIcon   = (p: IconProps) => <GlassIcon icon={X} {...p}/>;
+export const SearchIcon  = (p: IconProps) => <GlassIcon icon={Search} {...p}/>;
+
+// ── Core real-estate / capability icons ────────────
+export const HomeIcon         = (p: IconProps) => <GlassIcon icon={Home} {...p}/>;          // Property Owners / Residential
+export const GovernanceIcon   = (p: IconProps) => <GlassIcon icon={Landmark} {...p}/>;       // Governance & Structuring
+export const PortfolioIcon    = (p: IconProps) => <GlassIcon icon={Building2} {...p}/>;      // Portfolio / Asset Management
+export const SuccessionIcon   = (p: IconProps) => <GlassIcon icon={Users} {...p}/>;          // Families / Succession
+export const AIIcon           = (p: IconProps) => <GlassIcon icon={BrainCircuit} {...p}/>;   // Digital intelligence
+export const CrossBorderIcon  = (p: IconProps) => <GlassIcon icon={Globe2} {...p}/>;         // Cross-border / Market reach
+export const RiskIcon         = (p: IconProps) => <GlassIcon icon={AlertTriangle} {...p}/>;  // Risk
+export const DigitalIcon      = (p: IconProps) => <GlassIcon icon={Zap} {...p}/>;            // Digital / Implementation speed
+
+// ── Process / step icons ───────────────────────────
+export const DiscoveryIcon      = (p: IconProps) => <GlassIcon icon={Search} {...p}/>;
+export const ArchitectureIcon   = (p: IconProps) => <GlassIcon icon={Building} {...p}/>;
+export const ImplementationIcon = (p: IconProps) => <GlassIcon icon={Construction} {...p}/>;
+export const OperationsIcon     = (p: IconProps) => <GlassIcon icon={Cog} {...p}/>;
+
+// ── Communication ──────────────────────────────────
+export const EmailIcon   = (p: IconProps) => <GlassIcon icon={Mail} {...p}/>;
+export const PhoneIcon   = (p: IconProps) => <GlassIcon icon={Phone} {...p}/>;
+export const ChatIcon    = (p: IconProps) => <GlassIcon icon={MessageCircle} {...p}/>;
+
+/* WhatsApp — brand mark kept authentic (not a generic Lucide glyph) so it
+   stays instantly recognizable, rendered as a bare flat glyph like every
+   other icon (the circular green button lives only in WhatsAppFAB below,
+   a floating action button — a different UI convention, not a content icon). */
+const WhatsAppGlyphPath = "M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.2-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.6-.8-2.7-1.4-3.8-3.2-.3-.5.3-.5.9-1.5.1-.2.1-.4 0-.5-.1-.1-.7-1.8-1-2.4-.3-.7-.5-.6-.7-.6-.2 0-.4 0-.6 0-.2 0-.5.1-.8.4C8 8 7 9 7 11c0 2.1 1.5 4.1 1.7 4.4 2.3 3.5 4.9 4.7 7.6 4.7 1.1 0 2.1-.4 2.9-1.1.7-.7 1.2-1.7 1.3-2.7.1-.9-.1-1.5-.4-1.8z M12 2a10 10 0 100 20A10 10 0 0012 2z";
+export const WhatsAppIconSvg = (p: IconProps) => (
+  <GlassIcon
+    customGlyph={<svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor"><path d={WhatsAppGlyphPath}/></svg>}
+    {...p}
+  />
 );
 
-export const CloseIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="rose" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors} rx={14}
-      path="M18 6 6 18M6 6l12 12"/>}
-  </GlassIcon>
+// ── Location & trust ────────────────────────────────
+export const LocationIcon = (p: IconProps) => <GlassIcon icon={MapPin} {...p}/>;
+export const LockIcon     = (p: IconProps) => <GlassIcon icon={Lock} {...p}/>;
+export const ClockIcon    = (p: IconProps) => <GlassIcon icon={Clock} {...p}/>;
+export const CheckIcon    = (p: IconProps) => <GlassIcon icon={CheckCircle2} {...p}/>;
+export const DocumentIcon = (p: IconProps) => <GlassIcon icon={FileText} {...p}/>;          // Endowments / Documentation
+export const UserIcon     = (p: IconProps) => <GlassIcon icon={User} {...p}/>;
+export const StarIcon     = (p: IconProps) => <GlassIcon icon={Star} {...p}/>;
+export const InfoIcon     = (p: IconProps) => <GlassIcon icon={Info} {...p}/>;
+
+// ── Reporting / wealth ──────────────────────────────
+export const ReportIcon = (p: IconProps) => <GlassIcon icon={BarChart3} {...p}/>;
+export const WealthIcon = (p: IconProps) => <GlassIcon icon={TrendingUp} {...p}/>;          // Growth / Investment
+
+// ── Social — brand marks kept authentic, bare glyph ─────────────
+export const LinkedInIcon = (p: IconProps) => (
+  <GlassIcon
+    customGlyph={
+      <svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.44-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.11 20.45H3.56V9h3.55v11.45z"/>
+      </svg>
+    }
+    {...p}
+  />
+);
+export const TwitterXIcon = (p: IconProps) => (
+  <GlassIcon
+    customGlyph={
+      <svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.9 2H22l-7.5 8.6L23.3 22h-6.9l-5.4-6.6L4.8 22H1.7l8-9.2L1 2h7.1l4.9 6.1L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/>
+      </svg>
+    }
+    {...p}
+  />
 );
 
-export const SearchIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="cyan" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors} rx={14}
-      path="M11 19a8 8 0 100-16 8 8 0 000 16zm10-1-4.35-4.35"/>}
-  </GlassIcon>
+// ── Advisory / partnership ───────────────────────────
+export const AdvisoryIcon = (p: IconProps) => <GlassIcon icon={Handshake} {...p}/>;
+export const StripesIcon  = (p: IconProps) => <GlassIcon icon={AlignJustify} {...p}/>;
+
+// ── Long-term / infinity ─────────────────────────────
+export const InfinityIcon = (p: IconProps) => <GlassIcon icon={InfinityGlyph} {...p}/>;
+
+// ── Success state ────────────────────────────────────
+export const SuccessStateIcon = ({ size="lg" as GlassSize, ...p }: IconProps) => (
+  <GlassIcon icon={CheckCircle2} size={size} {...p}/>
 );
 
-export const HomeIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="blue" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10"/>}
-  </GlassIcon>
-);
-
-// ── Service Icons ─────────────────────────────────────
-
-export const GovernanceIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="violet" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M12 2l8 4v6c0 5.5-4 10.3-8 12-4-1.7-8-6.5-8-12V6l8-4z"
-      accentDots={[
-        {cx:8,cy:9,r:2.2,fill:"rgba(0,212,255,.7)"},
-        {cx:39,cy:11,r:1.6,fill:"rgba(138,92,255,.6)"},
-      ]}/>}
-  </GlassIcon>
-);
-
-export const PortfolioIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="cyan" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M3 3v18h18M7 17l4-4 4 4 4-4"
-      accentDots={[{cx:40,cy:9,r:2.5,fill:"rgba(0,212,255,.8)"}]}/>}
-  </GlassIcon>
-);
-
-export const SuccessionIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="aurora" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>}
-  </GlassIcon>
-);
-
-export const AIIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="indigo" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M12 2a10 10 0 100 20A10 10 0 0012 2zM8 12h.01M12 8h.01M16 12h.01M12 16h.01"
-      accentDots={[
-        {cx:9,cy:9,r:2.5,fill:"rgba(138,92,255,.9)"},
-        {cx:39,cy:10,r:1.8,fill:"rgba(0,212,255,.8)"},
-        {cx:38,cy:38,r:2,fill:"rgba(168,85,247,.7)"},
-      ]}/>}
-  </GlassIcon>
-);
-
-export const CrossBorderIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="emerald" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 0v20M2 12h20M12 2c-2.8 3.3-4.5 7-4.5 10s1.7 6.7 4.5 10M12 2c2.8 3.3 4.5 7 4.5 10s-1.7 6.7-4.5 10"/>}
-  </GlassIcon>
-);
-
-export const RiskIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="gold" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M10.3 3.1L2 18a2 2 0 001.7 3h16.6a2 2 0 001.7-3L13.7 3.1a2 2 0 00-3.4 0zM12 9v4M12 17h.01"/>}
-  </GlassIcon>
-);
-
-export const DigitalIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="cyan" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M13 2L3 14h9l-1 8 10-12h-9z"
-      accentDots={[{cx:40,cy:8,r:2.8,fill:"rgba(0,212,255,.9)"}]}/>}
-  </GlassIcon>
-);
-
-// ── Process / Step Icons ─────────────────────────────
-
-export const DiscoveryIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="cyan" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35"/>}
-  </GlassIcon>
-);
-
-export const ArchitectureIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="blue" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10"/>}
-  </GlassIcon>
-);
-
-export const ImplementationIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="gold" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M13 2L3 14h9l-1 8 10-12h-9z"/>}
-  </GlassIcon>
-);
-
-export const OperationsIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="violet" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>}
-  </GlassIcon>
-);
-
-// ── Communication Icons ──────────────────────────────
-
-export const EmailIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="blue" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zM22 6l-10 7L2 6"/>}
-  </GlassIcon>
-);
-
-export const PhoneIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="emerald" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M6.6 10.8a12.6 12.6 0 006.6 6.6l2.1-2.1a1 1 0 011.1-.2c1.2.5 2.5.7 3.6.7 1 0 1 1 1 2v3.5c0 1-.5 1-1 1C10.6 22 2 13.4 2 3c0-.5 0-1 1-1H6.5c1 0 1 0 1 1 0 1.2.2 2.5.7 3.6a1 1 0 01-.2 1.1L6.6 10.8z"/>}
-  </GlassIcon>
-);
-
-export const ChatIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="aurora" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2zM8 10h.01M12 10h.01M16 10h.01"/>}
-  </GlassIcon>
-);
-
-export const WhatsAppIconSvg = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="emerald" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.2-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.6-.8-2.7-1.4-3.8-3.2-.3-.5.3-.5.9-1.5.1-.2.1-.4 0-.5-.1-.1-.7-1.8-1-2.4-.3-.7-.5-.6-.7-.6-.2 0-.4 0-.6 0-.2 0-.5.1-.8.4C8 8 7 9 7 11c0 2.1 1.5 4.1 1.7 4.4 2.3 3.5 4.9 4.7 7.6 4.7 1.1 0 2.1-.4 2.9-1.1.7-.7 1.2-1.7 1.3-2.7.1-.9-.1-1.5-.4-1.8z M12 2a10 10 0 100 20A10 10 0 0012 2z"/>}
-  </GlassIcon>
-);
-
-// ── Location & Info Icons ────────────────────────────
-
-export const LocationIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="pink" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M12 2a7 7 0 017 7c0 5.5-7 13-7 13S5 14.5 5 9a7 7 0 017-7zm0 4a3 3 0 100 6 3 3 0 000-6z"
-      accentDots={[{cx:10,cy:41,r:3.5,fill:"rgba(255,110,199,.25)"}]}/>}
-  </GlassIcon>
-);
-
-export const LockIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="violet" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M8 11V7a4 4 0 018 0v4M5 11h14a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2zM12 16v-2"/>}
-  </GlassIcon>
-);
-
-export const ClockIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="gold" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M12 2a10 10 0 100 20A10 10 0 0012 2zM12 6v6l4 2"
-      accentDots={[
-        {cx:9,cy:9,r:2.2,fill:"rgba(255,181,107,.9)"},
-        {cx:38,cy:10,r:1.6,fill:"rgba(255,181,107,.6)"},
-      ]}/>}
-  </GlassIcon>
-);
-
-export const CheckIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="emerald" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M9 11.5l3 3 7-7M12 2a10 10 0 100 20A10 10 0 0012 2z"/>}
-  </GlassIcon>
-);
-
-export const DocumentIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="blue" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM14 2v6h6M16 13H8M16 17H8M10 9H8"/>}
-  </GlassIcon>
-);
-
-export const UserIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="aurora" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/>}
-  </GlassIcon>
-);
-
-export const StarIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="gold" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>}
-  </GlassIcon>
-);
-
-export const InfoIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="cyan" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 9h.01M12 13v4"/>}
-  </GlassIcon>
-);
-
-// ── Report / Wealth Icons ────────────────────────────
-
-export const ReportIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="violet" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M18 20V10M12 20V4M6 20v-6"
-      accentDots={[{cx:40,cy:9,r:2.5,fill:"rgba(138,92,255,.9)"}]}/>}
-  </GlassIcon>
-);
-
-export const WealthIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="gold" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4M12 8a4 4 0 100 8 4 4 0 000-8z"/>}
-  </GlassIcon>
-);
-
-// ── Social Icons ─────────────────────────────────────
-
-export const LinkedInIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="blue" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/>}
-  </GlassIcon>
-);
-
-export const TwitterXIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="indigo" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M4 4l16 16M4 20L20 4"/>}
-  </GlassIcon>
-);
-
-// ── Advisory Icon ────────────────────────────────────
-
-export const AdvisoryIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="blue" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M9 17H5a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3M13 21l4-4H19a2 2 0 002-2v-4a2 2 0 00-2-2h-6a2 2 0 00-2 2v6l-2 2z"/>}
-  </GlassIcon>
-);
-
-export const StripesIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="aurora" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M3 12h18M3 6h18M3 18h18"/>}
-  </GlassIcon>
-);
-
-// ── Infinity / Long-term ─────────────────────────────
-
-export const InfinityIcon = ({ size="md" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="violet" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M12 12c-2-2.5-4-4-6-4a4 4 0 000 8c2 0 4-1.5 6-4zm0 0c2 2.5 4 4 6 4a4 4 0 000-8c-2 0-4 1.5-6 4z"/>}
-  </GlassIcon>
-);
-
-// ── Success / Check state icon ────────────────────────
-
-export const SuccessStateIcon = ({ size="lg" as GlassSize, ...p }: Omit<GlassIconProps,"children"|"variant"> & {size?:GlassSize}) => (
-  <GlassIcon size={size} variant="emerald" {...p}>
-    {(uid,sz,colors)=><GlassSVG uid={uid} size={sz} colors={colors}
-      path="M22 11.08V12a10 10 0 11-5.93-9.14M22 4L12 14.01l-3-3"
-      accentDots={[
-        {cx:11,cy:10,r:3,fill:"rgba(0,212,184,.85)"},
-        {cx:38,cy:9,r:2,fill:"rgba(0,212,184,.6)"},
-      ]}/>}
-  </GlassIcon>
-);
-
-// ── WhatsApp FAB icon ─────────────────────────────────
-
+// ── WhatsApp floating action button — the one deliberate exception:
+// a circular FAB is the universal convention for a floating chat
+// launcher, not a content icon, so it keeps its brand-green button. ──
 export const WhatsAppFAB = ({ size=52 }: { size?: number }) => (
   <motion.div
     whileHover={{ scale:1.1, y:-2 }}
@@ -542,25 +203,21 @@ export const WhatsAppFAB = ({ size=52 }: { size?: number }) => (
       cursor:"pointer", overflow:"hidden", position:"relative",
     }}
   >
-    {/* Inner shine */}
     <div style={{
       position:"absolute",top:0,left:0,right:0,height:"45%",
       background:"linear-gradient(to bottom,rgba(255,255,255,.3),transparent)",
       borderRadius:"50% 50% 0 0",pointerEvents:"none",
     }}/>
     <svg width={size*.52} height={size*.52} viewBox="0 0 24 24" fill="none">
-      <path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.2-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.6-.8-2.7-1.4-3.8-3.2-.3-.5.3-.5.9-1.5.1-.2.1-.4 0-.5-.1-.1-.7-1.8-1-2.4-.3-.7-.5-.6-.7-.6-.2 0-.4 0-.6 0-.2 0-.5.1-.8.4C8 8 7 9 7 11c0 2.1 1.5 4.1 1.7 4.4 2.3 3.5 4.9 4.7 7.6 4.7 1.1 0 2.1-.4 2.9-1.1.7-.7 1.2-1.7 1.3-2.7.1-.9-.1-1.5-.4-1.8z"
-        fill="white"/>
-      <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z"
-        fill="white" opacity=".3"/>
+      <path d={WhatsAppGlyphPath} fill="white"/>
+      <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z" fill="white" opacity=".3"/>
     </svg>
   </motion.div>
 );
 
 // ── Service tab icon helper ───────────────────────────
-// Maps service ID to its glass icon component
 export function ServiceIcon({ id, size="md" as GlassSize }: { id:string; size?:GlassSize }) {
-  const icons: Record<string, React.FC<{size?:GlassSize}>> = {
+  const icons: Record<string, FC<IconProps>> = {
     stewardship: GovernanceIcon,
     growth:      OperationsIcon,
     advisory:    AdvisoryIcon,
@@ -585,29 +242,11 @@ export function ProcessIcon({ step, size="md" as GlassSize }: { step:number; siz
   const Icon = Icons[Math.min(step, Icons.length-1)];
   return <Icon size={size}/>;
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const ChallengeIcon = ({ size = "sm" }: { size?: string }) => (
-  <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
-    <path
-      d="M12 2L2 22h20L12 2z"
-      stroke="currentColor"
-      strokeWidth="1.8"
-    />
-    <path d="M12 9v4" stroke="currentColor" strokeWidth="1.8" />
-    <circle cx="12" cy="17" r="1" fill="currentColor" />
-  </svg>
-);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const SolutionCheckIcon = ({ size = "sm" }: { size?: string }) => (
-  <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
-    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8" />
-    <path
-      d="M7 12l3 3 7-7"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
+// ── Small inline list icons — challenge / solution rows ───
+export const ChallengeIcon = ({ size = 18 }: { size?: number }) => (
+  <AlertTriangle size={size} strokeWidth={2} color="currentColor" />
+);
+export const SolutionCheckIcon = ({ size = 18 }: { size?: number }) => (
+  <CheckCircle2 size={size} strokeWidth={2} color="currentColor" />
 );

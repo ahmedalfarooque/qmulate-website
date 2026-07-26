@@ -39,7 +39,7 @@ const STACK_CARDS = [
    ═══════════════════════════════════════════════════ */
 export default function ArAboutPage() {
   return (
-    <main style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
+    <main className="hero-page" style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
       <PageBackground variant="about"/>
 
       {/* ── HERO — قسم واحد موحّد، النص فوق صورة معمارية راقية ── */}
@@ -49,7 +49,7 @@ export default function ArAboutPage() {
         <div className="svc-hero-scrim" />
 
         <div className="container svc-hero-inner">
-          <div className="svc-hero-copy" style={{ textAlign:"right", marginLeft:"auto" }}>
+          <div className="svc-hero-copy" style={{ textAlign:"right" }}>
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
                 عن كيوميليت
@@ -155,11 +155,6 @@ export default function ArAboutPage() {
                 المبادئ التي توجّه كل قرار نتخذه
               </p>
             </Reveal>
-            <Reveal direction="up" delay={0.3}>
-              <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
-                <span className="line" /><span className="deco-diamond" /><span className="line r" />
-              </div>
-            </Reveal>
           </div>
 
           <div style={{
@@ -189,35 +184,24 @@ export default function ArAboutPage() {
         </div>
       </section>
 
-      {/* ── SHOWCASE PULL-QUOTE (contained dark band) ── */}
+      {/* ── SHOWCASE + CTA (single contained dark band) ── */}
       <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(28px,4vw,48px)" }} dir="rtl">
         <Reveal direction="up">
           <div className="showcase-dark" style={{ textAlign:"center" }}>
-            <div className="showcase-quote" style={{ maxWidth:760, margin:"0 auto" }}>
+            <div className="showcase-quote showcase-quote-sm" style={{ maxWidth:680, margin:"0 auto" }}>
               نطوّر وننظّم الأصول العقارية ضمن أطر حوكمة وإدارة واضحة، بما يحفظ القيمة ويحقق استدامة الاستثمار على المدى الطويل.
             </div>
-            <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
-              <span className="line" /><span className="deco-diamond" /><span className="line r" />
+            <h2 className="showcase-cta-h" style={{ marginTop:"clamp(22px,2.8vw,32px)", marginBottom:10 }}>هل أنت مستعد لبدء محادثة؟</h2>
+            <p className="showcase-sub" style={{ maxWidth:440, margin:"0 auto 26px" }}>
+              جميع المقدمات خاصة وسرية.
+            </p>
+            <div style={{ display:"flex", gap:14, justifyContent:"center", flexWrap:"wrap" }}>
+              <Link href="/ar/contact" className="btn btn-primary" style={{ fontSize:14, padding:"13px 32px" }}>← تواصل معنا</Link>
+              <Link href="/ar/services" className="btn btn-ghost" style={{ fontSize:14, padding:"13px 28px", color:"#F5F6F8", borderColor:"rgba(255,255,255,0.20)" }}>خدماتنا</Link>
             </div>
           </div>
         </Reveal>
       </div>
-
-      {/* ── CTA ── */}
-      <section className="section" style={{ textAlign:"center" }} dir="rtl">
-        <div className="container">
-          <LineReveal delay={0}>
-            <h2 className="t-h2 gt-w" style={{ marginBottom:18 }}>هل أنت مستعد لبدء محادثة؟</h2>
-          </LineReveal>
-          <motion.p {...FU(.08)} className="t-lg" style={{ color:"var(--text-3)", marginBottom:42 }}>
-            جميع المقدمات خاصة وسرية.
-          </motion.p>
-          <motion.div {...FU(.14)} style={{ display:"flex", gap:16, justifyContent:"center", flexWrap:"wrap" }}>
-            <Link href="/ar/contact" className="btn btn-primary" style={{ fontSize:15, padding:"15px 38px" }}>← تواصل معنا</Link>
-            <Link href="/ar/services" className="btn btn-ghost" style={{ fontSize:15, padding:"15px 34px" }}>خدماتنا</Link>
-          </motion.div>
-        </div>
-      </section>
     </main>
   );
 }

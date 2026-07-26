@@ -67,7 +67,7 @@ const SERVICES = [
    ═════════════════════════════════════════════ */
 export default function ArServicesPage() {
   return (
-    <main style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
+    <main className="hero-page" style={{ position:"relative", fontFamily:"'Madani Arabic',sans-serif" }}>
       <PageBackground variant="services"/>
 
       {/* ── HERO: قسم واحد موحّد — النص فوق الصورة ── */}
@@ -77,7 +77,7 @@ export default function ArServicesPage() {
         <div className="svc-hero-scrim" />
 
         <div className="container svc-hero-inner">
-          <div className="svc-hero-copy" style={{ textAlign:"right", marginLeft:"auto" }}>
+          <div className="svc-hero-copy" style={{ textAlign:"right" }}>
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
                 الخدمات
@@ -148,7 +148,6 @@ export default function ArServicesPage() {
 
         return (
           <Fragment key={svc.num}>
-          {si > 0 && <div className="container"><div className="deco-divider"><span className="line" /><span className="deco-diamond" /><span className="line r" /></div></div>}
           <section id={`svc-${svc.num}`} className="section-lux" style={{
             position:"relative",
             overflow:"hidden",
@@ -275,34 +274,23 @@ export default function ArServicesPage() {
         );
       })}
 
-      {/* ── SHOWCASE PULL-QUOTE (contained dark band) ── */}
+      {/* ── SHOWCASE + CTA (single contained dark band) ── */}
       <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(28px,4vw,48px)" }} dir="rtl">
         <Reveal direction="up">
           <div className="showcase-dark" style={{ textAlign:"center" }}>
-            <div className="showcase-quote" style={{ maxWidth:760, margin:"0 auto" }}>
+            <div className="showcase-quote showcase-quote-sm" style={{ maxWidth:680, margin:"0 auto" }}>
               هيكلة مناسبة لكل نوع من أنواع الملكية — الحوكمة والإدارة والنمو ضمن منظومة واحدة متكاملة.
             </div>
-            <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
-              <span className="line" /><span className="deco-diamond" /><span className="line r" />
+            <h2 className="showcase-cta-h" style={{ marginTop:"clamp(22px,2.8vw,32px)", marginBottom:10 }}>ابدأ محادثة.</h2>
+            <p className="showcase-sub" style={{ maxWidth:440, margin:"0 auto 26px" }}>
+              كل تواصل يُعامَل بسرية تامة.
+            </p>
+            <div style={{ display:"flex", gap:14, justifyContent:"center", flexWrap:"wrap" }}>
+              <Link href="/ar/contact" className="btn btn-primary" style={{ fontSize:14, padding:"13px 32px" }}>← تواصل معنا</Link>
             </div>
           </div>
         </Reveal>
       </div>
-
-      {/* ── CTA ── */}
-      <section className="section" style={{ textAlign:"center" }} dir="rtl">
-        <div className="container">
-          <LineReveal delay={0}>
-            <h2 className="t-h2 gt-w" style={{ marginBottom:18 }}>ابدأ محادثة.</h2>
-          </LineReveal>
-          <motion.p {...FU(.08)} className="t-lg" style={{ color:"var(--text-3)", marginBottom:42 }}>
-            كل تواصل يُعامَل بسرية تامة.
-          </motion.p>
-          <motion.div {...FU(.14)} style={{ display:"flex", gap:16, justifyContent:"center", flexWrap:"wrap" }}>
-            <Link href="/ar/contact" className="btn btn-primary" style={{ fontSize:15, padding:"15px 38px" }}>← تواصل معنا</Link>
-          </motion.div>
-        </div>
-      </section>
 
       <style>{`
         @media(max-width:900px){.svc-split{grid-template-columns:1fr!important;direction:rtl!important}}

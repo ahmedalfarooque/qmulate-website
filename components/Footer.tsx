@@ -14,7 +14,6 @@ export function Footer() {
     contactTitle:"Get In Touch",
     tagline:"Transforming Ownership into Enduring Value.",
     sub:"QMULATE is a specialist real estate platform. All communications are private and confidential.",
-    copy:"© 2026 QMULATE. All rights reserved. Private & Confidential.",
     email:"ceo@qmulate.com",
     phone:"+966 53 333 9052",
     phoneHref:"+966533339052",
@@ -29,7 +28,6 @@ export function Footer() {
     contactTitle:"تواصل معنا",
     tagline:"نحوّل الملكية إلى قيمة مستدامة.",
     sub:"كيوميليت منظومة عقارية متكاملة. جميع المراسلات سرية وخاصة.",
-    copy:"© 2026 كيوميليت. جميع الحقوق محفوظة. خاص وسري.",
     email:"ceo@qmulate.com",
     phone:"+966 53 333 9052",
     phoneHref:"+966533339052",
@@ -84,14 +82,11 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="qm-footer-rule" style={{marginBottom:22}}/>
-        <div style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between",alignItems:"center",gap:16}}>
-          <p style={{fontSize:11,color:"#5B5F69",fontFamily:"var(--font-geist-mono,'Courier New'),monospace"}}>{t.copy}</p>
-          <div style={{display:"flex",gap:14,alignItems:"center"}}>
-            <Link href={isAr?"/":"/ar"} className="qm-footer-lang">
-              {t.langSwitch}
-            </Link>
-            <span style={{fontSize:11,color:"#5B5F69",fontFamily:"var(--font-geist-mono,'Courier New'),monospace"}}>v7.0 · 2026</span>
-          </div>
+        <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",alignItems:"center",gap:14}}>
+          <Link href={isAr?"/":"/ar"} className="qm-footer-lang">
+            {t.langSwitch}
+          </Link>
+          <span style={{fontSize:11,color:"#5B5F69",fontFamily:"var(--font-geist-mono,'Courier New'),monospace"}}>v7.0 · 2026</span>
         </div>
       </div>
 

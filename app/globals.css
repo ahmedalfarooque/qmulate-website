@@ -115,7 +115,10 @@ html { scroll-behavior: smooth; }
   --grad-violet: linear-gradient(135deg,#22318F 0%,#3B54C4 55%,#5B7CFA 100%);
   --grad-aurora: linear-gradient(135deg,#0A0B0D 0%,#3B54C4 45%,#5B7CFA 75%,#A8BBFF 100%);
   --grad-warm:   linear-gradient(135deg,#3B54C4,#5B7CFA,#A8BBFF);
-  --grad-border: linear-gradient(135deg,rgba(91,124,250,.30),rgba(10,11,13,.04),rgba(59,84,196,.18));
+  /* Neutral glass-edge sheen — pure white/grey, no colour tint, so cards
+     read as clear glass at rest. Blue only ever appears as an interactive
+     hover accent (--sh-glow-c/v), never baked into the resting surface. */
+  --grad-border: linear-gradient(135deg,rgba(255,255,255,.65),rgba(10,11,13,.03),rgba(255,255,255,.40));
 
   /* Gradient text values */
   --gt-primary: linear-gradient(160deg,#10131A 15%,#3E4654 100%);
@@ -374,12 +377,6 @@ main.hero-page{padding-top:0}
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
-  /* Stat strip renders on every homepage load (not conditional) — same
-     GPU-crash mitigation applies. */
-  .stat-strip {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
 }
 
 /* Noise texture */
@@ -511,7 +508,7 @@ main.hero-page{padding-top:0}
    ══════════════════ */
 /* Editorial serif for large display/heading sizes, Geist sans for the rest */
 .t-d  {font-size:clamp(40px,6vw,104px);font-weight:700;line-height:1.05;letter-spacing:-.015em;font-family:var(--font-geist,'Inter',sans-serif)}
-.t-h1 {font-size:clamp(36px,5.2vw,72px);font-weight:700;line-height:1.05;letter-spacing:-.01em;font-family:var(--font-geist,'Inter',sans-serif)}
+.t-h1 {font-size:clamp(28px,3.6vw,56px);font-weight:700;line-height:1.18;letter-spacing:-.01em;font-family:var(--font-geist,'Inter',sans-serif)}
 .t-h2 {font-size:clamp(27px,3.6vw,46px);font-weight:600;line-height:1.1;letter-spacing:-.008em;font-family:var(--font-geist,'Inter',sans-serif)}
 .t-h3 {font-size:clamp(19px,2.3vw,28px);font-weight:600;line-height:1.22;letter-spacing:-.012em;font-family:var(--font-geist,'Inter',sans-serif)}
 .t-h4 {font-size:clamp(16px,1.7vw,21px);font-weight:600;line-height:1.34;letter-spacing:-.01em;font-family:var(--font-geist,'Inter',sans-serif)}
@@ -1162,45 +1159,6 @@ a, button, [role="button"] {
   .ed-hero-image{aspect-ratio:4/3}
 }
 
-/* ══════════════════════════════════════════════════════════
-   DECORATIVE CRYSTAL MOTIF — a glass diamond flanked by gold
-   hairlines. Used to fill/soften transitions between sections
-   and to accent headings. Pure design detail — no colour wash,
-   no photography. Reusable via .deco-divider (with .line
-   children + .deco-diamond) and standalone .deco-diamond.
-   ══════════════════════════════════════════════════════════ */
-.deco-divider{
-  display:flex; align-items:center; justify-content:center;
-  gap:clamp(14px,2vw,22px);
-  margin:clamp(10px,2.4vw,30px) 0;
-}
-.deco-divider .line{
-  height:1px; flex:1 1 0; max-width:200px;
-  background:linear-gradient(90deg,transparent 0%,rgba(91,124,250,0.45) 100%);
-}
-.deco-divider .line.r{
-  background:linear-gradient(90deg,rgba(91,124,250,0.45) 0%,transparent 100%);
-}
-.deco-diamond{
-  width:15px; height:15px; flex-shrink:0; transform:rotate(45deg);
-  background:linear-gradient(135deg,rgba(255,255,255,0.85) 0%,rgba(255,255,255,0.28) 100%);
-  border:1px solid rgba(91,124,250,0.55);
-  border-radius:3px;
-  box-shadow:
-    0 4px 14px rgba(10,11,13,0.14),
-    0 0 0 5px rgba(91,124,250,0.06),
-    0 1px 0 rgba(255,255,255,0.9) inset;
-  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
-  position:relative;
-}
-.deco-diamond::after{
-  content:""; position:absolute; inset:0; margin:auto;
-  width:4px; height:4px; border-radius:1px;
-  background:var(--gold);
-  box-shadow:0 0 6px rgba(91,124,250,0.6);
-}
-@media(max-width:640px){ .deco-divider .line{ max-width:80px; } }
-
 /* Soft floating crystal accent — a faint glass shard to fill open
    space beside a heading/column. Absolutely positioned by its parent
    (parent needs position:relative). No colour, just glass + a gold edge. */
@@ -1227,12 +1185,18 @@ a, button, [role="button"] {
    editorial ink), and the quick-fact glass cards overlapping
    the bottom edge. No separate text-block-then-image split.
    ══════════════════════════════════════════════════════════ */
+/* Full-bleed hero — the page's own <main> gets the .hero-page class so
+   main's default nav-clearance padding (var(--nav-h)) doesn't ALSO stack
+   with this section's own top padding. This section alone is responsible
+   for clearing the fixed navbar, with just a small breathing gap after —
+   content sits near the top (upper portion), not vertically centred in
+   a tall slab. */
 .svc-hero{
   position:relative;
   display:flex;
-  align-items:center;
-  min-height:clamp(600px,86vh,860px);
-  padding-top:clamp(120px,14vw,168px);
+  align-items:flex-start;
+  min-height:clamp(560px,82vh,820px);
+  padding-top:calc(var(--nav-h) + clamp(24px,3vw,40px));
   padding-bottom:clamp(96px,11vw,150px);
   overflow:hidden;
   background:var(--bg-0);
@@ -1240,6 +1204,7 @@ a, button, [role="button"] {
 .svc-hero-img{
   position:absolute; inset:0; z-index:0;
   width:100%; height:100%; object-fit:cover; object-position:center 42%;
+  filter:saturate(1.12) contrast(1.06);
 }
 .svc-hero-scrim{
   position:absolute; inset:0; z-index:1; pointer-events:none;
@@ -1257,7 +1222,7 @@ a, button, [role="button"] {
       rgba(252,252,251,0.88) 100%);
 }
 .svc-hero-inner{ position:relative; z-index:2; width:100%; }
-.svc-hero-copy{ max-width:600px; }
+.svc-hero-copy{ max-width:660px; }
 /* quick-fact cards straddle the hero's lower edge */
 .svc-hero-cards{
   position:relative; z-index:3;
@@ -1278,8 +1243,17 @@ html[dir="rtl"] .svc-hero-scrim{
       transparent 66%,
       rgba(252,252,251,0.88) 100%);
 }
-html[dir="rtl"] .svc-hero-copy{ margin-inline-start:auto; text-align:right; }
+html[dir="rtl"] .svc-hero-copy{ text-align:right; }
 @media(max-width:600px){
+  /* Mobile: auto height with generous spacing, not a forced tall viewport
+     slab — avoids empty space above/below a shorter stack of content.
+     Top padding is inherited from the base rule (nav clearance + a small
+     gap) — no extra stacking needed now that .hero-page zeroes out
+     <main>'s own padding-top. */
+  .svc-hero{
+    min-height:auto;
+    padding-bottom:clamp(48px,10vw,72px);
+  }
   .svc-hero-scrim{
     background:
       linear-gradient(180deg,
@@ -3097,30 +3071,6 @@ nav { padding-top: max(0px, env(safe-area-inset-top)); }
   box-shadow: 0 0 10px rgba(91,124,250,0.9), 0 0 22px rgba(91,124,250,0.5);
 }
 
-/* ── Premium gradient stat number ── */
-.prem-stat-num {
-  font-size: clamp(38px, 5.5vw, 68px);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  background: linear-gradient(135deg, rgba(255,255,255,0.96) 30%, rgba(91,124,250,0.82));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.prem-stat-label {
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.54);
-}
-.prem-stat-sub {
-  font-size: 10px;
-  color: rgba(255,255,255,0.28);
-  letter-spacing: 0.02em;
-}
-
 /* ── Ghost oversized background number ── */
 .ghost-bg-num {
   position: absolute;
@@ -3144,42 +3094,6 @@ nav { padding-top: max(0px, env(safe-area-inset-top)); }
   font-family: var(--font-geist-mono, 'Courier New'), monospace;
 }
 
-/* ── Section stat strip ── */
-.stat-strip {
-  background: rgba(3,6,22,0.96);
-  border-top: 1px solid rgba(255,255,255,0.055);
-  border-bottom: 1px solid rgba(255,255,255,0.055);
-  backdrop-filter: blur(32px) saturate(140%);
-  -webkit-backdrop-filter: blur(32px) saturate(140%);
-  position: relative;
-  overflow: hidden;
-}
-.stat-strip::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(91,124,250,0.03) 0%, transparent 50%, rgba(0,100,200,0.03) 100%);
-  pointer-events: none;
-}
-
-/* Improve light-mode stat strip */
-:is([data-theme="light"],.light) .stat-strip {
-  background: transparent;
-  border-color: rgba(0,0,0,0.07);
-}
-:is([data-theme="light"],.light) .prem-stat-num {
-  background: linear-gradient(135deg, var(--blue) 30%, var(--cyan) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-:is([data-theme="light"],.light) .prem-stat-label {
-  color: var(--text-3);
-}
-:is([data-theme="light"],.light) .prem-stat-sub {
-  color: var(--text-4);
-}
-
 /* ── Hover lift utility ── */
 .hover-lift {
   transition: transform 0.36s cubic-bezier(0.34,1.56,0.64,1),
@@ -3200,16 +3114,6 @@ nav { padding-top: max(0px, env(safe-area-inset-top)); }
     0 0 80px rgba(91,124,250,0.16),
     0 2px 8px rgba(0,0,0,0.38);
   transform: scale(1.04) translateY(-2px);
-}
-
-/* ── Stat strip vertical separator ── */
-.stat-vsep {
-  position: absolute;
-  left: 0;
-  top: 12%;
-  bottom: 12%;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(91,124,250,0.22), transparent);
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -3260,4 +3164,36 @@ nav { padding-top: max(0px, env(safe-area-inset-top)); }
   font-size: clamp(14px, 1.3vw, 17px);
   line-height: 1.75;
 }
+/* Compact quote variant — used when a quote and a CTA share one band,
+   so neither block reads oversized next to the other. */
+.showcase-dark .showcase-quote-sm {
+  font-size: clamp(18px, 2.2vw, 28px);
+  line-height: 1.4;
+}
+/* CTA heading sized to sit comfortably under a quote in a merged band —
+   noticeably smaller than a standalone section heading. */
+.showcase-dark .showcase-cta-h {
+  color: #F5F6F8;
+  font-family: var(--font-geist, 'Inter', sans-serif);
+  font-weight: 700;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.3;
+  letter-spacing: -0.008em;
+}
 @media(max-width:640px){ .showcase-dark{ border-radius:20px; } }
+
+/* ══════════════════════════════════════════════════════════════════════
+   ICON SYSTEM — bare, transparent glyphs (v3.0). No box, no glass, no
+   glow on the icon itself; glassmorphism stays on cards/sections/buttons.
+   One flat ink colour at rest, brand blue only on hover/active.
+   ══════════════════════════════════════════════════════════════════════ */
+.qi-icon{
+  transition: color .22s ease, opacity .22s ease;
+}
+.qi-icon svg{ display:block; width:100%; height:100%; }
+a:hover .qi-icon,
+button:hover .qi-icon,
+.qi-icon:hover{
+  color:#5B7CFA;
+  opacity:.9;
+}

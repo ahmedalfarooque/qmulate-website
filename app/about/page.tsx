@@ -41,7 +41,7 @@ const STACK_CARDS = [
    ═══════════════════════════════════════════════════ */
 export default function AboutPage() {
   return (
-    <main style={{ position:"relative" }}>
+    <main className="hero-page" style={{ position:"relative" }}>
       <PageBackground variant="about"/>
 
       {/* ── HERO — one unified section, headline OVER a premium architecture image ── */}
@@ -160,11 +160,6 @@ export default function AboutPage() {
                 The principles that guide every decision we make
               </p>
             </Reveal>
-            <Reveal direction="up" delay={0.3}>
-              <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
-                <span className="line" /><span className="deco-diamond" /><span className="line r" />
-              </div>
-            </Reveal>
           </div>
 
           <div style={{
@@ -193,35 +188,24 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── SHOWCASE PULL-QUOTE (contained dark band) ── */}
+      {/* ── SHOWCASE + CTA (single contained dark band) ── */}
       <div className="container" style={{ padding:"0 clamp(20px,4vw,48px) clamp(28px,4vw,48px)" }}>
         <Reveal direction="up">
           <div className="showcase-dark" style={{ textAlign:"center" }}>
-            <div className="showcase-quote" style={{ maxWidth:760, margin:"0 auto" }}>
+            <div className="showcase-quote showcase-quote-sm" style={{ maxWidth:680, margin:"0 auto" }}>
               We develop and manage real estate assets through clear governance, preserving value and supporting long-term investment sustainability.
             </div>
-            <div className="deco-divider" style={{ marginTop:"clamp(20px,2.6vw,30px)" }}>
-              <span className="line" /><span className="deco-diamond" /><span className="line r" />
+            <h2 className="showcase-cta-h" style={{ marginTop:"clamp(22px,2.8vw,32px)", marginBottom:10 }}>Ready to begin a conversation?</h2>
+            <p className="showcase-sub" style={{ maxWidth:440, margin:"0 auto 26px" }}>
+              Every introduction is treated with complete discretion.
+            </p>
+            <div style={{ display:"flex", gap:14, justifyContent:"center", flexWrap:"wrap" }}>
+              <Link href="/contact" className="btn btn-primary" style={{ fontSize:14, padding:"13px 32px" }}>Get in touch →</Link>
+              <Link href="/services" className="btn btn-ghost" style={{ fontSize:14, padding:"13px 28px", color:"#F5F6F8", borderColor:"rgba(255,255,255,0.20)" }}>Our services</Link>
             </div>
           </div>
         </Reveal>
       </div>
-
-      {/* ── CTA ── */}
-      <section className="section" style={{ textAlign:"center" }}>
-        <div className="container">
-          <LineReveal delay={0}>
-            <h2 className="t-h2 gt-w" style={{ marginBottom:18 }}>Ready to begin a conversation?</h2>
-          </LineReveal>
-          <motion.p {...FU(.08)} className="t-lg" style={{ color:"var(--text-3)", marginBottom:42 }}>
-            Every introduction is treated with complete discretion.
-          </motion.p>
-          <motion.div {...FU(.14)} style={{ display:"flex", gap:16, justifyContent:"center", flexWrap:"wrap" }}>
-            <Link href="/contact" className="btn btn-primary" style={{ fontSize:15, padding:"15px 38px" }}>Get in touch →</Link>
-            <Link href="/services" className="btn btn-ghost" style={{ fontSize:15, padding:"15px 34px" }}>Our services</Link>
-          </motion.div>
-        </div>
-      </section>
     </main>
   );
 }
