@@ -28,7 +28,7 @@ const LAYOUTS = ["split", "feature", "split-rev"] as const;
 /* Real Arabic business copy — ported unchanged from the prior Arabic Services page */
 const SERVICES = [
   {
-    num:"01",
+    num:"٠١",
     title:"هيكلة الملكية والحوكمة",
     color:"#4C63D2",
     img: IMG_SVC[0],
@@ -39,7 +39,7 @@ const SERVICES = [
     ],
   },
   {
-    num:"02",
+    num:"٠٢",
     title:"إدارة الأصول العقارية",
     color:"#5B7CFA",
     img: IMG_SVC[1],
@@ -50,7 +50,7 @@ const SERVICES = [
     ],
   },
   {
-    num:"03",
+    num:"٠٣",
     title:"التطوير والاستثمار",
     color:"#0A0B0D",
     img: IMG_SVC[2],
@@ -144,8 +144,8 @@ export default function ArServicesPage() {
             overflow:"hidden",
             scrollMarginTop:"96px",
           }} dir="rtl">
-            {/* Ghost service number — editorial anchor, mirrored to the left */}
-            <div className="svc-ghost-num" style={{ top:"clamp(20px,3vw,32px)", right:"auto", left:"clamp(20px,3vw,32px)" }}>{svc.num}</div>
+            {/* Ghost service number — editorial anchor */}
+            <div className="svc-ghost-num">{svc.num}</div>
 
             <div className="container" style={{ position:"relative", zIndex:1 }}>
               {isFeature ? (
@@ -160,9 +160,9 @@ export default function ArServicesPage() {
                   </ImageReveal>
 
                   <div style={{ maxWidth:760, marginBottom:"clamp(40px,4.5vw,60px)", marginRight:0, marginLeft:"auto", textAlign:"right" }}>
-                    <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20, justifyContent:"flex-end" }}>
-                      <span className="svc-icon-badge"><SvcIcon size="md"/></span>
+                    <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20, justifyContent:"flex-start" }}>
                       <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
+                      <span className="svc-icon-badge"><SvcIcon size="md"/></span>
                     </motion.div>
                     <LineReveal delay={0.05}>
                       <h2 className="t-h2" style={{ color:"var(--text-1)" }}>{svc.title}</h2>
@@ -180,9 +180,9 @@ export default function ArServicesPage() {
                     direction: isRev ? "ltr" : "rtl",
                   }}>
                     <div style={{ direction:"rtl", textAlign:"right" }}>
-                      <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:22, justifyContent:"flex-end" }}>
-                        <SvcIcon size="md"/>
+                      <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:22, justifyContent:"flex-start" }}>
                         <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
+                        <SvcIcon size="md"/>
                       </motion.div>
 
                       <LineReveal delay={0.05}>
@@ -323,6 +323,45 @@ export default function ArServicesPage() {
         }
         @media(max-width:560px){
           .svc-glass-row{grid-template-columns:1fr!important;gap:8px!important}
+        }
+
+        /* ── Dark mode overrides — loaded last, plain attribute selector,
+           !important on every property the light rules above hardcode, so
+           these always win regardless of source order or :is() specificity
+           edge cases. Light mode rules above are untouched. ── */
+        [data-theme="dark"] .svc-icon-badge,
+        .dark .svc-icon-badge{
+          background:rgba(255,255,255,0.08) !important;
+          border-color:rgba(255,255,255,0.15) !important;
+        }
+        [data-theme="dark"] .svc-glass-panel,
+        .dark .svc-glass-panel{
+          background:rgba(255,255,255,0.06) !important;
+          border-color:rgba(255,255,255,0.15) !important;
+          backdrop-filter:blur(25px) !important;
+          -webkit-backdrop-filter:blur(25px) !important;
+          box-shadow:
+            0 25px 70px rgba(0,0,0,0.45),
+            inset 0 1px 1px rgba(255,255,255,0.15) !important;
+          position:relative;
+        }
+        [data-theme="dark"] .svc-glass-panel::after,
+        .dark .svc-glass-panel::after{
+          content:'';position:absolute;inset:0;border-radius:inherit;
+          background:linear-gradient(135deg,rgba(255,255,255,0.10),transparent 40%);
+          pointer-events:none;
+        }
+        [data-theme="dark"] .svc-glass-row,
+        .dark .svc-glass-row{
+          background:rgba(255,255,255,0.05) !important;
+          border-color:rgba(255,255,255,0.15) !important;
+        }
+        [data-theme="dark"] .svc-glass-row:hover,
+        .dark .svc-glass-row:hover{
+          background:rgba(255,255,255,0.10) !important;
+          box-shadow:
+            0 32px 90px rgba(0,0,0,0.55),
+            inset 0 1px 1px rgba(255,255,255,0.12) !important;
         }
       `}</style>
     </main>

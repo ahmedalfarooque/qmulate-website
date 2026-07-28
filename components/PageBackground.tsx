@@ -1,11 +1,39 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { useTheme } from '@/components/ThemeProvider'
 
 type PageVariant = 'home' | 'about' | 'services' | 'solutions' | 'projects' | 'contact'
+
+// Dark mode only — each section gets its own ambient glow hue instead of
+// the shared pearl-white wash (per-section tint per the luxury dark spec).
+// Light mode is untouched: DARK_ACCENTS is never consulted unless isDark.
+const DARK_ACCENTS: Record<string, string> = {
+  home:      '80,140,255',  // deep navy + electric blue
+  about:     '160,100,255', // purple/blue
+  services:  '60,190,255',  // blue/cyan
+  solutions: '60,190,255',
+  projects:  '70,210,160',  // green/blue
+  contact:   '230,190,110', // gold/blue
+}
+
+// Dark mode only — a soft, heavily-blurred photographic ambient layer per
+// page, picked from the existing /Background Images library (never the
+// section's own hero/content image). Meant to read as light passing
+// through glass, not a visible photo — see the opacity/blur values below.
+const DARK_AMBIENT_IMAGE: Record<string, string> = {
+  home:      '/Background%20Images/7.jpg',  // Jeddah Tower + palm boulevard — brand identity
+  about:     '/Background%20Images/1.jpg',  // calm dusk waterfront skyline — institutional
+  services:  '/Background%20Images/2.jpg',  // modern glass tower — technology/blue-cyan
+  solutions: '/Background%20Images/2.jpg',
+  projects:  '/Background%20Images/3.jpg',  // coastal development with cranes — construction
+  contact:   '/Background%20Images/6.jpg',  // subtle coastal skyline
+}
 
 export function PageBackground({ variant }: { variant: PageVariant }) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
   if (!mounted) return null
   // Skip on mobile — each backdropFilter:blur() creates a GPU compositing layer.
   // 10+ blurred elements simultaneously on a phone kills performance.
@@ -22,7 +50,8 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
   // photography, glass and text carry the design (per the "no background
   // colour" direction). Colour constants kept as pearl so all references
   // resolve to white.
-  const pearl     = '255,255,255'   // pearl white
+  const dc = isDark ? (DARK_ACCENTS[variant] ?? DARK_ACCENTS.home) : null
+  const pearl     = dc ?? '255,255,255'   // pearl white (light) / section accent (dark)
   const champagne = pearl, iceBlue = pearl, mist = pearl, slate = pearl
   const accentA = pearl
   const accentB = pearl
@@ -86,6 +115,28 @@ export function PageBackground({ variant }: { variant: PageVariant }) {
       `}</style>
 
       <div className="qbg-root" aria-hidden="true">
+        {isDark && (
+          <>
+            {/* Base layered wash — dark-mode only, sits beneath everything */}
+            <div style={{
+              position:'absolute', inset:0,
+              background:
+                'radial-gradient(circle at top, var(--dark-glow-blue, rgba(80,140,255,0.15)), transparent 60%),' +
+                'radial-gradient(circle at bottom, var(--dark-glow-purple, rgba(160,100,255,0.10)), transparent 60%),' +
+                'linear-gradient(180deg, var(--dark-surface-1, #05070D) 0%, var(--dark-surface-2, #0A1020) 100%)',
+            }}/>
+            {/* Soft, heavily-blurred ambient photo — reads as light through glass */}
+            <div style={{
+              position:'absolute', inset:0,
+              backgroundImage:`url('${DARK_AMBIENT_IMAGE[variant] ?? DARK_AMBIENT_IMAGE.home}')`,
+              backgroundSize:'cover',
+              backgroundPosition:'center',
+              filter:'blur(40px)',
+              opacity:0.14,
+              transform:'scale(1.18)',
+            }}/>
+          </>
+        )}
         {glows.map((g,i)=>(
           <div key={i} style={{
             position:'absolute',

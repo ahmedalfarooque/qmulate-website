@@ -5,6 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { MagneticButton } from "@/components/Motion";
 import { MenuIcon, CloseIcon } from "./icons/GlassIcons";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { useTheme } from "@/components/ThemeProvider";
 
 const EN_LINKS = [
   {h:"/",l:"Home"},{h:"/about",l:"About"},{h:"/services",l:"Services"},{h:"/contact",l:"Contact"},
@@ -22,6 +24,8 @@ export function Navbar() {
   const isAr = path.startsWith("/ar");
   const links = isAr ? AR_LINKS : EN_LINKS;
   const { scrollY } = useScroll();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   // Prefetch the other language route on mount for instant switching
   useEffect(() => {
@@ -34,6 +38,10 @@ export function Navbar() {
   });
   useEffect(()=>setOpen(false),[path]);
 
+  const switchLocale = () => startTransition(() => {
+    router.push(isAr ? (path.replace(/^\/ar/, "") || "/") : ("/ar" + (path === "/" ? "" : path)));
+  });
+
   const isActive = (h:string) => {
     if (h==="/"||h==="/ar") return path==="/"||path==="/ar";
     return path===h || path.startsWith(h+"/");
@@ -44,14 +52,14 @@ export function Navbar() {
       <motion.header
         animate={{
           height: compact ? 52 : 64,
-          background: scrolled ? "rgba(250,248,244,.86)" : "rgba(250,248,244,0)",
-          backdropFilter: scrolled ? "blur(18px) saturate(150%)" : "blur(0px)",
-          borderBottomColor: scrolled ? "rgba(20,23,31,.07)" : "rgba(20,23,31,0)",
+          background: scrolled ? "var(--nav-glass-bg)" : "var(--nav-glass-bg-0)",
+          backdropFilter: scrolled ? (isDark ? "blur(24px) saturate(180%)" : "blur(18px) saturate(150%)") : "blur(0px)",
+          borderBottomColor: scrolled ? "var(--nav-border)" : "var(--nav-border-0)",
         }}
         transition={{duration:.4,ease:[.16,1,.3,1]}}
         style={{
           position:"fixed",top:0,left:0,right:0,zIndex:9999,
-          WebkitBackdropFilter:scrolled?"blur(18px) saturate(150%)":"blur(0px)",
+          WebkitBackdropFilter:scrolled?(isDark?"blur(24px) saturate(180%)":"blur(18px) saturate(150%)"):"blur(0px)",
           borderBottom:"1px solid transparent",
         }}
       >
@@ -68,7 +76,7 @@ export function Navbar() {
           {/* ── Logo ── */}
           <Link href={isAr?"/ar":"/"} style={{display:"flex",alignItems:"center",gap:11,flexShrink:0}}>
             <img
-              src="/Logo.svg"
+              src={isDark ? "/Logo-light.svg" : "/Logo.svg"}
               alt="QMULATE logo"
               width={42}
               height={49}
@@ -94,22 +102,22 @@ export function Navbar() {
                 color:isActive(l.h)?"var(--text-1)":"var(--text-3)",
                 background:isActive(l.h)?"rgba(91,124,250,.10)":"transparent",
                 border:`1px solid ${isActive(l.h)?"rgba(91,124,250,.24)":"transparent"}`,
-                transition:"all .3s ease",
+                transition:"background .3s ease, border-color .3s ease",
               }}>{l.l}</Link>
             ))}
           </nav>
 
           {/* ── Right actions ── */}
           <div style={{display:"flex",alignItems:"center",gap:10}}>
+            <ThemeSwitcher compact/>
+
             <button
-              onClick={() => startTransition(() => {
-                router.push(isAr ? (path.replace(/^\/ar/, "") || "/") : ("/ar" + (path === "/" ? "" : path)));
-              })}
+              onClick={switchLocale}
               style={{
                 width:32,height:32,borderRadius:"50%",
                 background:"var(--g2)",border:"1px solid var(--glass-border)",
                 display:"flex",alignItems:"center",justifyContent:"center",
-                fontSize:isAr?10:12,color:"var(--text-3)",transition:"all .2s",flexShrink:0,
+                fontSize:isAr?10:12,color:"var(--text-3)",transition:"background .2s, border-color .2s",flexShrink:0,
                 cursor:"pointer",
               }}>
               {isAr?"EN":"ع"}
@@ -142,7 +150,7 @@ export function Navbar() {
             transition={{duration:.4,ease:[.16,1,.3,1]}}
             style={{
               position:"fixed",inset:0,zIndex:9998,
-              background:"rgba(250,248,244,.97)",
+              background:"var(--nav-mobile-overlay-bg)",
               backdropFilter:"blur(20px) saturate(150%)",
               paddingTop:64,direction:isAr?"rtl":"ltr",
               display:"flex",flexDirection:"column",
@@ -161,6 +169,11 @@ export function Navbar() {
                   {l.l}
                 </Link>
               ))}
+
+              <div className="theme-menu-row">
+                <ThemeSwitcher menuItem isAr={isAr}/>
+              </div>
+
               <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary"
                 style={{marginTop:28,justifyContent:"center",fontSize:15,padding:16}}>
                 {isAr?"طلب تواصل ←":"Request an introduction →"}

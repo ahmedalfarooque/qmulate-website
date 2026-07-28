@@ -5,6 +5,7 @@ import { FU, GlassCard } from "@/components/DS";
 import { PageBackground } from "@/components/PageBackground";
 import { ImageReveal } from "@/components/TextReveal";
 import { CheckIcon, PhoneIcon, EmailIcon, LocationIcon, ClockIcon } from "@/components/icons/GlassIcons";
+import { useTheme } from "@/components/ThemeProvider";
 
 /* ── Input / Textarea — premium light glass style ────────────────────────── */
 const inputBase: React.CSSProperties = {
@@ -40,18 +41,34 @@ function Field({
   );
 }
 
+function fieldStyle(isDark: boolean, focused: boolean): React.CSSProperties {
+  if (isDark) {
+    return {
+      background: focused ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.05)",
+      border: focused ? "1px solid rgba(91,124,250,0.55)" : "1px solid rgba(255,255,255,0.15)",
+      boxShadow: focused
+        ? "0 0 0 3px rgba(91,124,250,0.18), inset 0 1px 1px rgba(255,255,255,0.12)"
+        : "inset 0 1px 1px rgba(255,255,255,0.10)",
+    };
+  }
+  return {
+    background: focused ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)",
+    border: focused ? "1px solid rgba(91,124,250,0.55)" : "1px solid rgba(20,23,31,0.10)",
+    boxShadow: focused
+      ? "0 0 0 3px rgba(91,124,250,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
+      : "inset 0 1px 0 rgba(255,255,255,0.6)",
+  };
+}
+
 function GInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
   const [focused, setFocused] = useState(false);
+  const { resolvedTheme } = useTheme();
   return (
     <input
       {...props}
       style={{
         ...inputBase,
-        background: focused ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)",
-        border: focused ? "1px solid rgba(91,124,250,0.55)" : "1px solid rgba(20,23,31,0.10)",
-        boxShadow: focused
-          ? "0 0 0 3px rgba(91,124,250,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
-          : "inset 0 1px 0 rgba(255,255,255,0.6)",
+        ...fieldStyle(resolvedTheme === "dark", focused),
       }}
       onFocus={e => { setFocused(true); props.onFocus?.(e); }}
       onBlur={e => { setFocused(false); props.onBlur?.(e); }}
@@ -61,6 +78,7 @@ function GInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
 
 function GSelect(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
   const [focused, setFocused] = useState(false);
+  const { resolvedTheme } = useTheme();
   return (
     <select
       {...props}
@@ -71,11 +89,7 @@ function GSelect(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "right 14px center",
         paddingRight: 36,
-        background: focused ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)",
-        border: focused ? "1px solid rgba(91,124,250,0.55)" : "1px solid rgba(20,23,31,0.10)",
-        boxShadow: focused
-          ? "0 0 0 3px rgba(91,124,250,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
-          : "inset 0 1px 0 rgba(255,255,255,0.6)",
+        ...fieldStyle(resolvedTheme === "dark", focused),
       }}
       onFocus={e => { setFocused(true); props.onFocus?.(e); }}
       onBlur={e => { setFocused(false); props.onBlur?.(e); }}
@@ -85,6 +99,7 @@ function GSelect(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
 
 function GTextarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   const [focused, setFocused] = useState(false);
+  const { resolvedTheme } = useTheme();
   return (
     <textarea
       {...props}
@@ -92,11 +107,7 @@ function GTextarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
         ...inputBase,
         resize: "vertical",
         minHeight: 120,
-        background: focused ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)",
-        border: focused ? "1px solid rgba(91,124,250,0.55)" : "1px solid rgba(20,23,31,0.10)",
-        boxShadow: focused
-          ? "0 0 0 3px rgba(91,124,250,0.14), inset 0 1px 0 rgba(255,255,255,0.9)"
-          : "inset 0 1px 0 rgba(255,255,255,0.6)",
+        ...fieldStyle(resolvedTheme === "dark", focused),
       }}
       onFocus={e => { setFocused(true); props.onFocus?.(e); }}
       onBlur={e => { setFocused(false); props.onBlur?.(e); }}
@@ -113,6 +124,8 @@ const AREAS = [
 ];
 
 export default function ContactPage() {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   const [form, setForm] = useState({
     name: "", email: "", entity: "", area: "", message: "",
   });
@@ -148,7 +161,7 @@ export default function ContactPage() {
             <div>
               <ImageReveal delay={0.04} style={{ marginBottom: 28 }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/Logo.svg" alt="QMULATE" className="contact-logo-img" />
+                <img src={isDark ? "/Logo-light.svg" : "/Logo.svg"} alt="QMULATE" className="contact-logo-img" />
               </ImageReveal>
 
               <motion.h1 {...FU(.08)} className="t-h1 gt-w" style={{ marginBottom: 20, marginTop: 24 }}>
@@ -269,6 +282,8 @@ export default function ContactPage() {
         @media(max-width:900px){.grid-contact{grid-template-columns:1fr!important}}
         @media(max-width:560px){.form-row{grid-template-columns:1fr!important}}
         select option { background: #FFFFFF; color: var(--text-1); }
+        [data-theme="dark"] select option,
+        .dark select option { background: #10141D; color: #FFFFFF; }
         .contact-logo-frame{
           display:flex; align-items:center; justify-content:center;
           padding:clamp(52px,7vw,80px) clamp(24px,4vw,40px);

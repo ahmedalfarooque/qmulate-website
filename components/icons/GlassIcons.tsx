@@ -38,8 +38,10 @@ const SIZE_CLAMP: Record<GlassSize,string> = {
 };
 
 // One consistent ink/charcoal colour everywhere; blue only on hover
-// (the hover colour itself lives in the .qi-icon:hover CSS rule).
-const INK = "#232833";
+// (the hover colour itself lives in the .qi-icon:hover CSS rule). Themed
+// via CSS variable so icons stay visible against a dark background
+// instead of rendering near-black-on-black.
+const INK = "var(--icon-ink)";
 
 // ── Hover interaction — colour + slight scale only, nothing flashy,
 // no background/glow/shadow ever appears on the glyph. ───────────────

@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsApp } from "@/components/WhatsApp";
 import { ScrollProgress, PageTransition } from "@/components/Motion";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const geist = localFont({
   src:"../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preload" href="/Logo.svg" as="image"/>
       </head>
       <body className={`${geist.variable} ${geistMono.variable} ${madaniArabic.variable}`} suppressHydrationWarning>
+        <ThemeProvider>
           {/* Global scroll progress bar */}
           <ScrollProgress />
           <Navbar/>
@@ -55,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </PageTransition>
           <Footer/>
           <WhatsApp/>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -8,6 +8,8 @@ import { HomeIcon, SuccessionIcon, GovernanceIcon, DocumentIcon } from "@/compon
 import { SplitSlideshow } from "@/components/HeroSlideshow";
 import { HeroCardStack } from "@/components/HeroCardStack";
 import { PropertyShowcase, type ShowcaseItem } from "@/components/PropertyShowcase";
+import { PageBackground } from "@/components/PageBackground";
+import { useTheme } from "@/components/ThemeProvider";
 
 const BGI = (file: string) => `/Background%20Images/${file}`;
 
@@ -37,20 +39,24 @@ const HOME_SERVICES: ShowcaseItem[] = [
 ];
 
 const REGULATORS = [
-  { name: "أوقاف",             img: "/Regulatory%20Authorities/AWQAF%20LOGO.png" },
-  { name: "إحكام",             img: "/Regulatory%20Authorities/EHKAAM%20LOGO.png" },
-  { name: "وزارة الإسكان",     img: "/Regulatory%20Authorities/Ministry%20of%20Housing%20Logo.png" },
-  { name: "هيئة العقار",        img: "/Regulatory%20Authorities/REAL%20ESTATE%20GENERAL%20AUTHORITY%20LOGO.png" },
-  { name: "هيئة أملاك الدولة",  img: "/Regulatory%20Authorities/STATE%20PROPERTY%20OF%20GENERAL%20AUTHORITY%20LOGO.png" },
+  { name: "أوقاف",             img: "/Regulatory%20Authorities/AWQAF%20LOGO.png", aspect: 480 / 270, hasDarkVariant: true, boost: true },
+  { name: "إحكام",             img: "/Regulatory%20Authorities/EHKAAM%20LOGO.png", aspect: 469 / 203, hasDarkVariant: true, boost: true },
+  { name: "وزارة الإسكان",     img: "/Regulatory%20Authorities/Ministry%20of%20Housing%20Logo.png", aspect: 1280 / 1291, hasDarkVariant: true, boost: true },
+  { name: "هيئة العقار",        img: "/Regulatory%20Authorities/REAL%20ESTATE%20GENERAL%20AUTHORITY%20LOGO.png", aspect: 2774 / 880, hasDarkVariant: true, boost: false },
+  { name: "هيئة أملاك الدولة",  img: "/Regulatory%20Authorities/STATE%20PROPERTY%20OF%20GENERAL%20AUTHORITY%20LOGO.png", aspect: 320 / 320, hasDarkVariant: true, boost: false },
 ];
+
+/* Dedicated Dark Mode logo files live alongside the Light Mode originals,
+   named with a " 2" suffix before the extension. */
+const darkLogoSrc = (img: string) => img.replace(/\.png$/, "%202.png");
 
 const PROCESS_IMG = [{ src: BGI("1000_F_332524339_NGSV5Nsf4ZQHUIB7xjBeP5IQBQdDGFaU.jpg"), position: "center 45%" }];
 
 const PROCESS_STEPS = [
-  { num: "01", title: "الاكتشاف", body: "فهم هيكل الملكية والأهداف وتركيبة الأصول القائمة." },
-  { num: "02", title: "الهيكلة", body: "إرساء أطر حوكمة واضحة وآليات لصنع القرار حول تلك الأصول." },
-  { num: "03", title: "الإدارة", body: "إدارة الأصول والتقارير والحفاظ على القيمة عبر المحفظة بشكل مستمر." },
-  { num: "04", title: "النمو", body: "تحديد فرص التطوير وإعادة التوظيف والنمو على المدى الطويل." },
+  { num: "٠١", title: "الاكتشاف", body: "فهم هيكل الملكية والأهداف وتركيبة الأصول القائمة." },
+  { num: "٠٢", title: "الهيكلة", body: "إرساء أطر حوكمة واضحة وآليات لصنع القرار حول تلك الأصول." },
+  { num: "٠٣", title: "الإدارة", body: "إدارة الأصول والتقارير والحفاظ على القيمة عبر المحفظة بشكل مستمر." },
+  { num: "٠٤", title: "النمو", body: "تحديد فرص التطوير وإعادة التوظيف والنمو على المدى الطويل." },
 ];
 
 const SERVICE_LAYERS = [
@@ -66,9 +72,11 @@ export default function ArHome() {
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const { resolvedTheme } = useTheme();
 
   return (
     <main className="hero-page" style={{ position: "relative", fontFamily: "var(--font-madani),sans-serif" }}>
+      <PageBackground variant="home"/>
 
       {/* ══════════════════════════════════════════
           1. HERO — LIGHT EDITORIAL SPLIT (mirrored: text right, image left)
@@ -134,17 +142,21 @@ export default function ArHome() {
                 مرخّص ومنظَّم من قبل
               </div>
               <div className="trust-bar-row">
-                {REGULATORS.map(r => (
-                  <div key={r.name} className="trust-logo-box">
+                {REGULATORS.map(r => {
+                  const isLg = r.img.includes("STATE%20PROPERTY");
+                  return (
+                  <div key={r.name} className={`trust-logo-box${isLg ? " trust-logo-box-lg" : ""}${r.boost ? " trust-logo-box-boost" : ""}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={r.img}
+                      src={resolvedTheme === "dark" && r.hasDarkVariant ? darkLogoSrc(r.img) : r.img}
                       alt={r.name}
                       title={r.name}
-                      className={`trust-logo${r.img.includes("STATE%20PROPERTY") ? " trust-logo-lg" : ""}`}
+                      className={`trust-logo${isLg ? " trust-logo-lg" : ""}`}
+                      style={{ aspectRatio: r.aspect }}
                     />
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </motion.div>
           </div>
@@ -234,11 +246,11 @@ export default function ArHome() {
               <div className="process-steps">
                 {PROCESS_STEPS.map((step, i) => (
                   <motion.div key={step.num} {...FU(i * 0.08)} className="process-step process-step-rtl">
+                    <div className="process-num t-xs" style={{ color: "var(--gold)" }}>{step.num}</div>
                     <div>
                       <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{step.title}</div>
                       <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "var(--text-3)" }}>{step.body}</p>
                     </div>
-                    <div className="process-num t-xs" style={{ color: "var(--gold)" }}>{step.num}</div>
                   </motion.div>
                 ))}
               </div>
@@ -398,9 +410,46 @@ export default function ArHome() {
         .trust-logo:hover{ opacity:1; filter:grayscale(0); transform:scale(1.05); }
         .trust-logo-lg{ transform:scale(1.55); }
         .trust-logo-lg:hover{ transform:scale(1.63); }
+        /* Dark theme only: each logo box hugs its own logo's rendered width
+           instead of stretching into an equal-width slot, so the row's single
+           gap value becomes the real, uniform visual distance between every
+           logo, not just between box edges. The whole row is then centered
+           as one balanced group. Light theme is untouched. */
+        [data-theme="dark"] .trust-bar-row,
+        .dark .trust-bar-row{
+          justify-content:center;
+          flex-wrap:nowrap;
+        }
+        [data-theme="dark"] .trust-logo-box,
+        .dark .trust-logo-box{
+          flex:0 1 auto;
+        }
+        /* AWQAF, EHKAAM and Ministry of Housing read visually smaller than
+           REGA / State Properties at the shared box height, so their boxes
+           get a ~20% taller height in dark mode only — width follows via the
+           image's own aspect-ratio, so proportions stay exact. */
+        [data-theme="dark"] .trust-logo-box-boost,
+        .dark .trust-logo-box-boost{
+          height:clamp(105px,12.24vw,149px);
+        }
+        /* The State Properties mark is intentionally scaled 1.55x (approved
+           sizing, kept as-is) — that transform grows its painted box
+           symmetrically from its own center, eating into the gap on its
+           leading side. Compensate with margin so its visual gap matches
+           every other pair, without touching the scale or the asset. */
+        [data-theme="dark"] .trust-logo-box-lg,
+        .dark .trust-logo-box-lg{
+          margin-inline-start:calc(clamp(88px,10.2vw,124px) * 0.275);
+        }
         @media(max-width:640px){
           .trust-bar-row{ justify-content:center; }
           .trust-logo-box{ flex:0 1 auto; height:68px; }
+          [data-theme="dark"] .trust-bar-row,
+          .dark .trust-bar-row{ flex-wrap:wrap; }
+          [data-theme="dark"] .trust-logo-box-boost,
+          .dark .trust-logo-box-boost{ height:82px; }
+          [data-theme="dark"] .trust-logo-box-lg,
+          .dark .trust-logo-box-lg{ margin-inline-start:calc(68px * 0.275); }
         }
         @media(max-width:1180px){
           .hero-split-grid{ grid-template-columns:1fr!important; }
@@ -410,11 +459,11 @@ export default function ArHome() {
         /* ── How We Work — numbered process list (mirrored) ── */
         .process-steps{ display:flex; flex-direction:column; gap:0; }
         .process-step-rtl{
-          display:grid; grid-template-columns:1fr 52px; gap:18px;
+          display:grid; grid-template-columns:52px 1fr; gap:18px;
           padding:18px 0; border-bottom:1px solid var(--glass-border);
         }
         .process-step-rtl:last-child{ border-bottom:none; }
-        .process-num{ letter-spacing:0; text-align:left; font-size:clamp(18px,1.8vw,24px); }
+        .process-num{ letter-spacing:0; font-size:clamp(18px,1.8vw,24px); }
       `}</style>
     </main>
   );

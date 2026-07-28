@@ -1,10 +1,13 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "@/components/ThemeProvider";
 
 export function Footer() {
   const path = usePathname();
   const isAr = path.startsWith("/ar");
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   const en = {
     navTitle:"Navigation",
@@ -42,11 +45,14 @@ export function Footer() {
       direction:isAr?"rtl":"ltr",
       fontFamily:isAr?"var(--font-madani),sans-serif":"var(--font-geist,'Inter',sans-serif)",
     }}>
-      {/* Solid, fully-opaque background layer — the ONLY thing painted at
-         z-index 0 inside this stacking context. Nothing from any page
-         (PageBackground glows, showcase-dark, body background) can ever
-         show through this, regardless of what page renders the footer. */}
-      <div className="footer-background" />
+      {/* Solid, fully-opaque background layer in light mode — unchanged.
+         Dark mode: transparent, so the footer continues the page's own
+         dark background instead of reading as a separate boxed-off
+         section; only the text/columns below remain visible. */}
+      <div
+        className="footer-background"
+        style={isDark ? { background: "transparent" } : undefined}
+      />
 
       <div className="footer-content container" style={{position:"relative",zIndex:1,paddingTop:"clamp(56px,7vw,88px)",paddingBottom:"clamp(32px,4vw,48px)"}}>
         {/* Top section */}
@@ -57,13 +63,13 @@ export function Footer() {
               <img src="/Logo-light.svg" alt="QMULATE" className="qm-footer-logo" style={{height:'46px',width:'auto',display:'block',objectFit:'contain'}} />
               <div style={{fontFamily:"var(--font-geist,'Inter',sans-serif)",fontWeight:700,fontSize:16,letterSpacing:"0.04em",color:"#F5F6F8",lineHeight:1}}>QMULATE</div>
             </Link>
-            <p style={{fontSize:14.5,color:"#B9BEC8",lineHeight:1.75,marginBottom:12,maxWidth:320}}>{t.tagline}</p>
-            <p style={{fontSize:12,color:"#7A7F8A",lineHeight:1.7,maxWidth:320}}>{t.sub}</p>
+            <p style={{fontSize:14.5,color:isDark?"rgba(220,225,235,0.88)":"#B9BEC8",lineHeight:1.75,marginBottom:12,maxWidth:320}}>{t.tagline}</p>
+            <p style={{fontSize:12,color:isDark?"rgba(190,200,215,0.75)":"#7A7F8A",lineHeight:1.7,maxWidth:320}}>{t.sub}</p>
           </div>
 
           {/* Navigation column */}
           <div>
-            <div className="t-xs" style={{color:"#7A7F8A",marginBottom:18}}>{t.navTitle}</div>
+            <div className="t-xs" style={{color:isDark?"rgba(190,200,215,0.75)":"#7A7F8A",marginBottom:18}}>{t.navTitle}</div>
             <div style={{display:"flex",flexDirection:"column",gap:12}}>
               {t.navLinks.map(item=>(
                 <Link key={item.l} href={item.h} className="qm-footer-link" style={{fontSize:13.5,lineHeight:1.5}}>
@@ -75,7 +81,7 @@ export function Footer() {
 
           {/* Contact column */}
           <div>
-            <div className="t-xs" style={{color:"#7A7F8A",marginBottom:18}}>{t.contactTitle}</div>
+            <div className="t-xs" style={{color:isDark?"rgba(190,200,215,0.75)":"#7A7F8A",marginBottom:18}}>{t.contactTitle}</div>
             <div style={{display:"flex",flexDirection:"column",gap:12}}>
               <a href={`mailto:${t.email}`} className="qm-footer-link" style={{fontSize:13.5}}>{t.email}</a>
               <a href={`tel:${t.phoneHref}`} className="qm-footer-link" style={{fontSize:13.5, direction:"ltr", textAlign:isAr?"right":"left"}}>{t.phone}</a>
@@ -126,6 +132,40 @@ export function Footer() {
         }
         .qm-footer-lang:hover{
           color:#FFFFFF; border-color:rgba(91,124,250,0.45); background:rgba(91,124,250,0.10);
+        }
+
+        /* ── Dark mode only — one unified 3D glass card wrapping all footer
+           content (brand + navigation + contact), instead of three separate
+           boxes. Light mode never matches these selectors; the footer's
+           permanent light-mode look is untouched. */
+        [data-theme="dark"] .qm-footer .footer-grid,
+        .dark .qm-footer .footer-grid{
+          position:relative;
+          background:rgba(255,255,255,0.05) !important;
+          border:1px solid rgba(255,255,255,0.15) !important;
+          backdrop-filter:blur(30px) saturate(160%) !important;
+          -webkit-backdrop-filter:blur(30px) saturate(160%) !important;
+          border-radius:28px !important;
+          padding:clamp(28px,3.4vw,44px) !important;
+          box-shadow:
+            0 25px 80px rgba(0,0,0,0.45),
+            inset 0 1px 1px rgba(255,255,255,0.12) !important;
+          overflow:hidden;
+        }
+        [data-theme="dark"] .qm-footer .footer-grid::after,
+        .dark .qm-footer .footer-grid::after{
+          content:'';position:absolute;inset:0;border-radius:inherit;
+          background:linear-gradient(135deg,rgba(255,255,255,0.10),transparent 40%);
+          pointer-events:none;
+        }
+        [data-theme="dark"] .qm-footer-link,
+        .dark .qm-footer-link{
+          color:rgba(180,200,255,0.9) !important;
+        }
+        [data-theme="dark"] .qm-footer-link:hover,
+        .dark .qm-footer-link:hover{
+          color:#FFFFFF !important;
+          text-shadow:0 0 14px rgba(91,124,250,0.45);
         }
       `}</style>
     </footer>

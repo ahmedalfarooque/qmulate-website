@@ -321,6 +321,45 @@ export default function ServicesPage() {
         @media(max-width:560px){
           .svc-glass-row{grid-template-columns:1fr!important;gap:8px!important}
         }
+
+        /* ── Dark mode overrides — loaded last, plain attribute selector,
+           !important on every property the light rules above hardcode, so
+           these always win regardless of source order or :is() specificity
+           edge cases. Light mode rules above are untouched. ── */
+        [data-theme="dark"] .svc-icon-badge,
+        .dark .svc-icon-badge{
+          background:rgba(255,255,255,0.08) !important;
+          border-color:rgba(255,255,255,0.15) !important;
+        }
+        [data-theme="dark"] .svc-glass-panel,
+        .dark .svc-glass-panel{
+          background:rgba(255,255,255,0.06) !important;
+          border-color:rgba(255,255,255,0.15) !important;
+          backdrop-filter:blur(25px) !important;
+          -webkit-backdrop-filter:blur(25px) !important;
+          box-shadow:
+            0 25px 70px rgba(0,0,0,0.45),
+            inset 0 1px 1px rgba(255,255,255,0.15) !important;
+          position:relative;
+        }
+        [data-theme="dark"] .svc-glass-panel::after,
+        .dark .svc-glass-panel::after{
+          content:'';position:absolute;inset:0;border-radius:inherit;
+          background:linear-gradient(135deg,rgba(255,255,255,0.10),transparent 40%);
+          pointer-events:none;
+        }
+        [data-theme="dark"] .svc-glass-row,
+        .dark .svc-glass-row{
+          background:rgba(255,255,255,0.05) !important;
+          border-color:rgba(255,255,255,0.15) !important;
+        }
+        [data-theme="dark"] .svc-glass-row:hover,
+        .dark .svc-glass-row:hover{
+          background:rgba(255,255,255,0.10) !important;
+          box-shadow:
+            0 32px 90px rgba(0,0,0,0.55),
+            inset 0 1px 1px rgba(255,255,255,0.12) !important;
+        }
       `}</style>
     </main>
   );

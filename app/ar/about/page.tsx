@@ -49,7 +49,7 @@ export default function ArAboutPage() {
         <div className="svc-hero-scrim" />
 
         <div className="container svc-hero-inner">
-          <div className="svc-hero-copy" style={{ textAlign:"right" }}>
+          <div className="svc-hero-copy">
             <Reveal direction="up" delay={0.05}>
               <span className="pill pill-c" style={{ marginBottom:22 }}>
                 عن كيوميليت
@@ -63,14 +63,14 @@ export default function ArAboutPage() {
             <motion.p
               {...FU(.4)}
               className="t-lg"
-              style={{ color:"var(--text-3)", maxWidth:540, marginTop:26, marginRight:0, marginLeft:"auto" }}
+              style={{ color:"var(--text-3)", maxWidth:540, marginTop:26 }}
             >
               من خلال مساعدة الملاك والعائلات والشركات والأوقاف على إرساء
               أطر ملكية وإدارة واضحة، نعمل على تعزيز أداء الأصول وإطلاق
               إمكاناتها الحقيقية وخلق قيمة دائمة تمتد عبر الأجيال.
             </motion.p>
 
-            <motion.div {...FU(.48)} className="ed-hero-cta-row" style={{ justifyContent:"flex-end" }}>
+            <motion.div {...FU(.48)} className="ed-hero-cta-row">
               <Link href="/ar/contact" className="btn btn-primary" style={{ fontSize:14, padding:"14px 30px" }}>تواصل معنا ←</Link>
               <Link href="/ar/services" className="btn btn-ghost" style={{ fontSize:14, padding:"14px 26px" }}>خدماتنا</Link>
             </motion.div>
@@ -111,7 +111,7 @@ export default function ArAboutPage() {
               <div className="about-highlights">
                 {HIGHLIGHTS.map((h,i)=>(
                   <Reveal key={h.title} direction="up" delay={.3+i*.06}>
-                    <div className="about-highlight-row" style={{ flexDirection:"row-reverse", textAlign:"right" }}>
+                    <div className="about-highlight-row" style={{ textAlign:"right" }}>
                       <h.Icon size="sm"/>
                       <div>
                         <div className="about-highlight-title">{h.title}</div>
@@ -164,7 +164,7 @@ export default function ArAboutPage() {
                   padding:"clamp(28px,3vw,42px) clamp(22px,2.4vw,32px)",
                   height:"100%",
                 }}>
-                  <div className="value-num-prefix">{String(i+1).padStart(2,"0")}</div>
+                  <div className="value-num-prefix">{"٠" + "٠١٢٣٤٥٦٧٨٩"[i+1]}</div>
                   <value.Icon size="md"/>
                   <h4 className="t-h4" style={{
                     color:"var(--text-1)",

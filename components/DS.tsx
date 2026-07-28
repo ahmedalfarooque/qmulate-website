@@ -34,7 +34,7 @@ export function SectionHeading({eyebrow,title,subtitle,center=false,wide=false,c
   eyebrow?:string;title:React.ReactNode;subtitle?:string;center?:boolean;wide?:boolean;className?:string
 }) {
   return(
-    <div className={className} style={{textAlign:center?"center":"left",maxWidth:wide?"100%":center?680:720}}>
+    <div className={className} style={{textAlign:center?"center":"start",maxWidth:wide?"100%":center?680:720}}>
       {eyebrow&&(
         <motion.div {...FI(0)} style={{marginBottom:16}}>
           <span className="pill pill-c">{eyebrow}</span>
