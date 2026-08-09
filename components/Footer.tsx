@@ -16,7 +16,7 @@ export function Footer() {
     ],
     contactTitle:"Get In Touch",
     tagline:"Transforming Ownership into Enduring Value.",
-    sub:"QMULATE is a specialist real estate platform. All communications are private and confidential.",
+    sub:"QMULATE is a Saudi real estate consultancy, brokerage, and property management platform.",
     email:"ceo@qmulate.com",
     phone:"+966 53 333 9052",
     phoneHref:"+966533339052",
@@ -30,7 +30,7 @@ export function Footer() {
     ],
     contactTitle:"تواصل معنا",
     tagline:"نحوّل الملكية إلى قيمة مستدامة.",
-    sub:"كيوميليت منظومة عقارية متكاملة. جميع المراسلات سرية وخاصة.",
+    sub:"كيوموليت منصة سعودية متخصصة في الاستشارات العقارية والوساطة العقارية وإدارة الأملاك.",
     email:"ceo@qmulate.com",
     phone:"+966 53 333 9052",
     phoneHref:"+966533339052",
@@ -65,6 +65,13 @@ export function Footer() {
             </Link>
             <p style={{fontSize:14.5,color:isDark?"rgba(220,225,235,0.88)":"#B9BEC8",lineHeight:1.75,marginBottom:12,maxWidth:320}}>{t.tagline}</p>
             <p style={{fontSize:12,color:isDark?"rgba(190,200,215,0.75)":"#7A7F8A",lineHeight:1.7,maxWidth:320}}>{t.sub}</p>
+            <p style={{fontSize:12,color:isDark?"rgba(190,200,215,0.75)":"#7A7F8A",lineHeight:1.7,maxWidth:320,marginTop:12}}>
+              {isAr ? (
+                <>مرخص من الهيئة العامة للعقار (REGA) بموجب الترخيصين رقم <span dir="ltr" style={{unicodeBidi:"isolate"}}>2200005389</span> و<span dir="ltr" style={{unicodeBidi:"isolate"}}>1200049558</span>.</>
+              ) : (
+                <>Licensed by the Real Estate General Authority (REGA) under license numbers 2200005389 and 1200049558.</>
+              )}
+            </p>
           </div>
 
           {/* Navigation column */}
@@ -95,7 +102,6 @@ export function Footer() {
           <Link href={isAr?"/":"/ar"} className="qm-footer-lang">
             {t.langSwitch}
           </Link>
-          <span style={{fontSize:11,color:"#5B5F69",fontFamily:"var(--font-geist-mono,'Courier New'),monospace"}}>v7.0 · 2026</span>
         </div>
       </div>
 

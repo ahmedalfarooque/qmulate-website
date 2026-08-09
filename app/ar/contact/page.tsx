@@ -172,12 +172,12 @@ export default function ArContactPage() {
                 تواصل معنا.
               </motion.h1>
               <motion.p {...FU(.16)} className="t-xl" style={{ color: "var(--text-3)", maxWidth: 420, lineHeight: 1.9, marginBottom: 20 }}>
-                يسعدنا التواصل معكم. كل تواصل يُعامَل بسرية تامة.
+                يسعدنا خدمتكم من خلال نموذج التواصل التالي وفريقنا سيكون على استعداد تام للرد بأقرب فرصة ممكنة.
               </motion.p>
 
               <motion.div {...FU(.19)} className="contact-warm-badge" style={{ marginBottom: 32 }}>
-                <span>نردّ عادةً في غضون يوم عمل واحد</span>
                 <ClockIcon size="sm" />
+                <span>نردّ عادةً في غضون يوم عمل واحد</span>
               </motion.div>
 
               <motion.div {...FU(.22)} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -186,7 +186,7 @@ export default function ArContactPage() {
                     <PhoneIcon size="sm" />
                     <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "var(--font-madani),sans-serif" }}>التواصل</div>
                   </div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text-1)", marginBottom: 6, textAlign: "right" }}>د. أحمد إسماعيل الفاروق</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text-1)", marginBottom: 6, textAlign: "right" }}>د. أحمد إسماعيل الفاروقي</div>
                   <a href="tel:+966533339052" style={{ display: "block", fontSize: 13, color: "var(--cyan)", marginBottom: 3, direction: "ltr", textAlign: "right" }}>+966 53 333 9052</a>
                   <a href="mailto:ceo@qmulate.com" style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--cyan)", direction: "ltr", justifyContent: "flex-end" }}>ceo@qmulate.com<EmailIcon size="sm" /></a>
                 </GlassCard>

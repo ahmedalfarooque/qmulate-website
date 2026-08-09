@@ -60,9 +60,9 @@ const PROCESS_STEPS = [
 ];
 
 const SERVICE_LAYERS = [
-  { label: "Ownership Structuring", sub: "Clear frameworks · Decision governance · Long-term clarity", color: "var(--gold)" },
-  { label: "Asset Management",       sub: "Leasing · Operations · Maintenance · Value preservation",   color: "var(--cyan)" },
-  { label: "Development & Investment", sub: "Expansion · Repositioning · Sustainable growth",           color: "var(--blue)" },
+  { label: "Ownership Structuring", sub: "Real estate consultancy · Ownership frameworks · Decision governance · Long-term clarity", color: "var(--gold)" },
+  { label: "Asset Management",       sub: "Property management · Leasing · Operations · Maintenance · Value preservation",   color: "var(--cyan)" },
+  { label: "Development & Investment", sub: "Real estate brokerage · Investment opportunities · Repositioning · Sustainable growth",           color: "var(--blue)" },
 ];
 
 /* ═══════════════════════════════════════════════════════════
@@ -119,8 +119,9 @@ export default function Home() {
                   className="hero-lead"
                   style={{ fontSize: "clamp(16px,1.5vw,20px)", lineHeight: 1.85, maxWidth: 520, marginBottom: 44 }}
                 >
-                  A fully integrated real estate platform for families, businesses, and individuals,
-                  dedicated to managing assets, preserving value, and enabling sustainable long-term growth.
+                  A fully integrated real estate platform providing real estate consultancy, brokerage, and property
+                  management services for families, businesses, and individuals, focused on preserving value and
+                  enabling sustainable long-term growth.
                 </motion.p>
               </div>
 
@@ -188,12 +189,11 @@ export default function Home() {
 
               <Reveal direction="up" delay={0.2}>
                 <p style={{ fontSize: "clamp(15px,1.3vw,18px)", lineHeight: 1.85, color: "var(--text-3)", marginBottom: 40 }}>
-                  We support property owners, families, businesses, and endowments in
-                  managing their real estate assets through a clear and structured
-                  framework that facilitates decision-making and promotes long-term
-                  sustainability. By combining real estate expertise with institutional
-                  best practices, we help enhance asset performance, preserve value,
-                  and support sustainable growth over time.
+                  We support property owners, families, businesses, and endowments through real
+                  estate consultancy, brokerage, and property management, delivered within a clear and
+                  structured framework that facilitates decision-making and promotes long-term
+                  sustainability. By combining real estate expertise with institutional best practices, we
+                  help enhance asset performance, preserve value, and support sustainable growth over time.
                 </p>
               </Reveal>
 

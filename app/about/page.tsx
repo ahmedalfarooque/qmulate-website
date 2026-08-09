@@ -67,10 +67,10 @@ export default function AboutPage() {
               className="t-lg"
               style={{ color:"var(--text-3)", maxWidth:540, marginTop:26 }}
             >
-              By helping property owners, families, businesses, and endowments
-              establish clear ownership and management frameworks, we enhance
-              asset performance, unlock potential, and create lasting value
-              for generations to come.
+              By providing real estate consultancy, brokerage, and property
+              management services, we help property owners, families,
+              businesses, and endowments enhance asset performance, unlock
+              opportunities, and create lasting value.
             </motion.p>
 
             <motion.div {...FU(.48)} className="ed-hero-cta-row">
@@ -94,15 +94,13 @@ export default function AboutPage() {
                 <span className="pill pill-c">Who We Are</span>
               </Reveal>
               <LineReveal delay={0.08} style={{ marginTop:18 }}>
-                <h2 className="t-h2 gt-w">A governance-led platform for real estate ownership.</h2>
+                <h2 className="t-h2 gt-w">An integrated real estate platform specializing in Real Estate Consultancy, Brokerage, and Property Management.</h2>
               </LineReveal>
 
               <motion.p {...FU(.16)} className="t-md about-narrative-p">
-                QMULATE is a real estate ownership and asset management platform
-                built for families, businesses, and endowments across the Kingdom.
-                We help clients establish clear ownership structures, govern their
-                holdings with discipline, and turn static assets into long-term
-                sources of value.
+                QMULATE provides integrated real estate consultancy, brokerage,
+                property management, and ownership solutions for families,
+                businesses, individuals, and endowments across the Kingdom.
               </motion.p>
 
               <motion.p {...FU(.24)} className="t-md about-narrative-p">

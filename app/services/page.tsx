@@ -56,7 +56,7 @@ const SERVICES = [
     clients:[
       { label:"Corporates",           body:"Identifying opportunities for expansion, development, and asset repositioning to support growth and maximize investment returns." },
       { label:"Endowments",           body:"Evaluating and developing endowment assets through sustainable investment opportunities that strengthen long-term impact and value creation." },
-      { label:"Individuals & Families", body:"Assessing investment opportunities and identifying the most suitable path for development, retention, or exit in line with long-term financial objectives." },
+      { label:"Individuals & Families", body:"Assessing investment opportunities and providing real estate consultancy and brokerage support for acquisitions, sales, development, retention, or exit decisions." },
     ],
   },
 ];
@@ -92,8 +92,9 @@ export default function ServicesPage() {
               className="t-lg"
               style={{ color:"var(--text-3)", maxWidth:520, marginTop:26 }}
             >
-              Our services cover the key aspects of real estate ownership, from structuring and governance to asset management,
-              development, and investment.
+              Our services cover real estate consultancy, brokerage, property management, ownership
+              structuring, development, and investment — providing integrated support across the real
+              estate lifecycle.
             </motion.p>
 
             <motion.div {...FU(.48)} className="ed-hero-cta-row">
