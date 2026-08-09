@@ -116,7 +116,8 @@ export default function Home() {
 
                 <motion.p
                   initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.85 }}
-                  style={{ fontSize: "clamp(16px,1.5vw,20px)", lineHeight: 1.85, color: "var(--text-3)", maxWidth: 520, marginBottom: 44 }}
+                  className="hero-lead"
+                  style={{ fontSize: "clamp(16px,1.5vw,20px)", lineHeight: 1.85, maxWidth: 520, marginBottom: 44 }}
                 >
                   A fully integrated real estate platform for families, businesses, and individuals,
                   dedicated to managing assets, preserving value, and enabling sustainable long-term growth.
@@ -241,7 +242,7 @@ export default function Home() {
                   <motion.div key={step.num} {...FU(i * 0.08)} className="process-step">
                     <div className="process-num t-xs" style={{ color: "var(--gold)" }}>{step.num}</div>
                     <div>
-                      <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{step.title}</div>
+                      <div style={{ fontSize: "clamp(20px,2.2vw,26px)", fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{step.title}</div>
                       <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "var(--text-3)" }}>{step.body}</p>
                     </div>
                   </motion.div>
@@ -291,7 +292,7 @@ export default function Home() {
                   <motion.div key={layer.label} {...FU(i * 0.1)}>
                     <div className="layer-item gc" style={{ padding: "clamp(18px,2.2vw,26px) clamp(20px,2.2vw,28px)" }}>
                       <div>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{layer.label}</div>
+                        <div style={{ fontSize: "clamp(20px,2.2vw,26px)", fontWeight: 700, color: "var(--text-1)", marginBottom: 6 }}>{layer.label}</div>
                         <div className="t-xs" style={{ color: "var(--text-3)", textTransform: "none", letterSpacing: 0, fontSize: 11.5, fontWeight: 500 }}>{layer.sub}</div>
                       </div>
                     </div>

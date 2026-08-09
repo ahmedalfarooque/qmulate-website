@@ -1581,7 +1581,7 @@ html[dir="rtl"].dark .svc-hero-scrim{
   padding-top:22px; border-top:1px solid var(--glass-border);
 }
 .about-highlight-row{ display:flex; align-items:flex-start; gap:14px; }
-.about-highlight-title{ font-size:14px; font-weight:600; color:var(--text-1); margin-bottom:4px; }
+.about-highlight-title{ font-size:clamp(19px,2.1vw,24px); font-weight:700; color:var(--text-1); margin-bottom:4px; }
 .about-highlight-body{ font-size:13px; color:var(--text-3); line-height:1.65; max-width:360px; }
 
 .about-cards-col{ grid-area:cards; display:flex; flex-direction:column; gap:18px; }
@@ -3723,14 +3723,33 @@ button:hover .qi-icon,
 /* Homepage hero fullbleed — gradient display headings luminous depth
    Covers gt-w (silver), gt-warm (blue), gt-a (aurora), gt-v (violet) */
 [data-theme="dark"] .hero-fullbleed .t-d.gt-w,
-[data-theme="dark"] .hero-fullbleed .t-d.gt-warm,
 [data-theme="dark"] .hero-fullbleed .t-d.gt-a,
 [data-theme="dark"] .hero-fullbleed .t-d.gt-v,
 .dark .hero-fullbleed .t-d.gt-w,
-.dark .hero-fullbleed .t-d.gt-warm,
 .dark .hero-fullbleed .t-d.gt-a,
 .dark .hero-fullbleed .t-d.gt-v{
   filter: drop-shadow(0 2px 22px rgba(80,140,255,0.22)) drop-shadow(0 1px 4px rgba(0,0,0,0.55));
+}
+
+/* Home hero accent heading (dark mode only) — flat bright light-blue
+   fill instead of the shared gradient-clip token (--grad-warm starts
+   at navy #3B54C4, and the gradient+drop-shadow combo read as a dark
+   embossed/metallic letterface). Solid color + a barely-there shadow
+   keeps the glyph face itself bright. */
+[data-theme="dark"] .hero-fullbleed .t-d.gt-warm,
+.dark .hero-fullbleed .t-d.gt-warm{
+  background: none;
+  -webkit-background-clip: initial; -webkit-text-fill-color: #AFC4FF; background-clip: initial;
+  color: #AFC4FF;
+  filter: none;
+  text-shadow: 0 0 20px rgba(100,140,255,0.18);
+}
+
+/* Home hero lead paragraph — bright, readable body text */
+.hero-lead{ color: var(--text-3); }
+[data-theme="dark"] .hero-fullbleed .hero-lead,
+.dark .hero-fullbleed .hero-lead{
+  color: rgba(226,232,240,0.92);
 }
 
 /* Services / About hero glass panel — gradient h1 depth & glow */
