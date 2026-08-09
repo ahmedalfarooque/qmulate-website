@@ -164,7 +164,7 @@ export default function ArAboutPage() {
                   padding:"clamp(28px,3vw,42px) clamp(22px,2.4vw,32px)",
                   height:"100%",
                 }}>
-                  <div className="value-num-prefix">{"٠" + "٠١٢٣٤٥٦٧٨٩"[i+1]}</div>
+                  <div className="value-num-prefix">{String(i+1).padStart(2,"0")}</div>
                   <value.Icon size="md"/>
                   <h4 className="t-h4" style={{
                     color:"var(--text-1)",

@@ -614,6 +614,9 @@ main.hero-page{padding-top:0}
 .t-md {font-size:15px;line-height:1.78;letter-spacing:-.006em}
 .t-sm {font-size:13px;line-height:1.68;letter-spacing:0}
 .t-xs {font-size:11px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;font-family:var(--font-geist-mono,'Courier New'),monospace}
+/* Service icon-badge index number (01/02/03) — larger than base .t-xs,
+   same weight/color/tracking/family, used alongside .t-xs not replacing it. */
+.svc-num {font-size:clamp(17px,1.8vw,21px)}
 
 /* Gradient text */
 .gt-w{background:var(--gt-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -2870,13 +2873,17 @@ img[alt="QMULATE logo"] {
 [dir="rtl"] .t-d, [dir="rtl"] .t-h1, [dir="rtl"] .t-h2,
 [dir="rtl"] .t-h3, [dir="rtl"] .t-lg, [dir="rtl"] .t-xl { text-align: right; }
 
-/* Arabic font application */
+/* Arabic font application — universal, catches every element
+   (div/li/footer containers etc, not just the tag list this used to be)
+   so nothing can silently fall back to a default sans-serif. */
+html[dir="rtl"], [dir="rtl"], [dir="rtl"] * {
+  font-family: var(--font-madani), sans-serif;
+}
 [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3,
 [dir="rtl"] p, [dir="rtl"] span,
 [dir="rtl"] a, [dir="rtl"] button,
 [dir="rtl"] label, [dir="rtl"] input,
 [dir="rtl"] textarea, [dir="rtl"] select {
-  font-family: var(--font-madani), sans-serif;
   line-height: 1.85;
 }
 
@@ -3648,6 +3655,10 @@ nav { padding-top: max(0px, env(safe-area-inset-top)); }
   font-size: clamp(18px, 1.8vw, 24px);
   line-height: 1.3;
   letter-spacing: -0.008em;
+}
+[dir="rtl"] .showcase-dark .showcase-quote,
+[dir="rtl"] .showcase-dark .showcase-cta-h {
+  font-family: var(--font-madani), sans-serif;
 }
 @media(max-width:640px){ .showcase-dark{ border-radius:20px; } }
 

@@ -160,7 +160,7 @@ export default function ServicesPage() {
                   <div style={{ maxWidth:760, marginBottom:"clamp(40px,4.5vw,60px)" }}>
                     <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20 }}>
                       <span className="svc-icon-badge"><SvcIcon size="md"/></span>
-                      <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
+                      <span className="t-xs svc-num" style={{ color:svc.color }}>{svc.num}</span>
                     </motion.div>
                     <LineReveal delay={0.05}>
                       <h2 className="t-h2" style={{ color:"var(--text-1)" }}>{svc.title}</h2>
@@ -180,7 +180,7 @@ export default function ServicesPage() {
                     <div style={{ direction:"ltr" }}>
                       <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:22 }}>
                         <SvcIcon size="md"/>
-                        <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
+                        <span className="t-xs svc-num" style={{ color:svc.color }}>{svc.num}</span>
                       </motion.div>
 
                       <LineReveal delay={0.05}>
@@ -216,7 +216,7 @@ export default function ServicesPage() {
                     <motion.div key={c.label} {...FU(.05 + ci * .09)}>
                       <div className="svc-glass-row">
                         <div style={{
-                          fontSize:11, color:"var(--text-1)", fontWeight:700, letterSpacing:"0.13em",
+                          fontSize:"clamp(18px,2vw,23px)", color:"var(--text-1)", fontWeight:700, letterSpacing:"0.13em",
                           textTransform:"uppercase", fontFamily:"var(--font-geist-mono,'Courier New'),monospace",
                         }}>
                           {c.label}
@@ -235,7 +235,7 @@ export default function ServicesPage() {
                         height:"100%",
                       }}>
                         <div style={{
-                          fontSize:11,
+                          fontSize:"clamp(18px,2vw,23px)",
                           color:"var(--text-1)",
                           fontWeight:700,
                           letterSpacing:"0.13em",

@@ -28,7 +28,7 @@ const LAYOUTS = ["split", "feature", "split-rev"] as const;
 /* Real Arabic business copy — ported unchanged from the prior Arabic Services page */
 const SERVICES = [
   {
-    num:"٠١",
+    num:"01",
     title:"هيكلة الملكية والحوكمة",
     color:"#4C63D2",
     img: IMG_SVC[0],
@@ -39,7 +39,7 @@ const SERVICES = [
     ],
   },
   {
-    num:"٠٢",
+    num:"02",
     title:"إدارة الأصول العقارية",
     color:"#5B7CFA",
     img: IMG_SVC[1],
@@ -50,7 +50,7 @@ const SERVICES = [
     ],
   },
   {
-    num:"٠٣",
+    num:"03",
     title:"التطوير والاستثمار",
     color:"#0A0B0D",
     img: IMG_SVC[2],
@@ -161,7 +161,7 @@ export default function ArServicesPage() {
 
                   <div style={{ maxWidth:760, marginBottom:"clamp(40px,4.5vw,60px)", marginRight:0, marginLeft:"auto", textAlign:"right" }}>
                     <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20, justifyContent:"flex-start" }}>
-                      <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
+                      <span className="t-xs svc-num" style={{ color:svc.color }}>{svc.num}</span>
                       <span className="svc-icon-badge"><SvcIcon size="md"/></span>
                     </motion.div>
                     <LineReveal delay={0.05}>
@@ -181,7 +181,7 @@ export default function ArServicesPage() {
                   }}>
                     <div style={{ direction:"rtl", textAlign:"right" }}>
                       <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:22, justifyContent:"flex-start" }}>
-                        <span className="t-xs" style={{ color:svc.color }}>{svc.num}</span>
+                        <span className="t-xs svc-num" style={{ color:svc.color }}>{svc.num}</span>
                         <SvcIcon size="md"/>
                       </motion.div>
 
@@ -219,7 +219,7 @@ export default function ArServicesPage() {
                         direction:"rtl",
                       }}>
                         <div style={{
-                          fontSize:11, color:"var(--text-1)", fontWeight:700, letterSpacing:"0.06em",
+                          fontSize:"clamp(18px,2vw,23px)", color:"var(--text-1)", fontWeight:700, letterSpacing:"0.06em",
                           fontFamily:"var(--font-madani),sans-serif", textAlign:"right",
                         }}>
                           {c.label}
@@ -238,7 +238,7 @@ export default function ArServicesPage() {
                         height:"100%",
                       }}>
                         <div style={{
-                          fontSize:11,
+                          fontSize:"clamp(18px,2vw,23px)",
                           color:"var(--text-1)",
                           fontWeight:700,
                           letterSpacing:"0.06em",

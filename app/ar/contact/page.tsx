@@ -182,7 +182,7 @@ export default function ArContactPage() {
 
               <motion.div {...FU(.22)} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <GlassCard style={{ padding: "22px 26px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexDirection: "row-reverse", justifyContent: "flex-end" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, justifyContent: "flex-start" }}>
                     <PhoneIcon size="sm" />
                     <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "var(--font-madani),sans-serif" }}>التواصل</div>
                   </div>
@@ -192,7 +192,7 @@ export default function ArContactPage() {
                 </GlassCard>
 
                 <GlassCard style={{ padding: "22px 26px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexDirection: "row-reverse", justifyContent: "flex-end" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, justifyContent: "flex-start" }}>
                     <LocationIcon size="sm" />
                     <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: "var(--text-4)", fontFamily: "var(--font-madani),sans-serif" }}>العنوان</div>
                   </div>
