@@ -1317,6 +1317,8 @@ a, button, [role="button"] {
 }
 .ed-hero-card{
   position:relative;
+  height:100%;
+  box-sizing:border-box;
   /* Anchored frosted-glass "shelf" — sits directly on the photo's darkened
      bottom edge, so it needs a stronger, clearly-legible glass base than
      surfaces that rest on plain ivory. Still glass, not an opaque card:

@@ -160,8 +160,8 @@ export default function ServicesPage() {
 
                   <div style={{ maxWidth:760, marginBottom:"clamp(40px,4.5vw,60px)" }}>
                     <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20 }}>
-                      <span className="svc-icon-badge"><SvcIcon size="md"/></span>
-                      <span className="t-xs svc-num" style={{ color:svc.color }}>{svc.num}</span>
+                      <SvcIcon size="md"/>
+                      <span className="t-xs svc-num" style={{ color:"#4C63D2" }}>{svc.num}</span>
                     </motion.div>
                     <LineReveal delay={0.05}>
                       <h2 className="t-h2" style={{ color:"var(--text-1)" }}>{svc.title}</h2>
@@ -181,7 +181,7 @@ export default function ServicesPage() {
                     <div style={{ direction:"ltr" }}>
                       <motion.div {...FI()} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:22 }}>
                         <SvcIcon size="md"/>
-                        <span className="t-xs svc-num" style={{ color:svc.color }}>{svc.num}</span>
+                        <span className="t-xs svc-num" style={{ color:"#4C63D2" }}>{svc.num}</span>
                       </motion.div>
 
                       <LineReveal delay={0.05}>
@@ -278,15 +278,6 @@ export default function ServicesPage() {
         @media(max-width:900px){.svc-split{grid-template-columns:1fr!important;direction:ltr!important}}
         @media(max-width:640px){.grid-3{grid-template-columns:1fr!important}}
 
-        /* ── Frosted glass badge around the section icon (number stays bare) ── */
-        .svc-icon-badge{
-          width:64px; height:64px; border-radius:18px; flex-shrink:0;
-          display:flex; align-items:center; justify-content:center;
-          background:rgba(255,255,255,0.22);
-          backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-          border:1px solid rgba(255,255,255,0.4);
-        }
-
         /* ── Premium glass panel wrapping the client-type rows ── */
         .svc-glass-panel{
           display:flex; flex-direction:column; gap:20px;
@@ -327,11 +318,6 @@ export default function ServicesPage() {
            !important on every property the light rules above hardcode, so
            these always win regardless of source order or :is() specificity
            edge cases. Light mode rules above are untouched. ── */
-        [data-theme="dark"] .svc-icon-badge,
-        .dark .svc-icon-badge{
-          background:rgba(255,255,255,0.08) !important;
-          border-color:rgba(255,255,255,0.15) !important;
-        }
         [data-theme="dark"] .svc-glass-panel,
         .dark .svc-glass-panel{
           background:rgba(255,255,255,0.06) !important;
