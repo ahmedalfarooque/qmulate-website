@@ -11,24 +11,32 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+// Temporary global switch — dark theme is fully implemented below but
+// disabled site-wide for now. Flip back to `true` to restore normal
+// light/dark switching everywhere (ThemeSwitcher, Navbar) with no other
+// code changes needed.
+export const DARK_MODE_ENABLED = false;
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   // Always starts "light" — no localStorage/sessionStorage/cookie/system-
   // preference read of any kind. Matches the server-rendered
   // data-theme="light" in app/layout.tsx exactly, so there is no
   // hydration mismatch and no flash of the wrong theme. A visitor's
   // choice is intentionally never remembered across reload/tab/device.
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setThemeState] = useState<Theme>("light");
+  const resolvedTheme: Theme = DARK_MODE_ENABLED ? theme : "light";
+  const setTheme = DARK_MODE_ENABLED ? setThemeState : () => {};
 
   useEffect(() => {
     const root = document.documentElement;
-    root.setAttribute("data-theme", theme);
-    root.classList.toggle("dark", theme === "dark");
-    root.classList.toggle("light", theme === "light");
-    root.style.colorScheme = theme;
-  }, [theme]);
+    root.setAttribute("data-theme", resolvedTheme);
+    root.classList.toggle("dark", resolvedTheme === "dark");
+    root.classList.toggle("light", resolvedTheme === "light");
+    root.style.colorScheme = resolvedTheme;
+  }, [resolvedTheme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, resolvedTheme: theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme: resolvedTheme, resolvedTheme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );

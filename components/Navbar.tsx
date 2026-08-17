@@ -6,7 +6,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-
 import { MagneticButton } from "@/components/Motion";
 import { MenuIcon, CloseIcon } from "./icons/GlassIcons";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import { useTheme } from "@/components/ThemeProvider";
+import { useTheme, DARK_MODE_ENABLED } from "@/components/ThemeProvider";
 
 const EN_LINKS = [
   {h:"/",l:"Home"},{h:"/about",l:"About"},{h:"/services",l:"Services"},{h:"/contact",l:"Contact"},
@@ -170,9 +170,11 @@ export function Navbar() {
                 </Link>
               ))}
 
-              <div className="theme-menu-row">
-                <ThemeSwitcher menuItem isAr={isAr}/>
-              </div>
+              {DARK_MODE_ENABLED && (
+                <div className="theme-menu-row">
+                  <ThemeSwitcher menuItem isAr={isAr}/>
+                </div>
+              )}
 
               <Link href={isAr?"/ar/contact":"/contact"} className="btn btn-primary"
                 style={{marginTop:28,justifyContent:"center",fontSize:15,padding:16}}>

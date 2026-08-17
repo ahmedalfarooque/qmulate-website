@@ -1,5 +1,5 @@
 "use client";
-import { useTheme } from "@/components/ThemeProvider";
+import { useTheme, DARK_MODE_ENABLED } from "@/components/ThemeProvider";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -26,6 +26,8 @@ export function ThemeSwitcher({ compact=false, menuItem=false, isAr=false }:{
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(()=>setMounted(true),[]);
+
+  if (!DARK_MODE_ENABLED) return null;
 
   if (!mounted) {
     if (menuItem) return <div className="theme-menu-item" style={{opacity:0}} aria-hidden />;
