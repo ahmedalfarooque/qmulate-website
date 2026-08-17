@@ -95,6 +95,13 @@ export function CardTilt3D({
   style?:React.CSSProperties; className?:string;
 }) {
   const [mounted, setMounted] = useState(false);
+  // Mouse-driven tilt is meaningless on touch (no hover), and the
+  // perspective + preserve-3d it requires creates a real GPU compositing
+  // cost per card — multiplied across every GlassCard on a section, this
+  // is the same class of mobile compositor overload as the backdrop-filter
+  // issue (see globals.css "MOBILE SAFARI FIX"). Skip the 3D wrapper
+  // entirely under the project's mobile breakpoint.
+  const [isMobile, setIsMobile] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -103,7 +110,14 @@ export function CardTilt3D({
   const glowX = useTransform(x,[-0.5,0.5],[0,100]);
   const glowY = useTransform(y,[-0.5,0.5],[0,100]);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -117,8 +131,9 @@ export function CardTilt3D({
   }, [x, y]);
 
   // Before mount: plain <div> — SSR and initial client render agree exactly.
-  // After mount: switch to motion.div with 3D tilt. Safe because hydration is complete.
-  if (!mounted) {
+  // On mobile: stay a plain div permanently — no perspective/3D compositing.
+  // After mount on desktop/tablet: switch to motion.div with 3D tilt.
+  if (!mounted || isMobile) {
     return <div className={className} style={style}>{children}</div>;
   }
 

@@ -434,30 +434,40 @@ main.hero-page{padding-top:0}
 /* ══ MOBILE SAFARI FIX ══════════════════════════════════════════════════
    backdrop-filter:blur() creates a full GPU compositor layer per element.
    50+ blurred GlassCards simultaneously exhausts iPhone GPU memory and
-   causes the "A problem repeatedly occurred" WebContent process crash.
-   On mobile we fall back to a semi-opaque solid background instead.
-   ═══════════════════════════════════════════════════════════════════════ */
+   causes the "A problem repeatedly occurred" WebContent process crash
+   (and, short of a full crash, severe scroll stutter/freezes while the
+   compositor thread is saturated). On mobile we fall back to a
+   semi-opaque solid background instead.
+
+   NOTE: `!important` here is load-bearing, not decorative. Further down
+   this file, `:is([data-theme="light"],.light) .gc/.gp/.gf` set their own
+   backdrop-filter (0-2-0 specificity) — higher than a plain `.gc` inside
+   this @media block (0-1-0; media queries don't add specificity). Since
+   the site now always runs in light theme, that rule was silently
+   winning on every mobile viewport and this whole mitigation was a
+   no-op in practice. `!important` makes mobile win unconditionally,
+   regardless of future edits to the light-theme block's order. */
 @media (max-width: 767px) {
   .gc {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: rgba(12,18,32,0.88);
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(12,18,32,0.88) !important;
   }
   :is([data-theme="light"],.light) .gc {
-    background: rgba(255,255,255,0.90);
+    background: rgba(255,255,255,0.90) !important;
   }
   .gp {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: rgba(6,11,20,0.92);
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(6,11,20,0.92) !important;
   }
   :is([data-theme="light"],.light) .gp {
-    background: rgba(255,255,255,0.94);
+    background: rgba(255,255,255,0.94) !important;
   }
   /* Hero panel keeps a light blur — only one instance on the page */
   .gf {
-    backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(150%) !important;
   }
   /* Disable hover 3D lift on touch devices */
   .gc:hover { transform: none; }
@@ -3058,11 +3068,15 @@ nav { padding-top: max(0px, env(safe-area-inset-top)); }
   .hero-page { overflow-x: hidden; }
 }
 
-/* Tablet-specific: allow backdrop-filter but cap at 12px */
+/* Tablet-specific: allow backdrop-filter but cap at 12px.
+   Same specificity issue as the phone-width block above: the later
+   `:is([data-theme="light"],.light) .gc/.gp/.gf` rule is 0-2-0, this
+   plain `.gc` is 0-1-0, so without !important the cap never actually
+   applied once the site settled on light theme. */
 @media (min-width: 768px) and (max-width: 1023px) {
   .gc, .gp, .gf {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
   }
 }
 
